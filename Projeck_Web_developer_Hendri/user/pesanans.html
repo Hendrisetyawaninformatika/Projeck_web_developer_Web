@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesanan Saya | WebDevPro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        .user-layout { display: flex; min-height: 100vh; }
+        .user-sidebar { width: 250px; background: white; box-shadow: 2px 0 10px rgba(0,0,0,0.05); padding: 20px 0; position: fixed; height: 100vh; }
+        .user-sidebar .logo { padding: 0 20px 20px; text-align: center; border-bottom: 1px solid #eee; margin-bottom: 20px; }
+        .user-menu a { display: block; padding: 12px 25px; color: #666; text-decoration: none; transition: all 0.3s; border-left: 3px solid transparent; }
+        .user-menu a:hover, .user-menu a.active { background: rgba(255,215,0,0.1); color: var(--secondary); border-left-color: var(--primary); }
+        .user-main { margin-left: 250px; flex: 1; background: #f5f6fa; }
+        .user-header { background: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .user-content { padding: 30px; }
+
+        /* Status Badge Styles */
+        .status-badge {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .status-pending { background: #fff3cd; color: #856404; }
+        .status-diproses { background: #cce5ff; color: #004085; }
+        .status-selesai { background: #d4edda; color: #155724; }
+        .status-dibatalkan { background: #f8d7da; color: #721c24; }
+        .status-revisi { background: #e2e3e5; color: #383d41; }
+
+        /* Pesanan Card */
+        .pesanan-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            border-left: 4px solid transparent;
+        }
+        .pesanan-card:hover {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+        .pesanan-card.pending { border-left-color: #f39c12; }
+        .pesanan-card.diproses { border-left-color: #3498db; }
+        .pesanan-card.selesai { border-left-color: #27ae60; }
+        .pesanan-card.dibatalkan { border-left-color: #e74c3c; }
+        .pesanan-card.revisi { border-left-color: #6c757d; }
+
+        .pesanan-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .pesanan-kode {
+            font-weight: 700;
+            color: #333;
+            font-size: 16px;
+        }
+        .pesanan-date {
+            font-size: 13px;
+            color: #999;
+        }
+
+        .pesanan-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .pesanan-info {
+            display: flex;
+            flex-direction: column;
+        }
+        .pesanan-info-label {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 3px;
+        }
+        .pesanan-info-value {
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .pesanan-progress {
+            margin-bottom: 15px;
+        }
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 13px;
+        }
+        .progress-track {
+            background: #e0e0e0;
+            border-radius: 8px;
+            height: 6px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            height: 100%;
+            border-radius: 8px;
+            transition: width 0.5s ease;
+        }
+
+        .pesanan-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 12px;
+            border-top: 1px solid #f0f0f0;
+        }
+        .pesanan-harga {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 16px;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+        .empty-state-icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+        }
+        .empty-state h3 {
+            margin: 0 0 10px 0;
+            color: #333;
+        }
+        .empty-state p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        /* Filter Tabs */
+        .filter-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .filter-tab {
+            padding: 8px 18px;
+            border-radius: 20px;
+            border: 1px solid #ddd;
+            background: white;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+            color: #666;
+        }
+        .filter-tab:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        .filter-tab.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="user-layout">
+        <!-- Sidebar -->
+        <aside class="user-sidebar">
+            <div class="logo">
+                <h4 style="margin:0;">Web<span style="color:var(--primary);">Dev</span>Pro</h4>
+            </div>
+            <div class="user-menu">
+                <a href="index.html">📊 Dashboard</a>
+                <a href="profile.html">👤 Profil Saya</a>
+                <a href="pesanans.html" class="active">🛒 Pesanan Saya</a>
+                <div style="margin-top:30px; border-top:1px solid #eee; padding-top:20px;">
+                    <a href="../index.html">🌐 Lihat Website</a>
+                    <a href="#" onclick="logout()">🚪 Logout</a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main -->
+        <div class="user-main">
+            <div class="user-header">
+                <div>
+                    <h4 style="margin:0;">Pesanan Saya</h4>
+                </div>
+                <div>
+                    <a href="https://wa.me/6281234567890" target="_blank" class="btn btn-sm btn-primary">💬 Chat Admin</a>
+                    <span id="userName" style="margin-left:15px;">User</span> 👤
+                </div>
+            </div>
+            
+            <div class="user-content">
+                <!-- Stats -->
+                <div class="stats-grid" style="grid-template-columns: repeat(4, 1fr); margin-bottom:25px;">
+                    <div class="stat-card">
+                        <div class="stat-icon yellow">🛒</div>
+                        <div class="stat-value" id="totalPesanan">0</div>
+                        <div class="stat-label">Total Pesanan</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon blue">⏳</div>
+                        <div class="stat-value" id="pesananProses">0</div>
+                        <div class="stat-label">Dalam Proses</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon green">✅</div>
+                        <div class="stat-value" id="pesananSelesai">0</div>
+                        <div class="stat-label">Selesai</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon red">🚫</div>
+                        <div class="stat-value" id="pesananBatal">0</div>
+                        <div class="stat-label">Dibatalkan</div>
+                    </div>
+                </div>
+
+                <!-- Filter Tabs -->
+                <div class="filter-tabs">
+                    <div class="filter-tab active" onclick="filterPesanans('all')">Semua</div>
+                    <div class="filter-tab" onclick="filterPesanans('pending')">Pending</div>
+                    <div class="filter-tab" onclick="filterPesanans('diproses')">Diproses</div>
+                    <div class="filter-tab" onclick="filterPesanans('selesai')">Selesai</div>
+                    <div class="filter-tab" onclick="filterPesanans('revisi')">Revisi</div>
+                    <div class="filter-tab" onclick="filterPesanans('dibatalkan')">Dibatalkan</div>
+                </div>
+
+                <!-- Pesanan List -->
+                <div id="pesananList">
+                    <div style="text-align:center; padding:50px;">Memuat data...</div>
+                </div>
+
+                <!-- Empty State -->
+                <div id="emptyState" class="empty-state" style="display:none;">
+                    <div class="empty-state-icon">📭</div>
+                    <h3>Belum Ada Pesanan</h3>
+                    <p>Anda belum memiliki pesanan. Yuk, buat pesanan sekarang!</p>
+                    <a href="../pemesanan.html" class="btn btn-primary">🛒 Buat Pesanan</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    
+    <script src="../assets/js/firebase-config.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script>
+        let allPesanans = [];
+        let currentFilter = 'all';
+
+        checkUser().then(() => {
+            const user = auth.currentUser;
+            document.getElementById('userName').textContent = user.displayName || user.email;
+            loadPesanans();
+        });
+
+        async function loadPesanans() {
+            try {
+                const user = auth.currentUser;
+                const snapshot = await db.collection('pesanans')
+                    .where('userId', '==', user.uid)
+                    .orderBy('createdAt', 'desc')
+                    .get();
+
+                allPesanans = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                
+                updateStats(allPesanans);
+                renderPesanans(allPesanans);
+            } catch (error) {
+                console.error('Error loading pesanans:', error);
+                document.getElementById('pesananList').innerHTML = 
+                    '<div style="text-align:center; padding:50px; color:#e74c3c;">Gagal memuat data. Coba lagi nanti.</div>';
+            }
+        }
+
+        function updateStats(pesanans) {
+            document.getElementById('totalPesanan').textContent = pesanans.length;
+            document.getElementById('pesananProses').textContent = pesanans.filter(p => ['pending', 'diproses', 'revisi'].includes(p.status)).length;
+            document.getElementById('pesananSelesai').textContent = pesanans.filter(p => p.status === 'selesai').length;
+            document.getElementById('pesananBatal').textContent = pesanans.filter(p => p.status === 'dibatalkan').length;
+        }
+
+        function filterPesanans(status) {
+            currentFilter = status;
+            
+            // Update active tab
+            document.querySelectorAll('.filter-tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Filter data
+            const filtered = status === 'all' 
+                ? allPesanans 
+                : allPesanans.filter(p => p.status === status);
+            
+            renderPesanans(filtered);
+        }
+
+        function renderPesanans(pesanans) {
+            const container = document.getElementById('pesananList');
+            const emptyState = document.getElementById('emptyState');
+            
+            if (pesanans.length === 0) {
+                container.innerHTML = '';
+                emptyState.style.display = 'block';
+                return;
+            }
+            
+            emptyState.style.display = 'none';
+            container.innerHTML = '';
+            
+            pesanans.forEach(p => {
+                const statusConfig = {
+                    'pending': { class: 'status-pending', text: 'Pending' },
+                    'diproses': { class: 'status-diproses', text: 'Diproses' },
+                    'selesai': { class: 'status-selesai', text: 'Selesai' },
+                    'dibatalkan': { class: 'status-dibatalkan', text: 'Dibatalkan' },
+                    'revisi': { class: 'status-revisi', text: 'Revisi' }
+                };
+                const status = statusConfig[p.status] || statusConfig['pending'];
+                const progress = p.progress || 0;
+                
+                container.innerHTML += `
+                    <div class="pesanan-card ${p.status}">
+                        <div class="pesanan-header">
+                            <div>
+                                <span class="pesanan-kode">#${p.kodePesanan || '000'}</span>
+                                <span class="pesanan-date" style="margin-left:15px;">
+                                    ${p.createdAt ? new Date(p.createdAt.toDate()).toLocaleDateString('id-ID') : '-'}
+                                </span>
+                            </div>
+                            <span class="status-badge ${status.class}">${status.text}</span>
+                        </div>
+                        
+                        <div class="pesanan-body">
+                            <div class="pesanan-info">
+                                <span class="pesanan-info-label">Nama Proyek</span>
+                                <span class="pesanan-info-value">${p.namaProyek || '-'}</span>
+                            </div>
+                            <div class="pesanan-info">
+                                <span class="pesanan-info-label">Paket</span>
+                                <span class="pesanan-info-value">${p.paketNama || 'Unknown'}</span>
+                            </div>
+                            <div class="pesanan-info">
+                                <span class="pesanan-info-label">Estimasi Selesai</span>
+                                <span class="pesanan-info-value">
+                                    ${p.estimasiSelesai ? new Date(p.estimasiSelesai.toDate()).toLocaleDateString('id-ID') : 'Menunggu'}
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="pesanan-progress">
+                            <div class="progress-info">
+                                <span>Progress Proyek</span>
+                                <span>${progress}%</span>
+                            </div>
+                            <div class="progress-track">
+                                <div class="progress-fill" style="width:${progress}%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="pesanan-footer">
+                            <span class="pesanan-harga">Rp ${(p.harga || 0).toLocaleString('id-ID')}</span>
+                            <a href="pesanan-detail.html?id=${p.id}" class="btn btn-primary">📄 Lihat Detail</a>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // Show alert
+        function showAlert(message, type = 'success') {
+            let alertBox = document.querySelector('.alert-toast');
+            if (alertBox) alertBox.remove();
+            
+            const colors = {
+                success: '#27ae60',
+                error: '#e74c3c',
+                warning: '#f39c12'
+            };
+            
+            alertBox = document.createElement('div');
+            alertBox.className = 'alert-toast';
+            alertBox.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${colors[type] || colors.success};
+                color: white;
+                padding: 15px 25px;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                z-index: 9999;
+                font-weight: 500;
+                animation: slideIn 0.3s ease;
+            `;
+            alertBox.textContent = message;
+            
+            document.body.appendChild(alertBox);
+            
+            setTimeout(() => {
+                alertBox.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => alertBox.remove(), 300);
+            }, 3000);
+        }
+
+        // CSS Animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Saya | WebDevPro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        .user-layout { display: flex; min-height: 100vh; }
+        .user-sidebar { width: 250px; background: white; box-shadow: 2px 0 10px rgba(0,0,0,0.05); padding: 20px 0; position: fixed; height: 100vh; }
+        .user-sidebar .logo { padding: 0 20px 20px; text-align: center; border-bottom: 1px solid #eee; margin-bottom: 20px; }
+        .user-menu a { display: block; padding: 12px 25px; color: #666; text-decoration: none; transition: all 0.3s; border-left: 3px solid transparent; }
+        .user-menu a:hover, .user-menu a.active { background: rgba(255,215,0,0.1); color: var(--secondary); border-left-color: var(--primary); }
+        .user-main { margin-left: 250px; flex: 1; background: #f5f6fa; }
+        .user-header { background: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .user-content { padding: 30px; }
+
+        /* Profile Card */
+        .profile-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 16px;
+            padding: 40px;
+            color: white;
+            margin-bottom: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+        .profile-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+        }
+        .profile-header-content {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            position: relative;
+            z-index: 1;
+        }
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 4px solid rgba(255,255,255,0.3);
+            object-fit: cover;
+            background: white;
+        }
+        .profile-info h3 {
+            margin: 0 0 5px 0;
+            font-size: 24px;
+        }
+        .profile-info p {
+            margin: 0;
+            opacity: 0.9;
+            font-size: 14px;
+        }
+        .profile-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 20px;
+            font-size: 12px;
+            margin-top: 8px;
+        }
+
+        /* Form Card */
+        .form-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+        .form-card h4 {
+            margin: 0 0 20px 0;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Avatar Upload */
+        .avatar-upload {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .avatar-preview {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #eee;
+        }
+        .upload-btn {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+        .upload-btn input[type=file] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Password Section */
+        .password-toggle {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            color: var(--primary);
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        .password-section {
+            display: none;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        .password-section.show {
+            display: block;
+        }
+
+        /* Activity Log */
+        .activity-item {
+            display: flex;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,215,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+        .activity-content {
+            flex: 1;
+        }
+        .activity-title {
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+        }
+        .activity-desc {
+            color: #666;
+            font-size: 13px;
+            margin-top: 2px;
+        }
+        .activity-time {
+            color: #999;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+
+        /* Stats Grid */
+        .mini-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .mini-stat {
+            text-align: center;
+            padding: 15px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+        }
+        .mini-stat-value {
+            font-size: 24px;
+            font-weight: 700;
+        }
+        .mini-stat-label {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <div class="user-layout">
+        <!-- Sidebar -->
+        <aside class="user-sidebar">
+            <div class="logo">
+                <h4 style="margin:0;">Web<span style="color:var(--primary);">Dev</span>Pro</h4>
+            </div>
+            <div class="user-menu">
+                <a href="index.html">📊 Dashboard</a>
+                <a href="profile.html" class="active">👤 Profil Saya</a>
+                <a href="pesanans.html">🛒 Pesanan Saya</a>
+                <div style="margin-top:30px; border-top:1px solid #eee; padding-top:20px;">
+                    <a href="../index.html">🌐 Lihat Website</a>
+                    <a href="#" onclick="logout()">🚪 Logout</a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main -->
+        <div class="user-main">
+            <div class="user-header">
+                <h4 style="margin:0;">Profil Saya</h4>
+                <div>
+                    <a href="https://wa.me/6281234567890" target="_blank" class="btn btn-sm btn-primary">💬 Chat Admin</a>
+                    <span id="headerUserName" style="margin-left:15px;">User</span> 👤
+                </div>
+            </div>
+            
+            <div class="user-content">
+                <!-- Profile Header -->
+                <div class="profile-header">
+                    <div class="profile-header-content">
+                        <img src="" id="profileAvatar" class="profile-avatar" alt="Avatar">
+                        <div class="profile-info">
+                            <h3 id="profileName">Loading...</h3>
+                            <p id="profileEmail">Loading...</p>
+                            <span class="profile-badge" id="profileRole">User</span>
+                        </div>
+                    </div>
+                    <div class="mini-stats">
+                        <div class="mini-stat">
+                            <div class="mini-stat-value" id="statTotal">0</div>
+                            <div class="mini-stat-label">Total Pesanan</div>
+                        </div>
+                        <div class="mini-stat">
+                            <div class="mini-stat-value" id="statAktif">0</div>
+                            <div class="mini-stat-label">Aktif</div>
+                        </div>
+                        <div class="mini-stat">
+                            <div class="mini-stat-value" id="statSelesai">0</div>
+                            <div class="mini-stat-label">Selesai</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="display:grid; grid-template-columns: 2fr 1fr; gap:25px;">
+                    <!-- Left Column -->
+                    <div>
+                        <!-- Edit Profile -->
+                        <div class="form-card">
+                            <h4>✏️ Edit Profil</h4>
+                            <form id="profileForm" onsubmit="updateProfile(event)">
+                                <div class="avatar-upload">
+                                    <img src="" id="formAvatar" class="avatar-preview" alt="Preview">
+                                    <div class="upload-btn">
+                                        <button type="button" class="btn btn-outline">📷 Ganti Foto</button>
+                                        <input type="file" id="avatarInput" accept="image/*" onchange="previewAvatar(event)">
+                                    </div>
+                                </div>
+
+                                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
+                                    <div class="form-group">
+                                        <label>Nama Lengkap</label>
+                                        <input type="text" id="editNama" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Email</label>
+                                        <input type="email" id="editEmail" class="form-control" required disabled>
+                                        <small style="color:#999;">Email tidak dapat diubah</small>
+                                    </div>
+                                </div>
+
+                                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;">
+                                    <div class="form-group">
+                                        <label>Telepon</label>
+                                        <input type="tel" id="editTelepon" class="form-control" placeholder="08xxxxxxxxxx">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Perusahaan/Organisasi</label>
+                                        <input type="text" id="editPerusahaan" class="form-control" placeholder="Opsional">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Alamat</label>
+                                    <textarea id="editAlamat" class="form-control" rows="3" placeholder="Alamat lengkap..."></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Bio</label>
+                                    <textarea id="editBio" class="form-control" rows="2" placeholder="Ceritakan sedikit tentang Anda..."></textarea>
+                                </div>
+
+                                <div style="display:flex; justify-content:flex-end; gap:10px;">
+                                    <button type="button" class="btn btn-outline" onclick="resetForm()">Batal</button>
+                                    <button type="submit" class="btn btn-primary">💾 Simpan Perubahan</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Change Password -->
+                        <div class="form-card">
+                            <h4>🔒 Keamanan</h4>
+                            <div class="password-toggle" onclick="togglePassword()">
+                                <span id="passIcon">🔽</span>
+                                <span>Ubah Password</span>
+                            </div>
+                            <div class="password-section" id="passwordSection">
+                                <form id="passwordForm" onsubmit="updatePassword(event)">
+                                    <div class="form-group">
+                                        <label>Password Saat Ini</label>
+                                        <input type="password" id="currentPassword" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Password Baru</label>
+                                        <input type="password" id="newPassword" class="form-control" required minlength="6">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Konfirmasi Password Baru</label>
+                                        <input type="password" id="confirmPassword" class="form-control" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">🔐 Update Password</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column -->
+                    <div>
+                        <!-- Account Info -->
+                        <div class="form-card">
+                            <h4>📋 Info Akun</h4>
+                            <div class="detail-row" style="display:flex; justify-content:space-between; padding:12px 0; border-bottom:1px solid #f0f0f0;">
+                                <span style="color:#666; font-size:14px;">ID User</span>
+                                <span style="font-weight:600; font-size:14px;" id="infoUid">-</span>
+                            </div>
+                            <div class="detail-row" style="display:flex; justify-content:space-between; padding:12px 0; border-bottom:1px solid #f0f0f0;">
+                                <span style="color:#666; font-size:14px;">Bergabung</span>
+                                <span style="font-weight:600; font-size:14px;" id="infoJoin">-</span>
+                            </div>
+                            <div class="detail-row" style="display:flex; justify-content:space-between; padding:12px 0; border-bottom:1px solid #f0f0f0;">
+                                <span style="color:#666; font-size:14px;">Terakhir Login</span>
+                                <span style="font-weight:600; font-size:14px;" id="infoLastLogin">-</span>
+                            </div>
+                            <div class="detail-row" style="display:flex; justify-content:space-between; padding:12px 0;">
+                                <span style="color:#666; font-size:14px;">Status</span>
+                                <span style="font-weight:600; font-size:14px; color:#27ae60;">Aktif</span>
+                            </div>
+                        </div>
+
+                        <!-- Recent Activity -->
+                        <div class="form-card">
+                            <h4>🔔 Aktivitas Terbaru</h4>
+                            <div id="activityList">
+                                <div class="activity-item">
+                                    <div class="activity-icon">📝</div>
+                                    <div class="activity-content">
+                                        <div class="activity-title">Profil diperbarui</div>
+                                        <div class="activity-desc">Anda mengubah data profil</div>
+                                    </div>
+                                    <div class="activity-time">Baru saja</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+    
+    <script src="../assets/js/firebase-config.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script>
+        let currentUserData = null;
+        let avatarFile = null;
+
+        checkUser().then(() => {
+            const user = auth.currentUser;
+            document.getElementById('headerUserName').textContent = user.displayName || user.email;
+            loadProfile();
+        });
+
+        async function loadProfile() {
+            try {
+                const user = auth.currentUser;
+                const doc = await db.collection('users').doc(user.uid).get();
+                
+                if (doc.exists) {
+                    currentUserData = doc.data();
+                } else {
+                    currentUserData = {
+                        uid: user.uid,
+                        email: user.email,
+                        nama: user.displayName || '',
+                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    };
+                }
+
+                // Fill header
+                const avatarUrl = currentUserData.fotoUrl || `https://ui-avatars.com/api/?name=${encodeURIComponent(currentUserData.nama || 'User')}&background=random&size=200`;
+                document.getElementById('profileAvatar').src = avatarUrl;
+                document.getElementById('formAvatar').src = avatarUrl;
+                document.getElementById('profileName').textContent = currentUserData.nama || user.displayName || 'User';
+                document.getElementById('profileEmail').textContent = user.email;
+                document.getElementById('profileRole').textContent = (currentUserData.role || 'user').toUpperCase();
+
+                // Fill form
+                document.getElementById('editNama').value = currentUserData.nama || user.displayName || '';
+                document.getElementById('editEmail').value = user.email;
+                document.getElementById('editTelepon').value = currentUserData.telepon || '';
+                document.getElementById('editPerusahaan').value = currentUserData.perusahaan || '';
+                document.getElementById('editAlamat').value = currentUserData.alamat || '';
+                document.getElementById('editBio').value = currentUserData.bio || '';
+
+                // Fill info
+                document.getElementById('infoUid').textContent = user.uid.substring(0, 8) + '...';
+                document.getElementById('infoJoin').textContent = currentUserData.createdAt 
+                    ? new Date(currentUserData.createdAt.toDate()).toLocaleDateString('id-ID') 
+                    : '-';
+                document.getElementById('infoLastLogin').textContent = user.metadata.lastSignInTime 
+                    ? new Date(user.metadata.lastSignInTime).toLocaleDateString('id-ID') 
+                    : '-';
+
+                // Load stats
+                loadStats(user.uid);
+                loadActivity(user.uid);
+
+            } catch (error) {
+                console.error('Error loading profile:', error);
+                showAlert('Gagal memuat profil', 'error');
+            }
+        }
+
+        async function loadStats(uid) {
+            try {
+                const snapshot = await db.collection('pesanans').where('userId', '==', uid).get();
+                const pesanans = snapshot.docs.map(d => d.data());
+                
+                document.getElementById('statTotal').textContent = pesanans.length;
+                document.getElementById('statAktif').textContent = pesanans.filter(p => ['pending','diproses','revisi'].includes(p.status)).length;
+                document.getElementById('statSelesai').textContent = pesanans.filter(p => p.status === 'selesai').length;
+            } catch (error) {
+                console.error('Error loading stats:', error);
+            }
+        }
+
+        async function loadActivity(uid) {
+            try {
+                // Get recent pesanans as activity
+                const snapshot = await db.collection('pesanans')
+                    .where('userId', '==', uid)
+                    .orderBy('createdAt', 'desc')
+                    .limit(5)
+                    .get();
+
+                const container = document.getElementById('activityList');
+                
+                if (snapshot.empty) {
+                    container.innerHTML = '<p style="color:#999; text-align:center; padding:20px;">Belum ada aktivitas</p>';
+                    return;
+                }
+
+                container.innerHTML = '';
+                snapshot.docs.forEach(doc => {
+                    const p = doc.data();
+                    const icons = {
+                        'pending': '🛒',
+                        'diproses': '⚙️',
+                        'selesai': '✅',
+                        'dibatalkan': '❌',
+                        'revisi': '📝'
+                    };
+                    
+                    container.innerHTML += `
+                        <div class="activity-item">
+                            <div class="activity-icon">${icons[p.status] || '📦'}</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Pesanan ${p.kodePesanan || '#'}</div>
+                                <div class="activity-desc">${p.namaProyek || 'Proyek baru'} - ${p.status}</div>
+                            </div>
+                            <div class="activity-time">
+                                ${p.createdAt ? new Date(p.createdAt.toDate()).toLocaleDateString('id-ID') : '-'}
+                            </div>
+                        </div>
+                    `;
+                });
+            } catch (error) {
+                console.error('Error loading activity:', error);
+            }
+        }
+
+        // Preview avatar
+        function previewAvatar(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            avatarFile = file;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('formAvatar').src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Update profile
+        async function updateProfile(event) {
+            event.preventDefault();
+            
+            const user = auth.currentUser;
+            const nama = document.getElementById('editNama').value;
+            const telepon = document.getElementById('editTelepon').value;
+            const perusahaan = document.getElementById('editPerusahaan').value;
+            const alamat = document.getElementById('editAlamat').value;
+            const bio = document.getElementById('editBio').value;
+
+            try {
+                let fotoUrl = currentUserData?.fotoUrl || '';
+
+                // Upload avatar if changed
+                if (avatarFile) {
+                    const storageRef = storage.ref(`avatars/${user.uid}_${Date.now()}_${avatarFile.name}`);
+                    await storageRef.put(avatarFile);
+                    fotoUrl = await storageRef.getDownloadURL();
+                }
+
+                // Update display name
+                await user.updateProfile({ displayName: nama });
+
+                // Update Firestore
+                const updateData = {
+                    nama,
+                    telepon,
+                    perusahaan,
+                    alamat,
+                    bio,
+                    fotoUrl,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                };
+
+                await db.collection('users').doc(user.uid).set(updateData, { merge: true });
+
+                showAlert('Profil berhasil diperbarui!', 'success');
+                loadProfile(); // Reload
+
+            } catch (error) {
+                console.error('Error updating profile:', error);
+                showAlert('Gagal memperbarui: ' + error.message, 'error');
+            }
+        }
+
+        // Toggle password section
+        function togglePassword() {
+            const section = document.getElementById('passwordSection');
+            const icon = document.getElementById('passIcon');
+            section.classList.toggle('show');
+            icon.textContent = section.classList.contains('show') ? '🔼' : '🔽';
+        }
+
+        // Update password
+        async function updatePassword(event) {
+            event.preventDefault();
+            
+            const currentPass = document.getElementById('currentPassword').value;
+            const newPass = document.getElementById('newPassword').value;
+            const confirmPass = document.getElementById('confirmPassword').value;
+
+            if (newPass !== confirmPass) {
+                showAlert('Password baru tidak cocok!', 'error');
+                return;
+            }
+
+            try {
+                const user = auth.currentUser;
+                const credential = firebase.auth.EmailAuthProvider.credential(user.email, currentPass);
+                
+                // Reauthenticate
+                await user.reauthenticateWithCredential(credential);
+                
+                // Update password
+                await user.updatePassword(newPass);
+                
+                document.getElementById('passwordForm').reset();
+                togglePassword();
+                showAlert('Password berhasil diubah!', 'success');
+                
+            } catch (error) {
+                console.error('Error updating password:', error);
+                showAlert('Gagal: ' + (error.message.includes('wrong-password') ? 'Password saat ini salah' : error.message), 'error');
+            }
+        }
+
+        // Reset form
+        function resetForm() {
+            loadProfile();
+            avatarFile = null;
+        }
+
+        // Show alert
+        function showAlert(message, type = 'success') {
+            let alertBox = document.querySelector('.alert-toast');
+            if (alertBox) alertBox.remove();
+            
+            const colors = {
+                success: '#27ae60',
+                error: '#e74c3c',
+                warning: '#f39c12'
+            };
+            
+            alertBox = document.createElement('div');
+            alertBox.className = 'alert-toast';
+            alertBox.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${colors[type] || colors.success};
+                color: white;
+                padding: 15px 25px;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                z-index: 9999;
+                font-weight: 500;
+                animation: slideIn 0.3s ease;
+            `;
+            alertBox.textContent = message;
+            
+            document.body.appendChild(alertBox);
+            
+            setTimeout(() => {
+                alertBox.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => alertBox.remove(), 300);
+            }, 3000);
+        }
+
+        // CSS Animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

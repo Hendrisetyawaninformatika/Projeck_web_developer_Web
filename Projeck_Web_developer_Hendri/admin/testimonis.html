@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manajemen Testimoni | WebDevPro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <h3>Web<span>Dev</span>Pro</h3>
+                <small>Admin Panel</small>
+            </div>
+            
+            <div class="sidebar-menu">
+                <div class="menu-header">Menu Utama</div>
+                <a href="index.html" class="menu-item">📊 Dashboard</a>
+                
+                <div class="menu-header">Manajemen</div>
+                <a href="users.html" class="menu-item">👥 Users</a>
+                <a href="pakets.html" class="menu-item">📦 Paket</a>
+                <a href="portofolios.html" class="menu-item">🎨 Portofolio</a>
+                <a href="blogs.html" class="menu-item">📝 Blog</a>
+                <a href="testimonis.html" class="menu-item active">⭐ Testimoni</a>
+                <a href="faqs.html" class="menu-item">❓ FAQ</a>
+                <a href="pesanans.html" class="menu-item">🛒 Pesanan</a>
+                
+                <div class="menu-header">Pengaturan</div>
+                <a href="settings.html" class="menu-item">⚙️ Pengaturan</a>
+                
+                <div style="margin-top:30px; padding:20px; border-top:1px solid rgba(255,255,255,0.1);">
+                    <a href="../index.html" class="menu-item">🌐 Lihat Website</a>
+                    <a href="#" onclick="logout()" class="menu-item">🚪 Logout</a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="admin-main">
+            <div class="admin-header">
+                <h3>Manajemen Testimoni</h3>
+                <div>
+                    <span id="adminName">Hendri Setyawan</span> 👤
+                </div>
+            </div>
+            
+            <div class="admin-content">
+                <!-- Filter & Actions -->
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:10px;">
+                    <div style="display:flex; gap:10px; align-items:center;">
+                        <select id="filterStatus" class="form-control" style="width:auto; min-width:150px;" onchange="loadTestimonis()">
+                            <option value="">Semua Status</option>
+                            <option value="published">Published</option>
+                            <option value="pending">Pending</option>
+                            <option value="rejected">Rejected</option>
+                        </select>
+                        <select id="filterRating" class="form-control" style="width:auto; min-width:120px;" onchange="loadTestimonis()">
+                            <option value="">Semua Rating</option>
+                            <option value="5">⭐⭐⭐⭐⭐ (5)</option>
+                            <option value="4">⭐⭐⭐⭐ (4)</option>
+                            <option value="3">⭐⭐⭐ (3)</option>
+                            <option value="2">⭐⭐ (2)</option>
+                            <option value="1">⭐ (1)</option>
+                        </select>
+                    </div>
+                    <button class="btn btn-primary" onclick="openModal()">
+                        ➕ Tambah Testimoni
+                    </button>
+                </div>
+
+                <!-- Testimoni Table -->
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width:50px;">No</th>
+                                <th>Pelanggan</th>
+                                <th>Rating</th>
+                                <th>Testimoni</th>
+                                <th>Paket</th>
+                                <th>Status</th>
+                                <th>Tanggal</th>
+                                <th style="width:150px;">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="testimoniTable">
+                            <tr><td colspan="8" style="text-align:center;">Memuat data...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Form -->
+    <div id="testimoniModal" class="modal" style="display:none;">
+        <div class="modal-content" style="max-width:600px;">
+            <div class="modal-header">
+                <h4 id="modalTitle">Tambah Testimoni</h4>
+                <button class="btn btn-sm btn-outline" onclick="closeModal()">✕</button>
+            </div>
+            <form id="testimoniForm" onsubmit="saveTestimoni(event)">
+                <input type="hidden" id="testimoniId">
+                
+                <div class="form-group">
+                    <label>Nama Pelanggan</label>
+                    <input type="text" id="nama" class="form-control" required placeholder="Nama pelanggan">
+                </div>
+                
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="email" class="form-control" placeholder="Email pelanggan (opsional)">
+                </div>
+                
+                <div class="form-group">
+                    <label>Perusahaan/Profesi</label>
+                    <input type="text" id="perusahaan" class="form-control" placeholder="Contoh: CEO PT Maju Jaya">
+                </div>
+                
+                <div class="form-group">
+                    <label>Rating</label>
+                    <div class="rating-input" style="display:flex; gap:5px; font-size:24px; cursor:pointer;">
+                        <span class="star" data-value="1" onclick="setRating(1)">⭐</span>
+                        <span class="star" data-value="2" onclick="setRating(2)">⭐</span>
+                        <span class="star" data-value="3" onclick="setRating(3)">⭐</span>
+                        <span class="star" data-value="4" onclick="setRating(4)">⭐</span>
+                        <span class="star" data-value="5" onclick="setRating(5)">⭐</span>
+                    </div>
+                    <input type="hidden" id="rating" value="5" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Testimoni</label>
+                    <textarea id="isi" class="form-control" rows="4" required placeholder="Isi testimoni pelanggan..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Paket Layanan</label>
+                    <select id="paketId" class="form-control">
+                        <option value="">Pilih Paket</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Foto Profil (URL)</label>
+                    <input type="url" id="fotoUrl" class="form-control" placeholder="https://example.com/foto.jpg">
+                    <small style="color:#666;">Kosongkan untuk menggunakan avatar default</small>
+                </div>
+                
+                <div class="form-group">
+                    <label>Status</label>
+                    <select id="status" class="form-control">
+                        <option value="published">Published</option>
+                        <option value="pending">Pending</option>
+                        <option value="rejected">Rejected</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="isFeatured"> Tampilkan di Beranda (Featured)
+                    </label>
+                </div>
+                
+                <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px;">
+                    <button type="button" class="btn btn-outline" onclick="closeModal()">Batal</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="modal" style="display:none;">
+        <div class="modal-content" style="max-width:400px; text-align:center;">
+            <div class="modal-header" style="justify-content:center;">
+                <h4>⚠️ Konfirmasi Hapus</h4>
+            </div>
+            <p>Apakah Anda yakin ingin menghapus testimoni ini?</p>
+            <p style="color:#666; font-size:14px;">Tindakan ini tidak dapat dibatalkan.</p>
+            <div style="display:flex; justify-content:center; gap:10px; margin-top:20px;">
+                <button class="btn btn-outline" onclick="closeDeleteModal()">Batal</button>
+                <button class="btn btn-danger" id="confirmDeleteBtn" onclick="confirmDelete()">Hapus</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    
+    <script src="../assets/js/firebase-config.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script>
+        let deleteId = null;
+        let paketList = [];
+
+        // Cek admin
+        checkAdmin().then(() => {
+            loadPaketOptions();
+            loadTestimonis();
+        });
+
+        // Load paket options untuk dropdown
+        async function loadPaketOptions() {
+            try {
+                const snapshot = await db.collection('pakets').orderBy('nama', 'asc').get();
+                paketList = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                
+                const select = document.getElementById('paketId');
+                paketList.forEach(paket => {
+                    select.innerHTML += `<option value="${paket.id}">${paket.nama}</option>`;
+                });
+            } catch (error) {
+                console.error('Error loading pakets:', error);
+            }
+        }
+
+        // Load testimoni data
+        async function loadTestimonis() {
+            try {
+                const statusFilter = document.getElementById('filterStatus').value;
+                const ratingFilter = document.getElementById('filterRating').value;
+                
+                let query = db.collection('testimonis').orderBy('createdAt', 'desc');
+                
+                if (statusFilter) {
+                    query = query.where('status', '==', statusFilter);
+                }
+                
+                const snapshot = await query.get();
+                let testimonis = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                
+                // Filter rating di client side
+                if (ratingFilter) {
+                    testimonis = testimonis.filter(t => t.rating == ratingFilter);
+                }
+                
+                renderTable(testimonis);
+            } catch (error) {
+                console.error('Error loading testimonis:', error);
+                document.getElementById('testimoniTable').innerHTML = 
+                    '<tr><td colspan="8" style="text-align:center; color:#e74c3c;">Gagal memuat data</td></tr>';
+            }
+        }
+
+        // Render table
+        function renderTable(testimonis) {
+            const tbody = document.getElementById('testimoniTable');
+            tbody.innerHTML = '';
+            
+            if (testimonis.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;">Tidak ada data testimoni</td></tr>';
+                return;
+            }
+            
+            testimonis.forEach((t, index) => {
+                const statusBadge = {
+                    'published': '<span class="badge badge-success">Published</span>',
+                    'pending': '<span class="badge badge-warning">Pending</span>',
+                    'rejected': '<span class="badge badge-danger">Rejected</span>'
+                }[t.status] || '<span class="badge badge-warning">Pending</span>';
+                
+                const stars = '⭐'.repeat(t.rating || 0);
+                const paketNama = paketList.find(p => p.id === t.paketId)?.nama || t.paketNama || '-';
+                const foto = t.fotoUrl || `https://ui-avatars.com/api/?name=${encodeURIComponent(t.nama || 'User')}&background=random`;
+                
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>
+                            <div style="display:flex; align-items:center; gap:10px;">
+                                <img src="${foto}" style="width:40px; height:40px; border-radius:50%; object-fit:cover;">
+                                <div>
+                                    <div style="font-weight:600;">${t.nama || 'Unknown'}</div>
+                                    <small style="color:#666;">${t.perusahaan || ''}</small>
+                                </div>
+                            </div>
+                        </td>
+                        <td>${stars}</td>
+                        <td style="max-width:250px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${t.isi || ''}">
+                            ${t.isi || '-'}
+                        </td>
+                        <td>${paketNama}</td>
+                        <td>${statusBadge}</td>
+                        <td>${t.createdAt ? new Date(t.createdAt.toDate()).toLocaleDateString('id-ID') : '-'}</td>
+                        <td>
+                            <div style="display:flex; gap:5px;">
+                                <button class="btn btn-sm btn-primary" onclick="editTestimoni('${t.id}')" title="Edit">✏️</button>
+                                <button class="btn btn-sm btn-outline" onclick="toggleStatus('${t.id}', '${t.status}')" title="Ubah Status">
+                                    ${t.status === 'published' ? '🚫' : '✅'}
+                                </button>
+                                <button class="btn btn-sm btn-danger" onclick="deleteTestimoni('${t.id}')" title="Hapus">🗑️</button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        // Set rating
+        function setRating(value) {
+            document.getElementById('rating').value = value;
+            const stars = document.querySelectorAll('.star');
+            stars.forEach((star, index) => {
+                star.style.opacity = index < value ? '1' : '0.3';
+            });
+        }
+
+        // Open modal
+        function openModal(id = null) {
+            document.getElementById('testimoniForm').reset();
+            document.getElementById('testimoniId').value = '';
+            setRating(5);
+            
+            if (id) {
+                document.getElementById('modalTitle').textContent = 'Edit Testimoni';
+                loadTestimoniData(id);
+            } else {
+                document.getElementById('modalTitle').textContent = 'Tambah Testimoni';
+            }
+            
+            document.getElementById('testimoniModal').style.display = 'flex';
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('testimoniModal').style.display = 'none';
+        }
+
+        // Load single testimoni data
+        async function loadTestimoniData(id) {
+            try {
+                const doc = await db.collection('testimonis').doc(id).get();
+                if (!doc.exists) return;
+                
+                const data = doc.data();
+                document.getElementById('testimoniId').value = id;
+                document.getElementById('nama').value = data.nama || '';
+                document.getElementById('email').value = data.email || '';
+                document.getElementById('perusahaan').value = data.perusahaan || '';
+                document.getElementById('isi').value = data.isi || '';
+                document.getElementById('fotoUrl').value = data.fotoUrl || '';
+                document.getElementById('paketId').value = data.paketId || '';
+                document.getElementById('status').value = data.status || 'pending';
+                document.getElementById('isFeatured').checked = data.isFeatured || false;
+                setRating(data.rating || 5);
+            } catch (error) {
+                console.error('Error loading testimoni:', error);
+            }
+        }
+
+        // Save testimoni
+        async function saveTestimoni(event) {
+            event.preventDefault();
+            
+            const id = document.getElementById('testimoniId').value;
+            const data = {
+                nama: document.getElementById('nama').value,
+                email: document.getElementById('email').value,
+                perusahaan: document.getElementById('perusahaan').value,
+                rating: parseInt(document.getElementById('rating').value),
+                isi: document.getElementById('isi').value,
+                paketId: document.getElementById('paketId').value,
+                paketNama: paketList.find(p => p.id === document.getElementById('paketId').value)?.nama || '',
+                fotoUrl: document.getElementById('fotoUrl').value,
+                status: document.getElementById('status').value,
+                isFeatured: document.getElementById('isFeatured').checked,
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+            };
+            
+            try {
+                if (id) {
+                    await db.collection('testimonis').doc(id).update(data);
+                    showAlert('Testimoni berhasil diperbarui!', 'success');
+                } else {
+                    data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+                    await db.collection('testimonis').add(data);
+                    showAlert('Testimoni berhasil ditambahkan!', 'success');
+                }
+                
+                closeModal();
+                loadTestimonis();
+            } catch (error) {
+                console.error('Error saving testimoni:', error);
+                showAlert('Gagal menyimpan testimoni: ' + error.message, 'error');
+            }
+        }
+
+        // Edit testimoni
+        function editTestimoni(id) {
+            openModal(id);
+        }
+
+        // Toggle status
+        async function toggleStatus(id, currentStatus) {
+            const newStatus = currentStatus === 'published' ? 'pending' : 'published';
+            try {
+                await db.collection('testimonis').doc(id).update({
+                    status: newStatus,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                showAlert(`Status diubah ke ${newStatus}`, 'success');
+                loadTestimonis();
+            } catch (error) {
+                showAlert('Gagal mengubah status: ' + error.message, 'error');
+            }
+        }
+
+        // Delete testimoni
+        function deleteTestimoni(id) {
+            deleteId = id;
+            document.getElementById('deleteModal').style.display = 'flex';
+        }
+
+        // Close delete modal
+        function closeDeleteModal() {
+            deleteId = null;
+            document.getElementById('deleteModal').style.display = 'none';
+        }
+
+        // Confirm delete
+        async function confirmDelete() {
+            if (!deleteId) return;
+            
+            try {
+                await db.collection('testimonis').doc(deleteId).delete();
+                showAlert('Testimoni berhasil dihapus!', 'success');
+                closeDeleteModal();
+                loadTestimonis();
+            } catch (error) {
+                showAlert('Gagal menghapus: ' + error.message, 'error');
+            }
+        }
+
+        // Show alert
+        function showAlert(message, type = 'success') {
+            // Cek apakah sudah ada alert
+            let alertBox = document.querySelector('.alert-toast');
+            if (alertBox) alertBox.remove();
+            
+            const colors = {
+                success: '#27ae60',
+                error: '#e74c3c',
+                warning: '#f39c12'
+            };
+            
+            alertBox = document.createElement('div');
+            alertBox.className = 'alert-toast';
+            alertBox.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${colors[type] || colors.success};
+                color: white;
+                padding: 15px 25px;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                z-index: 9999;
+                font-weight: 500;
+                animation: slideIn 0.3s ease;
+            `;
+            alertBox.textContent = message;
+            
+            document.body.appendChild(alertBox);
+            
+            setTimeout(() => {
+                alertBox.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => alertBox.remove(), 300);
+            }, 3000);
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+            }
+        }
+
+        // CSS Animation untuk alert
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

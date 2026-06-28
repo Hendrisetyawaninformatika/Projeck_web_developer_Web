@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog | WebDevPro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        /* Blog Styles */
+        .blog-hero {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 80px 20px;
+            text-align: center;
+            color: white;
+        }
+        .blog-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        .blog-hero p {
+            color: rgba(255,255,255,0.7);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Search & Filter */
+        .blog-toolbar {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+        .search-box input {
+            width: 100%;
+            padding: 12px 15px 12px 45px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: 'Poppins', sans-serif;
+        }
+        .search-box::before {
+            content: '🔍';
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        /* Category Pills */
+        .category-pills {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .category-pill {
+            padding: 8px 18px;
+            border-radius: 25px;
+            border: 1px solid #ddd;
+            background: white;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+            color: #666;
+        }
+        .category-pill:hover, .category-pill.active {
+            background: var(--primary);
+            color: #1a1a2e;
+            border-color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Featured Post */
+        .featured-post {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 30px;
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin-bottom: 40px;
+        }
+        .featured-image {
+            height: 100%;
+            min-height: 400px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        .featured-image .category-tag {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: var(--primary);
+            color: #1a1a2e;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 12px;
+        }
+        .featured-content {
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .featured-meta {
+            display: flex;
+            gap: 20px;
+            color: #999;
+            font-size: 13px;
+            margin-bottom: 15px;
+        }
+        .featured-content h2 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            line-height: 1.3;
+        }
+        .featured-content p {
+            color: #666;
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
+        .featured-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: auto;
+        }
+        .featured-author img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* Blog Grid */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+        .blog-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        }
+        .blog-card-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        .blog-card-image .category-tag {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            background: var(--primary);
+            color: #1a1a2e;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-weight: 600;
+            font-size: 11px;
+        }
+        .blog-card-content {
+            padding: 20px;
+        }
+        .blog-card-meta {
+            display: flex;
+            gap: 15px;
+            color: #999;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+        .blog-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            line-height: 1.4;
+            color: #333;
+        }
+        .blog-card p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        .blog-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid #f0f0f0;
+        }
+        .blog-author-small {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #666;
+        }
+        .blog-author-small img {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 40px;
+        }
+        .page-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            background: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        .page-btn:hover, .page-btn.active {
+            background: var(--primary);
+            color: #1a1a2e;
+            border-color: var(--primary);
+        }
+        .page-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Loading Skeleton */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 8px;
+        }
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .featured-post {
+                grid-template-columns: 1fr;
+            }
+            .featured-image {
+                min-height: 250px;
+            }
+            .blog-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 576px) {
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+            .blog-hero h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">Web<span>Dev</span>Pro</a>
+            
+            <ul class="nav-links">
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="tentang.html">Tentang</a></li>
+                <li><a href="layanan.html">Layanan</a></li>
+                <li><a href="portofolio.html">Portofolio</a></li>
+                <li><a href="harga.html">Harga</a></li>
+                <li><a href="blog.html" class="active">Blog</a></li>
+                <li><a href="kontak.html">Kontak</a></li>
+            </ul>
+            
+            <div class="nav-buttons">
+                <a href="login.html" class="btn btn-outline btn-sm" id="loginBtn">Masuk</a>
+                <a href="register.html" class="btn btn-primary btn-sm" id="registerBtn">Daftar</a>
+                <div id="userMenu" class="hidden">
+                    <a href="user/index.html" class="btn btn-primary btn-sm">
+                        👤 <span id="userName">User</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Blog Hero -->
+    <section class="blog-hero">
+        <h1>Blog <span style="color:var(--primary);">WebDevPro</span></h1>
+        <p>Tips, tutorial, dan insight terbaru seputar pengembangan web, teknologi, dan digital marketing.</p>
+    </section>
+
+    <!-- Blog Content -->
+    <section style="padding: 40px 0 60px;">
+        <div class="container">
+            <!-- Toolbar -->
+            <div class="blog-toolbar">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Cari artikel..." onkeyup="searchBlogs()">
+                </div>
+                <div class="category-pills" id="categoryPills">
+                    <div class="category-pill active" onclick="filterCategory('all')">Semua</div>
+                    <!-- Dynamic categories -->
+                </div>
+            </div>
+
+            <!-- Featured Post -->
+            <div id="featuredSection">
+                <!-- Dynamic -->
+            </div>
+
+            <!-- Blog Grid -->
+            <div class="blog-grid" id="blogGrid">
+                <!-- Dynamic -->
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination" id="pagination">
+                <!-- Dynamic -->
+            </div>
+
+            <!-- Empty State -->
+            <div id="emptyState" style="display:none; text-align:center; padding:60px 20px;">
+                <div style="font-size:60px; margin-bottom:15px;">📭</div>
+                <h3>Tidak Ada Artikel</h3>
+                <p style="color:#666;">Belum ada artikel dalam kategori ini.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h4>Web<span>Dev</span>Pro</h4>
+                    <p style="color:rgba(255,255,255,0.7); margin-top:15px;">Solusi digital terbaik untuk bisnis Anda.</p>
+                </div>
+                <div>
+                    <h4>Menu</h4>
+                    <a href="index.html">Beranda</a>
+                    <a href="tentang.html">Tentang Kami</a>
+                    <a href="layanan.html">Layanan</a>
+                    <a href="harga.html">Paket Harga</a>
+                </div>
+                <div>
+                    <h4>Layanan</h4>
+                    <a href="layanan.html">Company Profile</a>
+                    <a href="layanan.html">E-Commerce</a>
+                    <a href="layanan.html">Web Application</a>
+                    <a href="layanan.html">Landing Page</a>
+                </div>
+                <div>
+                    <h4>Kontak</h4>
+                    <a href="#">📍 Batang, Jawa Tengah</a>
+                    <a href="#">📧 setyawanhendri253@gmail.com</a>
+                    <a href="#">📱 +62 812-4814-1031</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 WebDevPro. All rights reserved.</p>
+                <div>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/6281248141031?text=Halo%20kak%20Hendri,%20saya%20tertarik%20dengan%20produk%20Anda." 
+       class="whatsapp-float" target="_blank" title="Chat WhatsApp">
+        💬
+    </a>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    
+    <script src="assets/js/firebase-config.js"></script>
+    <script src="assets/js/auth.js"></script>
+    <script>
+        let allBlogs = [];
+        let filteredBlogs = [];
+        let currentPage = 1;
+        const perPage = 6;
+        let currentCategory = 'all';
+
+        // Check auth state
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                document.getElementById('loginBtn').style.display = 'none';
+                document.getElementById('registerBtn').style.display = 'none';
+                document.getElementById('userMenu').classList.remove('hidden');
+                document.getElementById('userName').textContent = user.displayName || user.email;
+            }
+        });
+
+        // Load blogs
+        async function loadBlogs() {
+            try {
+                const snapshot = await db.collection('blogs')
+                    .where('status', '==', 'published')
+                    .orderBy('createdAt', 'desc')
+                    .get();
+
+                allBlogs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                filteredBlogs = [...allBlogs];
+
+                // Load categories
+                loadCategories();
+                
+                // Render
+                renderFeatured();
+                renderGrid();
+                renderPagination();
+
+            } catch (error) {
+                console.error('Error loading blogs:', error);
+                document.getElementById('blogGrid').innerHTML = 
+                    '<div style="text-align:center; padding:50px; color:#e74c3c;">Gagal memuat artikel</div>';
+            }
+        }
+
+        // Load categories
+        function loadCategories() {
+            const categories = [...new Set(allBlogs.map(b => b.kategori).filter(Boolean))];
+            const container = document.getElementById('categoryPills');
+            
+            categories.forEach(cat => {
+                container.innerHTML += `<div class="category-pill" onclick="filterCategory('${cat}')">${cat}</div>`;
+            });
+        }
+
+        // Filter by category
+        function filterCategory(category) {
+            currentCategory = category;
+            currentPage = 1;
+            
+            // Update active pill
+            document.querySelectorAll('.category-pill').forEach(pill => {
+                pill.classList.toggle('active', 
+                    (category === 'all' && pill.textContent === 'Semua') ||
+                    pill.textContent === category
+                );
+            });
+
+            // Filter
+            if (category === 'all') {
+                filteredBlogs = [...allBlogs];
+            } else {
+                filteredBlogs = allBlogs.filter(b => b.kategori === category);
+            }
+
+            renderFeatured();
+            renderGrid();
+            renderPagination();
+        }
+
+        // Search blogs
+        function searchBlogs() {
+            const keyword = document.getElementById('searchInput').value.toLowerCase();
+            currentPage = 1;
+            
+            filteredBlogs = allBlogs.filter(b => 
+                (b.judul && b.judul.toLowerCase().includes(keyword)) ||
+                (b.konten && b.konten.toLowerCase().includes(keyword)) ||
+                (b.kategori && b.kategori.toLowerCase().includes(keyword))
+            );
+
+            renderFeatured();
+            renderGrid();
+            renderPagination();
+        }
+
+        // Render featured post
+        function renderFeatured() {
+            const section = document.getElementById('featuredSection');
+            
+            if (filteredBlogs.length === 0) {
+                section.style.display = 'none';
+                return;
+            }
+
+            // Featured = first post or isFeatured
+            const featured = filteredBlogs.find(b => b.isFeatured) || filteredBlogs[0];
+            const imageUrl = featured.imageUrl || 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800';
+            
+            section.innerHTML = `
+                <div class="featured-post">
+                    <div class="featured-image" style="background-image:url('${imageUrl}')">
+                        <span class="category-tag">${featured.kategori || 'Umum'}</span>
+                    </div>
+                    <div class="featured-content">
+                        <div class="featured-meta">
+                            <span>📅 ${featured.createdAt ? new Date(featured.createdAt.toDate()).toLocaleDateString('id-ID') : '-'}</span>
+                            <span>👁️ ${featured.views || 0} views</span>
+                            <span>⏱️ ${featured.readTime || '5 min'} read</span>
+                        </div>
+                        <h2>${featured.judul || 'Untitled'}</h2>
+                        <p>${stripHtml(featured.konten || '').substring(0, 200)}...</p>
+                        <a href="blog-detail.html?id=${featured.id}" class="btn btn-primary">Baca Selengkapnya →</a>
+                        <div class="featured-author" style="margin-top:20px;">
+                            <img src="${featured.authorPhoto || 'https://ui-avatars.com/api/?name=Admin&background=random'}" alt="Author">
+                            <div>
+                                <div style="font-weight:600;">${featured.authorName || 'Admin'}</div>
+                                <div style="font-size:13px; color:#999;">${featured.authorRole || 'Writer'}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            section.style.display = 'block';
+        }
+
+        // Render blog grid
+        function renderGrid() {
+            const grid = document.getElementById('blogGrid');
+            const emptyState = document.getElementById('emptyState');
+            
+            // Skip featured post from grid
+            const featured = filteredBlogs.find(b => b.isFeatured) || filteredBlogs[0];
+            const gridBlogs = filteredBlogs.filter(b => b.id !== featured?.id);
+            
+            // Pagination
+            const start = (currentPage - 1) * perPage;
+            const end = start + perPage;
+            const pageBlogs = gridBlogs.slice(start, end);
+
+            if (pageBlogs.length === 0 && filteredBlogs.length === 0) {
+                grid.innerHTML = '';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            emptyState.style.display = 'none';
+            grid.innerHTML = '';
+
+            pageBlogs.forEach(blog => {
+                const imageUrl = blog.imageUrl || 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600';
+                
+                grid.innerHTML += `
+                    <div class="blog-card">
+                        <div class="blog-card-image" style="background-image:url('${imageUrl}')">
+                            <span class="category-tag">${blog.kategori || 'Umum'}</span>
+                        </div>
+                        <div class="blog-card-content">
+                            <div class="blog-card-meta">
+                                <span>📅 ${blog.createdAt ? new Date(blog.createdAt.toDate()).toLocaleDateString('id-ID') : '-'}</span>
+                                <span>👁️ ${blog.views || 0}</span>
+                            </div>
+                            <h3>${blog.judul || 'Untitled'}</h3>
+                            <p>${stripHtml(blog.konten || '').substring(0, 120)}...</p>
+                            <div class="blog-card-footer">
+                                <div class="blog-author-small">
+                                    <img src="${blog.authorPhoto || 'https://ui-avatars.com/api/?name=Admin&background=random'}" alt="">
+                                    <span>${blog.authorName || 'Admin'}</span>
+                                </div>
+                                <a href="blog-detail.html?id=${blog.id}" style="color:var(--primary); font-weight:600; font-size:13px;">Baca →</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // Render pagination
+        function renderPagination() {
+            const container = document.getElementById('pagination');
+            const featured = filteredBlogs.find(b => b.isFeatured) || filteredBlogs[0];
+            const totalPages = Math.ceil((filteredBlogs.length - (featured ? 1 : 0)) / perPage);
+            
+            if (totalPages <= 1) {
+                container.innerHTML = '';
+                return;
+            }
+
+            let html = '';
+            
+            // Prev
+            html += `<button class="page-btn" onclick="changePage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>←</button>`;
+            
+            // Pages
+            for (let i = 1; i <= totalPages; i++) {
+                if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
+                    html += `<button class="page-btn ${i === currentPage ? 'active' : ''}" onclick="changePage(${i})">${i}</button>`;
+                } else if (i === currentPage - 2 || i === currentPage + 2) {
+                    html += `<span style="padding:8px;">...</span>`;
+                }
+            }
+            
+            // Next
+            html += `<button class="page-btn" onclick="changePage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>→</button>`;
+            
+            container.innerHTML = html;
+        }
+
+        function changePage(page) {
+            currentPage = page;
+            renderGrid();
+            renderPagination();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Strip HTML tags
+        function stripHtml(html) {
+            const tmp = document.createElement('div');
+            tmp.innerHTML = html;
+            return tmp.textContent || tmp.innerText || '';
+        }
+
+        // Navbar scroll
+        window.addEventListener('scroll', () => {
+            document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // Load on ready
+        document.addEventListener('DOMContentLoaded', loadBlogs);
+    </script>
+</body>
+</html>

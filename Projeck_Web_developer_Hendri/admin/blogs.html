@@ -6,11 +6,815 @@
     <title>Blog | WebDevPro</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        :root {
+            --primary: #ffd700;
+            --secondary: #ffed4e;
+            --dark: #1a1a2e;
+            --gray: #666;
+            --light: #f8f9fa;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: transparent;
+            transition: all 0.3s ease;
+            padding: 15px 0;
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .navbar.scrolled .logo {
+            color: var(--dark);
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 35px;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .navbar.scrolled .nav-links a {
+            color: #333;
+        }
+
+        .nav-links a.active,
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--primary);
+        }
+
+        .nav-buttons {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            text-decoration: none;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--dark);
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .navbar.scrolled .btn-outline {
+            color: #333;
+            border-color: #ddd;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-sm { padding: 8px 18px; font-size: 13px; }
+
+        .hidden { display: none !important; }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .mobile-menu-btn span {
+            width: 25px;
+            height: 2px;
+            background: white;
+            transition: all 0.3s;
+        }
+
+        .navbar.scrolled .mobile-menu-btn span {
+            background: #333;
+        }
+
+        /* Hero */
+        .page-hero {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            padding: 160px 0 100px;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,215,0,0.05)" stroke-width="0.5"/></svg>');
+            background-size: 60px 60px;
+            opacity: 0.5;
+        }
+
+        .page-hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .page-hero h1 span {
+            color: var(--primary);
+        }
+
+        .page-hero p {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.7);
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* Section Padding */
+        .section-padding { padding: 80px 0; }
+
+        .bg-light { background: #f8f9fa; }
+
+        /* Featured Post */
+        .featured-post-section { padding: 60px 0; }
+
+        .featured-post {
+            display: grid;
+            grid-template-columns: 1.1fr 1fr;
+            gap: 0;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+
+        .featured-image {
+            position: relative;
+            min-height: 450px;
+            overflow: hidden;
+        }
+
+        .featured-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .featured-post:hover .featured-image img {
+            transform: scale(1.05);
+        }
+
+        .featured-badge {
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            background: var(--primary);
+            color: var(--dark);
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .placeholder-image {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .featured-content {
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .post-meta {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .post-category {
+            background: rgba(255, 215, 0, 0.15);
+            color: var(--dark);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .post-date, .post-read {
+            color: #999;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .featured-content h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+
+        .featured-content > p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            font-size: 15px;
+        }
+
+        .post-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .post-author img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary);
+        }
+
+        .author-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .author-name {
+            font-weight: 700;
+            color: #333;
+            font-size: 15px;
+        }
+
+        .author-role {
+            color: #999;
+            font-size: 13px;
+        }
+
+        /* Categories */
+        .categories-section {
+            padding: 30px 0;
+            background: white;
+            border-bottom: 1px solid #eee;
+            position: sticky;
+            top: 70px;
+            z-index: 100;
+        }
+
+        .categories-list {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            padding: 10px 24px;
+            border-radius: 30px;
+            border: 2px solid #e8e8e8;
+            background: white;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            font-size: 14px;
+            color: #666;
+            transition: all 0.3s;
+        }
+
+        .category-btn:hover {
+            border-color: var(--primary);
+            color: var(--dark);
+        }
+
+        .category-btn.active {
+            background: var(--primary);
+            color: var(--dark);
+            border-color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Blog Grid */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .blog-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            transition: all 0.4s ease;
+            border: 1px solid #f0f0f0;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.12);
+        }
+
+        .blog-image {
+            position: relative;
+            height: 220px;
+            overflow: hidden;
+        }
+
+        .blog-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .blog-card:hover .blog-image img {
+            transform: scale(1.1);
+        }
+
+        .blog-category {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            background: rgba(255, 215, 0, 0.95);
+            color: var(--dark);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .blog-content {
+            padding: 25px;
+        }
+
+        .blog-meta {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 12px;
+        }
+
+        .blog-date, .blog-read {
+            font-size: 12px;
+            color: #999;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .blog-card h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            line-height: 1.4;
+            margin-bottom: 12px;
+            color: var(--dark);
+        }
+
+        .blog-card h3:hover {
+            color: var(--primary);
+        }
+
+        .blog-card > p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .blog-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid #f5f5f5;
+        }
+
+        .blog-author {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .blog-author img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .blog-author span {
+            font-size: 13px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .read-more {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 13px;
+            text-decoration: none;
+            transition: gap 0.3s;
+        }
+
+        .read-more:hover {
+            gap: 10px;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-top: 60px;
+        }
+
+        .page-btn {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            border: 2px solid #e8e8e8;
+            background: white;
+            color: #666;
+            font-weight: 600;
+            font-size: 14px;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .page-btn:hover {
+            border-color: var(--primary);
+            color: var(--dark);
+        }
+
+        .page-btn.active {
+            background: var(--primary);
+            color: var(--dark);
+            border-color: var(--primary);
+        }
+
+        .page-btn.next {
+            width: auto;
+            padding: 0 20px;
+            gap: 8px;
+        }
+
+        .page-dots {
+            color: #999;
+            padding: 0 10px;
+        }
+
+        /* Newsletter */
+        .newsletter-section {
+            background: linear-gradient(135deg, var(--dark) 0%, #16213e 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newsletter-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 400px;
+            height: 400px;
+            background: rgba(255, 215, 0, 0.05);
+            border-radius: 50%;
+        }
+
+        .newsletter-content {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 60px;
+            align-items: center;
+            position: relative;
+        }
+
+        .newsletter-text h2 {
+            color: white;
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+        }
+
+        .newsletter-text p {
+            color: rgba(255,255,255,0.7);
+            font-size: 15px;
+        }
+
+        .newsletter-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .newsletter-input-group {
+            display: flex;
+            gap: 10px;
+            background: rgba(255,255,255,0.1);
+            padding: 8px;
+            border-radius: 14px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .newsletter-input-group input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 12px 15px;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .newsletter-input-group input::placeholder {
+            color: rgba(255,255,255,0.5);
+        }
+
+        .newsletter-input-group .btn {
+            padding: 12px 25px;
+        }
+
+        .newsletter-note {
+            color: rgba(255,255,255,0.5);
+            font-size: 13px;
+            margin: 0;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark);
+            color: white;
+            padding: 80px 0 30px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+            gap: 50px;
+            margin-bottom: 50px;
+        }
+
+        .footer-about .logo {
+            font-size: 28px;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .footer-about p {
+            color: rgba(255,255,255,0.6);
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 12px;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            color: var(--dark);
+            transform: translateY(-3px);
+        }
+
+        .footer-links h4,
+        .footer-contact h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: white;
+        }
+
+        .footer-links ul,
+        .footer-contact ul {
+            list-style: none;
+        }
+
+        .footer-links li,
+        .footer-contact li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .footer-contact li {
+            color: rgba(255,255,255,0.6);
+            font-size: 14px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 25px;
+            text-align: center;
+            color: rgba(255,255,255,0.4);
+            font-size: 13px;
+        }
+
+        /* WhatsApp Float */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: #25d366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28px;
+            text-decoration: none;
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+            transition: all 0.3s;
+            z-index: 999;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1) rotate(10deg);
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .nav-links { display: none; }
+            .mobile-menu-btn { display: flex; }
+            .featured-post { grid-template-columns: 1fr; }
+            .featured-image { min-height: 300px; }
+            .blog-grid { grid-template-columns: repeat(2, 1fr); }
+            .newsletter-content { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 576px) {
+            .page-hero h1 { font-size: 2rem; }
+            .page-hero { padding: 120px 0 60px; }
+            .featured-content { padding: 30px; }
+            .featured-content h2 { font-size: 1.5rem; }
+            .blog-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .newsletter-input-group { flex-direction: column; }
+            .newsletter-input-group .btn { width: 100%; justify-content: center; }
+        }
+
+        /* Animation */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .blog-card {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .blog-card:nth-child(1) { animation-delay: 0.1s; }
+        .blog-card:nth-child(2) { animation-delay: 0.2s; }
+        .blog-card:nth-child(3) { animation-delay: 0.3s; }
+        .blog-card:nth-child(4) { animation-delay: 0.4s; }
+        .blog-card:nth-child(5) { animation-delay: 0.5s; }
+        .blog-card:nth-child(6) { animation-delay: 0.6s; }
+    </style>
 </head>
 <body>
+    <!-- Navbar -->
     <nav class="navbar" id="navbar">
         <div class="container">
             <a href="index.html" class="logo">Web<span>Dev</span>Pro</a>
+            
             <ul class="nav-links">
                 <li><a href="index.html">Beranda</a></li>
                 <li><a href="tentang.html">Tentang</a></li>
@@ -20,6 +824,7 @@
                 <li><a href="blog.html" class="active">Blog</a></li>
                 <li><a href="kontak.html">Kontak</a></li>
             </ul>
+            
             <div class="nav-buttons">
                 <a href="login.html" class="btn btn-outline btn-sm" id="loginBtn">Masuk</a>
                 <a href="register.html" class="btn btn-primary btn-sm" id="registerBtn">Daftar</a>
@@ -38,7 +843,7 @@
     <!-- Hero Section -->
     <section class="page-hero">
         <div class="container">
-            <h1>Blog WebDevPro</h1>
+            <h1>Blog <span>WebDevPro</span></h1>
             <p>Tips, tutorial, dan insight terbaru seputar pengembangan web dan teknologi digital</p>
         </div>
     </section>
@@ -54,19 +859,19 @@
                 <div class="featured-content">
                     <div class="post-meta">
                         <span class="post-category">Tren Teknologi</span>
-                        <span class="post-date">15 Juni 2024</span>
-                        <span class="post-read">8 menit baca</span>
+                        <span class="post-date">📅 15 Juni 2024</span>
+                        <span class="post-read">⏱️ 8 menit baca</span>
                     </div>
                     <h2>10 Tren Web Development yang Akan Mendominasi 2024</h2>
-                    <p>Dari AI-powered development hingga WebAssembly, pelajari teknologi-teknologi terbaru yang akan mengubah cara kita membangun aplikasi web di tahun ini. Artikel ini membahas secara mendalam setiap tren dengan contoh implementasi praktis.</p>
+                    <p>Dari AI-powered development hingga WebAssembly, pelajari teknologi-teknologi terbaru yang akan mengubah cara kita membangun aplikasi web di tahun ini.</p>
                     <div class="post-author">
-                        <img src="assets/images/team/author1.jpg" alt="Ahmad Rizki" onerror="this.src='https://via.placeholder.com/40'">
+                        <img src="assets/images/team/author1.jpg" alt="Ahmad Rizki" onerror="this.src='https://ui-avatars.com/api/?name=Ahmad+Rizki&background=random&size=100'">
                         <div class="author-info">
                             <span class="author-name">Ahmad Rizki</span>
                             <span class="author-role">Lead Developer</span>
                         </div>
                     </div>
-                    <a href="#" class="btn btn-primary">Baca Selengkapnya</a>
+                    <a href="#" class="btn btn-primary">Baca Selengkapnya →</a>
                 </div>
             </div>
         </div>
@@ -93,25 +898,22 @@
                 <!-- Post 1 -->
                 <article class="blog-card" data-category="tutorial">
                     <div class="blog-image">
-                        <img src="assets/images/blog/post1.jpg" alt="React Hooks" onerror="this.style.display='none'; this.parentElement.classList.add('placeholder-image');">
+                        <img src="assets/images/blog/post1.jpg" alt="React Hooks" onerror="this.src='https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=600'">
                         <span class="blog-category">Tutorial</span>
                     </div>
                     <div class="blog-content">
                         <div class="blog-meta">
-                            <span class="blog-date">12 Juni 2024</span>
-                            <span class="blog-read">5 menit</span>
+                            <span class="blog-date">📅 12 Juni 2024</span>
+                            <span class="blog-read">⏱️ 5 menit</span>
                         </div>
                         <h3>Panduan Lengkap React Hooks untuk Pemula</h3>
-                        <p>Pelajari cara menggunakan useState, useEffect, dan custom hooks untuk membangun aplikasi React yang lebih efisien dan mudah dikelola.</p>
+                        <p>Pelajari cara menggunakan useState, useEffect, dan custom hooks untuk membangun aplikasi React yang lebih efisien.</p>
                         <div class="blog-footer">
                             <div class="blog-author">
-                                <img src="assets/images/team/author2.jpg" alt="Dina Sari" onerror="this.src='https://via.placeholder.com/32'">
+                                <img src="assets/images/team/author2.jpg" alt="Dina Sari" onerror="this.src='https://ui-avatars.com/api/?name=Dina+Sari&background=random&size=64'">
                                 <span>Dina Sari</span>
                             </div>
-                            <a href="#" class="read-more">
-                                Baca
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                            </a>
+                            <a href="#" class="read-more">Baca →</a>
                         </div>
                     </div>
                 </article>
@@ -119,25 +921,22 @@
                 <!-- Post 2 -->
                 <article class="blog-card" data-category="tips">
                     <div class="blog-image">
-                        <img src="assets/images/blog/post2.jpg" alt="SEO Tips" onerror="this.style.display='none'; this.parentElement.classList.add('placeholder-image');">
+                        <img src="assets/images/blog/post2.jpg" alt="SEO Tips" onerror="this.src='https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=600'">
                         <span class="blog-category">Tips & Trik</span>
                     </div>
                     <div class="blog-content">
                         <div class="blog-meta">
-                            <span class="blog-date">10 Juni 2024</span>
-                            <span class="blog-read">6 menit</span>
+                            <span class="blog-date">📅 10 Juni 2024</span>
+                            <span class="blog-read">⏱️ 6 menit</span>
                         </div>
                         <h3>5 Strategi SEO On-Page yang Wajib Diterapkan</h3>
-                        <p>Tingkatkan peringkat website Anda di Google dengan menerapkan teknik SEO on-page yang terbukti efektif dan mudah diimplementasikan.</p>
+                        <p>Tingkatkan peringkat website Anda di Google dengan teknik SEO on-page yang terbukti efektif.</p>
                         <div class="blog-footer">
                             <div class="blog-author">
-                                <img src="assets/images/team/author3.jpg" alt="Budi Santoso" onerror="this.src='https://via.placeholder.com/32'">
+                                <img src="assets/images/team/author3.jpg" alt="Budi Santoso" onerror="this.src='https://ui-avatars.com/api/?name=Budi+Santoso&background=random&size=64'">
                                 <span>Budi Santoso</span>
                             </div>
-                            <a href="#" class="read-more">
-                                Baca
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                            </a>
+                            <a href="#" class="read-more">Baca →</a>
                         </div>
                     </div>
                 </article>
@@ -145,25 +944,22 @@
                 <!-- Post 3 -->
                 <article class="blog-card" data-category="desain">
                     <div class="blog-image">
-                        <img src="assets/images/blog/post3.jpg" alt="UI Design" onerror="this.style.display='none'; this.parentElement.classList.add('placeholder-image');">
+                        <img src="assets/images/blog/post3.jpg" alt="UI Design" onerror="this.src='https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600'">
                         <span class="blog-category">UI/UX Design</span>
                     </div>
                     <div class="blog-content">
                         <div class="blog-meta">
-                            <span class="blog-date">8 Juni 2024</span>
-                            <span class="blog-read">7 menit</span>
+                            <span class="blog-date">📅 8 Juni 2024</span>
+                            <span class="blog-read">⏱️ 7 menit</span>
                         </div>
                         <h3>Prinsip Desain Antarmuka yang Meningkatkan Konversi</h3>
-                        <p>Pelajari bagaimana psychology of design dapat mempengaruhi perilaku pengguna dan meningkatkan tingkat konversi website Anda.</p>
+                        <p>Pelajari psychology of design untuk mempengaruhi perilaku pengguna dan meningkatkan konversi.</p>
                         <div class="blog-footer">
                             <div class="blog-author">
-                                <img src="assets/images/team/author4.jpg" alt="Maya Wulandari" onerror="this.src='https://via.placeholder.com/32'">
+                                <img src="assets/images/team/author4.jpg" alt="Maya Wulandari" onerror="this.src='https://ui-avatars.com/api/?name=Maya+Wulandari&background=random&size=64'">
                                 <span>Maya Wulandari</span>
                             </div>
-                            <a href="#" class="read-more">
-                                Baca
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                            </a>
+                            <a href="#" class="read-more">Baca →</a>
                         </div>
                     </div>
                 </article>
@@ -171,25 +967,22 @@
                 <!-- Post 4 -->
                 <article class="blog-card" data-category="bisnis">
                     <div class="blog-image">
-                        <img src="assets/images/blog/post4.jpg" alt="Digital Marketing" onerror="this.style.display='none'; this.parentElement.classList.add('placeholder-image');">
+                        <img src="assets/images/blog/post4.jpg" alt="Digital Marketing" onerror="this.src='https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600'">
                         <span class="blog-category">Bisnis Digital</span>
                     </div>
                     <div class="blog-content">
                         <div class="blog-meta">
-                            <span class="blog-date">5 Juni 2024</span>
-                            <span class="blog-read">4 menit</span>
+                            <span class="blog-date">📅 5 Juni 2024</span>
+                            <span class="blog-read">⏱️ 4 menit</span>
                         </div>
                         <h3>Cara Membangun Brand Digital yang Kuat di 2024</h3>
-                        <p>Strategi branding digital yang efektif untuk membedakan bisnis Anda dari kompetitor dan membangun loyalitas pelanggan.</p>
+                        <p>Strategi branding digital untuk membedakan bisnis Anda dari kompetitor dan membangun loyalitas.</p>
                         <div class="blog-footer">
                             <div class="blog-author">
-                                <img src="assets/images/team/author1.jpg" alt="Ahmad Rizki" onerror="this.src='https://via.placeholder.com/32'">
+                                <img src="assets/images/team/author1.jpg" alt="Ahmad Rizki" onerror="this.src='https://ui-avatars.com/api/?name=Ahmad+Rizki&background=random&size=64'">
                                 <span>Ahmad Rizki</span>
                             </div>
-                            <a href="#" class="read-more">
-                                Baca
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                            </a>
+                            <a href="#" class="read-more">Baca →</a>
                         </div>
                     </div>
                 </article>
@@ -197,25 +990,22 @@
                 <!-- Post 5 -->
                 <article class="blog-card" data-category="tren">
                     <div class="blog-image">
-                        <img src="assets/images/blog/post5.jpg" alt="AI Technology" onerror="this.style.display='none'; this.parentElement.classList.add('placeholder-image');">
+                        <img src="assets/images/blog/post5.jpg" alt="AI Technology" onerror="this.src='https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600'">
                         <span class="blog-category">Tren Teknologi</span>
                     </div>
                     <div class="blog-content">
                         <div class="blog-meta">
-                            <span class="blog-date">1 Juni 2024</span>
-                            <span class="blog-read">10 menit</span>
+                            <span class="blog-date">📅 1 Juni 2024</span>
+                            <span class="blog-read">⏱️ 10 menit</span>
                         </div>
                         <h3>AI dalam Pengembangan Web: Peluang dan Tantangan</h3>
-                        <p>Bagaimana artificial intelligence mengubah landscape pengembangan web dan apa yang perlu developer ketahui untuk tetap relevan.</p>
+                        <p>Bagaimana AI mengubah landscape pengembangan web dan apa yang perlu developer ketahui.</p>
                         <div class="blog-footer">
                             <div class="blog-author">
-                                <img src="assets/images/team/author5.jpg" alt="Rudi Hartono" onerror="this.src='https://via.placeholder.com/32'">
+                                <img src="assets/images/team/author5.jpg" alt="Rudi Hartono" onerror="this.src='https://ui-avatars.com/api/?name=Rudi+Hartono&background=random&size=64'">
                                 <span>Rudi Hartono</span>
                             </div>
-                            <a href="#" class="read-more">
-                                Baca
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                            </a>
+                            <a href="#" class="read-more">Baca →</a>
                         </div>
                     </div>
                 </article>
@@ -223,25 +1013,22 @@
                 <!-- Post 6 -->
                 <article class="blog-card" data-category="tutorial">
                     <div class="blog-image">
-                        <img src="assets/images/blog/post6.jpg" alt="CSS Grid" onerror="this.style.display='none'; this.parentElement.classList.add('placeholder-image');">
+                        <img src="assets/images/blog/post6.jpg" alt="CSS Grid" onerror="this.src='https://images.unsplash.com/photo-1507721999472-8ed4421c4af2?w=600'">
                         <span class="blog-category">Tutorial</span>
                     </div>
                     <div class="blog-content">
                         <div class="blog-meta">
-                            <span class="blog-date">28 Mei 2024</span>
-                            <span class="blog-read">5 menit</span>
+                            <span class="blog-date">📅 28 Mei 2024</span>
+                            <span class="blog-read">⏱️ 5 menit</span>
                         </div>
                         <h3>Mastering CSS Grid: Layout Kompleks Jadi Mudah</h3>
-                        <p>Tutorial praktis membuat layout responsif yang kompleks menggunakan CSS Grid dengan contoh kasus nyata dan reusable code snippets.</p>
+                        <p>Tutorial praktis membuat layout responsif kompleks dengan CSS Grid dan contoh kasus nyata.</p>
                         <div class="blog-footer">
                             <div class="blog-author">
-                                <img src="assets/images/team/author2.jpg" alt="Dina Sari" onerror="this.src='https://via.placeholder.com/32'">
+                                <img src="assets/images/team/author2.jpg" alt="Dina Sari" onerror="this.src='https://ui-avatars.com/api/?name=Dina+Sari&background=random&size=64'">
                                 <span>Dina Sari</span>
                             </div>
-                            <a href="#" class="read-more">
-                                Baca
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                            </a>
+                            <a href="#" class="read-more">Baca →</a>
                         </div>
                     </div>
                 </article>
@@ -254,10 +1041,7 @@
                 <a href="#" class="page-btn">3</a>
                 <span class="page-dots">...</span>
                 <a href="#" class="page-btn">8</a>
-                <a href="#" class="page-btn next">
-                    Selanjutnya
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
-                </a>
+                <a href="#" class="page-btn next">Selanjutnya →</a>
             </div>
         </div>
     </section>
@@ -273,10 +1057,7 @@
                 <form class="newsletter-form" id="newsletterForm">
                     <div class="newsletter-input-group">
                         <input type="email" placeholder="Masukkan email Anda" required>
-                        <button type="submit" class="btn btn-primary">
-                            Berlangganan
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-                        </button>
+                        <button type="submit" class="btn btn-primary">Berlangganan ✉️</button>
                     </div>
                     <p class="newsletter-note">Gratis. Tidak ada spam. Bisa berhenti kapan saja.</p>
                 </form>
@@ -292,30 +1073,10 @@
                     <a href="index.html" class="logo">Web<span>Dev</span>Pro</a>
                     <p>Partner tepercaya untuk solusi digital bisnis Anda. Kami menghadirkan inovasi dan kualitas dalam setiap proyek.</p>
                     <div class="social-links">
-                        <a href="#" aria-label="Facebook">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-                            </svg>
-                        </a>
-                        <a href="#" aria-label="Twitter">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
-                            </svg>
-                        </a>
-                        <a href="#" aria-label="Instagram">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                            </svg>
-                        </a>
-                        <a href="#" aria-label="LinkedIn">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                                <rect x="2" y="9" width="4" height="12"></rect>
-                                <circle cx="4" cy="4" r="2"></circle>
-                            </svg>
-                        </a>
+                        <a href="#" aria-label="Facebook">📘</a>
+                        <a href="#" aria-label="Twitter">🐦</a>
+                        <a href="#" aria-label="Instagram">📷</a>
+                        <a href="#" aria-label="LinkedIn">💼</a>
                     </div>
                 </div>
                 <div class="footer-links">
@@ -341,9 +1102,9 @@
                 <div class="footer-contact">
                     <h4>Kontak</h4>
                     <ul>
-                        <li>📍 Jl. Sudirman No. 123, Jakarta</li>
-                        <li>📞 +62 812-3456-7890</li>
-                        <li>✉️ info@webdevpro.id</li>
+                        <li>📍 Batang, Jawa Tengah</li>
+                        <li>📞 +62 812-4814-1031</li>
+                        <li>✉️ setyawanhendri253@gmail.com</li>
                         <li>🕐 Senin - Jumat: 09.00 - 17.00</li>
                     </ul>
                 </div>
@@ -354,17 +1115,43 @@
         </div>
     </footer>
 
-    <script src="assets/js/main.js"></script>
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/6281248141031?text=Halo%20kak%20Hendri,%20saya%20tertarik%20dengan%20produk%20Anda." 
+       class="whatsapp-float" target="_blank" title="Chat WhatsApp">
+        💬
+    </a>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    
+    <script src="assets/js/firebase-config.js"></script>
+    <script src="assets/js/auth.js"></script>
+    
     <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // Check auth
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                document.getElementById('loginBtn').style.display = 'none';
+                document.getElementById('registerBtn').style.display = 'none';
+                document.getElementById('userMenu').classList.remove('hidden');
+                document.getElementById('userName').textContent = user.displayName || user.email;
+            }
+        });
+
         // Category Filter
         const categoryBtns = document.querySelectorAll('.category-btn');
         const blogCards = document.querySelectorAll('.blog-card');
 
         categoryBtns.forEach(btn => {
             btn.addEventListener('click', () => {
-                // Remove active class from all buttons
                 categoryBtns.forEach(b => b.classList.remove('active'));
-                // Add active class to clicked button
                 btn.classList.add('active');
 
                 const category = btn.dataset.category;
@@ -395,10 +1182,10 @@
             const originalText = btn.innerHTML;
             
             btn.disabled = true;
-            btn.innerHTML = '<span>Mengirim...</span>';
+            btn.innerHTML = 'Mengirim...';
             
             setTimeout(() => {
-                btn.innerHTML = '<span>Berhasil!</span>';
+                btn.innerHTML = 'Berhasil! ✅';
                 input.value = '';
                 setTimeout(() => {
                     btn.disabled = false;

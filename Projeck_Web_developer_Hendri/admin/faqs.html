@@ -3,14 +3,779 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FAQ | WebDevPro</title>
+    <title>FAQ - Pertanyaan Umum | WebDevPro</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        :root {
+            --primary: #ffd700;
+            --secondary: #ffed4e;
+            --dark: #1a1a2e;
+            --gray: #666;
+            --light: #f8f9fa;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: transparent;
+            transition: all 0.3s ease;
+            padding: 15px 0;
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .navbar.scrolled .logo {
+            color: var(--dark);
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 35px;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .navbar.scrolled .nav-links a {
+            color: #333;
+        }
+
+        .nav-links a.active,
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--primary);
+        }
+
+        .nav-buttons {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            text-decoration: none;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--dark);
+        }
+
+        .btn-primary:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .navbar.scrolled .btn-outline {
+            color: #333;
+            border-color: #ddd;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-sm { padding: 8px 18px; font-size: 13px; }
+
+        .hidden { display: none !important; }
+
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .mobile-menu-btn span {
+            width: 25px;
+            height: 2px;
+            background: white;
+            transition: all 0.3s;
+        }
+
+        .navbar.scrolled .mobile-menu-btn span {
+            background: #333;
+        }
+
+        /* Hero Section */
+        .page-hero {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            padding: 160px 0 120px;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,215,0,0.05)" stroke-width="0.5"/></svg>');
+            background-size: 60px 60px;
+            opacity: 0.5;
+        }
+
+        .page-hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .page-hero h1 span {
+            color: var(--primary);
+        }
+
+        .page-hero p {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.7);
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,215,0,0.15);
+            color: var(--primary);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 20px;
+            position: relative;
+            border: 1px solid rgba(255,215,0,0.2);
+        }
+
+        /* Search Section */
+        .faq-search-section {
+            padding: 0;
+            margin-top: -40px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .faq-search-box {
+            background: white;
+            border-radius: 16px;
+            padding: 8px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            border: 2px solid #f0f0f0;
+            transition: all 0.3s;
+        }
+
+        .faq-search-box:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 20px 60px rgba(255,215,0,0.15);
+        }
+
+        .faq-search-box svg {
+            margin-left: 15px;
+            color: #999;
+            flex-shrink: 0;
+        }
+
+        .faq-search-box input {
+            flex: 1;
+            border: none;
+            padding: 15px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            outline: none;
+            color: #333;
+        }
+
+        .faq-search-box input::placeholder {
+            color: #bbb;
+        }
+
+        .faq-search-box button {
+            background: var(--primary);
+            color: var(--dark);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .faq-search-box button:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        /* Categories */
+        .faq-categories-section {
+            padding: 40px 0 20px;
+        }
+
+        .faq-categories {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .faq-category-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 50px;
+            border: 2px solid #e8e8e8;
+            background: white;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            font-size: 14px;
+            color: #666;
+            transition: all 0.3s;
+        }
+
+        .faq-category-btn:hover {
+            border-color: var(--primary);
+            color: var(--dark);
+            transform: translateY(-2px);
+        }
+
+        .faq-category-btn.active {
+            background: var(--primary);
+            color: var(--dark);
+            border-color: var(--primary);
+            font-weight: 600;
+            box-shadow: 0 8px 25px rgba(255,215,0,0.3);
+        }
+
+        .faq-category-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* FAQ Content */
+        .section-padding { padding: 60px 0; }
+
+        .bg-light { background: #f8f9fa; }
+
+        .faq-list {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .faq-group {
+            margin-bottom: 50px;
+        }
+
+        .faq-group-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 25px;
+            padding-left: 20px;
+            border-left: 4px solid var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .faq-item {
+            background: white;
+            border-radius: 16px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            overflow: hidden;
+            transition: all 0.3s;
+            border: 1px solid #f0f0f0;
+        }
+
+        .faq-item:hover {
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        }
+
+        .faq-item.active {
+            border-color: var(--primary);
+            box-shadow: 0 8px 30px rgba(255,215,0,0.1);
+        }
+
+        .faq-question {
+            width: 100%;
+            padding: 22px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            color: #333;
+            font-size: 16px;
+            gap: 15px;
+            background: none;
+            border: none;
+            font-family: 'Poppins', sans-serif;
+            text-align: left;
+            transition: all 0.3s;
+        }
+
+        .faq-question:hover {
+            color: var(--primary);
+        }
+
+        .faq-question span {
+            flex: 1;
+            line-height: 1.5;
+        }
+
+        .faq-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255,215,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            color: var(--primary);
+        }
+
+        .faq-item.active .faq-icon {
+            background: var(--primary);
+            color: var(--dark);
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), padding 0.5s ease;
+        }
+
+        .faq-answer-inner {
+            padding: 0 25px 25px;
+            color: #555;
+            line-height: 1.8;
+            font-size: 15px;
+        }
+
+        .faq-answer-inner p {
+            margin-bottom: 12px;
+        }
+
+        .faq-answer-inner ul {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        .faq-answer-inner li {
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        .faq-answer-inner li::marker {
+            color: var(--primary);
+        }
+
+        .faq-answer-inner a {
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .faq-answer-inner a:hover {
+            text-decoration: underline;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 800px;
+        }
+
+        /* Highlighted text in search */
+        .highlight {
+            background: rgba(255,215,0,0.3);
+            padding: 2px 4px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        /* No Results */
+        .no-results {
+            text-align: center;
+            padding: 80px 20px;
+        }
+
+        .no-results svg {
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+
+        .no-results h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .no-results p {
+            color: #999;
+        }
+
+        /* Still Questions Section */
+        .still-questions-section {
+            background: linear-gradient(135deg, var(--dark) 0%, #16213e 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .still-questions-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 400px;
+            height: 400px;
+            background: rgba(255,215,0,0.05);
+            border-radius: 50%;
+        }
+
+        .still-questions-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            position: relative;
+        }
+
+        .still-questions-text h2 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .still-questions-text p {
+            color: rgba(255,255,255,0.7);
+            font-size: 16px;
+        }
+
+        .still-questions-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+        }
+
+        .btn-whatsapp {
+            background: #25d366;
+            color: white;
+        }
+
+        .btn-whatsapp:hover {
+            background: #128c7e;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.3);
+        }
+
+        .btn-lg {
+            padding: 14px 32px;
+            font-size: 16px;
+        }
+
+        /* Stats */
+        .faq-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .faq-stat {
+            text-align: center;
+            padding: 30px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+
+        .faq-stat:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .faq-stat-icon {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .faq-stat-value {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1;
+        }
+
+        .faq-stat-label {
+            color: #666;
+            font-size: 14px;
+            margin-top: 8px;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark);
+            color: white;
+            padding: 80px 0 30px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+            gap: 50px;
+            margin-bottom: 50px;
+        }
+
+        .footer-about .logo {
+            font-size: 28px;
+            margin-bottom: 20px;
+            display: inline-block;
+            color: white;
+        }
+
+        .footer-about p {
+            color: rgba(255,255,255,0.6);
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 12px;
+        }
+
+        .social-links a {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: all 0.3s;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            color: var(--dark);
+            transform: translateY(-3px);
+        }
+
+        .footer-links h4,
+        .footer-contact h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: white;
+        }
+
+        .footer-links ul,
+        .footer-contact ul {
+            list-style: none;
+        }
+
+        .footer-links li,
+        .footer-contact li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .footer-contact li {
+            color: rgba(255,255,255,0.6);
+            font-size: 14px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 25px;
+            text-align: center;
+            color: rgba(255,255,255,0.4);
+            font-size: 13px;
+        }
+
+        /* WhatsApp Float */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: #25d366;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28px;
+            text-decoration: none;
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+            transition: all 0.3s;
+            z-index: 999;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1) rotate(10deg);
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .nav-links { display: none; }
+            .mobile-menu-btn { display: flex; }
+            .still-questions-content { grid-template-columns: 1fr; text-align: center; }
+            .still-questions-actions { justify-content: center; }
+            .faq-stats { grid-template-columns: repeat(2, 1fr); }
+            .footer-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 576px) {
+            .page-hero h1 { font-size: 2rem; }
+            .page-hero { padding: 120px 0 80px; }
+            .faq-search-box { flex-direction: column; }
+            .faq-search-box button { width: 100%; }
+            .faq-category-btn { font-size: 13px; padding: 10px 18px; }
+            .faq-question { font-size: 14px; padding: 18px 20px; }
+            .still-questions-text h2 { font-size: 1.8rem; }
+            .faq-stats { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; }
+        }
+
+        /* Animation */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .faq-group {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .faq-group:nth-child(1) { animation-delay: 0.1s; }
+        .faq-group:nth-child(2) { animation-delay: 0.2s; }
+        .faq-group:nth-child(3) { animation-delay: 0.3s; }
+        .faq-group:nth-child(4) { animation-delay: 0.4s; }
+        .faq-group:nth-child(5) { animation-delay: 0.5s; }
+    </style>
 </head>
 <body>
+    <!-- Navbar -->
     <nav class="navbar" id="navbar">
         <div class="container">
             <a href="index.html" class="logo">Web<span>Dev</span>Pro</a>
+            
             <ul class="nav-links">
                 <li><a href="index.html">Beranda</a></li>
                 <li><a href="tentang.html">Tentang</a></li>
@@ -20,6 +785,7 @@
                 <li><a href="blog.html">Blog</a></li>
                 <li><a href="kontak.html">Kontak</a></li>
             </ul>
+            
             <div class="nav-buttons">
                 <a href="login.html" class="btn btn-outline btn-sm" id="loginBtn">Masuk</a>
                 <a href="register.html" class="btn btn-primary btn-sm" id="registerBtn">Daftar</a>
@@ -38,12 +804,13 @@
     <!-- Hero Section -->
     <section class="page-hero">
         <div class="container">
-            <h1>Pertanyaan Umum</h1>
+            <div class="hero-badge">❓ Pertanyaan Umum</div>
+            <h1>FAQ <span>WebDevPro</span></h1>
             <p>Temukan jawaban atas pertanyaan yang sering diajukan seputar layanan dan proses kerja kami</p>
         </div>
     </section>
 
-    <!-- Search FAQ -->
+    <!-- Search Section -->
     <section class="faq-search-section">
         <div class="container">
             <div class="faq-search-box">
@@ -52,362 +819,340 @@
                     <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                 </svg>
                 <input type="text" id="faqSearch" placeholder="Cari pertanyaan... (contoh: harga, domain, revisi)">
+                <button onclick="searchFAQ()">🔍 Cari</button>
             </div>
         </div>
     </section>
 
-    <!-- FAQ Categories -->
+    <!-- Stats -->
+    <section style="padding: 60px 0 20px;">
+        <div class="container">
+            <div class="faq-stats">
+                <div class="faq-stat">
+                    <div class="faq-stat-icon">❓</div>
+                    <div class="faq-stat-value" id="statTotal">15</div>
+                    <div class="faq-stat-label">Total FAQ</div>
+                </div>
+                <div class="faq-stat">
+                    <div class="faq-stat-icon">📂</div>
+                    <div class="faq-stat-value" id="statKategori">5</div>
+                    <div class="faq-stat-label">Kategori</div>
+                </div>
+                <div class="faq-stat">
+                    <div class="faq-stat-icon">✅</div>
+                    <div class="faq-stat-value">98%</div>
+                    <div class="faq-stat-label">Terjawab</div>
+                </div>
+                <div class="faq-stat">
+                    <div class="faq-stat-icon">⏱️</div>
+                    <div class="faq-stat-value">24h</div>
+                    <div class="faq-stat-label">Response Time</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories -->
     <section class="faq-categories-section">
         <div class="container">
             <div class="faq-categories">
                 <button class="faq-category-btn active" data-category="all">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="8" y1="6" x2="21" y2="6"></line>
-                        <line x1="8" y1="12" x2="21" y2="12"></line>
-                        <line x1="8" y1="18" x2="21" y2="18"></line>
-                        <line x1="3" y1="6" x2="3.01" y2="6"></line>
-                        <line x1="3" y1="12" x2="3.01" y2="12"></line>
-                        <line x1="3" y1="18" x2="3.01" y2="18"></line>
-                    </svg>
-                    Semua
+                    📂 Semua
                 </button>
                 <button class="faq-category-btn" data-category="umum">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <line x1="12" y1="16" x2="12" y2="12"></line>
-                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
-                    </svg>
-                    Umum
+                    💡 Umum
                 </button>
                 <button class="faq-category-btn" data-category="pemesanan">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                        <polyline points="14 2 14 8 20 8"></polyline>
-                        <line x1="16" y1="13" x2="8" y2="13"></line>
-                        <line x1="16" y1="17" x2="8" y2="17"></line>
-                        <polyline points="10 9 9 9 8 9"></polyline>
-                    </svg>
-                    Pemesanan
+                    🛒 Pemesanan
                 </button>
                 <button class="faq-category-btn" data-category="pembayaran">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
-                        <line x1="1" y1="10" x2="23" y2="10"></line>
-                    </svg>
-                    Pembayaran
+                    💳 Pembayaran
                 </button>
                 <button class="faq-category-btn" data-category="teknis">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="16 18 22 12 16 6"></polyline>
-                        <polyline points="8 6 2 12 8 18"></polyline>
-                    </svg>
-                    Teknis
+                    ⚙️ Teknis
                 </button>
                 <button class="faq-category-btn" data-category="pasca-launch">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                    </svg>
-                    Pasca Launch
+                    🚀 Pasca Launch
                 </button>
             </div>
         </div>
     </section>
 
     <!-- FAQ Content -->
-    <section class="faq-content-section section-padding bg-light">
+    <section class="section-padding bg-light">
         <div class="container">
             <div class="faq-list" id="faqList">
                 <!-- Umum -->
                 <div class="faq-group" data-category="umum">
-                    <h3 class="faq-group-title">Umum</h3>
+                    <h3 class="faq-group-title">💡 Umum</h3>
                     
                     <div class="faq-item">
                         <button class="faq-question" aria-expanded="false">
                             <span>Apa itu WebDevPro dan layanan apa saja yang ditawarkan?</span>
-                            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
+                            <div class="faq-icon">▼</div>
                         </button>
                         <div class="faq-answer">
-                            <p>WebDevPro adalah perusahaan pengembangan web dan solusi digital yang menyediakan layanan lengkap mulai dari pembuatan website, aplikasi mobile, UI/UX design, digital marketing, DevOps & cloud services, hingga maintenance dan support berkelanjutan. Kami melayani klien dari berbagai skala bisnis, mulai dari personal brand hingga perusahaan enterprise.</p>
+                            <div class="faq-answer-inner">
+                                <p>WebDevPro adalah perusahaan pengembangan web dan solusi digital yang menyediakan layanan lengkap mulai dari pembuatan website, aplikasi mobile, UI/UX design, digital marketing, DevOps & cloud services, hingga maintenance dan support berkelanjutan. Kami melayani klien dari berbagai skala bisnis, mulai dari personal brand hingga perusahaan enterprise.</p>
+                            </div>
                         </div>
                     </div>
 
                     <div class="faq-item">
                         <button class="faq-question" aria-expanded="false">
                             <span>Bagaimana cara memulai proyek dengan WebDevPro?</span>
-                            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
+                            <div class="faq-icon">▼</div>
                         </button>
                         <div class="faq-answer">
-                            <p>Anda dapat memulai dengan mengisi formulir kontak di halaman <a href="kontak.html">Kontak</a>, mengirim email ke info@webdevpro.id, atau langsung menghubungi kami via WhatsApp. Tim kami akan menjadwalkan konsultasi gratis untuk mendiskusikan kebutuhan proyek Anda dan memberikan estimasi waktu serta biaya.</p>
+                            <div class="faq-answer-inner">
+                                <p>Anda dapat memulai dengan mengisi formulir kontak di halaman <a href="kontak.html">Kontak</a>, mengirim email ke setyawanhendri253@gmail.com, atau langsung menghubungi kami via WhatsApp. Tim kami akan menjadwalkan konsultasi gratis untuk mendiskusikan kebutuhan proyek Anda dan memberikan estimasi waktu serta biaya.</p>
+                            </div>
                         </div>
                     </div>
 
                     <div class="faq-item">
                         <button class="faq-question" aria-expanded="false">
                             <span>Apakah WebDevPro menerima proyek dari luar kota atau luar negeri?</span>
-                            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
+                            <div class="faq-icon">▼</div>
                         </button>
                         <div class="faq-answer">
-                            <p>Tentu! Kami melayani klien dari seluruh Indonesia dan mancanegara. Proses kerja kami didesain untuk berjalan efektif secara remote melalui video conference, email, dan platform kolaborasi online. Kami telah menangani proyek untuk klien di Singapura, Malaysia, Australia, dan beberapa negara Eropa.</p>
+                            <div class="faq-answer-inner">
+                                <p>Tentu! Kami melayani klien dari seluruh Indonesia dan mancanegara. Proses kerja kami didesain untuk berjalan efektif secara remote melalui video conference, email, dan platform kolaborasi online. Kami telah menangani proyek untuk klien di berbagai kota di Indonesia.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Pemesanan -->
                 <div class="faq-group" data-category="pemesanan">
-                    <h3 class="faq-group-title">Pemesanan & Proses Kerja</h3>
+                    <h3 class="faq-group-title">🛒 Pemesanan & Proses Kerja</h3>
                     
                     <div class="faq-item">
                         <button class="faq-question" aria-expanded="false">
                             <span>Berapa lama waktu pengerjaan sebuah website?</span>
-                            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
+                            <div class="faq-icon">▼</div>
                         </button>
                         <div class="faq-answer">
-                            <p>Waktu pengerjaan bergantung pada kompleksitas proyek:</p>
-                            <ul>
-                                <li><strong>Landing Page:</strong> 1-2 minggu</li>
-                                <li><strong>Company Profile (5-10 halaman):</strong> 2-4 minggu</li>
-                                <li><strong>E-Commerce:</strong> 4-8 minggu</li>
-                                <li><strong>Web App Custom:</strong> 8-16 minggu</li>
-                            </ul>
-                            <p>Timeline pasti akan disepakati dalam kontrak kerja setelah diskusi detail kebutuhan.</p>
+                            <div class="faq-answer-inner">
+                                <p>Waktu pengerjaan bergantung pada kompleksitas proyek:</p>
+                                <ul>
+                                    <li><strong>Landing Page:</strong> 1-2 minggu</li>
+                                    <li><strong>Company Profile (5-10 halaman):</strong> 2-4 minggu</li>
+                                    <li><strong>E-Commerce:</strong> 4-8 minggu</li>
+                                    <li><strong>Web App Custom:</strong> 8-16 minggu</li>
+                                </ul>
+                                <p>Timeline pasti akan disepakati dalam kontrak kerja setelah diskusi detail kebutuhan.</p>
+                            </div>
                         </div>
                     </div>
 
                     <div class="faq-item">
                         <button class="faq-question" aria-expanded="false">
                             <span>Apakah saya bisa melihat progress proyek saat dikerjakan?</span>
-                            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
+                            <div class="faq-icon">▼</div>
                         </button>
                         <div class="faq-answer">
-                            <p>Ya, tentu. Kami memberikan akses ke staging server sehingga Anda dapat melihat dan menguji website secara real-time selama proses development. Selain itu, kami mengadakan meeting progress mingguan dan memberikan laporan update melalui email atau project management tool yang kami gunakan.</p>
+                            <div class="faq-answer-inner">
+                                <p>Ya, tentu. Kami memberikan akses ke staging server sehingga Anda dapat melihat dan menguji website secara real-time selama proses development. Selain itu, kami mengadakan meeting progress mingguan dan memberikan laporan update melalui email atau project management tool.</p>
+                            </div>
                         </div>
                     </div>
 
                     <div class="faq-item">
                         <button class="faq-question" aria-expanded="false">
                             <span>Berapa kali revisi yang didapatkan?</span>
-                            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
+                            <div class="faq-icon">▼</div>
                         </button>
                         <div class="faq-answer">
-                            <p>Jumlah revisi tergantung paket yang dipilih:</p>
-                            <ul>
-                                <li><strong>Starter:</strong> 1 kali revisi</li>
-                                <li><strong>Business:</strong> 3 kali revisi</li>
-                                <li><strong>Enterprise:</strong> Unlimited revisi selama masa development</li>
-                            </ul>
-                            <p>Revisi mencakup perubahan desain, konten, dan fungsionalitas sesuai scope awal. Perubahan scope besar di luar kesepakatan awal akan dikenakan biaya tambahan.</p>
+                            <div class="faq-answer-inner">
+                                <p>Jumlah revisi tergantung paket yang dipilih:</p>
+                                <ul>
+                                    <li><strong>Starter:</strong> 1 kali revisi</li>
+                                    <li><strong>Business:</strong> 3 kali revisi</li>
+                                    <li><strong>Enterprise:</strong> Unlimited revisi selama masa development</li>
+                                </ul>
+                                <p>Revisi mencakup perubahan desain, konten, dan fungsionalitas sesuai scope awal.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Pembayaran -->
                 <div class="faq-group" data-category="pembayaran">
-                    <h3 class="faq-group-title">Pembayaran</h3>
+                    <h3 class="faq-group-title">💳 Pembayaran</h3>
                     
                     <div class="faq-item">
                         <button class="faq-question" aria-expanded="false">
                             <span>Metode pembayaran apa saja yang diterima?</span>
-                            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
+                            <div class="faq-icon">▼</div>
                         </button>
                         <div class="faq-answer">
-                            <p>Kami menerima berbagai metode pembayaran:</p>
-                            <ul>
-                                <li>Transfer Bank (BCA, Mandiri, BNI, BRI)</li>
-                                <li>E-Wallet (GoPay, OVO, DANA, LinkAja)</li>
-                                <li>Kartu Kredit (Visa, Mastercard, JCB)</li>
-                                <li>PayPal (untuk klien internasional)</li>
-                            </ul>
+                            <div class="faq-answer-inner">
+                                <p>Kami menerima berbagai metode pembayaran:</p>
+                                <ul>
+                                    <li>Transfer Bank (BCA, Mandiri, BNI, BRI)</li>
+                                    <li>E-Wallet (GoPay, OVO, DANA, LinkAja)</li>
+                                    <li>Kartu Kredit (Visa, Mastercard, JCB)</li>
+                                    <li>PayPal (untuk klien internasional)</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
 
                     <div class="faq-item">
                         <button class="faq-question" aria-expanded="false">
                             <span>Bagaimana skema pembayaran untuk proyek besar?</span>
-                            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
+                            <div class="faq-icon">▼</div>
                         </button>
                         <div class="faq-answer">
-                            <p>Untuk proyek dengan nilai di atas Rp 10 juta, kami menggunakan skema pembayaran termin:</p>
-                            <ul>
-                                <li><strong>Termin 1 (30%):</strong> Saat penandatanganan kontrak</li>
-                                <li><strong>Termin 2 (40%):</strong> Saat progress mencapai 50% (setelah desain disetujui)</li>
-                                <li><strong>Termin 3 (30%):</strong> Setelah proyek selesai dan disetujui</li>
-                            </ul>
-                            <p>Untuk proyek kecil, pembayaran dapat dilakukan 50% di depan dan 50% setelah selesai.</p>
+                            <div class="faq-answer-inner">
+                                <p>Untuk proyek dengan nilai di atas Rp 10 juta, kami menggunakan skema pembayaran termin:</p>
+                                <ul>
+                                    <li><strong>Termin 1 (30%):</strong> Saat penandatanganan kontrak</li>
+                                    <li><strong>Termin 2 (40%):</strong> Saat progress mencapai 50%</li>
+                                    <li><strong>Termin 3 (30%):</strong> Setelah proyek selesai dan disetujui</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
 
                     <div class="faq-item">
                         <button class="faq-question" aria-expanded="false">
                             <span>Apakah ada refund jika saya membatalkan proyek?</span>
-                            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
+                            <div class="faq-icon">▼</div>
                         </button>
                         <div class="faq-answer">
-                            <p>Kebijakan refund kami:</p>
-                            <ul>
-                                <li>Pembatalan sebelum development dimulai: refund 100%</li>
-                                <li>Pembatalan setelah desain disetujui: refund 50%</li>
-                                <li>Pembatalan setelah development dimulai: refund 25%</li>
-                                <li>Pembatalan setelah testing: tidak ada refund</li>
-                            </ul>
-                            <p>Semua refund diproses dalam waktu 7-14 hari kerja.</p>
+                            <div class="faq-answer-inner">
+                                <p>Kebijakan refund kami:</p>
+                                <ul>
+                                    <li>Pembatalan sebelum development dimulai: <strong>refund 100%</strong></li>
+                                    <li>Pembatalan setelah desain disetujui: <strong>refund 50%</strong></li>
+                                    <li>Pembatalan setelah development dimulai: <strong>refund 25%</strong></li>
+                                    <li>Pembatalan setelah testing: <strong>tidak ada refund</strong></li>
+                                </ul>
+                                <p>Semua refund diproses dalam waktu 7-14 hari kerja.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Teknis -->
                 <div class="faq-group" data-category="teknis">
-                    <h3 class="faq-group-title">Teknis</h3>
+                    <h3 class="faq-group-title">⚙️ Teknis</h3>
                     
                     <div class="faq-item">
                         <button class="faq-question" aria-expanded="false">
                             <span>Apakah website yang dibuat sudah mobile-friendly?</span>
-                            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
+                            <div class="faq-icon">▼</div>
                         </button>
                         <div class="faq-answer">
-                            <p>Ya, 100%. Semua website yang kami bangun menggunakan pendekatan mobile-first responsive design. Website akan tampil optimal di semua perangkat: desktop, tablet, dan smartphone. Kami juga melakukan testing pada berbagai ukuran layar dan browser untuk memastikan kompatibilitas maksimal.</p>
+                            <div class="faq-answer-inner">
+                                <p>Ya, <strong>100%</strong>. Semua website yang kami bangun menggunakan pendekatan mobile-first responsive design. Website akan tampil optimal di semua perangkat: desktop, tablet, dan smartphone. Kami juga melakukan testing pada berbagai ukuran layar dan browser untuk memastikan kompatibilitas maksimal.</p>
+                            </div>
                         </div>
                     </div>
 
                     <div class="faq-item">
                         <button class="faq-question" aria-expanded="false">
                             <span>Apakah website sudah SEO-friendly?</span>
-                            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
+                            <div class="faq-icon">▼</div>
                         </button>
                         <div class="faq-answer">
-                            <p>Ya, kami menerapkan best practice SEO on-page pada setiap website, termasuk:</p>
-                            <ul>
-                                <li>Struktur URL yang bersih dan semantic</li>
-                                <li>Meta tags, Open Graph, dan Twitter Cards</li>
-                                <li>Schema markup untuk rich snippets</li>
-                                <li>Optimasi kecepatan loading (Core Web Vitals)</li>
-                                <li>XML sitemap dan robots.txt</li>
-                                <li>Alt text untuk semua gambar</li>
-                            </ul>
-                            <p>Untuk paket Business dan Enterprise, kami juga menyediakan layanan SEO lanjutan termasuk keyword research dan content strategy.</p>
-                        </div>
-                    </div>
-
-                    <div class="faq-item">
-                        <button class="faq-question" aria-expanded="false">
-                            <span>Apakah saya mendapatkan source code website?</span>
-                            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
-                        </button>
-                        <div class="faq-answer">
-                            <p>Ya, setelah proyek selesai dan pembayaran lunas, seluruh source code, aset desain, dan dokumentasi teknis akan diserahkan kepada Anda. Kami juga memberikan akses ke repository GitHub/GitLab proyek Anda. Namun, framework dan library pihak ketiga tetap mengikuti lisensi masing-masing.</p>
+                            <div class="faq-answer-inner">
+                                <p>Ya, kami menerapkan best practice SEO on-page pada setiap website, termasuk:</p>
+                                <ul>
+                                    <li>Struktur URL yang bersih dan semantic</li>
+                                    <li>Meta tags, Open Graph, dan Twitter Cards</li>
+                                    <li>Schema markup untuk rich snippets</li>
+                                    <li>Optimasi kecepatan loading (Core Web Vitals)</li>
+                                    <li>XML sitemap dan robots.txt</li>
+                                    <li>Alt text untuk semua gambar</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
 
                     <div class="faq-item">
                         <button class="faq-question" aria-expanded="false">
                             <span>Platform dan teknologi apa yang biasa digunakan?</span>
-                            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
+                            <div class="faq-icon">▼</div>
                         </button>
                         <div class="faq-answer">
-                            <p>Kami menggunakan teknologi modern yang sesuai kebutuhan proyek:</p>
-                            <ul>
-                                <li><strong>Frontend:</strong> HTML5, CSS3, JavaScript, React, Vue.js, Next.js</li>
-                                <li><strong>Backend:</strong> Node.js, Python/Django, PHP/Laravel</li>
-                                <li><strong>Database:</strong> PostgreSQL, MySQL, MongoDB, Firebase</li>
-                                <li><strong>CMS:</strong> WordPress, Strapi, Sanity, Custom CMS</li>
-                                <li><strong>Mobile:</strong> React Native, Flutter</li>
-                                <li><strong>Cloud:</strong> AWS, Google Cloud, Vercel, Netlify</li>
-                            </ul>
-                            <p>Pilihan teknologi akan didiskusikan bersama Anda berdasarkan kebutuhan dan budget.</p>
+                            <div class="faq-answer-inner">
+                                <p>Kami menggunakan teknologi modern yang sesuai kebutuhan proyek:</p>
+                                <ul>
+                                    <li><strong>Frontend:</strong> HTML5, CSS3, JavaScript, React, Vue.js, Next.js</li>
+                                    <li><strong>Backend:</strong> Node.js, Python/Django, PHP/Laravel</li>
+                                    <li><strong>Database:</strong> PostgreSQL, MySQL, MongoDB, Firebase</li>
+                                    <li><strong>CMS:</strong> WordPress, Strapi, Custom CMS</li>
+                                    <li><strong>Mobile:</strong> React Native, Flutter</li>
+                                    <li><strong>Cloud:</strong> AWS, Google Cloud, Vercel, Netlify</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Pasca Launch -->
                 <div class="faq-group" data-category="pasca-launch">
-                    <h3 class="faq-group-title">Pasca Launch & Maintenance</h3>
+                    <h3 class="faq-group-title">🚀 Pasca Launch & Maintenance</h3>
                     
                     <div class="faq-item">
                         <button class="faq-question" aria-expanded="false">
                             <span>Apakah ada garansi setelah website selesai?</span>
-                            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
+                            <div class="faq-icon">▼</div>
                         </button>
                         <div class="faq-answer">
-                            <p>Kami memberikan garansi bug fixing sesuai paket:</p>
-                            <ul>
-                                <li><strong>Starter:</strong> 1 bulan</li>
-                                <li><strong>Business:</strong> 3 bulan</li>
-                                <li><strong>Enterprise:</strong> 6 bulan</li>
-                            </ul>
-                            <p>Garansi mencakup perbaikan bug yang timbul akibat kesalahan development kami, bukan perubahan fitur atau konten baru.</p>
+                            <div class="faq-answer-inner">
+                                <p>Kami memberikan garansi bug fixing sesuai paket:</p>
+                                <ul>
+                                    <li><strong>Starter:</strong> 1 bulan</li>
+                                    <li><strong>Business:</strong> 3 bulan</li>
+                                    <li><strong>Enterprise:</strong> 6 bulan</li>
+                                </ul>
+                                <p>Garansi mencakup perbaikan bug yang timbul akibat kesalahan development kami.</p>
+                            </div>
                         </div>
                     </div>
 
                     <div class="faq-item">
                         <button class="faq-question" aria-expanded="false">
                             <span>Apakah WebDevPro menyediakan layanan maintenance?</span>
-                            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
+                            <div class="faq-icon">▼</div>
                         </button>
                         <div class="faq-answer">
-                            <p>Ya, kami menyediakan paket maintenance bulanan yang mencakup:</p>
-                            <ul>
-                                <li>Update keamanan dan patch sistem</li>
-                                <li>Backup otomatis harian/mingguan</li>
-                                <li>Monitoring uptime 24/7</li>
-                                <li>Update konten (tergantung paket)</li>
-                                <li>Optimasi performa berkala</li>
-                                <li>Support teknis</li>
-                            </ul>
-                            <p>Biaya maintenance mulai dari Rp 500.000/bulan tergantung kompleksitas website.</p>
+                            <div class="faq-answer-inner">
+                                <p>Ya, kami menyediakan paket maintenance bulanan yang mencakup:</p>
+                                <ul>
+                                    <li>Update keamanan dan patch sistem</li>
+                                    <li>Backup otomatis harian/mingguan</li>
+                                    <li>Monitoring uptime 24/7</li>
+                                    <li>Update konten (tergantung paket)</li>
+                                    <li>Optimasi performa berkala</li>
+                                    <li>Support teknis</li>
+                                </ul>
+                                <p>Biaya maintenance mulai dari <strong>Rp 500.000/bulan</strong> tergantung kompleksitas website.</p>
+                            </div>
                         </div>
                     </div>
 
                     <div class="faq-item">
                         <button class="faq-question" aria-expanded="false">
                             <span>Apakah saya bisa mengelola website sendiri setelah selesai?</span>
-                            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="6 9 12 15 18 9"></polyline>
-                            </svg>
+                            <div class="faq-icon">▼</div>
                         </button>
                         <div class="faq-answer">
-                            <p>Tentu! Untuk paket Business dan Enterprise, kami menyediakan CMS (Content Management System) yang user-friendly sehingga Anda dapat mengupdate konten, gambar, dan beberapa pengaturan tanpa perlu coding. Kami juga memberikan training singkat dan dokumentasi penggunaan CMS. Untuk paket Starter, perubahan konten dapat dilakukan dengan menghubungi tim kami.</p>
+                            <div class="faq-answer-inner">
+                                <p>Tentu! Untuk paket Business dan Enterprise, kami menyediakan CMS (Content Management System) yang user-friendly sehingga Anda dapat mengupdate konten, gambar, dan beberapa pengaturan tanpa perlu coding. Kami juga memberikan <strong>training singkat</strong> dan dokumentasi penggunaan CMS.</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- No Results Message -->
+            <!-- No Results -->
             <div id="noResults" class="no-results hidden">
-                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="11" cy="11" r="8"></circle>
-                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                    <line x1="8" y1="8" x2="14" y2="14"></line>
-                    <line x1="14" y1="8" x2="8" y2="14"></line>
-                </svg>
+                <div style="font-size:60px; margin-bottom:15px;">🔍</div>
                 <h3>Tidak ada hasil</h3>
                 <p>Coba gunakan kata kunci lain atau pilih kategori yang tersedia.</p>
             </div>
@@ -419,23 +1164,12 @@
         <div class="container">
             <div class="still-questions-content">
                 <div class="still-questions-text">
-                    <h2>Masih Punya Pertanyaan?</h2>
+                    <h2>Masih Punya <span style="color:var(--primary);">Pertanyaan</span>?</h2>
                     <p>Tim kami siap membantu menjawab pertanyaan spesifik Anda. Hubungi kami melalui salah satu channel di bawah ini.</p>
                 </div>
                 <div class="still-questions-actions">
-                    <a href="kontak.html" class="btn btn-primary btn-lg">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                            <polyline points="22,6 12,13 2,6"></polyline>
-                        </svg>
-                        Kirim Email
-                    </a>
-                    <a href="https://wa.me/6281234567890" target="_blank" class="btn btn-whatsapp btn-lg">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-                        </svg>
-                        Chat WhatsApp
-                    </a>
+                    <a href="kontak.html" class="btn btn-primary btn-lg">📧 Kirim Email</a>
+                    <a href="https://wa.me/6281248141031?text=Halo%20kak%20Hendri,%20saya%20punya%20pertanyaan." target="_blank" class="btn btn-whatsapp btn-lg">💬 Chat WhatsApp</a>
                 </div>
             </div>
         </div>
@@ -449,30 +1183,10 @@
                     <a href="index.html" class="logo">Web<span>Dev</span>Pro</a>
                     <p>Partner tepercaya untuk solusi digital bisnis Anda. Kami menghadirkan inovasi dan kualitas dalam setiap proyek.</p>
                     <div class="social-links">
-                        <a href="#" aria-label="Facebook">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-                            </svg>
-                        </a>
-                        <a href="#" aria-label="Twitter">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
-                            </svg>
-                        </a>
-                        <a href="#" aria-label="Instagram">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                            </svg>
-                        </a>
-                        <a href="#" aria-label="LinkedIn">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                                <rect x="2" y="9" width="4" height="12"></rect>
-                                <circle cx="4" cy="4" r="2"></circle>
-                            </svg>
-                        </a>
+                        <a href="#" aria-label="Facebook">📘</a>
+                        <a href="#" aria-label="Twitter">🐦</a>
+                        <a href="#" aria-label="Instagram">📷</a>
+                        <a href="#" aria-label="LinkedIn">💼</a>
                     </div>
                 </div>
                 <div class="footer-links">
@@ -498,9 +1212,9 @@
                 <div class="footer-contact">
                     <h4>Kontak</h4>
                     <ul>
-                        <li>📍 Jl. Sudirman No. 123, Jakarta</li>
-                        <li>📞 +62 812-3456-7890</li>
-                        <li>✉️ info@webdevpro.id</li>
+                        <li>📍 Batang, Jawa Tengah</li>
+                        <li>📞 +62 812-4814-1031</li>
+                        <li>✉️ setyawanhendri253@gmail.com</li>
                         <li>🕐 Senin - Jumat: 09.00 - 17.00</li>
                     </ul>
                 </div>
@@ -511,22 +1225,47 @@
         </div>
     </footer>
 
-    <script src="assets/js/main.js"></script>
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/6281248141031?text=Halo%20kak%20Hendri,%20saya%20tertarik%20dengan%20produk%20Anda." 
+       class="whatsapp-float" target="_blank" title="Chat WhatsApp">
+        💬
+    </a>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    
+    <script src="assets/js/firebase-config.js"></script>
+    <script src="assets/js/auth.js"></script>
+
     <script>
+        // Navbar scroll
+        window.addEventListener('scroll', () => {
+            document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // Check auth
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                document.getElementById('loginBtn').style.display = 'none';
+                document.getElementById('registerBtn').style.display = 'none';
+                document.getElementById('userMenu').classList.remove('hidden');
+                document.getElementById('userName').textContent = user.displayName || user.email;
+            }
+        });
+
         // FAQ Accordion
         document.querySelectorAll('.faq-question').forEach(button => {
             button.addEventListener('click', () => {
                 const faqItem = button.parentElement;
                 const isOpen = faqItem.classList.contains('active');
                 
-                // Close all items in the same group
-                const group = faqItem.closest('.faq-group');
-                if (group) {
-                    group.querySelectorAll('.faq-item').forEach(item => {
-                        item.classList.remove('active');
-                        item.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
-                    });
-                }
+                // Close all items
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('active');
+                    item.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+                });
                 
                 // Toggle clicked item
                 if (!isOpen) {
@@ -558,20 +1297,13 @@
                     }
                 });
 
-                // Show/hide no results message
-                if (visibleCount === 0) {
-                    noResults.classList.remove('hidden');
-                } else {
-                    noResults.classList.add('hidden');
-                }
+                noResults.classList.toggle('hidden', visibleCount > 0);
             });
         });
 
         // Search Functionality
-        const searchInput = document.getElementById('faqSearch');
-        
-        searchInput.addEventListener('input', function() {
-            const query = this.value.toLowerCase().trim();
+        function searchFAQ() {
+            const query = document.getElementById('faqSearch').value.toLowerCase().trim();
             let hasResults = false;
 
             faqGroups.forEach(group => {
@@ -591,21 +1323,15 @@
                     }
                 });
 
-                // Show group if it has matching items
                 group.style.display = groupHasMatch ? 'block' : 'none';
             });
 
-            // Show/hide no results
-            if (!hasResults && query.length > 0) {
-                noResults.classList.remove('hidden');
-            } else {
-                noResults.classList.add('hidden');
-            }
+            noResults.classList.toggle('hidden', hasResults);
+        }
 
-            // Reset category buttons if searching
-            if (query.length > 0) {
-                categoryBtns.forEach(b => b.classList.remove('active'));
-            }
+        // Enter key search
+        document.getElementById('faqSearch').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') searchFAQ();
         });
     </script>
 </body>
