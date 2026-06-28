@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | WebDevPro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        .user-layout { display: flex; min-height: 100vh; }
+        .user-sidebar { width: 250px; background: white; box-shadow: 2px 0 10px rgba(0,0,0,0.05); padding: 20px 0; position: fixed; height: 100vh; }
+        .user-sidebar .logo { padding: 0 20px 20px; text-align: center; border-bottom: 1px solid #eee; margin-bottom: 20px; }
+        .user-menu a { display: block; padding: 12px 25px; color: #666; text-decoration: none; transition: all 0.3s; border-left: 3px solid transparent; }
+        .user-menu a:hover, .user-menu a.active { background: rgba(255,215,0,0.1); color: var(--secondary); border-left-color: var(--primary); }
+        .user-main { margin-left: 250px; flex: 1; background: #f5f6fa; }
+        .user-header { background: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .user-content { padding: 30px; }
+    </style>
+</head>
+<body>
+    <div class="user-layout">
+        <!-- Sidebar -->
+        <aside class="user-sidebar">
+            <div class="logo">
+                <h4 style="margin:0;">Web<span style="color:var(--primary);">Dev</span>Pro</h4>
+            </div>
+            <div class="user-menu">
+                <a href="index.html" class="active">📊 Dashboard</a>
+                <a href="profile.html">👤 Profil Saya</a>
+                <a href="pesanans.html">🛒 Pesanan Saya</a>
+                <div style="margin-top:30px; border-top:1px solid #eee; padding-top:20px;">
+                    <a href="../index.html">🌐 Lihat Website</a>
+                    <a href="#" onclick="logout()">🚪 Logout</a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main -->
+        <div class="user-main">
+            <div class="user-header">
+                <h4 style="margin:0;">Dashboard</h4>
+                <div>
+                    <a href="https://wa.me/6281234567890" target="_blank" class="btn btn-sm btn-primary">💬 Chat Admin</a>
+                    <span id="userName" style="margin-left:15px;">User</span> 👤
+                </div>
+            </div>
+            
+            <div class="user-content">
+                <div class="stats-grid" style="grid-template-columns: repeat(3, 1fr);">
+                    <div class="stat-card">
+                        <div class="stat-icon yellow">🛒</div>
+                        <div class="stat-value" id="totalPesanan">0</div>
+                        <div class="stat-label">Total Pesanan</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon blue">⏳</div>
+                        <div class="stat-value" id="pesananProses">0</div>
+                        <div class="stat-label">Dalam Proses</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon green">✅</div>
+                        <div class="stat-value" id="pesananSelesai">0</div>
+                        <div class="stat-label">Selesai</div>
+                    </div>
+                </div>
+
+                <div class="table-container" style="margin-top:30px;">
+                    <div style="padding:20px; border-bottom:1px solid #eee;">
+                        <h4>Pesanan Terbaru</h4>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Kode</th>
+                                <th>Nama Proyek</th>
+                                <th>Paket</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="userPesanans">
+                            <tr><td colspan="5" style="text-align:center;">Memuat data...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    
+    <script src="../assets/js/firebase-config.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script>
+        checkUser().then(() => {
+            loadUserData();
+        });
+
+        async function loadUserData() {
+            const user = auth.currentUser;
+            document.getElementById('userName').textContent = user.displayName || user.email;
+
+            const snapshot = await db.collection('pesanans')
+                .where('userId', '==', user.uid)
+                .orderBy('createdAt', 'desc')
+                .get();
+
+            const pesanans = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            
+            document.getElementById('totalPesanan').textContent = pesanans.length;
+            document.getElementById('pesananProses').textContent = pesanans.filter(p => ['pending','diproses','revisi'].includes(p.status)).length;
+            document.getElementById('pesananSelesai').textContent = pesanans.filter(p => p.status === 'selesai').length;
+
+            const tbody = document.getElementById('userPesanans');
+            tbody.innerHTML = '';
+            
+            if (pesanans.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">Belum ada pesanan. <a href="../pemesanan.html" style="color:var(--primary);">Buat pesanan!</a></td></tr>';
+                return;
+            }
+            
+            pesanans.slice(0, 5).forEach(p => {
+                const statusBadge = {
+                    'pending': '<span class="badge badge-warning">Pending</span>',
+                    'diproses': '<span class="badge badge-info">Diproses</span>',
+                    'selesai': '<span class="badge badge-success">Selesai</span>'
+                }[p.status] || '<span class="badge badge-warning">Pending</span>';
+                
+                tbody.innerHTML += `
+                    <tr>
+                        <td><strong>#${p.kodePesanan || 'N/A'}</strong></td>
+                        <td>${p.namaProyek || ''}</td>
+                        <td>${p.paketNama || 'Unknown'}</td>
+                        <td>${statusBadge}</td>
+                        <td><a href="pesanan-detail.html?id=${p.id}" class="btn btn-sm btn-primary">Detail</a></td>
+                    </tr>
+                `;
+            });
+        }
+    </script>
+</body>
+</html>

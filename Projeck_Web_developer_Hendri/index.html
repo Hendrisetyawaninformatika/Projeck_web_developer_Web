@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jasa Web Developer Profesional | WebDevPro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">Web<span>Dev</span>Pro</a>
+            
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Beranda</a></li>
+                <li><a href="tentang.html">Tentang</a></li>
+                <li><a href="layanan.html">Layanan</a></li>
+                <li><a href="portofolio.html">Portofolio</a></li>
+                <li><a href="harga.html">Harga</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="kontak.html">Kontak</a></li>
+            </ul>
+            
+            <div class="nav-buttons">
+                <a href="login.html" class="btn btn-outline btn-sm" id="loginBtn">Masuk</a>
+                <a href="register.html" class="btn btn-primary btn-sm" id="registerBtn">Daftar</a>
+                <div id="userMenu" class="hidden">
+                    <a href="user/index.html" class="btn btn-primary btn-sm">
+                        👤 <span id="userName">User</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div style="display:inline-block; background:rgba(255,215,0,0.2); padding:8px 20px; border-radius:50px; margin-bottom:20px; color:var(--primary); font-weight:600;">
+                    ⭐ Web Developer Batang Jawa Tengah
+                </div>
+               <h1>Hendri Setyawa Akan<span></span> <h1>Wujudkan Website <span>Impian</span> Anda Bersama Kami</h1>
+                <p>Kami menyediakan jasa pembuatan website profesional dengan desain modern, responsif, dan optimasi SEO terbaik untuk mengembangkan bisnis Anda.</p>
+                
+                <div class="hero-buttons">
+                    <a href="pemesanan.html" class="btn btn-primary btn-lg">
+                        🚀 Mulai Proyek
+                    </a>
+                    <a href="portofolio.html" class="btn btn-outline btn-lg" style="color:white; border-color:white;">
+                        📂 Lihat Portofolio
+                    </a>
+                </div>
+                
+                <div class="hero-stats">
+                    <div>
+                        <h3>500+</h3>
+                        <small>Proyek Selesai</small>
+                    </div>
+                    <div>
+                        <h3>98%</h3>
+                        <small>Kepuasan Klien</small>
+                    </div>
+                    <div>
+                        <h3>50+</h3>
+                        <small>Klien Aktif</small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hero-image">
+                <img src="https://img.freepik.com/free-vector/web-development-programmer-engineering-coding-website-augmented-reality-interface-screens-developer-project-engineer-programming-software-application-design-cartoon-illustration_107791-3863.jpg" alt="Web Development">
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section>
+        <div class="container">
+            <div class="section-title">
+                <h2>Layanan <span>Unggulan</span></h2>
+                <p>Solusi lengkap untuk kebutuhan digital Anda</p>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">💻</div>
+                    <h3>Website Company Profile</h3>
+                    <p>Tampilkan identitas perusahaan Anda dengan website profesional yang menarik.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🛒</div>
+                    <h3>E-Commerce</h3>
+                    <p>Bangun toko online Anda dengan fitur lengkap dan sistem pembayaran terintegrasi.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">⚙️</div>
+                    <h3>Web Application</h3>
+                    <p>Aplikasi web custom sesuai kebutuhan bisnis Anda dengan teknologi terkini.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🚀</div>
+                    <h3>Landing Page</h3>
+                    <p>Halaman landing yang konversi tinggi untuk campaign marketing Anda.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🔍</div>
+                    <h3>SEO Optimization</h3>
+                    <p>Optimasi mesin pencari untuk meningkatkan visibilitas website Anda.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">📱</div>
+                    <h3>Mobile Responsive</h3>
+                    <p>Website yang optimal di semua perangkat, dari desktop hingga smartphone.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Preview -->
+    <section style="background:#f8f9fa;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Paket <span>Harga</span></h2>
+                <p>Pilih paket yang sesuai dengan kebutuhan Anda</p>
+            </div>
+            
+            <div class="pricing-grid" id="pricingGrid">
+                <!-- Diisi oleh JavaScript dari Firebase -->
+                <div class="pricing-card">
+                    <h3>Starter</h3>
+                    <div class="price">Rp 2.500.000<span>/proyek</span></div>
+                    <ul>
+                        <li>5 Halaman Website</li>
+                        <li>Responsive Design</li>
+                        <li>Basic SEO</li>
+                        <li>1x Revisi</li>
+                        <li>Gratis Domain .com</li>
+                    </ul>
+                    <a href="pemesanan.html?paket=starter" class="btn btn-outline w-100">Pilih Paket</a>
+                </div>
+                
+                <div class="pricing-card featured">
+                    <h3>Professional</h3>
+                    <div class="price">Rp 5.000.000<span>/proyek</span></div>
+                    <ul>
+                        <li>10 Halaman Website</li>
+                        <li>Responsive Design</li>
+                        <li>Advanced SEO</li>
+                        <li>Unlimited Revisi</li>
+                        <li>Gratis Domain .com</li>
+                        <li>Panel Admin</li>
+                        <li>Blog System</li>
+                    </ul>
+                    <a href="pemesanan.html?paket=professional" class="btn btn-primary w-100">Pilih Paket</a>
+                </div>
+                
+                <div class="pricing-card">
+                    <h3>Enterprise</h3>
+                    <div class="price">Rp 10.000.000<span>/proyek</span></div>
+                    <ul>
+                        <li>Unlimited Halaman</li>
+                        <li>Custom Design</li>
+                        <li>Premium SEO</li>
+                        <li>Unlimited Revisi</li>
+                        <li>Gratis Domain .com</li>
+                        <li>Panel Admin</li>
+                        <li>Multi Bahasa</li>
+                        <li>Maintenance 1 Tahun</li>
+                    </ul>
+                    <a href="pemesanan.html?paket=enterprise" class="btn btn-outline w-100">Pilih Paket</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section>
+        <div class="container" style="text-align:center;">
+            <h2 style="font-size:2rem; margin-bottom:20px;">Siap Memulai Proyek <span style="color:var(--primary);">Website</span> Anda?</h2>
+            <p style="color:var(--gray); margin-bottom:30px;">Konsultasikan kebutuhan website Anda secara gratis.</p>
+           <a href="https://wa.me/6281248141031?text=Halo%20kak%20Hendri,%20saya%20tertarik%20dengan%20produk%20Anda." 
+   class="btn btn-primary btn-lg" 
+   target="_blank">
+   💬 Chat WhatsApp
+</a>
+            <a href="pemesanan.html" class="btn btn-outline btn-lg" style="margin-left:15px;">📩 Kirim Pesanan</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h4>Web<span>Dev</span>Pro</h4>
+                    <p style="color:rgba(255,255,255,0.7); margin-top:15px;">Solusi digital terbaik untuk bisnis Anda.</p>
+                </div>
+                <div>
+                    <h4>Menu</h4>
+                    <a href="index.html">Beranda</a>
+                    <a href="tentang.html">Tentang Kami</a>
+                    <a href="layanan.html">Layanan</a>
+                    <a href="harga.html">Paket Harga</a>
+                </div>
+                <div>
+                    <h4>Layanan</h4>
+                    <a href="layanan.html">Company Profile</a>
+                    <a href="layanan.html">E-Commerce</a>
+                    <a href="layanan.html">Web Application</a>
+                    <a href="layanan.html">Landing Page</a>
+                </div>
+                <div>
+                    <h4>Kontak</h4>
+                    <a href="#">📍 Batang  Indonesia</a>
+                    <a href="#">📧 setyawanhendri253@gmail.com </a>
+                    <a href="#">📱 +62 812-4814-1031</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 WebDevPro. All rights reserved.</p>
+                <div>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/6281248141031?text=Halo%20kak%20Hendri,%20saya%20tertarik%20dengan%20produk%20Anda." 
+   class="btn btn-primary btn-lg" 
+   target="_blank">
+   💬 Chat WhatsApp
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    
+    <script src="assets/js/firebase-config.js"></script>
+    <script src="assets/js/auth.js"></script>
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+        });
+    </script>
+</body>
+</html>

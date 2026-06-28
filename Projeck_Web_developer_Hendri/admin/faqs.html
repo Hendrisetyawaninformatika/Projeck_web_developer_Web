@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ | WebDevPro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">Web<span>Dev</span>Pro</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="tentang.html">Tentang</a></li>
+                <li><a href="layanan.html">Layanan</a></li>
+                <li><a href="portofolio.html">Portofolio</a></li>
+                <li><a href="harga.html">Harga</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="kontak.html">Kontak</a></li>
+            </ul>
+            <div class="nav-buttons">
+                <a href="login.html" class="btn btn-outline btn-sm" id="loginBtn">Masuk</a>
+                <a href="register.html" class="btn btn-primary btn-sm" id="registerBtn">Daftar</a>
+                <div id="userMenu" class="hidden">
+                    <a href="user/index.html" class="btn btn-primary btn-sm">👤 <span id="userName">User</span></a>
+                </div>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="page-hero">
+        <div class="container">
+            <h1>Pertanyaan Umum</h1>
+            <p>Temukan jawaban atas pertanyaan yang sering diajukan seputar layanan dan proses kerja kami</p>
+        </div>
+    </section>
+
+    <!-- Search FAQ -->
+    <section class="faq-search-section">
+        <div class="container">
+            <div class="faq-search-box">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input type="text" id="faqSearch" placeholder="Cari pertanyaan... (contoh: harga, domain, revisi)">
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Categories -->
+    <section class="faq-categories-section">
+        <div class="container">
+            <div class="faq-categories">
+                <button class="faq-category-btn active" data-category="all">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="8" y1="6" x2="21" y2="6"></line>
+                        <line x1="8" y1="12" x2="21" y2="12"></line>
+                        <line x1="8" y1="18" x2="21" y2="18"></line>
+                        <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                        <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                        <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                    </svg>
+                    Semua
+                </button>
+                <button class="faq-category-btn" data-category="umum">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                    </svg>
+                    Umum
+                </button>
+                <button class="faq-category-btn" data-category="pemesanan">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                    Pemesanan
+                </button>
+                <button class="faq-category-btn" data-category="pembayaran">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                        <line x1="1" y1="10" x2="23" y2="10"></line>
+                    </svg>
+                    Pembayaran
+                </button>
+                <button class="faq-category-btn" data-category="teknis">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="16 18 22 12 16 6"></polyline>
+                        <polyline points="8 6 2 12 8 18"></polyline>
+                    </svg>
+                    Teknis
+                </button>
+                <button class="faq-category-btn" data-category="pasca-launch">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    </svg>
+                    Pasca Launch
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Content -->
+    <section class="faq-content-section section-padding bg-light">
+        <div class="container">
+            <div class="faq-list" id="faqList">
+                <!-- Umum -->
+                <div class="faq-group" data-category="umum">
+                    <h3 class="faq-group-title">Umum</h3>
+                    
+                    <div class="faq-item">
+                        <button class="faq-question" aria-expanded="false">
+                            <span>Apa itu WebDevPro dan layanan apa saja yang ditawarkan?</span>
+                            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            <p>WebDevPro adalah perusahaan pengembangan web dan solusi digital yang menyediakan layanan lengkap mulai dari pembuatan website, aplikasi mobile, UI/UX design, digital marketing, DevOps & cloud services, hingga maintenance dan support berkelanjutan. Kami melayani klien dari berbagai skala bisnis, mulai dari personal brand hingga perusahaan enterprise.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" aria-expanded="false">
+                            <span>Bagaimana cara memulai proyek dengan WebDevPro?</span>
+                            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Anda dapat memulai dengan mengisi formulir kontak di halaman <a href="kontak.html">Kontak</a>, mengirim email ke info@webdevpro.id, atau langsung menghubungi kami via WhatsApp. Tim kami akan menjadwalkan konsultasi gratis untuk mendiskusikan kebutuhan proyek Anda dan memberikan estimasi waktu serta biaya.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" aria-expanded="false">
+                            <span>Apakah WebDevPro menerima proyek dari luar kota atau luar negeri?</span>
+                            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Tentu! Kami melayani klien dari seluruh Indonesia dan mancanegara. Proses kerja kami didesain untuk berjalan efektif secara remote melalui video conference, email, dan platform kolaborasi online. Kami telah menangani proyek untuk klien di Singapura, Malaysia, Australia, dan beberapa negara Eropa.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pemesanan -->
+                <div class="faq-group" data-category="pemesanan">
+                    <h3 class="faq-group-title">Pemesanan & Proses Kerja</h3>
+                    
+                    <div class="faq-item">
+                        <button class="faq-question" aria-expanded="false">
+                            <span>Berapa lama waktu pengerjaan sebuah website?</span>
+                            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Waktu pengerjaan bergantung pada kompleksitas proyek:</p>
+                            <ul>
+                                <li><strong>Landing Page:</strong> 1-2 minggu</li>
+                                <li><strong>Company Profile (5-10 halaman):</strong> 2-4 minggu</li>
+                                <li><strong>E-Commerce:</strong> 4-8 minggu</li>
+                                <li><strong>Web App Custom:</strong> 8-16 minggu</li>
+                            </ul>
+                            <p>Timeline pasti akan disepakati dalam kontrak kerja setelah diskusi detail kebutuhan.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" aria-expanded="false">
+                            <span>Apakah saya bisa melihat progress proyek saat dikerjakan?</span>
+                            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Ya, tentu. Kami memberikan akses ke staging server sehingga Anda dapat melihat dan menguji website secara real-time selama proses development. Selain itu, kami mengadakan meeting progress mingguan dan memberikan laporan update melalui email atau project management tool yang kami gunakan.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" aria-expanded="false">
+                            <span>Berapa kali revisi yang didapatkan?</span>
+                            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Jumlah revisi tergantung paket yang dipilih:</p>
+                            <ul>
+                                <li><strong>Starter:</strong> 1 kali revisi</li>
+                                <li><strong>Business:</strong> 3 kali revisi</li>
+                                <li><strong>Enterprise:</strong> Unlimited revisi selama masa development</li>
+                            </ul>
+                            <p>Revisi mencakup perubahan desain, konten, dan fungsionalitas sesuai scope awal. Perubahan scope besar di luar kesepakatan awal akan dikenakan biaya tambahan.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pembayaran -->
+                <div class="faq-group" data-category="pembayaran">
+                    <h3 class="faq-group-title">Pembayaran</h3>
+                    
+                    <div class="faq-item">
+                        <button class="faq-question" aria-expanded="false">
+                            <span>Metode pembayaran apa saja yang diterima?</span>
+                            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Kami menerima berbagai metode pembayaran:</p>
+                            <ul>
+                                <li>Transfer Bank (BCA, Mandiri, BNI, BRI)</li>
+                                <li>E-Wallet (GoPay, OVO, DANA, LinkAja)</li>
+                                <li>Kartu Kredit (Visa, Mastercard, JCB)</li>
+                                <li>PayPal (untuk klien internasional)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" aria-expanded="false">
+                            <span>Bagaimana skema pembayaran untuk proyek besar?</span>
+                            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Untuk proyek dengan nilai di atas Rp 10 juta, kami menggunakan skema pembayaran termin:</p>
+                            <ul>
+                                <li><strong>Termin 1 (30%):</strong> Saat penandatanganan kontrak</li>
+                                <li><strong>Termin 2 (40%):</strong> Saat progress mencapai 50% (setelah desain disetujui)</li>
+                                <li><strong>Termin 3 (30%):</strong> Setelah proyek selesai dan disetujui</li>
+                            </ul>
+                            <p>Untuk proyek kecil, pembayaran dapat dilakukan 50% di depan dan 50% setelah selesai.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" aria-expanded="false">
+                            <span>Apakah ada refund jika saya membatalkan proyek?</span>
+                            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Kebijakan refund kami:</p>
+                            <ul>
+                                <li>Pembatalan sebelum development dimulai: refund 100%</li>
+                                <li>Pembatalan setelah desain disetujui: refund 50%</li>
+                                <li>Pembatalan setelah development dimulai: refund 25%</li>
+                                <li>Pembatalan setelah testing: tidak ada refund</li>
+                            </ul>
+                            <p>Semua refund diproses dalam waktu 7-14 hari kerja.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Teknis -->
+                <div class="faq-group" data-category="teknis">
+                    <h3 class="faq-group-title">Teknis</h3>
+                    
+                    <div class="faq-item">
+                        <button class="faq-question" aria-expanded="false">
+                            <span>Apakah website yang dibuat sudah mobile-friendly?</span>
+                            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Ya, 100%. Semua website yang kami bangun menggunakan pendekatan mobile-first responsive design. Website akan tampil optimal di semua perangkat: desktop, tablet, dan smartphone. Kami juga melakukan testing pada berbagai ukuran layar dan browser untuk memastikan kompatibilitas maksimal.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" aria-expanded="false">
+                            <span>Apakah website sudah SEO-friendly?</span>
+                            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Ya, kami menerapkan best practice SEO on-page pada setiap website, termasuk:</p>
+                            <ul>
+                                <li>Struktur URL yang bersih dan semantic</li>
+                                <li>Meta tags, Open Graph, dan Twitter Cards</li>
+                                <li>Schema markup untuk rich snippets</li>
+                                <li>Optimasi kecepatan loading (Core Web Vitals)</li>
+                                <li>XML sitemap dan robots.txt</li>
+                                <li>Alt text untuk semua gambar</li>
+                            </ul>
+                            <p>Untuk paket Business dan Enterprise, kami juga menyediakan layanan SEO lanjutan termasuk keyword research dan content strategy.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" aria-expanded="false">
+                            <span>Apakah saya mendapatkan source code website?</span>
+                            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Ya, setelah proyek selesai dan pembayaran lunas, seluruh source code, aset desain, dan dokumentasi teknis akan diserahkan kepada Anda. Kami juga memberikan akses ke repository GitHub/GitLab proyek Anda. Namun, framework dan library pihak ketiga tetap mengikuti lisensi masing-masing.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" aria-expanded="false">
+                            <span>Platform dan teknologi apa yang biasa digunakan?</span>
+                            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Kami menggunakan teknologi modern yang sesuai kebutuhan proyek:</p>
+                            <ul>
+                                <li><strong>Frontend:</strong> HTML5, CSS3, JavaScript, React, Vue.js, Next.js</li>
+                                <li><strong>Backend:</strong> Node.js, Python/Django, PHP/Laravel</li>
+                                <li><strong>Database:</strong> PostgreSQL, MySQL, MongoDB, Firebase</li>
+                                <li><strong>CMS:</strong> WordPress, Strapi, Sanity, Custom CMS</li>
+                                <li><strong>Mobile:</strong> React Native, Flutter</li>
+                                <li><strong>Cloud:</strong> AWS, Google Cloud, Vercel, Netlify</li>
+                            </ul>
+                            <p>Pilihan teknologi akan didiskusikan bersama Anda berdasarkan kebutuhan dan budget.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pasca Launch -->
+                <div class="faq-group" data-category="pasca-launch">
+                    <h3 class="faq-group-title">Pasca Launch & Maintenance</h3>
+                    
+                    <div class="faq-item">
+                        <button class="faq-question" aria-expanded="false">
+                            <span>Apakah ada garansi setelah website selesai?</span>
+                            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Kami memberikan garansi bug fixing sesuai paket:</p>
+                            <ul>
+                                <li><strong>Starter:</strong> 1 bulan</li>
+                                <li><strong>Business:</strong> 3 bulan</li>
+                                <li><strong>Enterprise:</strong> 6 bulan</li>
+                            </ul>
+                            <p>Garansi mencakup perbaikan bug yang timbul akibat kesalahan development kami, bukan perubahan fitur atau konten baru.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" aria-expanded="false">
+                            <span>Apakah WebDevPro menyediakan layanan maintenance?</span>
+                            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Ya, kami menyediakan paket maintenance bulanan yang mencakup:</p>
+                            <ul>
+                                <li>Update keamanan dan patch sistem</li>
+                                <li>Backup otomatis harian/mingguan</li>
+                                <li>Monitoring uptime 24/7</li>
+                                <li>Update konten (tergantung paket)</li>
+                                <li>Optimasi performa berkala</li>
+                                <li>Support teknis</li>
+                            </ul>
+                            <p>Biaya maintenance mulai dari Rp 500.000/bulan tergantung kompleksitas website.</p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question" aria-expanded="false">
+                            <span>Apakah saya bisa mengelola website sendiri setelah selesai?</span>
+                            <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </button>
+                        <div class="faq-answer">
+                            <p>Tentu! Untuk paket Business dan Enterprise, kami menyediakan CMS (Content Management System) yang user-friendly sehingga Anda dapat mengupdate konten, gambar, dan beberapa pengaturan tanpa perlu coding. Kami juga memberikan training singkat dan dokumentasi penggunaan CMS. Untuk paket Starter, perubahan konten dapat dilakukan dengan menghubungi tim kami.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- No Results Message -->
+            <div id="noResults" class="no-results hidden">
+                <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    <line x1="8" y1="8" x2="14" y2="14"></line>
+                    <line x1="14" y1="8" x2="8" y2="14"></line>
+                </svg>
+                <h3>Tidak ada hasil</h3>
+                <p>Coba gunakan kata kunci lain atau pilih kategori yang tersedia.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Still Have Questions -->
+    <section class="still-questions-section section-padding">
+        <div class="container">
+            <div class="still-questions-content">
+                <div class="still-questions-text">
+                    <h2>Masih Punya Pertanyaan?</h2>
+                    <p>Tim kami siap membantu menjawab pertanyaan spesifik Anda. Hubungi kami melalui salah satu channel di bawah ini.</p>
+                </div>
+                <div class="still-questions-actions">
+                    <a href="kontak.html" class="btn btn-primary btn-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                        Kirim Email
+                    </a>
+                    <a href="https://wa.me/6281234567890" target="_blank" class="btn btn-whatsapp btn-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                        </svg>
+                        Chat WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <a href="index.html" class="logo">Web<span>Dev</span>Pro</a>
+                    <p>Partner tepercaya untuk solusi digital bisnis Anda. Kami menghadirkan inovasi dan kualitas dalam setiap proyek.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                            </svg>
+                        </a>
+                        <a href="#" aria-label="Twitter">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+                            </svg>
+                        </a>
+                        <a href="#" aria-label="Instagram">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                            </svg>
+                        </a>
+                        <a href="#" aria-label="LinkedIn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                                <rect x="2" y="9" width="4" height="12"></rect>
+                                <circle cx="4" cy="4" r="2"></circle>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Tautan Cepat</h4>
+                    <ul>
+                        <li><a href="index.html">Beranda</a></li>
+                        <li><a href="tentang.html">Tentang Kami</a></li>
+                        <li><a href="layanan.html">Layanan</a></li>
+                        <li><a href="portofolio.html">Portofolio</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Layanan</h4>
+                    <ul>
+                        <li><a href="#">Website Development</a></li>
+                        <li><a href="#">Mobile Apps</a></li>
+                        <li><a href="#">UI/UX Design</a></li>
+                        <li><a href="#">Digital Marketing</a></li>
+                        <li><a href="#">Cloud Services</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Kontak</h4>
+                    <ul>
+                        <li>📍 Jl. Sudirman No. 123, Jakarta</li>
+                        <li>📞 +62 812-3456-7890</li>
+                        <li>✉️ info@webdevpro.id</li>
+                        <li>🕐 Senin - Jumat: 09.00 - 17.00</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 WebDevPro. Hak Cipta Dilindungi.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+    <script>
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(button => {
+            button.addEventListener('click', () => {
+                const faqItem = button.parentElement;
+                const isOpen = faqItem.classList.contains('active');
+                
+                // Close all items in the same group
+                const group = faqItem.closest('.faq-group');
+                if (group) {
+                    group.querySelectorAll('.faq-item').forEach(item => {
+                        item.classList.remove('active');
+                        item.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+                    });
+                }
+                
+                // Toggle clicked item
+                if (!isOpen) {
+                    faqItem.classList.add('active');
+                    button.setAttribute('aria-expanded', 'true');
+                }
+            });
+        });
+
+        // Category Filter
+        const categoryBtns = document.querySelectorAll('.faq-category-btn');
+        const faqGroups = document.querySelectorAll('.faq-group');
+        const noResults = document.getElementById('noResults');
+
+        categoryBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                categoryBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const category = btn.dataset.category;
+                let visibleCount = 0;
+
+                faqGroups.forEach(group => {
+                    if (category === 'all' || group.dataset.category === category) {
+                        group.style.display = 'block';
+                        visibleCount++;
+                    } else {
+                        group.style.display = 'none';
+                    }
+                });
+
+                // Show/hide no results message
+                if (visibleCount === 0) {
+                    noResults.classList.remove('hidden');
+                } else {
+                    noResults.classList.add('hidden');
+                }
+            });
+        });
+
+        // Search Functionality
+        const searchInput = document.getElementById('faqSearch');
+        
+        searchInput.addEventListener('input', function() {
+            const query = this.value.toLowerCase().trim();
+            let hasResults = false;
+
+            faqGroups.forEach(group => {
+                const items = group.querySelectorAll('.faq-item');
+                let groupHasMatch = false;
+
+                items.forEach(item => {
+                    const question = item.querySelector('.faq-question span').textContent.toLowerCase();
+                    const answer = item.querySelector('.faq-answer').textContent.toLowerCase();
+
+                    if (question.includes(query) || answer.includes(query)) {
+                        item.style.display = 'block';
+                        groupHasMatch = true;
+                        hasResults = true;
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+
+                // Show group if it has matching items
+                group.style.display = groupHasMatch ? 'block' : 'none';
+            });
+
+            // Show/hide no results
+            if (!hasResults && query.length > 0) {
+                noResults.classList.remove('hidden');
+            } else {
+                noResults.classList.add('hidden');
+            }
+
+            // Reset category buttons if searching
+            if (query.length > 0) {
+                categoryBtns.forEach(b => b.classList.remove('active'));
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin | WebDevPro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <h3>Web<span>Dev</span>Pro</h3>
+                <small>Admin Panel</small>
+            </div>
+            
+            <div class="sidebar-menu">
+                <div class="menu-header">Menu Utama</div>
+                <a href="index.html" class="menu-item active">📊 Dashboard</a>
+                
+                <div class="menu-header">Manajemen</div>
+                <a href="users.html" class="menu-item">👥 Users</a>
+                <a href="pakets.html" class="menu-item">📦 Paket</a>
+                <a href="portofolios.html" class="menu-item">🎨 Portofolio</a>
+                <a href="blogs.html" class="menu-item">📝 Blog</a>
+                <a href="testimonis.html" class="menu-item">⭐ Testimoni</a>
+                <a href="faqs.html" class="menu-item">❓ FAQ</a>
+                <a href="pesanans.html" class="menu-item">🛒 Pesanan</a>
+                
+                <div class="menu-header">Pengaturan</div>
+                <a href="settings.html" class="menu-item">⚙️ Pengaturan</a>
+                
+                <div style="margin-top:30px; padding:20px; border-top:1px solid rgba(255,255,255,0.1);">
+                    <a href="../index.html" class="menu-item">🌐 Lihat Website</a>
+                    <a href="#" onclick="logout()" class="menu-item">🚪 Logout</a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <div class="admin-main">
+            <div class="admin-header">
+                <h3>Dashboard</h3>
+                <div>
+                    <span id="adminName">Hendri Setyawan</span> 👤
+                </div>
+            </div>
+            
+            <div class="admin-content">
+                <!-- Stats -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon yellow">👥</div>
+                        <div class="stat-value" id="totalUsers">0</div>
+                        <div class="stat-label">Total Users</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon green">🛒</div>
+                        <div class="stat-value" id="totalPesanan">0</div>
+                        <div class="stat-label">Total Pesanan</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon blue">💰</div>
+                        <div class="stat-value" id="totalPendapatan">Rp 0</div>
+                        <div class="stat-label">Total Pendapatan</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon red">⏳</div>
+                        <div class="stat-value" id="pesananPending">0</div>
+                        <div class="stat-label">Pesanan Pending</div>
+                    </div>
+                </div>
+
+                <!-- Recent Orders -->
+                <div class="table-container">
+                    <div style="padding:20px; border-bottom:1px solid #eee; display:flex; justify-content:space-between; align-items:center;">
+                        <h4>Pesanan Terbaru</h4>
+                        <a href="pesanans.html" class="btn btn-sm btn-outline">Lihat Semua</a>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Kode</th>
+                                <th>Pelanggan</th>
+                                <th>Paket</th>
+                                <th>Status</th>
+                                <th>Tanggal</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recentPesanans">
+                            <tr><td colspan="5" style="text-align:center;">Memuat data...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    
+    <script src="../assets/js/firebase-config.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script>
+        // Cek admin
+        checkAdmin().then(() => {
+            loadDashboardData();
+        });
+
+        async function loadDashboardData() {
+            // Hitung total users
+            const usersSnapshot = await db.collection('users').get();
+            document.getElementById('totalUsers').textContent = usersSnapshot.size;
+
+            // Hitung pesanan
+            const pesananSnapshot = await db.collection('pesanans').get();
+            const pesanans = pesananSnapshot.docs.map(doc => doc.data());
+            
+            document.getElementById('totalPesanan').textContent = pesanans.length;
+            
+            const pending = pesanans.filter(p => p.status === 'pending').length;
+            document.getElementById('pesananPending').textContent = pending;
+            
+            const pendapatan = pesanans
+                .filter(p => p.status === 'selesai')
+                .reduce((sum, p) => sum + (p.harga || 0), 0);
+            document.getElementById('totalPendapatan').textContent = 'Rp ' + pendapatan.toLocaleString('id-ID');
+
+            // Tampilkan pesanan terbaru
+            const tbody = document.getElementById('recentPesanans');
+            tbody.innerHTML = '';
+            
+            pesanans.slice(0, 5).forEach(p => {
+                const statusBadge = {
+                    'pending': '<span class="badge badge-warning">Pending</span>',
+                    'diproses': '<span class="badge badge-info">Diproses</span>',
+                    'selesai': '<span class="badge badge-success">Selesai</span>',
+                    'dibatalkan': '<span class="badge badge-danger">Dibatalkan</span>'
+                }[p.status] || '<span class="badge badge-warning">Pending</span>';
+                
+                tbody.innerHTML += `
+                    <tr>
+                        <td><strong>#${p.kodePesanan || 'N/A'}</strong></td>
+                        <td>${p.userName || 'Unknown'}</td>
+                        <td>${p.paketNama || 'Unknown'}</td>
+                        <td>${statusBadge}</td>
+                        <td>${p.createdAt ? new Date(p.createdAt.toDate()).toLocaleDateString('id-ID') : '-'}</td>
+                    </tr>
+                `;
+            });
+        }
+    </script>
+</body>
+</html>
