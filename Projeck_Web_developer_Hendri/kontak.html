@@ -6,8 +6,687 @@
     <title>Kontak Kami | WebDevPro</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        /* ========================================
+           ANIMASI DEVELOPER UNIK UNTUK KONTAK
+           ======================================== */
+
+        /* Background dengan pola kode */
+        .page-hero {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            padding: 140px 20px 100px;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Animasi Code Rain (seperti Matrix) */
+        .code-rain {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            opacity: 0.15;
+            z-index: 0;
+        }
+
+        .code-rain .code-char {
+            position: absolute;
+            color: #f5b014;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            animation: codeFall linear infinite;
+            opacity: 0;
+        }
+
+        .code-rain .code-char:nth-child(1) { left: 5%; animation-duration: 8s; animation-delay: 0s; font-size: 16px; }
+        .code-rain .code-char:nth-child(2) { left: 12%; animation-duration: 11s; animation-delay: 2s; font-size: 12px; }
+        .code-rain .code-char:nth-child(3) { left: 20%; animation-duration: 9s; animation-delay: 1s; }
+        .code-rain .code-char:nth-child(4) { left: 28%; animation-duration: 13s; animation-delay: 3s; font-size: 18px; }
+        .code-rain .code-char:nth-child(5) { left: 35%; animation-duration: 7s; animation-delay: 0.5s; font-size: 11px; }
+        .code-rain .code-char:nth-child(6) { left: 42%; animation-duration: 10s; animation-delay: 4s; font-size: 15px; }
+        .code-rain .code-char:nth-child(7) { left: 50%; animation-duration: 12s; animation-delay: 2.5s; }
+        .code-rain .code-char:nth-child(8) { left: 58%; animation-duration: 8.5s; animation-delay: 1.5s; font-size: 13px; }
+        .code-rain .code-char:nth-child(9) { left: 65%; animation-duration: 14s; animation-delay: 5s; font-size: 17px; }
+        .code-rain .code-char:nth-child(10) { left: 72%; animation-duration: 9.5s; animation-delay: 3.5s; font-size: 11px; }
+        .code-rain .code-char:nth-child(11) { left: 80%; animation-duration: 11.5s; animation-delay: 1.8s; }
+        .code-rain .code-char:nth-child(12) { left: 88%; animation-duration: 10.5s; animation-delay: 4.5s; font-size: 14px; }
+        .code-rain .code-char:nth-child(13) { left: 95%; animation-duration: 12.5s; animation-delay: 2.2s; font-size: 16px; }
+
+        @keyframes codeFall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            80% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* Animasi Terminal di Hero */
+        .terminal-animation {
+            position: relative;
+            z-index: 1;
+            max-width: 600px;
+            margin: 20px auto 0;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 12px;
+            border: 1px solid rgba(245, 176, 20, 0.2);
+            padding: 16px 20px;
+            backdrop-filter: blur(10px);
+            text-align: left;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            color: #a0aec0;
+            overflow: hidden;
+        }
+
+        .terminal-header {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .terminal-dot.red { background: #ff5f57; }
+        .terminal-dot.yellow { background: #ffbd2e; }
+        .terminal-dot.green { background: #28c840; }
+
+        .terminal-line {
+            display: flex;
+            gap: 12px;
+            line-height: 1.8;
+            animation: typeIn 2s ease forwards;
+            opacity: 0;
+        }
+        .terminal-line:nth-child(1) { animation-delay: 0.2s; }
+        .terminal-line:nth-child(2) { animation-delay: 0.8s; }
+        .terminal-line:nth-child(3) { animation-delay: 1.4s; }
+        .terminal-line:nth-child(4) { animation-delay: 2.0s; }
+        .terminal-line:nth-child(5) { animation-delay: 2.6s; }
+
+        @keyframes typeIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .terminal-prompt {
+            color: #f5b014;
+            font-weight: 700;
+        }
+        .terminal-command {
+            color: #a0aec0;
+        }
+        .terminal-response {
+            color: #68d391;
+        }
+        .terminal-cursor {
+            display: inline-block;
+            width: 8px;
+            height: 16px;
+            background: #f5b014;
+            animation: blink 1s step-end infinite;
+            vertical-align: text-bottom;
+            margin-left: 2px;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        /* ========================================
+           CONTACT INFO CARDS
+           ======================================== */
+        .contact-info-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            margin-top: -50px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .contact-info-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            transition: all 0.4s ease;
+            border: 1px solid rgba(0,0,0,0.04);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #f5b014, #d49a0e);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .contact-info-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .contact-info-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+        }
+
+        .contact-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(245, 176, 20, 0.12), rgba(245, 176, 20, 0.05));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 18px;
+            color: #f5b014;
+            transition: all 0.4s ease;
+        }
+
+        .contact-info-card:hover .contact-icon {
+            background: linear-gradient(135deg, #f5b014, #d49a0e);
+            color: white;
+            transform: scale(1.05) rotate(-5deg);
+        }
+
+        .contact-info-card h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+
+        .contact-info-card p {
+            font-size: 14px;
+            color: #64748b;
+            line-height: 1.7;
+        }
+
+        /* ========================================
+           FORM
+           ======================================== */
+        .contact-main-grid {
+            display: grid;
+            grid-template-columns: 1.3fr 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        .contact-form-wrapper {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 13px;
+            color: #1e293b;
+            margin-bottom: 5px;
+        }
+        .form-group .required {
+            color: #ef4444;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            background: #fafcff;
+            color: #1e293b;
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #f5b014;
+            box-shadow: 0 0 0 4px rgba(245, 176, 20, 0.08);
+            background: #fff;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #f5b014;
+            cursor: pointer;
+        }
+        .checkbox-group label {
+            font-size: 13px;
+            color: #64748b;
+            cursor: pointer;
+            margin: 0;
+        }
+        .checkbox-group a {
+            color: #f5b014;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #f5b014, #d49a0e);
+            color: #0f172a;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-family: inherit;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(245, 176, 20, 0.35);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #e2e8f0;
+            color: #475569;
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .btn-outline:hover {
+            border-color: #f5b014;
+            color: #f5b014;
+        }
+
+        .btn-whatsapp {
+            background: #25d366;
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            font-family: inherit;
+        }
+
+        .btn-whatsapp:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(37, 211, 102, 0.35);
+        }
+
+        .btn-lg {
+            padding: 16px 40px;
+            font-size: 16px;
+        }
+
+        /* Success Message */
+        .success-message {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .success-message .success-icon {
+            font-size: 60px;
+            color: #10b981;
+            margin-bottom: 15px;
+        }
+        .success-message h3 {
+            font-size: 24px;
+            color: #0f172a;
+            margin-bottom: 10px;
+        }
+        .success-message p {
+            color: #64748b;
+            margin-bottom: 25px;
+        }
+
+        /* ========================================
+           SOCIAL MEDIA
+           ======================================== */
+        .social-connect {
+            background: white;
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .social-connect h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 5px;
+        }
+
+        .social-connect p {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .social-links-large {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .social-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            padding: 15px 10px;
+            background: #f8fafc;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #475569;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .social-link:hover {
+            background: linear-gradient(135deg, rgba(245, 176, 20, 0.08), rgba(245, 176, 20, 0.02));
+            border-color: #f5b014;
+            color: #f5b014;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+
+        .social-link svg {
+            width: 28px;
+            height: 28px;
+            transition: transform 0.3s ease;
+        }
+
+        .social-link:hover svg {
+            transform: scale(1.1);
+        }
+
+        .social-link span {
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* Map Container */
+        .map-container {
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+        .map-container iframe {
+            display: block;
+            width: 100%;
+            height: 300px;
+        }
+
+        /* WhatsApp CTA */
+        .whatsapp-cta {
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            border-radius: 24px;
+            padding: 30px;
+            text-align: center;
+            margin-top: 20px;
+            color: white;
+        }
+
+        .whatsapp-cta h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .whatsapp-cta p {
+            color: rgba(255,255,255,0.7);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        /* ========================================
+           FOOTER
+           ======================================== */
+        footer {
+            background: #0f172a;
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+            gap: 40px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .footer-about .logo {
+            font-size: 26px;
+            font-weight: 800;
+            color: white;
+            text-decoration: none;
+        }
+        .footer-about .logo span {
+            color: #f5b014;
+        }
+        .footer-about p {
+            color: rgba(255,255,255,0.6);
+            font-size: 14px;
+            line-height: 1.8;
+            margin: 15px 0 20px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 10px;
+        }
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255,255,255,0.6);
+            transition: all 0.3s ease;
+        }
+        .social-links a:hover {
+            background: #f5b014;
+            color: #0f172a;
+            transform: translateY(-3px);
+        }
+
+        .footer-links h4,
+        .footer-contact h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        .footer-links a {
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        .footer-links a:hover {
+            color: #f5b014;
+            padding-left: 5px;
+        }
+
+        .footer-contact li {
+            color: rgba(255,255,255,0.6);
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            font-size: 13px;
+            color: rgba(255,255,255,0.4);
+        }
+        .footer-bottom a {
+            color: rgba(255,255,255,0.4);
+            text-decoration: none;
+            margin-left: 20px;
+        }
+        .footer-bottom a:hover {
+            color: #f5b014;
+        }
+
+        /* ========================================
+           RESPONSIVE
+           ======================================== */
+        @media (max-width: 992px) {
+            .contact-info-grid {
+                grid-template-columns: repeat(2, 1fr);
+                margin-top: -30px;
+            }
+            .contact-main-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .social-links-large {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-hero {
+                padding: 120px 16px 80px;
+            }
+            .page-hero h1 {
+                font-size: 2rem;
+            }
+            .terminal-animation {
+                font-size: 11px;
+                padding: 12px 15px;
+            }
+            .contact-info-grid {
+                grid-template-columns: 1fr;
+                margin-top: -20px;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            .social-links-large {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .contact-form-wrapper {
+                padding: 24px;
+            }
+            .code-rain {
+                opacity: 0.08;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-hero h1 {
+                font-size: 1.6rem;
+            }
+            .terminal-animation {
+                font-size: 10px;
+                padding: 10px 12px;
+            }
+            .terminal-line {
+                flex-wrap: wrap;
+            }
+            .social-links-large {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
 </head>
 <body>
+    <!-- ===== NAVBAR ===== -->
     <nav class="navbar" id="navbar">
         <div class="container">
             <a href="index.html" class="logo">Web<span>Dev</span>Pro</a>
@@ -35,15 +714,63 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- ===== HERO SECTION ===== -->
     <section class="page-hero">
-        <div class="container">
+        <!-- Code Rain Animation -->
+        <div class="code-rain">
+            <span class="code-char">&lt;/&gt;</span>
+            <span class="code-char">{ }</span>
+            <span class="code-char">function</span>
+            <span class="code-char">const</span>
+            <span class="code-char">return</span>
+            <span class="code-char">if</span>
+            <span class="code-char">else</span>
+            <span class="code-char">for</span>
+            <span class="code-char">while</span>
+            <span class="code-char">class</span>
+            <span class="code-char">import</span>
+            <span class="code-char">export</span>
+            <span class="code-char">async</span>
+        </div>
+
+        <div class="container" style="position:relative; z-index:1;">
             <h1>Hubungi Kami</h1>
             <p>Kami siap membantu mewujudkan ide digital Anda. Jangan ragu untuk menghubungi kami!</p>
+
+            <!-- Terminal Animation -->
+            <div class="terminal-animation">
+                <div class="terminal-header">
+                    <span class="terminal-dot red"></span>
+                    <span class="terminal-dot yellow"></span>
+                    <span class="terminal-dot green"></span>
+                    <span style="margin-left:10px; color:#64748b; font-size:11px;">developer@webdevpro:~$</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-prompt">$</span>
+                    <span class="terminal-command">contact --team</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-prompt">→</span>
+                    <span class="terminal-response">📧 Email: info@webdevpro.id</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-prompt">→</span>
+                    <span class="terminal-response">📱 WhatsApp: +62 812-4814-1031</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-prompt">→</span>
+                    <span class="terminal-response">📍 Lokasi: Batang, Jawa Tengah</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-prompt">$</span>
+                    <span class="terminal-command">_</span>
+                    <span class="terminal-cursor"></span>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- Contact Info Section -->
+    <!-- ===== CONTACT INFO ===== -->
     <section class="contact-info-section section-padding">
         <div class="container">
             <div class="contact-info-grid">
@@ -55,7 +782,7 @@
                         </svg>
                     </div>
                     <h3>Alamat Kantor</h3>
-                    <p>Jl. Sudirman No. 123<br>Karet Tengsin, Jakarta Pusat<br>DKI Jakarta 10220</p>
+                    <p>Jl. Mangga Subah<br>Batang, Jawa Tengah<br>Indonesia</p>
                 </div>
 
                 <div class="contact-info-card">
@@ -65,7 +792,7 @@
                         </svg>
                     </div>
                     <h3>Telepon & WhatsApp</h3>
-                    <p>+62 812-3456-7890<br>+62 21-5555-8888</p>
+                    <p>+62 812-4814-1031<br>+62 21-5555-8888</p>
                 </div>
 
                 <div class="contact-info-card">
@@ -93,7 +820,7 @@
         </div>
     </section>
 
-    <!-- Contact Form & Map Section -->
+    <!-- ===== CONTACT FORM & MAP ===== -->
     <section class="contact-main-section section-padding bg-light">
         <div class="container">
             <div class="contact-main-grid">
@@ -154,14 +881,9 @@
                         </button>
                     </form>
 
-                    <!-- Success Message (hidden by default) -->
+                    <!-- Success Message -->
                     <div id="successMessage" class="success-message hidden">
-                        <div class="success-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                            </svg>
-                        </div>
+                        <div class="success-icon">✅</div>
                         <h3>Pesan Terkirim!</h3>
                         <p>Terima kasih telah menghubungi kami. Tim kami akan merespons pesan Anda dalam waktu 1x24 jam.</p>
                         <button class="btn btn-outline" onclick="resetForm()">Kirim Pesan Lain</button>
@@ -169,12 +891,12 @@
                 </div>
 
                 <!-- Map & Social -->
-                <div class="contact-map-wrapper">
+                <div>
                     <div class="map-container">
                         <iframe 
                             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.521260322283!2d106.819045!3d-6.194742!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f5390917b759%3A0x6b45e67356080477!2sJl.%20Jend.%20Sudirman%2C%20Jakarta!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid" 
                             width="100%" 
-                            height="350" 
+                            height="300" 
                             style="border:0; border-radius: 12px;" 
                             allowfullscreen="" 
                             loading="lazy" 
@@ -222,13 +944,21 @@
                                 </svg>
                                 <span>YouTube</span>
                             </a>
+                            <a href="#" class="social-link" aria-label="TikTok">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M18.5 4h-13C3.5 4 2 5.5 2 7.5v9c0 2 1.5 3.5 3.5 3.5h13c2 0 3.5-1.5 3.5-3.5v-9c0-2-1.5-3.5-3.5-3.5z"></path>
+                                    <path d="M10 9.5v5c0 .8-.7 1.5-1.5 1.5S7 15.3 7 14.5c0-.8.7-1.5 1.5-1.5.3 0 .5.1.7.2"></path>
+                                    <path d="M10 11l4-2v4.5c0 .8-.7 1.5-1.5 1.5s-1.5-.7-1.5-1.5c0-.8.7-1.5 1.5-1.5.3 0 .5.1.7.2"></path>
+                                </svg>
+                                <span>TikTok</span>
+                            </a>
                         </div>
                     </div>
 
                     <div class="whatsapp-cta">
-                        <h3>Butuh Respon Cepat?</h3>
+                        <h3>💬 Butuh Respon Cepat?</h3>
                         <p>Chat langsung dengan tim kami via WhatsApp</p>
-                        <a href="https://wa.me/6281248141031" target="_blank" class="btn btn-whatsapp btn-lg">
+                        <a href="https://wa.me/6281248141031" target="_blank" class="btn-whatsapp btn-lg" style="width:100%; justify-content:center;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
                                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
                             </svg>
@@ -240,7 +970,7 @@
         </div>
     </section>
 
-    <!-- FAQ Section -->
+    <!-- ===== FAQ SECTION ===== -->
     <section class="faq-section section-padding">
         <div class="container">
             <div class="section-header">
@@ -312,7 +1042,7 @@
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- ===== FOOTER ===== -->
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
@@ -320,30 +1050,10 @@
                     <a href="index.html" class="logo">Web<span>Dev</span>Pro</a>
                     <p>Partner tepercaya untuk solusi digital bisnis Anda. Kami menghadirkan inovasi dan kualitas dalam setiap proyek.</p>
                     <div class="social-links">
-                        <a href="#" aria-label="Facebook">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-                            </svg>
-                        </a>
-                        <a href="#" aria-label="Twitter">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
-                            </svg>
-                        </a>
-                        <a href="#" aria-label="Instagram">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                            </svg>
-                        </a>
-                        <a href="#" aria-label="LinkedIn">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                                <rect x="2" y="9" width="4" height="12"></rect>
-                                <circle cx="4" cy="4" r="2"></circle>
-                            </svg>
-                        </a>
+                        <a href="#" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
+                        <a href="#" aria-label="Twitter"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a>
+                        <a href="#" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+                        <a href="#" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
                     </div>
                 </div>
                 <div class="footer-links">
@@ -369,8 +1079,8 @@
                 <div class="footer-contact">
                     <h4>Kontak</h4>
                     <ul>
-                        <li>📍 Jl. Mangga Subah Batang, Jakarta</li>
-                        <li>📞 +62 812-48141031</li>
+                        <li>📍 Batang, Jawa Tengah</li>
+                        <li>📞 +62 812-4814-1031</li>
                         <li>✉️ info@webdevpro.id</li>
                         <li>🕐 Senin - Jumat: 09.00 - 17.00</li>
                     </ul>
@@ -378,22 +1088,28 @@
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2024 WebDevPro. Hak Cipta Dilindungi.</p>
+                <div>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
             </div>
         </div>
     </footer>
 
+    <!-- ===== SCRIPTS ===== -->
     <script src="assets/js/main.js"></script>
     <script>
-        // Contact Form Handling
+        // ============================================
+        // CONTACT FORM
+        // ============================================
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Simulate form submission
             const submitBtn = this.querySelector('button[type="submit"]');
             const originalText = submitBtn.innerHTML;
             
             submitBtn.disabled = true;
-            submitBtn.innerHTML = '<span>Mengirim...</span>';
+            submitBtn.innerHTML = '<span>⏳ Mengirim...</span>';
             
             setTimeout(() => {
                 this.classList.add('hidden');
@@ -409,24 +1125,31 @@
             document.getElementById('successMessage').classList.add('hidden');
         }
 
-        // FAQ Accordion
+        // ============================================
+        // FAQ ACCORDION
+        // ============================================
         document.querySelectorAll('.faq-question').forEach(button => {
             button.addEventListener('click', () => {
                 const faqItem = button.parentElement;
                 const isOpen = faqItem.classList.contains('active');
                 
-                // Close all FAQ items
                 document.querySelectorAll('.faq-item').forEach(item => {
                     item.classList.remove('active');
                     item.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
                 });
                 
-                // Open clicked item if it wasn't open
                 if (!isOpen) {
                     faqItem.classList.add('active');
                     button.setAttribute('aria-expanded', 'true');
                 }
             });
+        });
+
+        // ============================================
+        // NAVBAR SCROLL
+        // ============================================
+        window.addEventListener('scroll', () => {
+            document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
         });
     </script>
 </body>

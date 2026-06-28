@@ -7,36 +7,275 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
     <style>
-        /* Blog Styles */
+        /* ========================================
+           ANIMASI DEVELOPER PREMIUM
+           ======================================== */
+
+        /* ===== HERO SECTION ===== */
         .blog-hero {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            padding: 80px 20px;
+            background: linear-gradient(135deg, #0f172a 0%, #1a1a3e 50%, #0f172a 100%);
+            padding: 140px 20px 100px;
             text-align: center;
             color: white;
+            position: relative;
+            overflow: hidden;
+            min-height: 450px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .blog-hero h1 {
-            font-size: 3rem;
+
+        /* ===== CODE RAIN BACKGROUND ===== */
+        .code-rain {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            opacity: 0.1;
+        }
+
+        .code-char {
+            position: absolute;
+            font-family: 'Courier New', monospace;
+            color: #f5b014;
+            font-size: 14px;
+            animation: codeFall linear infinite;
+            opacity: 0;
+        }
+
+        .code-char:nth-child(1) { left: 5%; animation-duration: 12s; animation-delay: 0s; font-size: 16px; }
+        .code-char:nth-child(2) { left: 10%; animation-duration: 15s; animation-delay: 2s; font-size: 12px; }
+        .code-char:nth-child(3) { left: 15%; animation-duration: 10s; animation-delay: 4s; font-size: 18px; }
+        .code-char:nth-child(4) { left: 20%; animation-duration: 18s; animation-delay: 1s; font-size: 14px; }
+        .code-char:nth-child(5) { left: 25%; animation-duration: 13s; animation-delay: 3s; font-size: 20px; }
+        .code-char:nth-child(6) { left: 30%; animation-duration: 16s; animation-delay: 5s; font-size: 11px; }
+        .code-char:nth-child(7) { left: 35%; animation-duration: 11s; animation-delay: 2.5s; font-size: 15px; }
+        .code-char:nth-child(8) { left: 40%; animation-duration: 19s; animation-delay: 4.5s; font-size: 13px; }
+        .code-char:nth-child(9) { left: 45%; animation-duration: 14s; animation-delay: 1.5s; font-size: 17px; }
+        .code-char:nth-child(10) { left: 50%; animation-duration: 17s; animation-delay: 3.5s; font-size: 12px; }
+        .code-char:nth-child(11) { left: 55%; animation-duration: 12.5s; animation-delay: 5.5s; font-size: 19px; }
+        .code-char:nth-child(12) { left: 60%; animation-duration: 15.5s; animation-delay: 0.5s; font-size: 14px; }
+        .code-char:nth-child(13) { left: 65%; animation-duration: 10.5s; animation-delay: 2.2s; font-size: 16px; }
+        .code-char:nth-child(14) { left: 70%; animation-duration: 18.5s; animation-delay: 4.2s; font-size: 11px; }
+        .code-char:nth-child(15) { left: 75%; animation-duration: 13.5s; animation-delay: 1.8s; font-size: 18px; }
+        .code-char:nth-child(16) { left: 80%; animation-duration: 16.5s; animation-delay: 3.8s; font-size: 13px; }
+        .code-char:nth-child(17) { left: 85%; animation-duration: 11.5s; animation-delay: 5.2s; font-size: 15px; }
+        .code-char:nth-child(18) { left: 90%; animation-duration: 14.5s; animation-delay: 0.8s; font-size: 17px; }
+        .code-char:nth-child(19) { left: 95%; animation-duration: 17.5s; animation-delay: 2.8s; font-size: 12px; }
+
+        @keyframes codeFall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+            }
+            80% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* ===== FLOATING CODE BADGES ===== */
+        .floating-badges {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .float-badge {
+            position: absolute;
+            background: rgba(245, 176, 20, 0.06);
+            border: 1px solid rgba(245, 176, 20, 0.08);
+            border-radius: 12px;
+            padding: 8px 16px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: rgba(245, 176, 20, 0.3);
+            animation: floatBadge linear infinite;
+            backdrop-filter: blur(4px);
+        }
+
+        .float-badge:nth-child(1) { top: 15%; left: 5%; animation-duration: 25s; }
+        .float-badge:nth-child(2) { top: 20%; right: 8%; animation-duration: 20s; animation-delay: -5s; }
+        .float-badge:nth-child(3) { bottom: 25%; left: 10%; animation-duration: 28s; animation-delay: -10s; }
+        .float-badge:nth-child(4) { bottom: 30%; right: 5%; animation-duration: 22s; animation-delay: -7s; }
+        .float-badge:nth-child(5) { top: 50%; left: 50%; animation-duration: 30s; animation-delay: -12s; }
+
+        @keyframes floatBadge {
+            0% { transform: translate(0, 0) rotate(0deg); opacity: 0.3; }
+            25% { transform: translate(80px, -40px) rotate(5deg); opacity: 0.6; }
+            50% { transform: translate(-50px, 60px) rotate(-3deg); opacity: 0.4; }
+            75% { transform: translate(60px, -30px) rotate(7deg); opacity: 0.7; }
+            100% { transform: translate(0, 0) rotate(0deg); opacity: 0.3; }
+        }
+
+        /* ===== TYPING ANIMATION ===== */
+        .typing-wrapper {
+            position: relative;
+            z-index: 1;
+        }
+
+        .typing-wrapper h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
             margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
         }
-        .blog-hero p {
+
+        .typing-wrapper h1::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #f5b014, transparent);
+            animation: expandLine 2s ease forwards;
+        }
+
+        @keyframes expandLine {
+            0% { width: 0; }
+            100% { width: 100%; }
+        }
+
+        .typing-wrapper h1 span {
+            color: #f5b014;
+            position: relative;
+        }
+
+        .typing-wrapper h1 span::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -10px;
+            right: -10px;
+            bottom: -5px;
+            background: rgba(245, 176, 20, 0.1);
+            border-radius: 8px;
+            transform: scaleX(0);
+            transform-origin: left;
+            animation: highlightText 1.5s ease forwards 0.5s;
+        }
+
+        @keyframes highlightText {
+            0% { transform: scaleX(0); }
+            100% { transform: scaleX(1); }
+        }
+
+        .typing-wrapper p {
             color: rgba(255,255,255,0.7);
             font-size: 1.1rem;
             max-width: 600px;
-            margin: 0 auto;
+            margin: 15px auto 0;
+            animation: fadeInUp 1s ease forwards 0.3s;
+            opacity: 0;
         }
 
-        /* Search & Filter */
-        .blog-toolbar {
-            background: white;
-            padding: 20px;
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== TERMINAL CODE ===== */
+        .terminal-code {
+            position: relative;
+            z-index: 1;
+            max-width: 500px;
+            margin: 20px auto 0;
+            background: rgba(0, 0, 0, 0.4);
             border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border: 1px solid rgba(245, 176, 20, 0.15);
+            padding: 14px 18px;
+            backdrop-filter: blur(10px);
+            text-align: left;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: #a0aec0;
+            overflow: hidden;
+        }
+
+        .terminal-code .term-header {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        .terminal-code .term-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .terminal-code .term-dot.red { background: #ff5f57; }
+        .terminal-code .term-dot.yellow { background: #ffbd2e; }
+        .terminal-code .term-dot.green { background: #28c840; }
+
+        .terminal-code .term-line {
+            display: flex;
+            gap: 10px;
+            line-height: 1.6;
+            animation: typeIn 1.5s ease forwards;
+            opacity: 0;
+        }
+        .terminal-code .term-line:nth-child(2) { animation-delay: 0.3s; }
+        .terminal-code .term-line:nth-child(3) { animation-delay: 0.8s; }
+        .terminal-code .term-line:nth-child(4) { animation-delay: 1.3s; }
+        .terminal-code .term-line:nth-child(5) { animation-delay: 1.8s; }
+
+        @keyframes typeIn {
+            from { opacity: 0; transform: translateX(-15px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .term-prompt { color: #f5b014; font-weight: 700; }
+        .term-command { color: #a0aec0; }
+        .term-output { color: #68d391; }
+        .term-cursor {
+            display: inline-block;
+            width: 8px;
+            height: 14px;
+            background: #f5b014;
+            animation: blink 1s step-end infinite;
+            vertical-align: text-bottom;
+            margin-left: 2px;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        /* ========================================
+           BLOG TOOLBAR
+           ======================================== */
+        .blog-toolbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px 25px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
             margin-bottom: 30px;
             display: flex;
             gap: 15px;
             flex-wrap: wrap;
             align-items: center;
+            border: 1px solid rgba(0,0,0,0.04);
+            position: sticky;
+            top: 80px;
+            z-index: 99;
         }
+
         .search-box {
             flex: 1;
             min-width: 250px;
@@ -45,10 +284,17 @@
         .search-box input {
             width: 100%;
             padding: 12px 15px 12px 45px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
             font-size: 14px;
             font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+            background: #fafcff;
+            outline: none;
+        }
+        .search-box input:focus {
+            border-color: #f5b014;
+            box-shadow: 0 0 0 4px rgba(245, 176, 20, 0.08);
         }
         .search-box::before {
             content: '🔍';
@@ -56,9 +302,9 @@
             left: 15px;
             top: 50%;
             transform: translateY(-50%);
+            font-size: 16px;
         }
 
-        /* Category Pills */
         .category-pills {
             display: flex;
             gap: 10px;
@@ -66,73 +312,120 @@
         }
         .category-pill {
             padding: 8px 18px;
-            border-radius: 25px;
-            border: 1px solid #ddd;
-            background: white;
+            border-radius: 40px;
+            border: 2px solid #e2e8f0;
+            background: transparent;
             cursor: pointer;
-            font-size: 14px;
-            transition: all 0.3s;
-            color: #666;
-        }
-        .category-pill:hover, .category-pill.active {
-            background: var(--primary);
-            color: #1a1a2e;
-            border-color: var(--primary);
+            font-size: 13px;
             font-weight: 600;
+            transition: all 0.3s ease;
+            color: #64748b;
+            font-family: inherit;
+        }
+        .category-pill:hover {
+            border-color: #f5b014;
+            color: #f5b014;
+        }
+        .category-pill.active {
+            background: linear-gradient(135deg, #f5b014, #d49a0e);
+            color: #0f172a;
+            border-color: #f5b014;
         }
 
-        /* Featured Post */
+        /* ========================================
+           FEATURED POST
+           ======================================== */
         .featured-post {
             display: grid;
             grid-template-columns: 1.2fr 1fr;
-            gap: 30px;
+            gap: 0;
             background: white;
-            border-radius: 16px;
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.06);
             margin-bottom: 40px;
+            border: 1px solid rgba(0,0,0,0.04);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
         }
+
+        .featured-post:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+
         .featured-image {
             height: 100%;
             min-height: 400px;
             background-size: cover;
             background-position: center;
             position: relative;
+            overflow: hidden;
         }
+
+        .featured-image::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.2));
+        }
+
         .featured-image .category-tag {
             position: absolute;
             top: 20px;
             left: 20px;
-            background: var(--primary);
-            color: #1a1a2e;
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-weight: 600;
+            background: linear-gradient(135deg, #f5b014, #d49a0e);
+            color: #0f172a;
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-weight: 700;
             font-size: 12px;
+            z-index: 1;
+            letter-spacing: 0.5px;
         }
+
+        .featured-image .image-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 40px;
+            background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+            z-index: 1;
+        }
+
         .featured-content {
             padding: 40px;
             display: flex;
             flex-direction: column;
             justify-content: center;
         }
+
         .featured-meta {
             display: flex;
             gap: 20px;
-            color: #999;
+            color: #94a3b8;
             font-size: 13px;
             margin-bottom: 15px;
+            flex-wrap: wrap;
         }
+
         .featured-content h2 {
-            font-size: 2rem;
+            font-size: 1.8rem;
             margin-bottom: 15px;
             line-height: 1.3;
+            color: #0f172a;
         }
+
+        .featured-content h2:hover {
+            color: #f5b014;
+        }
+
         .featured-content p {
-            color: #666;
-            line-height: 1.7;
+            color: #64748b;
+            line-height: 1.8;
             margin-bottom: 25px;
         }
+
         .featured-author {
             display: flex;
             align-items: center;
@@ -144,150 +437,303 @@
             height: 45px;
             border-radius: 50%;
             object-fit: cover;
+            border: 2px solid #f5b014;
         }
 
-        /* Blog Grid */
+        .btn-primary {
+            background: linear-gradient(135deg, #f5b014, #d49a0e);
+            color: #0f172a;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            font-family: inherit;
+            cursor: pointer;
+            align-self: flex-start;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(245, 176, 20, 0.35);
+        }
+
+        /* ========================================
+           BLOG GRID
+           ======================================== */
         .blog-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 25px;
         }
+
         .blog-card {
             background: white;
-            border-radius: 12px;
+            border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            transition: all 0.4s ease;
+            border: 1px solid rgba(0,0,0,0.04);
+            position: relative;
         }
+
+        .blog-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #f5b014, #d49a0e);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+            z-index: 2;
+        }
+
+        .blog-card:hover::before {
+            transform: scaleX(1);
+        }
+
         .blog-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
         }
+
         .blog-card-image {
-            height: 200px;
+            height: 220px;
             background-size: cover;
             background-position: center;
             position: relative;
+            overflow: hidden;
         }
+
         .blog-card-image .category-tag {
             position: absolute;
             bottom: 15px;
             left: 15px;
-            background: var(--primary);
-            color: #1a1a2e;
-            padding: 4px 12px;
-            border-radius: 15px;
-            font-weight: 600;
+            background: linear-gradient(135deg, #f5b014, #d49a0e);
+            color: #0f172a;
+            padding: 4px 14px;
+            border-radius: 40px;
+            font-weight: 700;
             font-size: 11px;
+            z-index: 1;
+            letter-spacing: 0.3px;
         }
+
+        .blog-card-image .blog-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.2);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .blog-card:hover .blog-overlay {
+            opacity: 1;
+        }
+
         .blog-card-content {
-            padding: 20px;
+            padding: 22px 24px 20px;
         }
+
         .blog-card-meta {
             display: flex;
             gap: 15px;
-            color: #999;
+            color: #94a3b8;
             font-size: 12px;
             margin-bottom: 10px;
         }
+
         .blog-card h3 {
             font-size: 1.1rem;
             margin-bottom: 10px;
             line-height: 1.4;
-            color: #333;
+            color: #0f172a;
+            transition: color 0.3s ease;
         }
+
+        .blog-card h3:hover {
+            color: #f5b014;
+        }
+
         .blog-card p {
-            color: #666;
+            color: #64748b;
             font-size: 14px;
-            line-height: 1.6;
+            line-height: 1.7;
             margin-bottom: 15px;
+            display: -webkit-box;
+            overflow: hidden;
         }
+
         .blog-card-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding-top: 15px;
-            border-top: 1px solid #f0f0f0;
+            border-top: 1px solid #f1f5f9;
         }
+
         .blog-author-small {
             display: flex;
             align-items: center;
             gap: 8px;
             font-size: 13px;
-            color: #666;
-        }
-        .blog-author-small img {
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
+            color: #475569;
         }
 
-        /* Pagination */
+        .blog-author-small img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #e2e8f0;
+        }
+
+        .read-more {
+            color: #f5b014;
+            font-weight: 700;
+            font-size: 13px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .read-more:hover {
+            gap: 10px;
+        }
+
+        /* ========================================
+           PAGINATION
+           ======================================== */
         .pagination {
             display: flex;
             justify-content: center;
             gap: 8px;
             margin-top: 40px;
         }
+
         .page-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            border: 1px solid #ddd;
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
             background: white;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 500;
-            transition: all 0.3s;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            color: #475569;
+            font-family: inherit;
         }
-        .page-btn:hover, .page-btn.active {
-            background: var(--primary);
-            color: #1a1a2e;
-            border-color: var(--primary);
+
+        .page-btn:hover:not(:disabled) {
+            border-color: #f5b014;
+            color: #f5b014;
+            transform: translateY(-2px);
         }
+
+        .page-btn.active {
+            background: linear-gradient(135deg, #f5b014, #d49a0e);
+            color: #0f172a;
+            border-color: #f5b014;
+        }
+
         .page-btn:disabled {
-            opacity: 0.5;
+            opacity: 0.4;
             cursor: not-allowed;
         }
 
-        /* Loading Skeleton */
-        .skeleton {
-            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-            background-size: 200% 100%;
-            animation: shimmer 1.5s infinite;
-            border-radius: 8px;
-        }
-        @keyframes shimmer {
-            0% { background-position: 200% 0; }
-            100% { background-position: -200% 0; }
-        }
-
-        /* Responsive */
+        /* ========================================
+           RESPONSIVE
+           ======================================== */
         @media (max-width: 992px) {
             .featured-post {
                 grid-template-columns: 1fr;
             }
             .featured-image {
-                min-height: 250px;
+                min-height: 280px;
             }
             .blog-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+            .typing-wrapper h1 {
+                font-size: 2.5rem;
+            }
+            .blog-hero {
+                padding: 120px 20px 80px;
+                min-height: 350px;
+            }
         }
-        @media (max-width: 576px) {
+
+        @media (max-width: 768px) {
+            .blog-toolbar {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 16px 20px;
+                top: 70px;
+            }
+            .search-box {
+                min-width: unset;
+            }
+            .category-pills {
+                justify-content: center;
+            }
+            .featured-content {
+                padding: 25px;
+            }
+            .featured-content h2 {
+                font-size: 1.4rem;
+            }
             .blog-grid {
                 grid-template-columns: 1fr;
+                max-width: 450px;
+                margin: 0 auto;
             }
-            .blog-hero h1 {
+            .typing-wrapper h1 {
                 font-size: 2rem;
+            }
+            .terminal-code {
+                font-size: 10px;
+                padding: 10px 14px;
+            }
+            .code-rain {
+                opacity: 0.06;
+            }
+            .floating-badges {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .typing-wrapper h1 {
+                font-size: 1.6rem;
+            }
+            .blog-hero {
+                padding: 100px 16px 60px;
+                min-height: 300px;
+            }
+            .terminal-code .term-line {
+                flex-wrap: wrap;
+            }
+            .featured-image {
+                min-height: 200px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Navbar -->
+    <!-- ===== NAVBAR ===== -->
     <nav class="navbar" id="navbar">
         <div class="container">
             <a href="index.html" class="logo">Web<span>Dev</span>Pro</a>
@@ -314,13 +760,78 @@
         </div>
     </nav>
 
-    <!-- Blog Hero -->
+    <!-- ===== HERO SECTION ===== -->
     <section class="blog-hero">
-        <h1>Blog <span style="color:var(--primary);">WebDevPro</span></h1>
-        <p>Tips, tutorial, dan insight terbaru seputar pengembangan web, teknologi, dan digital marketing.</p>
+        <!-- Code Rain -->
+        <div class="code-rain">
+            <span class="code-char">&lt;/&gt;</span>
+            <span class="code-char">{ }</span>
+            <span class="code-char">function</span>
+            <span class="code-char">const</span>
+            <span class="code-char">return</span>
+            <span class="code-char">if</span>
+            <span class="code-char">else</span>
+            <span class="code-char">for</span>
+            <span class="code-char">while</span>
+            <span class="code-char">class</span>
+            <span class="code-char">import</span>
+            <span class="code-char">export</span>
+            <span class="code-char">async</span>
+            <span class="code-char">await</span>
+            <span class="code-char">try</span>
+            <span class="code-char">catch</span>
+            <span class="code-char">finally</span>
+            <span class="code-char">throw</span>
+            <span class="code-char">new</span>
+        </div>
+
+        <!-- Floating Badges -->
+        <div class="floating-badges">
+            <span class="float-badge">// latest posts</span>
+            <span class="float-badge">const blog = []</span>
+            <span class="float-badge">function read()</span>
+            <span class="float-badge">import { articles }</span>
+            <span class="float-badge">export default Blog</span>
+        </div>
+
+        <div class="container typing-wrapper">
+            <h1>Blog <span>WebDevPro</span></h1>
+            <p>Tips, tutorial, dan insight terbaru seputar pengembangan web, teknologi, dan digital marketing.</p>
+
+            <!-- Terminal Code -->
+            <div class="terminal-code">
+                <div class="term-header">
+                    <span class="term-dot red"></span>
+                    <span class="term-dot yellow"></span>
+                    <span class="term-dot green"></span>
+                    <span style="margin-left:10px; color:#64748b; font-size:10px;">developer@webdevpro:~/blog$</span>
+                </div>
+                <div class="term-line">
+                    <span class="term-prompt">$</span>
+                    <span class="term-command">ls -la articles</span>
+                </div>
+                <div class="term-line">
+                    <span class="term-prompt">→</span>
+                    <span class="term-output">📄 10-tren-web-development-2024.md</span>
+                </div>
+                <div class="term-line">
+                    <span class="term-prompt">→</span>
+                    <span class="term-output">📄 panduan-react-hooks.md</span>
+                </div>
+                <div class="term-line">
+                    <span class="term-prompt">→</span>
+                    <span class="term-output">📄 tips-seo-untuk-pemula.md</span>
+                </div>
+                <div class="term-line">
+                    <span class="term-prompt">$</span>
+                    <span class="term-command">cat README.md</span>
+                    <span class="term-cursor"></span>
+                </div>
+            </div>
+        </div>
     </section>
 
-    <!-- Blog Content -->
+    <!-- ===== BLOG CONTENT ===== -->
     <section style="padding: 40px 0 60px;">
         <div class="container">
             <!-- Toolbar -->
@@ -330,7 +841,6 @@
                 </div>
                 <div class="category-pills" id="categoryPills">
                     <div class="category-pill active" onclick="filterCategory('all')">Semua</div>
-                    <!-- Dynamic categories -->
                 </div>
             </div>
 
@@ -352,13 +862,13 @@
             <!-- Empty State -->
             <div id="emptyState" style="display:none; text-align:center; padding:60px 20px;">
                 <div style="font-size:60px; margin-bottom:15px;">📭</div>
-                <h3>Tidak Ada Artikel</h3>
-                <p style="color:#666;">Belum ada artikel dalam kategori ini.</p>
+                <h3 style="color:#0f172a;">Tidak Ada Artikel</h3>
+                <p style="color:#64748b;">Belum ada artikel dalam kategori ini.</p>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- ===== FOOTER ===== -->
     <footer>
         <div class="container">
             <div class="footer-grid">
@@ -397,13 +907,11 @@
         </div>
     </footer>
 
-    <!-- WhatsApp Float -->
+    <!-- ===== WHATSAPP FLOAT ===== -->
     <a href="https://wa.me/6281248141031?text=Halo%20kak%20Hendri,%20saya%20tertarik%20dengan%20produk%20Anda." 
-       class="whatsapp-float" target="_blank" title="Chat WhatsApp">
-        💬
-    </a>
+       class="whatsapp-float" target="_blank" title="Chat WhatsApp">💬</a>
 
-    <!-- Firebase SDK -->
+    <!-- ===== FIREBASE SDK ===== -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
@@ -411,13 +919,9 @@
     <script src="assets/js/firebase-config.js"></script>
     <script src="assets/js/auth.js"></script>
     <script>
-        let allBlogs = [];
-        let filteredBlogs = [];
-        let currentPage = 1;
-        const perPage = 6;
-        let currentCategory = 'all';
-
-        // Check auth state
+        // ============================================
+        // AUTH STATE
+        // ============================================
         auth.onAuthStateChanged((user) => {
             if (user) {
                 document.getElementById('loginBtn').style.display = 'none';
@@ -427,7 +931,18 @@
             }
         });
 
-        // Load blogs
+        // ============================================
+        // BLOG DATA
+        // ============================================
+        let allBlogs = [];
+        let filteredBlogs = [];
+        let currentPage = 1;
+        const perPage = 6;
+        let currentCategory = 'all';
+
+        // ============================================
+        // LOAD BLOGS
+        // ============================================
         async function loadBlogs() {
             try {
                 const snapshot = await db.collection('blogs')
@@ -438,10 +953,7 @@
                 allBlogs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
                 filteredBlogs = [...allBlogs];
 
-                // Load categories
                 loadCategories();
-                
-                // Render
                 renderFeatured();
                 renderGrid();
                 renderPagination();
@@ -449,26 +961,29 @@
             } catch (error) {
                 console.error('Error loading blogs:', error);
                 document.getElementById('blogGrid').innerHTML = 
-                    '<div style="text-align:center; padding:50px; color:#e74c3c;">Gagal memuat artikel</div>';
+                    '<div style="text-align:center; padding:50px; color:#ef4444;">❌ Gagal memuat artikel</div>';
             }
         }
 
-        // Load categories
+        // ============================================
+        // LOAD CATEGORIES
+        // ============================================
         function loadCategories() {
             const categories = [...new Set(allBlogs.map(b => b.kategori).filter(Boolean))];
             const container = document.getElementById('categoryPills');
             
             categories.forEach(cat => {
-                container.innerHTML += `<div class="category-pill" onclick="filterCategory('${cat}')">${cat}</div>`;
+                container.innerHTML += `<button class="category-pill" onclick="filterCategory('${cat}')">${cat}</button>`;
             });
         }
 
-        // Filter by category
+        // ============================================
+        // FILTER CATEGORY
+        // ============================================
         function filterCategory(category) {
             currentCategory = category;
             currentPage = 1;
             
-            // Update active pill
             document.querySelectorAll('.category-pill').forEach(pill => {
                 pill.classList.toggle('active', 
                     (category === 'all' && pill.textContent === 'Semua') ||
@@ -476,19 +991,16 @@
                 );
             });
 
-            // Filter
-            if (category === 'all') {
-                filteredBlogs = [...allBlogs];
-            } else {
-                filteredBlogs = allBlogs.filter(b => b.kategori === category);
-            }
+            filteredBlogs = category === 'all' ? [...allBlogs] : allBlogs.filter(b => b.kategori === category);
 
             renderFeatured();
             renderGrid();
             renderPagination();
         }
 
-        // Search blogs
+        // ============================================
+        // SEARCH BLOGS
+        // ============================================
         function searchBlogs() {
             const keyword = document.getElementById('searchInput').value.toLowerCase();
             currentPage = 1;
@@ -504,7 +1016,9 @@
             renderPagination();
         }
 
-        // Render featured post
+        // ============================================
+        // RENDER FEATURED
+        // ============================================
         function renderFeatured() {
             const section = document.getElementById('featuredSection');
             
@@ -513,7 +1027,6 @@
                 return;
             }
 
-            // Featured = first post or isFeatured
             const featured = filteredBlogs.find(b => b.isFeatured) || filteredBlogs[0];
             const imageUrl = featured.imageUrl || 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800';
             
@@ -521,6 +1034,7 @@
                 <div class="featured-post">
                     <div class="featured-image" style="background-image:url('${imageUrl}')">
                         <span class="category-tag">${featured.kategori || 'Umum'}</span>
+                        <div class="image-overlay"></div>
                     </div>
                     <div class="featured-content">
                         <div class="featured-meta">
@@ -531,11 +1045,11 @@
                         <h2>${featured.judul || 'Untitled'}</h2>
                         <p>${stripHtml(featured.konten || '').substring(0, 200)}...</p>
                         <a href="blog-detail.html?id=${featured.id}" class="btn btn-primary">Baca Selengkapnya →</a>
-                        <div class="featured-author" style="margin-top:20px;">
-                            <img src="${featured.authorPhoto || 'https://ui-avatars.com/api/?name=Admin&background=random'}" alt="Author">
+                        <div class="featured-author">
+                            <img src="${featured.authorPhoto || 'https://ui-avatars.com/api/?name=Admin&background=f5b014&color=0f172a&size=45'}" alt="Author">
                             <div>
-                                <div style="font-weight:600;">${featured.authorName || 'Admin'}</div>
-                                <div style="font-size:13px; color:#999;">${featured.authorRole || 'Writer'}</div>
+                                <div style="font-weight:700; color:#0f172a;">${featured.authorName || 'Admin'}</div>
+                                <div style="font-size:13px; color:#94a3b8;">${featured.authorRole || 'Writer'}</div>
                             </div>
                         </div>
                     </div>
@@ -544,16 +1058,16 @@
             section.style.display = 'block';
         }
 
-        // Render blog grid
+        // ============================================
+        // RENDER GRID
+        // ============================================
         function renderGrid() {
             const grid = document.getElementById('blogGrid');
             const emptyState = document.getElementById('emptyState');
             
-            // Skip featured post from grid
             const featured = filteredBlogs.find(b => b.isFeatured) || filteredBlogs[0];
             const gridBlogs = filteredBlogs.filter(b => b.id !== featured?.id);
             
-            // Pagination
             const start = (currentPage - 1) * perPage;
             const end = start + perPage;
             const pageBlogs = gridBlogs.slice(start, end);
@@ -574,6 +1088,7 @@
                     <div class="blog-card">
                         <div class="blog-card-image" style="background-image:url('${imageUrl}')">
                             <span class="category-tag">${blog.kategori || 'Umum'}</span>
+                            <div class="blog-overlay"></div>
                         </div>
                         <div class="blog-card-content">
                             <div class="blog-card-meta">
@@ -584,10 +1099,10 @@
                             <p>${stripHtml(blog.konten || '').substring(0, 120)}...</p>
                             <div class="blog-card-footer">
                                 <div class="blog-author-small">
-                                    <img src="${blog.authorPhoto || 'https://ui-avatars.com/api/?name=Admin&background=random'}" alt="">
+                                    <img src="${blog.authorPhoto || 'https://ui-avatars.com/api/?name=Admin&background=f5b014&color=0f172a&size=30'}" alt="">
                                     <span>${blog.authorName || 'Admin'}</span>
                                 </div>
-                                <a href="blog-detail.html?id=${blog.id}" style="color:var(--primary); font-weight:600; font-size:13px;">Baca →</a>
+                                <a href="blog-detail.html?id=${blog.id}" class="read-more">Baca →</a>
                             </div>
                         </div>
                     </div>
@@ -595,7 +1110,9 @@
             });
         }
 
-        // Render pagination
+        // ============================================
+        // RENDER PAGINATION
+        // ============================================
         function renderPagination() {
             const container = document.getElementById('pagination');
             const featured = filteredBlogs.find(b => b.isFeatured) || filteredBlogs[0];
@@ -607,25 +1124,24 @@
             }
 
             let html = '';
+            html += `<button class="page-btn" onclick="changePage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>‹</button>`;
             
-            // Prev
-            html += `<button class="page-btn" onclick="changePage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>←</button>`;
-            
-            // Pages
             for (let i = 1; i <= totalPages; i++) {
                 if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
                     html += `<button class="page-btn ${i === currentPage ? 'active' : ''}" onclick="changePage(${i})">${i}</button>`;
                 } else if (i === currentPage - 2 || i === currentPage + 2) {
-                    html += `<span style="padding:8px;">...</span>`;
+                    html += `<span style="padding:8px; color:#94a3b8;">…</span>`;
                 }
             }
             
-            // Next
-            html += `<button class="page-btn" onclick="changePage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>→</button>`;
+            html += `<button class="page-btn" onclick="changePage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>›</button>`;
             
             container.innerHTML = html;
         }
 
+        // ============================================
+        // CHANGE PAGE
+        // ============================================
         function changePage(page) {
             currentPage = page;
             renderGrid();
@@ -633,19 +1149,25 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Strip HTML tags
+        // ============================================
+        // STRIP HTML
+        // ============================================
         function stripHtml(html) {
             const tmp = document.createElement('div');
             tmp.innerHTML = html;
             return tmp.textContent || tmp.innerText || '';
         }
 
-        // Navbar scroll
+        // ============================================
+        // NAVBAR SCROLL
+        // ============================================
         window.addEventListener('scroll', () => {
             document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
         });
 
-        // Load on ready
+        // ============================================
+        // INIT
+        // ============================================
         document.addEventListener('DOMContentLoaded', loadBlogs);
     </script>
 </body>

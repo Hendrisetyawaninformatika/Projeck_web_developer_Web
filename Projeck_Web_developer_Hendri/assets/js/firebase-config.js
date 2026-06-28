@@ -1,6 +1,4 @@
 // Firebase Configuration - WebDevPro
-// Ganti dengan konfigurasi proyek Firebase Anda sendiri
-
 const firebaseConfig = {
     apiKey: "AIzaSyXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
     authDomain: "webdevpro-XXXXX.firebaseapp.com",
@@ -14,11 +12,14 @@ const firebaseConfig = {
 // Inisialisasi Firebase
 firebase.initializeApp(firebaseConfig);
 
-// Export instances
 const auth = firebase.auth();
 const db = firebase.firestore();
 const storage = firebase.storage();
-const analytics = firebase.analytics();
+
+// 🔥 TAMBAHKAN INI UNTUK GOOGLE LOGIN - SETTING PERSISTENCE
+auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL)
+    .then(() => console.log('🔥 Auth persistence set to LOCAL'))
+    .catch((error) => console.error('Error setting persistence:', error));
 
 // Collection references
 const collections = {
@@ -33,4 +34,4 @@ const collections = {
     settings: db.collection('settings')
 };
 
-console.log('Firebase initialized successfully');
+console.log('✅ Firebase initialized successfully');

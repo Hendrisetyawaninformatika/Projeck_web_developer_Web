@@ -7,66 +7,730 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/style.css">
     <style>
-        .user-layout { display: flex; min-height: 100vh; }
-        .user-sidebar { width: 250px; background: white; box-shadow: 2px 0 10px rgba(0,0,0,0.05); padding: 20px 0; position: fixed; height: 100vh; }
-        .user-sidebar .logo { padding: 0 20px 20px; text-align: center; border-bottom: 1px solid #eee; margin-bottom: 20px; }
-        .user-menu a { display: block; padding: 12px 25px; color: #666; text-decoration: none; transition: all 0.3s; border-left: 3px solid transparent; }
-        .user-menu a:hover, .user-menu a.active { background: rgba(255,215,0,0.1); color: var(--secondary); border-left-color: var(--primary); }
-        .user-main { margin-left: 250px; flex: 1; background: #f5f6fa; }
-        .user-header { background: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        .user-content { padding: 30px; }
+        /* ========================================
+           RESET & BASE
+           ======================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f0f4f9;
+            color: #1e293b;
+        }
+
+        /* ========================================
+           USER LAYOUT
+           ======================================== */
+        .user-layout {
+            display: flex;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* ========================================
+           SIDEBAR
+           ======================================== */
+        .user-sidebar {
+            width: 260px;
+            background: linear-gradient(180deg, #0f172a 0%, #1a1a3e 100%);
+            box-shadow: 4px 0 20px rgba(0,0,0,0.1);
+            padding: 24px 0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        .user-sidebar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .user-sidebar::-webkit-scrollbar-thumb {
+            background: #f5b014;
+            border-radius: 10px;
+        }
+
+        .user-sidebar .logo {
+            padding: 0 24px 24px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            margin-bottom: 20px;
+        }
+
+        .user-sidebar .logo h4 {
+            font-size: 22px;
+            font-weight: 800;
+            color: white;
+            margin: 0;
+        }
+
+        .user-sidebar .logo h4 span {
+            color: #f5b014;
+        }
+
+        .user-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 24px;
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .user-menu a:hover {
+            background: rgba(255,255,255,0.05);
+            color: white;
+        }
+
+        .user-menu a.active {
+            background: rgba(245, 176, 20, 0.1);
+            color: #f5b014;
+            border-left-color: #f5b014;
+        }
+
+        .user-menu .menu-divider {
+            margin: 20px 24px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+
+        /* ========================================
+           MAIN CONTENT
+           ======================================== */
+        .user-main {
+            margin-left: 260px;
+            flex: 1;
+            background: #f0f4f9;
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* ===== BACKGROUND ANIMATION ===== */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .bg-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(245, 176, 20, 0.08);
+            border-radius: 50%;
+            animation: floatBgParticle linear infinite;
+        }
+
+        .bg-particle:nth-child(1) { left: 5%; animation-duration: 22s; }
+        .bg-particle:nth-child(2) { left: 15%; animation-duration: 28s; animation-delay: 2s; width: 6px; height: 6px; }
+        .bg-particle:nth-child(3) { left: 25%; animation-duration: 18s; animation-delay: 4s; }
+        .bg-particle:nth-child(4) { left: 35%; animation-duration: 32s; animation-delay: 1s; width: 8px; height: 8px; }
+        .bg-particle:nth-child(5) { left: 45%; animation-duration: 24s; animation-delay: 3s; }
+        .bg-particle:nth-child(6) { left: 55%; animation-duration: 30s; animation-delay: 5s; width: 5px; height: 5px; }
+        .bg-particle:nth-child(7) { left: 65%; animation-duration: 20s; animation-delay: 2.5s; }
+        .bg-particle:nth-child(8) { left: 75%; animation-duration: 26s; animation-delay: 4.5s; width: 7px; height: 7px; }
+        .bg-particle:nth-child(9) { left: 85%; animation-duration: 23s; animation-delay: 1.5s; }
+        .bg-particle:nth-child(10) { left: 95%; animation-duration: 29s; animation-delay: 3.5s; width: 6px; height: 6px; }
+
+        @keyframes floatBgParticle {
+            0% { transform: translateY(100vh) translateX(0) scale(0); opacity: 0; }
+            10% { opacity: 0.8; transform: translateY(80vh) translateX(20px) scale(1); }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(-100vh) translateX(-20px) scale(0); opacity: 0; }
+        }
+
+        /* ===== GRADIENT ORB ===== */
+        .gradient-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            pointer-events: none;
+            z-index: 0;
+            animation: orbFloat 20s ease-in-out infinite;
+        }
+
+        .gradient-orb:nth-child(1) {
+            width: 500px;
+            height: 500px;
+            background: rgba(245, 176, 20, 0.04);
+            top: -200px;
+            right: -100px;
+        }
+
+        .gradient-orb:nth-child(2) {
+            width: 400px;
+            height: 400px;
+            background: rgba(99, 102, 241, 0.03);
+            bottom: -150px;
+            left: -100px;
+            animation-delay: -10s;
+        }
+
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(50px, -50px) scale(1.1); }
+            66% { transform: translate(-30px, 30px) scale(0.9); }
+        }
+
+        /* ========================================
+           USER HEADER
+           ======================================== */
+        .user-header {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            padding: 16px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.04);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            border-bottom: 1px solid rgba(255,255,255,0.5);
+        }
+
+        .user-header h4 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-header h4 span {
+            color: #f5b014;
+        }
+
+        .user-header .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            border: none;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .btn-sm {
+            padding: 6px 16px;
+            font-size: 12px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #f5b014, #d49a0e);
+            color: #0f172a;
+            box-shadow: 0 4px 16px rgba(245, 176, 20, 0.25);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(245, 176, 20, 0.35);
+        }
+
+        .user-avatar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            font-size: 14px;
+            color: #1e293b;
+            padding: 4px 14px 4px 4px;
+            border-radius: 40px;
+            background: #f1f5f9;
+            transition: all 0.3s ease;
+        }
+
+        .user-avatar:hover {
+            background: #e2e8f0;
+        }
+
+        .user-avatar .avatar-img {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #e2e8f0;
+            background: #e2e8f0;
+        }
+
+        /* ========================================
+           USER CONTENT
+           ======================================== */
+        .user-content {
+            padding: 32px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== STATS GRID ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 24px 28px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            border: 1px solid rgba(255,255,255,0.5);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #f5b014, #d49a0e, #f5b014);
+            background-size: 200% 100%;
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .stat-card:hover::before {
+            transform: scaleX(1);
+            animation: shimmerStat 2s ease infinite;
+        }
+
+        @keyframes shimmerStat {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        .stat-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 48px rgba(0,0,0,0.08);
+        }
+
+        .stat-card .stat-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .stat-card .stat-icon.yellow {
+            background: rgba(245, 176, 20, 0.12);
+        }
+        .stat-card .stat-icon.blue {
+            background: rgba(59, 130, 246, 0.12);
+        }
+        .stat-card .stat-icon.green {
+            background: rgba(16, 185, 129, 0.12);
+        }
+
+        .stat-card .stat-info {
+            flex: 1;
+        }
+
+        .stat-card .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: #0f172a;
+            line-height: 1.2;
+        }
+
+        .stat-card .stat-label {
+            color: #64748b;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* ===== TABLE ===== */
+        .table-container {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            border: 1px solid rgba(255,255,255,0.5);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .table-container:hover {
+            box-shadow: 0 8px 40px rgba(0,0,0,0.06);
+        }
+
+        .table-container .table-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid #f1f5f9;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .table-container .table-header h4 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .table-container .table-header .badge-count {
+            background: #f5b014;
+            color: #0f172a;
+            padding: 1px 10px;
+            border-radius: 40px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .table-container table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table-container thead th {
+            padding: 12px 20px;
+            text-align: left;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #94a3b8;
+            border-bottom: 1px solid #f1f5f9;
+            background: rgba(248, 250, 252, 0.5);
+        }
+
+        .table-container tbody td {
+            padding: 14px 20px;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 14px;
+            color: #1e293b;
+            vertical-align: middle;
+        }
+
+        .table-container tbody tr {
+            transition: all 0.3s ease;
+        }
+
+        .table-container tbody tr:hover {
+            background: rgba(245, 176, 20, 0.04);
+        }
+
+        .table-container tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .badge-warning {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .badge-info {
+            background: #dbeafe;
+            color: #2563eb;
+        }
+
+        .badge-success {
+            background: #d1fae5;
+            color: #059669;
+        }
+
+        .badge-danger {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .btn-sm {
+            padding: 4px 14px;
+            font-size: 12px;
+            border-radius: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #f5b014, #d49a0e);
+            color: #0f172a;
+            border: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(245, 176, 20, 0.3);
+        }
+
+        /* ===== EMPTY STATE ===== */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .empty-state .empty-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+        }
+
+        .empty-state h4 {
+            color: #0f172a;
+            margin-bottom: 4px;
+        }
+
+        .empty-state p {
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        .empty-state a {
+            color: #f5b014;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .empty-state a:hover {
+            text-decoration: underline;
+        }
+
+        /* ========================================
+           RESPONSIVE
+           ======================================== */
+        @media (max-width: 1024px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .user-sidebar {
+                transform: translateX(-100%);
+                width: 280px;
+            }
+            .user-sidebar.open {
+                transform: translateX(0);
+            }
+            .user-main {
+                margin-left: 0;
+            }
+            .user-header {
+                padding: 12px 16px;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            .user-content {
+                padding: 16px;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+            .stat-card {
+                padding: 16px 20px;
+            }
+            .stat-card .stat-value {
+                font-size: 22px;
+            }
+            .table-container {
+                overflow-x: auto;
+            }
+            .table-container table {
+                min-width: 600px;
+            }
+            .gradient-orb {
+                opacity: 0.4;
+            }
+            .bg-particle {
+                opacity: 0.5;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .user-header h4 {
+                font-size: 17px;
+            }
+            .user-header .header-right {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            .user-avatar span {
+                display: none;
+            }
+            .stat-card .stat-value {
+                font-size: 20px;
+            }
+        }
+
+        /* ===== MENU TOGGLE ===== */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #0f172a;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+        }
+
+        /* ========================================
+           SCROLLBAR
+           ======================================== */
+        .user-main::-webkit-scrollbar {
+            width: 6px;
+        }
+        .user-main::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .user-main::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        .user-main::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
     </style>
 </head>
 <body>
+    <!-- ===== BACKGROUND ANIMATION ===== -->
+    <div class="bg-animation">
+        <div class="bg-particle"></div>
+        <div class="bg-particle"></div>
+        <div class="bg-particle"></div>
+        <div class="bg-particle"></div>
+        <div class="bg-particle"></div>
+        <div class="bg-particle"></div>
+        <div class="bg-particle"></div>
+        <div class="bg-particle"></div>
+        <div class="bg-particle"></div>
+        <div class="bg-particle"></div>
+        <div class="gradient-orb"></div>
+        <div class="gradient-orb"></div>
+    </div>
+
     <div class="user-layout">
-        <!-- Sidebar -->
-        <aside class="user-sidebar">
+        <!-- ===== SIDEBAR ===== -->
+        <aside class="user-sidebar" id="userSidebar">
             <div class="logo">
-                <h4 style="margin:0;">Web<span style="color:var(--primary);">Dev</span>Pro</h4>
+                <h4>Web<span>Dev</span>Pro</h4>
             </div>
             <div class="user-menu">
                 <a href="index.html" class="active">📊 Dashboard</a>
                 <a href="profile.html">👤 Profil Saya</a>
                 <a href="pesanans.html">🛒 Pesanan Saya</a>
-                <div style="margin-top:30px; border-top:1px solid #eee; padding-top:20px;">
-                    <a href="../index.html">🌐 Lihat Website</a>
-                    <a href="#" onclick="logout()">🚪 Logout</a>
-                </div>
+                <div class="menu-divider"></div>
+                <a href="../index.html">🌐 Lihat Website</a>
+                <a href="#" onclick="logout()">🚪 Logout</a>
             </div>
         </aside>
 
-        <!-- Main -->
+        <!-- ===== MAIN ===== -->
         <div class="user-main">
-            <div class="user-header">
-                <h4 style="margin:0;">Dashboard</h4>
-                <div>
-                    <a href="https://wa.me/6281234567890" target="_blank" class="btn btn-sm btn-primary">💬 Chat Admin</a>
-                    <span id="userName" style="margin-left:15px;">User</span> 👤
+            <!-- Header -->
+            <header class="user-header">
+                <div style="display:flex; align-items:center; gap:12px;">
+                    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
+                    <h4>📊 <span>Dashboard</span></h4>
                 </div>
-            </div>
-            
+                <div class="header-right">
+                    <a href="https://wa.me/6281248141031" target="_blank" class="btn btn-primary btn-sm">💬 Chat Admin</a>
+                    <div class="user-avatar">
+                        <img src="https://ui-avatars.com/api/?name=User&background=f5b014&color=0f172a&size=36" alt="Avatar" class="avatar-img" id="userAvatar">
+                        <span id="userName">User</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content -->
             <div class="user-content">
-                <div class="stats-grid" style="grid-template-columns: repeat(3, 1fr);">
+                <!-- Stats -->
+                <div class="stats-grid">
                     <div class="stat-card">
                         <div class="stat-icon yellow">🛒</div>
-                        <div class="stat-value" id="totalPesanan">0</div>
-                        <div class="stat-label">Total Pesanan</div>
+                        <div class="stat-info">
+                            <div class="stat-value" id="totalPesanan">0</div>
+                            <div class="stat-label">Total Pesanan</div>
+                        </div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-icon blue">⏳</div>
-                        <div class="stat-value" id="pesananProses">0</div>
-                        <div class="stat-label">Dalam Proses</div>
+                        <div class="stat-info">
+                            <div class="stat-value" id="pesananProses">0</div>
+                            <div class="stat-label">Dalam Proses</div>
+                        </div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-icon green">✅</div>
-                        <div class="stat-value" id="pesananSelesai">0</div>
-                        <div class="stat-label">Selesai</div>
+                        <div class="stat-info">
+                            <div class="stat-value" id="pesananSelesai">0</div>
+                            <div class="stat-label">Selesai</div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="table-container" style="margin-top:30px;">
-                    <div style="padding:20px; border-bottom:1px solid #eee;">
-                        <h4>Pesanan Terbaru</h4>
+                <!-- Table -->
+                <div class="table-container">
+                    <div class="table-header">
+                        <h4>
+                            📋 Pesanan Terbaru
+                            <span class="badge-count" id="totalBadge">0</span>
+                        </h4>
+                        <a href="pesanans.html" class="btn btn-primary btn-sm">Lihat Semua →</a>
                     </div>
                     <table>
                         <thead>
@@ -79,7 +743,15 @@
                             </tr>
                         </thead>
                         <tbody id="userPesanans">
-                            <tr><td colspan="5" style="text-align:center;">Memuat data...</td></tr>
+                            <tr>
+                                <td colspan="5" style="text-align:center; padding:40px; color:#94a3b8;">
+                                    <div class="empty-state">
+                                        <div class="empty-icon">📭</div>
+                                        <h4>Belum Ada Pesanan</h4>
+                                        <p>Mulai proyek website Anda sekarang! <a href="../pemesanan.html">Buat pesanan →</a></p>
+                                    </div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -87,59 +759,156 @@
         </div>
     </div>
 
-    <!-- Firebase SDK -->
+    <!-- ===== FIREBASE SDK ===== -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-    
+
     <script src="../assets/js/firebase-config.js"></script>
     <script src="../assets/js/auth.js"></script>
+
     <script>
+        // ============================================
+        // MENU TOGGLE (Mobile)
+        // ============================================
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.getElementById('userSidebar').classList.toggle('open');
+        });
+
+        // Close sidebar on outside click (mobile)
+        document.addEventListener('click', function(e) {
+            const sidebar = document.getElementById('userSidebar');
+            const toggle = document.getElementById('menuToggle');
+            if (window.innerWidth <= 768) {
+                if (!sidebar.contains(e.target) && !toggle.contains(e.target)) {
+                    sidebar.classList.remove('open');
+                }
+            }
+        });
+
+        // ============================================
+        // CHECK USER & LOAD DATA
+        // ============================================
         checkUser().then(() => {
             loadUserData();
         });
 
+        // ============================================
+        // LOAD USER DATA
+        // ============================================
         async function loadUserData() {
             const user = auth.currentUser;
-            document.getElementById('userName').textContent = user.displayName || user.email;
+            if (!user) return;
 
+            // Update user info
+            document.getElementById('userName').textContent = user.displayName || user.email;
+            const avatarImg = document.getElementById('userAvatar');
+            if (user.photoURL) {
+                avatarImg.src = user.photoURL;
+            }
+
+            // Load pesanans
             const snapshot = await db.collection('pesanans')
                 .where('userId', '==', user.uid)
                 .orderBy('createdAt', 'desc')
                 .get();
 
             const pesanans = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            
-            document.getElementById('totalPesanan').textContent = pesanans.length;
-            document.getElementById('pesananProses').textContent = pesanans.filter(p => ['pending','diproses','revisi'].includes(p.status)).length;
-            document.getElementById('pesananSelesai').textContent = pesanans.filter(p => p.status === 'selesai').length;
 
+            // Update stats with animation
+            animateValue(document.getElementById('totalPesanan'), 0, pesanans.length);
+            animateValue(document.getElementById('pesananProses'), 0, pesanans.filter(p => ['pending', 'diproses', 'revisi'].includes(p.status)).length);
+            animateValue(document.getElementById('pesananSelesai'), 0, pesanans.filter(p => p.status === 'selesai').length);
+            document.getElementById('totalBadge').textContent = pesanans.length;
+
+            // Render table
             const tbody = document.getElementById('userPesanans');
             tbody.innerHTML = '';
-            
+
             if (pesanans.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;">Belum ada pesanan. <a href="../pemesanan.html" style="color:var(--primary);">Buat pesanan!</a></td></tr>';
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="5" style="text-align:center; padding:40px; color:#94a3b8;">
+                            <div class="empty-state">
+                                <div class="empty-icon">📭</div>
+                                <h4>Belum Ada Pesanan</h4>
+                                <p>Mulai proyek website Anda sekarang! <a href="../pemesanan.html">Buat pesanan →</a></p>
+                            </div>
+                        </td>
+                    </tr>
+                `;
                 return;
             }
-            
+
             pesanans.slice(0, 5).forEach(p => {
-                const statusBadge = {
+                const statusMap = {
                     'pending': '<span class="badge badge-warning">Pending</span>',
                     'diproses': '<span class="badge badge-info">Diproses</span>',
-                    'selesai': '<span class="badge badge-success">Selesai</span>'
-                }[p.status] || '<span class="badge badge-warning">Pending</span>';
-                
+                    'selesai': '<span class="badge badge-success">Selesai</span>',
+                    'dibatalkan': '<span class="badge badge-danger">Dibatalkan</span>',
+                    'revisi': '<span class="badge badge-warning">Revisi</span>'
+                };
+                const statusBadge = statusMap[p.status] || '<span class="badge badge-warning">Pending</span>';
+
                 tbody.innerHTML += `
                     <tr>
                         <td><strong>#${p.kodePesanan || 'N/A'}</strong></td>
-                        <td>${p.namaProyek || ''}</td>
+                        <td>${p.namaProyek || '-'}</td>
                         <td>${p.paketNama || 'Unknown'}</td>
                         <td>${statusBadge}</td>
-                        <td><a href="pesanan-detail.html?id=${p.id}" class="btn btn-sm btn-primary">Detail</a></td>
+                        <td><a href="pesanan-detail.html?id=${p.id}" class="btn btn-primary btn-sm">Detail</a></td>
                     </tr>
                 `;
             });
         }
+
+        // ============================================
+        // ANIMATE VALUE
+        // ============================================
+        function animateValue(element, start, end) {
+            if (start === end) {
+                element.textContent = end;
+                return;
+            }
+
+            const duration = 800;
+            const steps = 40;
+            const increment = Math.ceil((end - start) / steps);
+            let current = start;
+            const stepTime = duration / steps;
+
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= end) {
+                    current = end;
+                    clearInterval(timer);
+                }
+                element.textContent = current;
+            }, stepTime);
+        }
+
+        // ============================================
+        // LOGOUT
+        // ============================================
+        function logout() {
+            if (confirm('Apakah Anda yakin ingin keluar?')) {
+                auth.signOut().then(() => {
+                    localStorage.removeItem('webdevpro_session');
+                    window.location.href = '../login.html';
+                });
+            }
+        }
+
+        // ============================================
+        // AUTH STATE LISTENER
+        // ============================================
+        auth.onAuthStateChanged((user) => {
+            if (!user) {
+                window.location.href = '../login.html';
+            }
+        });
+
+        console.log('🚀 User Dashboard loaded successfully!');
     </script>
 </body>
 </html>

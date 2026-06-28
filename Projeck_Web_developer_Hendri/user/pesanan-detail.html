@@ -7,21 +7,441 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/style.css">
     <style>
-        .user-layout { display: flex; min-height: 100vh; }
-        .user-sidebar { width: 250px; background: white; box-shadow: 2px 0 10px rgba(0,0,0,0.05); padding: 20px 0; position: fixed; height: 100vh; }
-        .user-sidebar .logo { padding: 0 20px 20px; text-align: center; border-bottom: 1px solid #eee; margin-bottom: 20px; }
-        .user-menu a { display: block; padding: 12px 25px; color: #666; text-decoration: none; transition: all 0.3s; border-left: 3px solid transparent; }
-        .user-menu a:hover, .user-menu a.active { background: rgba(255,215,0,0.1); color: var(--secondary); border-left-color: var(--primary); }
-        .user-main { margin-left: 250px; flex: 1; background: #f5f6fa; }
-        .user-header { background: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        .user-content { padding: 30px; }
+        /* ========================================
+           RESET & BASE
+           ======================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-        /* Timeline Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f0f4f9;
+            color: #1e293b;
+        }
+
+        /* ========================================
+           BACKGROUND ANIMATION
+           ======================================== */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .bg-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(245, 176, 20, 0.08);
+            border-radius: 50%;
+            animation: floatBgParticle linear infinite;
+        }
+
+        .bg-particle:nth-child(1) { left: 5%; animation-duration: 22s; }
+        .bg-particle:nth-child(2) { left: 15%; animation-duration: 28s; animation-delay: 2s; width: 6px; }
+        .bg-particle:nth-child(3) { left: 25%; animation-duration: 18s; animation-delay: 4s; }
+        .bg-particle:nth-child(4) { left: 35%; animation-duration: 32s; animation-delay: 1s; width: 8px; }
+        .bg-particle:nth-child(5) { left: 45%; animation-duration: 24s; animation-delay: 3s; }
+        .bg-particle:nth-child(6) { left: 55%; animation-duration: 30s; animation-delay: 5s; width: 5px; }
+        .bg-particle:nth-child(7) { left: 65%; animation-duration: 20s; animation-delay: 2.5s; }
+        .bg-particle:nth-child(8) { left: 75%; animation-duration: 26s; animation-delay: 4.5s; width: 7px; }
+        .bg-particle:nth-child(9) { left: 85%; animation-duration: 23s; animation-delay: 1.5s; }
+        .bg-particle:nth-child(10) { left: 95%; animation-duration: 29s; animation-delay: 3.5s; width: 6px; }
+        .bg-particle:nth-child(11) { left: 50%; animation-duration: 35s; animation-delay: 0.5s; width: 10px; }
+
+        @keyframes floatBgParticle {
+            0% { transform: translateY(100vh) translateX(0) scale(0); opacity: 0; }
+            10% { opacity: 0.8; transform: translateY(80vh) translateX(20px) scale(1); }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(-100vh) translateX(-20px) scale(0); opacity: 0; }
+        }
+
+        .gradient-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            pointer-events: none;
+            z-index: 0;
+            animation: orbFloat 20s ease-in-out infinite;
+        }
+
+        .gradient-orb:nth-child(1) {
+            width: 500px;
+            height: 500px;
+            background: rgba(245, 176, 20, 0.04);
+            top: -200px;
+            right: -100px;
+        }
+
+        .gradient-orb:nth-child(2) {
+            width: 400px;
+            height: 400px;
+            background: rgba(99, 102, 241, 0.03);
+            bottom: -150px;
+            left: -100px;
+            animation-delay: -10s;
+        }
+
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(50px, -50px) scale(1.1); }
+            66% { transform: translate(-30px, 30px) scale(0.9); }
+        }
+
+        /* ========================================
+           USER LAYOUT
+           ======================================== */
+        .user-layout {
+            display: flex;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* ========================================
+           SIDEBAR
+           ======================================== */
+        .user-sidebar {
+            width: 260px;
+            background: linear-gradient(180deg, #0f172a 0%, #1a1a3e 100%);
+            box-shadow: 4px 0 20px rgba(0,0,0,0.1);
+            padding: 24px 0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        .user-sidebar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .user-sidebar::-webkit-scrollbar-thumb {
+            background: #f5b014;
+            border-radius: 10px;
+        }
+
+        .user-sidebar .logo {
+            padding: 0 24px 24px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            margin-bottom: 20px;
+        }
+
+        .user-sidebar .logo h4 {
+            font-size: 22px;
+            font-weight: 800;
+            color: white;
+            margin: 0;
+        }
+
+        .user-sidebar .logo h4 span {
+            color: #f5b014;
+        }
+
+        .user-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 24px;
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .user-menu a:hover {
+            background: rgba(255,255,255,0.05);
+            color: white;
+        }
+
+        .user-menu a.active {
+            background: rgba(245, 176, 20, 0.1);
+            color: #f5b014;
+            border-left-color: #f5b014;
+        }
+
+        .user-menu .menu-divider {
+            margin: 20px 24px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+
+        /* ========================================
+           MAIN CONTENT
+           ======================================== */
+        .user-main {
+            margin-left: 260px;
+            flex: 1;
+            min-height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ========================================
+           HEADER
+           ======================================== */
+        .user-header {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            padding: 16px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.04);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            border-bottom: 1px solid rgba(255,255,255,0.5);
+        }
+
+        .user-header .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .user-header h4 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 0;
+        }
+
+        .user-header .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            border: none;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .btn-sm {
+            padding: 6px 16px;
+            font-size: 12px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #f5b014, #d49a0e);
+            color: #0f172a;
+            box-shadow: 0 4px 16px rgba(245, 176, 20, 0.25);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(245, 176, 20, 0.35);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #e2e8f0;
+            color: #475569;
+        }
+
+        .btn-outline:hover {
+            background: #f1f5f9;
+            border-color: #f5b014;
+            color: #f5b014;
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            box-shadow: 0 4px 16px rgba(239, 68, 68, 0.25);
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(239, 68, 68, 0.35);
+        }
+
+        .user-avatar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            font-size: 14px;
+            color: #1e293b;
+            padding: 4px 14px 4px 4px;
+            border-radius: 40px;
+            background: #f1f5f9;
+            transition: all 0.3s ease;
+        }
+
+        .user-avatar:hover {
+            background: #e2e8f0;
+        }
+
+        .user-avatar .avatar-img {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #e2e8f0;
+        }
+
+        /* ========================================
+           CONTENT
+           ======================================== */
+        .user-content {
+            padding: 32px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ========================================
+           STATUS BADGE
+           ======================================== */
+        .status-badge-lg {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 24px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 14px;
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        .status-badge-lg .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulseDot 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulseDot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.8); }
+        }
+
+        .status-pending { background: #fef3c7; color: #d97706; }
+        .status-pending .dot { background: #d97706; }
+        .status-diproses { background: #dbeafe; color: #2563eb; }
+        .status-diproses .dot { background: #2563eb; }
+        .status-selesai { background: #d1fae5; color: #059669; }
+        .status-selesai .dot { background: #059669; }
+        .status-dibatalkan { background: #fee2e2; color: #dc2626; }
+        .status-dibatalkan .dot { background: #dc2626; }
+        .status-revisi { background: #e2e3e5; color: #383d41; }
+        .status-revisi .dot { background: #383d41; }
+
+        /* ========================================
+           DETAIL CARD (Glassmorphism)
+           ======================================== */
+        .detail-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 24px 28px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            border: 1px solid rgba(255,255,255,0.5);
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .detail-card:hover {
+            box-shadow: 0 8px 40px rgba(0,0,0,0.06);
+        }
+
+        .detail-card h4 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 0 0 16px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .detail-value {
+            font-weight: 600;
+            color: #0f172a;
+            text-align: right;
+        }
+
+        /* ========================================
+           PROGRESS BAR
+           ======================================== */
+        .progress-track {
+            background: #f1f5f9;
+            border-radius: 10px;
+            height: 8px;
+            overflow: hidden;
+            margin: 8px 0;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #f5b014, #d49a0e);
+            height: 100%;
+            border-radius: 10px;
+            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmerProgress 2s ease-in-out infinite;
+        }
+
+        @keyframes shimmerProgress {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* ========================================
+           TIMELINE
+           ======================================== */
         .timeline {
             position: relative;
             padding-left: 30px;
-            margin: 20px 0;
+            margin: 10px 0;
         }
+
         .timeline::before {
             content: '';
             position: absolute;
@@ -29,214 +449,465 @@
             top: 0;
             bottom: 0;
             width: 2px;
-            background: #e0e0e0;
+            background: linear-gradient(to bottom, #f5b014, #d49a0e, transparent);
         }
+
         .timeline-item {
             position: relative;
             margin-bottom: 25px;
             padding-left: 20px;
+            animation: slideInTimeline 0.6s ease forwards;
+            opacity: 0;
         }
+
+        .timeline-item:nth-child(1) { animation-delay: 0.1s; }
+        .timeline-item:nth-child(2) { animation-delay: 0.2s; }
+        .timeline-item:nth-child(3) { animation-delay: 0.3s; }
+        .timeline-item:nth-child(4) { animation-delay: 0.4s; }
+        .timeline-item:nth-child(5) { animation-delay: 0.5s; }
+
+        @keyframes slideInTimeline {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
         .timeline-item::before {
             content: '';
             position: absolute;
             left: -24px;
             top: 5px;
-            width: 12px;
-            height: 12px;
+            width: 14px;
+            height: 14px;
             border-radius: 50%;
-            background: #ccc;
-            border: 2px solid white;
-            box-shadow: 0 0 0 2px #ccc;
-        }
-        .timeline-item.active::before {
-            background: var(--primary);
-            box-shadow: 0 0 0 2px var(--primary);
-        }
-        .timeline-item.completed::before {
-            background: #27ae60;
-            box-shadow: 0 0 0 2px #27ae60;
-        }
-        .timeline-date {
-            font-size: 12px;
-            color: #999;
-            margin-bottom: 3px;
-        }
-        .timeline-title {
-            font-weight: 600;
-            color: #333;
-        }
-        .timeline-desc {
-            font-size: 14px;
-            color: #666;
-            margin-top: 3px;
-        }
-
-        /* Progress Bar */
-        .progress-track {
-            background: #e0e0e0;
-            border-radius: 10px;
-            height: 8px;
-            overflow: hidden;
-            margin: 10px 0;
-        }
-        .progress-fill {
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            height: 100%;
-            border-radius: 10px;
-            transition: width 0.5s ease;
-        }
-
-        /* Chat Box */
-        .chat-box {
+            border: 3px solid #e2e8f0;
             background: white;
-            border-radius: 12px;
-            border: 1px solid #eee;
-            max-height: 400px;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item.active::before {
+            background: #f5b014;
+            border-color: #f5b014;
+            box-shadow: 0 0 0 4px rgba(245, 176, 20, 0.2);
+        }
+
+        .timeline-item.completed::before {
+            background: #10b981;
+            border-color: #10b981;
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2);
+        }
+
+        .timeline-date {
+            font-size: 11px;
+            color: #94a3b8;
+            margin-bottom: 2px;
+        }
+
+        .timeline-title {
+            font-weight: 700;
+            color: #0f172a;
+            font-size: 15px;
+        }
+
+        .timeline-desc {
+            font-size: 13px;
+            color: #64748b;
+            margin-top: 2px;
+        }
+
+        /* ========================================
+           CHAT BOX
+           ======================================== */
+        .chat-box {
+            background: #f8fafc;
+            border-radius: 16px;
+            max-height: 350px;
             overflow-y: auto;
-            padding: 15px;
+            padding: 16px;
+            border: 1px solid #f1f5f9;
         }
+
+        .chat-box::-webkit-scrollbar {
+            width: 4px;
+        }
+        .chat-box::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+
         .chat-message {
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             display: flex;
-            gap: 10px;
+            gap: 12px;
+            animation: fadeInChat 0.4s ease forwards;
         }
+
+        @keyframes fadeInChat {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         .chat-message.user {
             flex-direction: row-reverse;
         }
+
         .chat-message .chat-avatar {
-            width: 35px;
-            height: 35px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
-            background: var(--primary);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-size: 14px;
+            font-size: 16px;
             flex-shrink: 0;
         }
+
+        .chat-message.user .chat-avatar {
+            background: linear-gradient(135deg, #f5b014, #d49a0e);
+        }
+
         .chat-message.admin .chat-avatar {
-            background: #3498db;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
         }
+
         .chat-message .chat-bubble {
-            max-width: 70%;
-            padding: 10px 15px;
-            border-radius: 15px;
+            max-width: 72%;
+            padding: 10px 16px;
+            border-radius: 16px;
             font-size: 14px;
+            line-height: 1.6;
         }
+
         .chat-message.user .chat-bubble {
-            background: var(--primary);
-            color: white;
-            border-bottom-right-radius: 3px;
+            background: linear-gradient(135deg, #f5b014, #d49a0e);
+            color: #0f172a;
+            border-bottom-right-radius: 4px;
         }
+
         .chat-message.admin .chat-bubble {
-            background: #f0f0f0;
-            color: #333;
-            border-bottom-left-radius: 3px;
-        }
-        .chat-time {
-            font-size: 11px;
-            color: #999;
-            margin-top: 3px;
-        }
-
-        /* Detail Card */
-        .detail-card {
             background: white;
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            margin-bottom: 20px;
-        }
-        .detail-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px 0;
-            border-bottom: 1px solid #f0f0f0;
-        }
-        .detail-row:last-child {
-            border-bottom: none;
-        }
-        .detail-label {
-            color: #666;
-            font-size: 14px;
-        }
-        .detail-value {
-            font-weight: 600;
-            color: #333;
-            text-align: right;
+            color: #1e293b;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         }
 
-        /* Status Badge Large */
-        .status-badge-lg {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 20px;
-            border-radius: 25px;
-            font-weight: 600;
-            font-size: 14px;
+        .chat-time {
+            font-size: 10px;
+            color: #94a3b8;
+            margin-top: 4px;
         }
-        .status-pending { background: #fff3cd; color: #856404; }
-        .status-diproses { background: #cce5ff; color: #004085; }
-        .status-selesai { background: #d4edda; color: #155724; }
-        .status-dibatalkan { background: #f8d7da; color: #721c24; }
-        .status-revisi { background: #e2e3e5; color: #383d41; }
 
-        /* File Attachment */
+        /* ========================================
+           FILE ATTACHMENT
+           ======================================== */
         .file-attachment {
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 10px 15px;
-            background: #f8f9fa;
-            border-radius: 8px;
+            gap: 12px;
+            padding: 12px 16px;
+            background: #f8fafc;
+            border-radius: 12px;
             margin-bottom: 8px;
             text-decoration: none;
-            color: #333;
-            transition: all 0.3s;
+            color: #1e293b;
+            transition: all 0.3s ease;
+            border: 1px solid #f1f5f9;
         }
+
         .file-attachment:hover {
-            background: #e9ecef;
+            background: #f1f5f9;
+            border-color: #f5b014;
+            transform: translateX(5px);
+        }
+
+        /* ========================================
+           FORM
+           ======================================== */
+        .form-control {
+            width: 100%;
+            padding: 10px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            background: white;
+            color: #1e293b;
+            outline: none;
+        }
+
+        .form-control:focus {
+            border-color: #f5b014;
+            box-shadow: 0 0 0 4px rgba(245, 176, 20, 0.08);
+        }
+
+        /* ========================================
+           LOADING & NOT FOUND
+           ======================================== */
+        .loading-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .loading-state .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f1f5f9;
+            border-top-color: #f5b014;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .not-found {
+            text-align: center;
+            padding: 80px 20px;
+        }
+
+        .not-found .icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+        }
+
+        .not-found h3 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+
+        .not-found p {
+            color: #64748b;
+            margin-bottom: 20px;
+        }
+
+        /* ========================================
+           TOAST
+           ======================================== */
+        .alert-toast {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            padding: 14px 24px;
+            border-radius: 16px;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+            z-index: 9999;
+            animation: slideInRight 0.4s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .alert-toast.success {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+        .alert-toast.error {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+        }
+        .alert-toast.warning {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .alert-toast.hide {
+            animation: slideOutRight 0.4s ease forwards;
+        }
+
+        @keyframes slideOutRight {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        /* ========================================
+           RESPONSIVE
+           ======================================== */
+        @media (max-width: 1024px) {
+            .user-content {
+                padding: 24px;
+            }
+            .user-content .grid-2 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .user-sidebar {
+                transform: translateX(-100%);
+                width: 280px;
+            }
+            .user-sidebar.open {
+                transform: translateX(0);
+            }
+            .user-main {
+                margin-left: 0;
+            }
+            .user-header {
+                padding: 12px 16px;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            .user-content {
+                padding: 16px;
+            }
+            .detail-card {
+                padding: 18px 20px;
+            }
+            .status-badge-lg {
+                font-size: 12px;
+                padding: 8px 16px;
+            }
+            .gradient-orb {
+                opacity: 0.4;
+            }
+            .bg-particle {
+                opacity: 0.5;
+            }
+            .grid-2 {
+                grid-template-columns: 1fr !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .user-header h4 {
+                font-size: 15px;
+            }
+            .user-header .header-right {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            .user-avatar span {
+                display: none;
+            }
+            .detail-card {
+                padding: 14px 16px;
+            }
+            .chat-message .chat-bubble {
+                max-width: 85%;
+                font-size: 13px;
+            }
+        }
+
+        /* ========================================
+           GRID 2 COLUMNS
+           ======================================== */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 25px;
+        }
+
+        /* ========================================
+           MENU TOGGLE (Mobile)
+           ======================================== */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #0f172a;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- ===== BACKGROUND ANIMATION ===== -->
+    <div class="bg-animation">
+        <div class="bg-particle"></div>
+        <div class="bg-particle"></div>
+        <div class="bg-particle"></div>
+        <div class="bg-particle"></div>
+        <div class="bg-particle"></div>
+        <div class="bg-particle"></div>
+        <div class="bg-particle"></div>
+        <div class="bg-particle"></div>
+        <div class="bg-particle"></div>
+        <div class="bg-particle"></div>
+        <div class="bg-particle"></div>
+        <div class="gradient-orb"></div>
+        <div class="gradient-orb"></div>
+    </div>
+
     <div class="user-layout">
-        <!-- Sidebar -->
-        <aside class="user-sidebar">
+        <!-- ===== SIDEBAR ===== -->
+        <aside class="user-sidebar" id="userSidebar">
             <div class="logo">
-                <h4 style="margin:0;">Web<span style="color:var(--primary);">Dev</span>Pro</h4>
+                <h4>Web<span>Dev</span>Pro</h4>
             </div>
             <div class="user-menu">
                 <a href="index.html">📊 Dashboard</a>
                 <a href="profile.html">👤 Profil Saya</a>
                 <a href="pesanans.html" class="active">🛒 Pesanan Saya</a>
-                <div style="margin-top:30px; border-top:1px solid #eee; padding-top:20px;">
-                    <a href="../index.html">🌐 Lihat Website</a>
-                    <a href="#" onclick="logout()">🚪 Logout</a>
-                </div>
+                <div class="menu-divider"></div>
+                <a href="../index.html">🌐 Lihat Website</a>
+                <a href="#" onclick="logout()">🚪 Logout</a>
             </div>
         </aside>
 
-        <!-- Main -->
+        <!-- ===== MAIN ===== -->
         <div class="user-main">
-            <div class="user-header">
-                <div style="display:flex; align-items:center; gap:15px;">
-                    <a href="pesanans.html" class="btn btn-sm btn-outline">← Kembali</a>
-                    <h4 style="margin:0;">Detail Pesanan</h4>
+            <!-- Header -->
+            <header class="user-header">
+                <div class="header-left">
+                    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
+                    <a href="pesanans.html" class="btn btn-outline btn-sm">← Kembali</a>
+                    <h4>📋 Detail Pesanan</h4>
                 </div>
-                <div>
-                    <a href="https://wa.me/6281234567890" target="_blank" class="btn btn-sm btn-primary">💬 Chat Admin</a>
-                    <span id="userName" style="margin-left:15px;">User</span> 👤
+                <div class="header-right">
+                    <a href="https://wa.me/6281248141031" target="_blank" class="btn btn-primary btn-sm">💬 Chat Admin</a>
+                    <div class="user-avatar">
+                        <img src="https://ui-avatars.com/api/?name=User&background=f5b014&color=0f172a&size=36" alt="Avatar" class="avatar-img" id="userAvatar">
+                        <span id="userName">User</span>
+                    </div>
                 </div>
-            </div>
-            
+            </header>
+
+            <!-- Content -->
             <div class="user-content">
-                <!-- Loading State -->
-                <div id="loadingState" style="text-align:center; padding:50px;">
-                    <div style="font-size:40px; margin-bottom:15px;">⏳</div>
-                    <p>Memuat detail pesanan...</p>
+                <!-- Loading -->
+                <div id="loadingState" class="loading-state">
+                    <div class="spinner"></div>
+                    <p style="color:#94a3b8;">Memuat detail pesanan...</p>
                 </div>
 
                 <!-- Content -->
@@ -244,23 +915,29 @@
                     <!-- Header Info -->
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:25px; flex-wrap:wrap; gap:15px;">
                         <div>
-                            <h3 style="margin:0 0 5px 0;">Pesanan <span id="kodePesanan">#000</span></h3>
-                            <p style="margin:0; color:#666; font-size:14px;">Dibuat pada <span id="tanggalPesanan">-</span></p>
+                            <h3 style="margin:0 0 4px 0; font-size:22px; font-weight:700; color:#0f172a;">
+                                Pesanan <span id="kodePesanan" style="color:#f5b014;">#000</span>
+                            </h3>
+                            <p style="margin:0; color:#64748b; font-size:14px;">
+                                Dibuat pada <span id="tanggalPesanan">-</span>
+                            </p>
                         </div>
                         <div id="statusBadge" class="status-badge-lg status-pending">
-                            <span>●</span> <span id="statusText">Pending</span>
+                            <span class="dot"></span>
+                            <span id="statusText">Pending</span>
                         </div>
                     </div>
 
-                    <div style="display:grid; grid-template-columns: 2fr 1fr; gap:25px;">
+                    <!-- Grid -->
+                    <div class="grid-2">
                         <!-- Left Column -->
                         <div>
                             <!-- Progress -->
                             <div class="detail-card">
-                                <h4 style="margin:0 0 15px 0;">📊 Progress Proyek</h4>
-                                <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
-                                    <span style="font-size:14px; color:#666;">Progress</span>
-                                    <span style="font-weight:600;" id="progressText">0%</span>
+                                <h4>📊 Progress Proyek</h4>
+                                <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+                                    <span style="font-size:14px; color:#64748b;">Progress</span>
+                                    <span style="font-weight:700; color:#f5b014;" id="progressText">0%</span>
                                 </div>
                                 <div class="progress-track">
                                     <div class="progress-fill" id="progressBar" style="width:0%"></div>
@@ -269,38 +946,36 @@
 
                             <!-- Timeline -->
                             <div class="detail-card">
-                                <h4 style="margin:0 0 15px 0;">📅 Timeline Proyek</h4>
-                                <div class="timeline" id="timelineContainer">
-                                    <!-- Dynamic -->
-                                </div>
+                                <h4>📅 Timeline Proyek</h4>
+                                <div class="timeline" id="timelineContainer"></div>
                             </div>
 
                             <!-- Catatan Admin -->
                             <div class="detail-card" id="catatanCard" style="display:none;">
-                                <h4 style="margin:0 0 15px 0;">📝 Catatan dari Admin</h4>
-                                <div style="background:#fff3cd; padding:15px; border-radius:8px; border-left:4px solid var(--primary);">
-                                    <p style="margin:0; color:#856404;" id="catatanText">-</p>
+                                <h4>📝 Catatan Admin</h4>
+                                <div style="background:#fef3c7; padding:16px; border-radius:12px; border-left:4px solid #f5b014;">
+                                    <p style="margin:0; color:#92400e; font-size:14px;" id="catatanText">-</p>
                                 </div>
                             </div>
 
-                            <!-- Chat / Diskusi -->
+                            <!-- Chat -->
                             <div class="detail-card">
-                                <h4 style="margin:0 0 15px 0;">💬 Diskusi</h4>
+                                <h4>💬 Diskusi</h4>
                                 <div class="chat-box" id="chatContainer">
-                                    <p style="text-align:center; color:#999; padding:20px;">Belum ada diskusi</p>
+                                    <p style="text-align:center; color:#94a3b8; padding:20px;">💬 Belum ada diskusi</p>
                                 </div>
-                                <div style="display:flex; gap:10px; margin-top:15px;">
+                                <div style="display:flex; gap:10px; margin-top:12px;">
                                     <input type="text" id="chatInput" class="form-control" placeholder="Tulis pesan..." onkeypress="if(event.key==='Enter') sendMessage()">
-                                    <button class="btn btn-primary" onclick="sendMessage()">📤</button>
+                                    <button class="btn btn-primary" onclick="sendMessage()">📤 Kirim</button>
                                 </div>
                             </div>
                         </div>
 
                         <!-- Right Column -->
                         <div>
-                            <!-- Detail Pesanan -->
+                            <!-- Detail -->
                             <div class="detail-card">
-                                <h4 style="margin:0 0 15px 0;">📋 Detail Pesanan</h4>
+                                <h4>📋 Detail Pesanan</h4>
                                 <div class="detail-row">
                                     <span class="detail-label">Nama Proyek</span>
                                     <span class="detail-value" id="namaProyek">-</span>
@@ -319,9 +994,9 @@
                                 </div>
                             </div>
 
-                            <!-- Info Pelanggan -->
+                            <!-- Pelanggan -->
                             <div class="detail-card">
-                                <h4 style="margin:0 0 15px 0;">👤 Info Pelanggan</h4>
+                                <h4>👤 Info Pelanggan</h4>
                                 <div class="detail-row">
                                     <span class="detail-label">Nama</span>
                                     <span class="detail-value" id="userNama">-</span>
@@ -336,17 +1011,17 @@
                                 </div>
                             </div>
 
-                            <!-- File Attachments -->
+                            <!-- Files -->
                             <div class="detail-card" id="filesCard">
-                                <h4 style="margin:0 0 15px 0;">📎 File Lampiran</h4>
+                                <h4>📎 File Lampiran</h4>
                                 <div id="filesContainer">
-                                    <p style="color:#999; font-size:14px;">Tidak ada file</p>
+                                    <p style="color:#94a3b8; font-size:14px;">Tidak ada file</p>
                                 </div>
                             </div>
 
                             <!-- Actions -->
                             <div class="detail-card">
-                                <h4 style="margin:0 0 15px 0;">⚡ Aksi</h4>
+                                <h4>⚡ Aksi</h4>
                                 <button class="btn btn-outline" style="width:100%; margin-bottom:10px;" onclick="requestRevision()">
                                     📝 Minta Revisi
                                 </button>
@@ -359,36 +1034,64 @@
                 </div>
 
                 <!-- Not Found -->
-                <div id="notFound" style="display:none; text-align:center; padding:80px 20px;">
-                    <div style="font-size:60px; margin-bottom:15px;">😕</div>
+                <div id="notFound" class="not-found" style="display:none;">
+                    <div class="icon">😕</div>
                     <h3>Pesanan Tidak Ditemukan</h3>
-                    <p style="color:#666;">Pesanan yang Anda cari tidak ada atau telah dihapus.</p>
-                    <a href="pesanans.html" class="btn btn-primary" style="margin-top:15px;">← Kembali ke Daftar</a>
+                    <p>Pesanan yang Anda cari tidak ada atau telah dihapus.</p>
+                    <a href="pesanans.html" class="btn btn-primary">← Kembali ke Daftar</a>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Firebase SDK -->
+    <!-- ===== FIREBASE SDK ===== -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-    
+
     <script src="../assets/js/firebase-config.js"></script>
     <script src="../assets/js/auth.js"></script>
+
     <script>
+        // ============================================
+        // VARIABLES
+        // ============================================
         let pesananId = null;
         let pesananData = null;
         let currentUser = null;
 
-        // Get pesanan ID from URL
+        // ============================================
+        // MENU TOGGLE
+        // ============================================
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.getElementById('userSidebar').classList.toggle('open');
+        });
+
+        document.addEventListener('click', function(e) {
+            const sidebar = document.getElementById('userSidebar');
+            const toggle = document.getElementById('menuToggle');
+            if (window.innerWidth <= 768) {
+                if (!sidebar.contains(e.target) && !toggle.contains(e.target)) {
+                    sidebar.classList.remove('open');
+                }
+            }
+        });
+
+        // ============================================
+        // GET ID FROM URL
+        // ============================================
         const urlParams = new URLSearchParams(window.location.search);
         pesananId = urlParams.get('id');
 
+        // ============================================
+        // CHECK USER
+        // ============================================
         checkUser().then(() => {
             currentUser = auth.currentUser;
             document.getElementById('userName').textContent = currentUser.displayName || currentUser.email;
-            
+            const avatar = document.getElementById('userAvatar');
+            if (currentUser.photoURL) avatar.src = currentUser.photoURL;
+
             if (pesananId) {
                 loadPesananDetail();
             } else {
@@ -396,10 +1099,13 @@
             }
         });
 
+        // ============================================
+        // LOAD PESANAN DETAIL
+        // ============================================
         async function loadPesananDetail() {
             try {
                 const doc = await db.collection('pesanans').doc(pesananId).get();
-                
+
                 if (!doc.exists) {
                     showNotFound();
                     return;
@@ -407,7 +1113,6 @@
 
                 pesananData = doc.data();
 
-                // Cek ownership
                 if (pesananData.userId !== currentUser.uid) {
                     showNotFound();
                     return;
@@ -415,14 +1120,13 @@
 
                 renderDetail(pesananData);
                 loadChats();
-                
-                // Hide loading, show content
+
                 document.getElementById('loadingState').style.display = 'none';
                 document.getElementById('pesananContent').style.display = 'block';
             } catch (error) {
                 console.error('Error loading pesanan:', error);
                 document.getElementById('loadingState').innerHTML = `
-                    <div style="color:#e74c3c;">
+                    <div style="color:#ef4444;">
                         <div style="font-size:40px; margin-bottom:15px;">❌</div>
                         <p>Gagal memuat data. Coba lagi nanti.</p>
                     </div>
@@ -430,25 +1134,31 @@
             }
         }
 
+        // ============================================
+        // RENDER DETAIL
+        // ============================================
         function renderDetail(data) {
-            // Header
+            // Kode
             document.getElementById('kodePesanan').textContent = '#' + (data.kodePesanan || '000');
-            document.getElementById('tanggalPesanan').textContent = data.createdAt 
-                ? new Date(data.createdAt.toDate()).toLocaleDateString('id-ID', { 
-                    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' 
-                  }) 
+            document.getElementById('tanggalPesanan').textContent = data.createdAt
+                ? new Date(data.createdAt.toDate()).toLocaleDateString('id-ID', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                })
                 : '-';
 
             // Status
             const statusConfig = {
-                'pending': { class: 'status-pending', text: 'Pending', color: '#856404' },
-                'diproses': { class: 'status-diproses', text: 'Diproses', color: '#004085' },
-                'selesai': { class: 'status-selesai', text: 'Selesai', color: '#155724' },
-                'dibatalkan': { class: 'status-dibatalkan', text: 'Dibatalkan', color: '#721c24' },
-                'revisi': { class: 'status-revisi', text: 'Revisi', color: '#383d41' }
+                'pending': { class: 'status-pending', text: 'Pending' },
+                'diproses': { class: 'status-diproses', text: 'Diproses' },
+                'selesai': { class: 'status-selesai', text: 'Selesai' },
+                'dibatalkan': { class: 'status-dibatalkan', text: 'Dibatalkan' },
+                'revisi': { class: 'status-revisi', text: 'Revisi' }
             };
             const status = statusConfig[data.status] || statusConfig['pending'];
-            
+
             const badge = document.getElementById('statusBadge');
             badge.className = `status-badge-lg ${status.class}`;
             document.getElementById('statusText').textContent = status.text;
@@ -456,17 +1166,19 @@
             // Progress
             const progress = data.progress || 0;
             document.getElementById('progressText').textContent = progress + '%';
-            document.getElementById('progressBar').style.width = progress + '%';
+            setTimeout(() => {
+                document.getElementById('progressBar').style.width = progress + '%';
+            }, 300);
 
             // Detail
             document.getElementById('namaProyek').textContent = data.namaProyek || '-';
             document.getElementById('paketNama').textContent = data.paketNama || '-';
             document.getElementById('hargaPesanan').textContent = 'Rp ' + (data.harga || 0).toLocaleString('id-ID');
-            document.getElementById('estimasiSelesai').textContent = data.estimasiSelesai 
-                ? new Date(data.estimasiSelesai.toDate()).toLocaleDateString('id-ID') 
+            document.getElementById('estimasiSelesai').textContent = data.estimasiSelesai
+                ? new Date(data.estimasiSelesai.toDate()).toLocaleDateString('id-ID')
                 : 'Menunggu konfirmasi';
 
-            // User Info
+            // User
             document.getElementById('userNama').textContent = data.userName || currentUser.displayName || '-';
             document.getElementById('userEmail').textContent = data.userEmail || currentUser.email || '-';
             document.getElementById('userTelepon').textContent = data.userTelepon || '-';
@@ -487,7 +1199,7 @@
                             <span>📄</span>
                             <div>
                                 <div style="font-weight:500;">${file.name}</div>
-                                <small style="color:#999;">${file.size || ''}</small>
+                                <small style="color:#94a3b8;">${file.size || ''}</small>
                             </div>
                         </a>
                     `;
@@ -497,29 +1209,32 @@
             // Timeline
             renderTimeline(data);
 
-            // Hide cancel button if already cancelled or done
+            // Cancel button
             if (['selesai', 'dibatalkan'].includes(data.status)) {
                 document.getElementById('btnCancel').style.display = 'none';
             }
         }
 
+        // ============================================
+        // RENDER TIMELINE
+        // ============================================
         function renderTimeline(data) {
             const container = document.getElementById('timelineContainer');
             const steps = [
-                { key: 'createdAt', title: 'Pesanan Dibuat', desc: 'Pesanan telah berhasil dibuat dan menunggu konfirmasi admin.' },
+                { key: 'createdAt', title: 'Pesanan Dibuat', desc: 'Pesanan berhasil dibuat dan menunggu konfirmasi admin.' },
                 { key: 'confirmedAt', title: 'Pesanan Dikonfirmasi', desc: 'Admin telah mengkonfirmasi pesanan Anda.' },
                 { key: 'processedAt', title: 'Proses Pengerjaan', desc: 'Tim kami sedang mengerjakan proyek Anda.' },
                 { key: 'reviewAt', title: 'Tahap Review', desc: 'Proyek dalam tahap review dan pengujian.' },
-                { key: 'completedAt', title: 'Proyek Selesai', desc: 'Proyek telah selesai dan siap untuk delivery.' }
+                { key: 'completedAt', title: 'Proyek Selesai', desc: 'Proyek telah selesai dan siap delivery.' }
             ];
 
             container.innerHTML = '';
             let hasActive = false;
 
-            steps.forEach((step, index) => {
+            steps.forEach((step) => {
                 const date = data[step.key];
                 let itemClass = '';
-                
+
                 if (date) {
                     itemClass = 'completed';
                 } else if (!hasActive) {
@@ -537,7 +1252,9 @@
             });
         }
 
-        // Load chats
+        // ============================================
+        // LOAD CHATS
+        // ============================================
         async function loadChats() {
             try {
                 const snapshot = await db.collection('pesanans')
@@ -547,9 +1264,9 @@
                     .get();
 
                 const container = document.getElementById('chatContainer');
-                
+
                 if (snapshot.empty) {
-                    container.innerHTML = '<p style="text-align:center; color:#999; padding:20px;">Belum ada diskusi. Mulai chat dengan admin!</p>';
+                    container.innerHTML = '<p style="text-align:center; color:#94a3b8; padding:20px;">💬 Belum ada diskusi. Mulai chat dengan admin!</p>';
                     return;
                 }
 
@@ -557,7 +1274,7 @@
                 snapshot.docs.forEach(doc => {
                     const chat = doc.data();
                     const isUser = chat.sender === 'user';
-                    
+
                     container.innerHTML += `
                         <div class="chat-message ${isUser ? 'user' : 'admin'}">
                             <div class="chat-avatar">${isUser ? '👤' : '👨‍💼'}</div>
@@ -568,15 +1285,16 @@
                         </div>
                     `;
                 });
-                
-                // Scroll to bottom
+
                 container.scrollTop = container.scrollHeight;
             } catch (error) {
                 console.error('Error loading chats:', error);
             }
         }
 
-        // Send message
+        // ============================================
+        // SEND MESSAGE
+        // ============================================
         async function sendMessage() {
             const input = document.getElementById('chatInput');
             const message = input.value.trim();
@@ -602,93 +1320,92 @@
             }
         }
 
-        // Request revision
+        // ============================================
+        // REQUEST REVISION
+        // ============================================
         async function requestRevision() {
             if (!confirm('Apakah Anda yakin ingin meminta revisi untuk pesanan ini?')) return;
-            
+
             try {
                 await db.collection('pesanans').doc(pesananId).update({
                     status: 'revisi',
                     updatedAt: firebase.firestore.FieldValue.serverTimestamp()
                 });
-                showAlert('Permintaan revisi telah dikirim!', 'success');
+                showAlert('✅ Permintaan revisi telah dikirim!', 'success');
                 loadPesananDetail();
             } catch (error) {
-                showAlert('Gagal: ' + error.message, 'error');
+                showAlert('❌ Gagal: ' + error.message, 'error');
             }
         }
 
-        // Cancel pesanan
+        // ============================================
+        // CANCEL PESANAN
+        // ============================================
         async function cancelPesanan() {
-            if (!confirm('Apakah Anda yakin ingin membatalkan pesanan ini? Tindakan ini tidak dapat dibatalkan.')) return;
-            
+            if (!confirm('⚠️ Apakah Anda yakin ingin membatalkan pesanan ini? Tindakan ini tidak dapat dibatalkan.')) return;
+
             try {
                 await db.collection('pesanans').doc(pesananId).update({
                     status: 'dibatalkan',
                     updatedAt: firebase.firestore.FieldValue.serverTimestamp()
                 });
-                showAlert('Pesanan telah dibatalkan', 'warning');
+                showAlert('✅ Pesanan telah dibatalkan', 'warning');
                 loadPesananDetail();
             } catch (error) {
-                showAlert('Gagal: ' + error.message, 'error');
+                showAlert('❌ Gagal: ' + error.message, 'error');
             }
         }
 
+        // ============================================
+        // SHOW NOT FOUND
+        // ============================================
         function showNotFound() {
             document.getElementById('loadingState').style.display = 'none';
             document.getElementById('pesananContent').style.display = 'none';
             document.getElementById('notFound').style.display = 'block';
         }
 
-        // Show alert
+        // ============================================
+        // SHOW ALERT
+        // ============================================
         function showAlert(message, type = 'success') {
-            let alertBox = document.querySelector('.alert-toast');
-            if (alertBox) alertBox.remove();
-            
-            const colors = {
-                success: '#27ae60',
-                error: '#e74c3c',
-                warning: '#f39c12'
-            };
-            
-            alertBox = document.createElement('div');
-            alertBox.className = 'alert-toast';
-            alertBox.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: ${colors[type] || colors.success};
-                color: white;
-                padding: 15px 25px;
-                border-radius: 8px;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-                z-index: 9999;
-                font-weight: 500;
-                animation: slideIn 0.3s ease;
-            `;
-            alertBox.textContent = message;
-            
-            document.body.appendChild(alertBox);
-            
+            const existing = document.querySelector('.alert-toast');
+            if (existing) existing.remove();
+
+            const toast = document.createElement('div');
+            toast.className = `alert-toast ${type}`;
+            const icons = { success: '✅', error: '❌', warning: '⚠️' };
+            toast.innerHTML = `${icons[type] || 'ℹ️'} ${message}`;
+            document.body.appendChild(toast);
+
             setTimeout(() => {
-                alertBox.style.animation = 'slideOut 0.3s ease';
-                setTimeout(() => alertBox.remove(), 300);
-            }, 3000);
+                toast.classList.add('hide');
+                setTimeout(() => toast.remove(), 400);
+            }, 3500);
         }
 
-        // CSS Animation
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes slideIn {
-                from { transform: translateX(100%); opacity: 0; }
-                to { transform: translateX(0); opacity: 1; }
+        // ============================================
+        // LOGOUT
+        // ============================================
+        function logout() {
+            if (confirm('Apakah Anda yakin ingin keluar?')) {
+                auth.signOut().then(() => {
+                    localStorage.removeItem('webdevpro_session');
+                    window.location.href = '../login.html';
+                });
             }
-            @keyframes slideOut {
-                from { transform: translateX(0); opacity: 1; }
-                to { transform: translateX(100%); opacity: 0; }
+        }
+
+        // ============================================
+        // AUTH STATE
+        // ============================================
+        auth.onAuthStateChanged((user) => {
+            if (!user) {
+                window.location.href = '../login.html';
             }
-        `;
-        document.head.appendChild(style);
+        });
+
+        console.log('🚀 Pesanan Detail page loaded successfully!');
     </script>
 </body>
 </html>

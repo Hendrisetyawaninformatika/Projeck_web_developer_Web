@@ -1,271 +1,1007 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Kelola Pesanan | Admin WebDevPro</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f0f4f9;
+            color: #1e293b;
+            display: flex;
+        }
+        a {
+            text-decoration: none;
+        }
+        button {
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .admin-body {
+            min-height: 100vh;
+            background: #f0f4f9;
+        }
+
+        /* ===== SIDEBAR ===== */
+        .admin-sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 260px;
+            height: 100vh;
+            background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+            padding: 24px 16px;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, width 0.3s ease;
+            z-index: 1000;
+            overflow-y: auto;
+            box-shadow: 4px 0 24px rgba(0, 0, 0, 0.15);
+        }
+        .admin-sidebar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .admin-sidebar::-webkit-scrollbar-thumb {
+            background: #475569;
+            border-radius: 10px;
+        }
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            margin-bottom: 20px;
+        }
+        .sidebar-header .logo {
+            font-size: 22px;
+            font-weight: 800;
+            color: #fff;
+        }
+        .sidebar-header .logo span {
+            color: #60a5fa;
+        }
+        .admin-badge {
+            background: rgba(96, 165, 250, 0.18);
+            color: #60a5fa;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 2px 12px;
+            border-radius: 20px;
+            letter-spacing: 0.3px;
+            border: 1px solid rgba(96, 165, 250, 0.15);
+        }
+        .sidebar-nav ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .sidebar-nav ul li a {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            color: #94a3b8;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+        .sidebar-nav ul li a svg {
+            flex-shrink: 0;
+            opacity: 0.6;
+            transition: opacity 0.2s;
+        }
+        .sidebar-nav ul li a:hover {
+            background: rgba(255, 255, 255, 0.06);
+            color: #e2e8f0;
+        }
+        .sidebar-nav ul li a:hover svg {
+            opacity: 1;
+        }
+        .sidebar-nav ul li a.active {
+            background: rgba(96, 165, 250, 0.15);
+            color: #60a5fa;
+        }
+        .sidebar-nav ul li a.active svg {
+            opacity: 1;
+            stroke: #60a5fa;
+        }
+        .sidebar-footer {
+            margin-top: auto;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .logout-btn {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            color: #94a3b8;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .logout-btn:hover {
+            background: rgba(239, 68, 68, 0.12);
+            color: #f87171;
+        }
+        .logout-btn:hover svg {
+            stroke: #f87171;
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        .admin-main {
+            margin-left: 260px;
+            flex: 1;
+            padding: 24px 32px 40px;
+            transition: margin-left 0.3s ease;
+            min-height: 100vh;
+        }
+        .admin-topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            margin-bottom: 28px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+        .sidebar-toggle {
+            background: none;
+            border: none;
+            color: #475569;
+            padding: 6px;
+            border-radius: 10px;
+            transition: background 0.2s;
+        }
+        .sidebar-toggle:hover {
+            background: #f1f5f9;
+        }
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+        .topbar-search {
+            display: flex;
+            align-items: center;
+            background: #f1f5f9;
+            padding: 6px 16px;
+            border-radius: 40px;
+            gap: 10px;
+            transition: all 0.25s;
+            border: 1.5px solid transparent;
+        }
+        .topbar-search:focus-within {
+            background: #fff;
+            border-color: #60a5fa;
+            box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.12);
+        }
+        .topbar-search input {
+            border: none;
+            background: transparent;
+            padding: 8px 0;
+            font-size: 13px;
+            color: #1e293b;
+            outline: none;
+            width: 160px;
+        }
+        .topbar-search input::placeholder {
+            color: #94a3b8;
+        }
+        .topbar-search svg {
+            color: #94a3b8;
+            flex-shrink: 0;
+        }
+        .notification-btn {
+            position: relative;
+            background: none;
+            border: none;
+            padding: 6px;
+            border-radius: 10px;
+            color: #475569;
+            transition: background 0.2s;
+        }
+        .notification-btn:hover {
+            background: #f1f5f9;
+        }
+        .notification-badge {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: #fff;
+            font-size: 9px;
+            font-weight: 700;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #fff;
+            box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+        }
+        .topbar-user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            font-size: 14px;
+            color: #1e293b;
+            padding: 4px 12px 4px 4px;
+            border-radius: 40px;
+            background: #f1f5f9;
+            transition: background 0.2s;
+        }
+        .topbar-user:hover {
+            background: #e2e8f0;
+        }
+        .topbar-user img {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #e2e8f0;
+            background: #e2e8f0;
+        }
+
+        /* ===== PAGE HEADER ===== */
+        .page-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+        .page-header-left h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #0f172a;
+            letter-spacing: -0.3px;
+        }
+        .page-header-left p {
+            color: #64748b;
+            font-size: 15px;
+            margin-top: 2px;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 24px;
+            border: none;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.25s ease;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: #fff;
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.25);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 28px rgba(37, 99, 235, 0.35);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid #e2e8f0;
+            color: #475569;
+        }
+        .btn-outline:hover {
+            background: #f1f5f9;
+            border-color: #cbd5e1;
+        }
+        .btn-sm {
+            padding: 6px 14px;
+            font-size: 12px;
+            border-radius: 30px;
+        }
+        .btn-danger {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: #fff;
+            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.25);
+        }
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 28px rgba(239, 68, 68, 0.35);
+        }
+
+        /* ===== STATS ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+        .stat-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            padding: 20px 22px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: transform 0.25s, box-shadow 0.25s;
+        }
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.07);
+        }
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .stat-icon.blue {
+            background: linear-gradient(135deg, #eff6ff, #dbeafe);
+            color: #3b82f6;
+        }
+        .stat-icon.orange {
+            background: linear-gradient(135deg, #fffbeb, #fef3c7);
+            color: #f59e0b;
+        }
+        .stat-icon.green {
+            background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+            color: #10b981;
+        }
+        .stat-icon.purple {
+            background: linear-gradient(135deg, #f5f3ff, #ede9fe);
+            color: #8b5cf6;
+        }
+        .stat-info h3 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #0f172a;
+            line-height: 1.2;
+        }
+        .stat-info p {
+            font-size: 13px;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        /* ===== FILTER BAR ===== */
+        .filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            padding: 12px 20px;
+            border-radius: 20px;
+            margin-bottom: 28px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+        }
+        .filter-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .filter-select,
+        .filter-date {
+            padding: 8px 16px 8px 14px;
+            border-radius: 40px;
+            border: 1.5px solid #e2e8f0;
+            background: #f8fafc;
+            font-size: 13px;
+            font-weight: 500;
+            color: #1e293b;
+            outline: none;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+        .filter-select:focus,
+        .filter-date:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.08);
+        }
+        .filter-date {
+            min-width: 140px;
+        }
+        .filter-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* ===== DATA TABLE ===== */
+        .data-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            overflow: hidden;
+        }
+        .data-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 24px;
+            border-bottom: 1px solid #f1f5f9;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .data-card-header h2 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #0f172a;
+        }
+        .data-card-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .table-info {
+            font-size: 13px;
+            color: #94a3b8;
+        }
+        .table-responsive {
+            overflow-x: auto;
+            padding: 0 4px;
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        .data-table thead {
+            background: #f8fafc;
+        }
+        .data-table th {
+            text-align: left;
+            padding: 14px 16px;
+            font-weight: 600;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #64748b;
+            border-bottom: 1px solid #f1f5f9;
+            white-space: nowrap;
+        }
+        .data-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid #f1f5f9;
+            vertical-align: middle;
+        }
+        .data-table tbody tr {
+            transition: background 0.2s;
+        }
+        .data-table tbody tr:hover {
+            background: #f8fafc;
+        }
+        .data-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+        .table-checkbox {
+            width: 16px;
+            height: 16px;
+            accent-color: #3b82f6;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .order-id {
+            font-weight: 600;
+            color: #0f172a;
+            font-size: 12px;
+            background: #f1f5f9;
+            padding: 2px 10px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+        .table-user {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .table-user img {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: #e2e8f0;
+            border: 2px solid #e2e8f0;
+            flex-shrink: 0;
+        }
+        .user-info {
+            display: flex;
+            flex-direction: column;
+        }
+        .user-name {
+            font-weight: 600;
+            color: #0f172a;
+            font-size: 13px;
+        }
+        .user-email {
+            font-size: 11px;
+            color: #94a3b8;
+        }
+
+        /* ===== BADGES ===== */
+        .badge {
+            display: inline-block;
+            padding: 2px 14px;
+            border-radius: 40px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .badge-starter {
+            background: #f1f5f9;
+            color: #475569;
+        }
+        .badge-business {
+            background: #dbeafe;
+            color: #2563eb;
+        }
+        .badge-enterprise {
+            background: #fae8ff;
+            color: #9333ea;
+        }
+        .badge-custom {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 40px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .status-badge.menunggu {
+            background: #fef3c7;
+            color: #d97706;
+        }
+        .status-badge.diproses {
+            background: #dbeafe;
+            color: #2563eb;
+        }
+        .status-badge.development {
+            background: #e0e7ff;
+            color: #4338ca;
+        }
+        .status-badge.testing {
+            background: #fce7f3;
+            color: #db2777;
+        }
+        .status-badge.selesai {
+            background: #d1fae5;
+            color: #059669;
+        }
+        .status-badge.dibatalkan {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        /* ===== PROGRESS BAR ===== */
+        .progress-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 110px;
+        }
+        .progress-bar > div {
+            flex: 1;
+            height: 6px;
+            background: #f1f5f9;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #60a5fa);
+            border-radius: 10px;
+            transition: width 0.6s ease;
+        }
+        .progress-fill.complete {
+            background: linear-gradient(90deg, #10b981, #34d399);
+        }
+        .progress-fill.cancelled {
+            background: linear-gradient(90deg, #ef4444, #f87171);
+        }
+        .progress-bar span {
+            font-size: 12px;
+            font-weight: 600;
+            color: #64748b;
+            min-width: 36px;
+            text-align: right;
+        }
+
+        /* ===== TABLE ACTIONS ===== */
+        .table-actions {
+            display: flex;
+            gap: 4px;
+        }
+        .action-btn {
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            border: none;
+            background: transparent;
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .action-btn:hover {
+            background: #f1f5f9;
+            color: #1e293b;
+        }
+        .action-btn.view:hover {
+            background: #dbeafe;
+            color: #2563eb;
+        }
+        .action-btn.edit:hover {
+            background: #fef3c7;
+            color: #d97706;
+        }
+        .action-btn.delete:hover {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        /* ===== PAGINATION ===== */
+        .data-card-footer {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 16px 24px;
+            border-top: 1px solid #f1f5f9;
+        }
+        .pagination-info {
+            font-size: 14px;
+            color: #64748b;
+        }
+        .pagination {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .page-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            border: none;
+            background: transparent;
+            color: #475569;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .page-btn:hover {
+            background: #f1f5f9;
+        }
+        .page-btn.active {
+            background: #3b82f6;
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+        .page-btn:disabled {
+            opacity: 0.3;
+            pointer-events: none;
+        }
+        .page-dots {
+            color: #94a3b8;
+            padding: 0 4px;
+        }
+
+        /* ===== MODAL ===== */
+        .modal {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            visibility: hidden;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        .modal.active {
+            visibility: visible;
+            opacity: 1;
+        }
+        .modal-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(6px);
+        }
+        .modal-content {
+            position: relative;
+            background: #fff;
+            border-radius: 28px;
+            max-width: 520px;
+            width: 92%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 0;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.25);
+            transform: scale(0.95) translateY(10px);
+            transition: transform 0.3s ease;
+        }
+        .modal.active .modal-content {
+            transform: scale(1) translateY(0);
+        }
+        .modal-sm {
+            max-width: 440px;
+        }
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 22px 28px 12px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .modal-header h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0f172a;
+        }
+        .modal-close {
+            background: none;
+            border: none;
+            color: #94a3b8;
+            padding: 4px;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+        .modal-close:hover {
+            background: #f1f5f9;
+            color: #1e293b;
+        }
+        .modal-body {
+            padding: 24px 28px 10px;
+        }
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            padding: 16px 28px 24px;
+            border-top: 1px solid #f1f5f9;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .text-muted {
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        /* ===== FORM ===== */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 14px;
+            color: #1e293b;
+            margin-bottom: 4px;
+        }
+        .form-group .required {
+            color: #ef4444;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px 16px;
+            border-radius: 14px;
+            border: 1.5px solid #e2e8f0;
+            background: #fafcff;
+            font-size: 14px;
+            transition: all 0.2s;
+            outline: none;
+            font-family: inherit;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.08);
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        /* ===== PROGRESS RANGE ===== */
+        .progress-range {
+            width: 100%;
+            height: 6px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: #e2e8f0;
+            border-radius: 10px;
+            outline: none;
+            transition: background 0.2s;
+        }
+        .progress-range::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #3b82f6;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+            transition: all 0.2s;
+        }
+        .progress-range::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+        }
+        .progress-range::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #3b82f6;
+            cursor: pointer;
+            border: none;
+        }
+        .progress-value {
+            display: inline-block;
+            margin-top: 8px;
+            font-weight: 700;
+            font-size: 16px;
+            color: #3b82f6;
+        }
+
+        /* ===== DELETE ICON ===== */
+        .delete-icon {
+            color: #ef4444;
+            margin-bottom: 12px;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .admin-sidebar {
+                transform: translateX(-100%);
+            }
+            .admin-sidebar.collapsed {
+                transform: translateX(0);
+            }
+            .admin-main {
+                margin-left: 0;
+                padding: 16px;
+            }
+        }
+        @media (max-width: 600px) {
+            .page-header-left h1 {
+                font-size: 22px;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .filter-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .filter-group {
+                flex-wrap: wrap;
+            }
+            .filter-actions {
+                justify-content: flex-start;
+            }
+            .data-card-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .data-card-actions {
+                justify-content: space-between;
+            }
+            .data-card-footer {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
 </head>
 <body class="admin-body">
-    <!-- Admin Sidebar -->
+    <!-- ===== SIDEBAR ===== -->
     <aside class="admin-sidebar" id="adminSidebar">
         <div class="sidebar-header">
             <a href="../index.html" class="logo">Web<span>Dev</span>Pro</a>
             <span class="admin-badge">Admin</span>
         </div>
-        
         <nav class="sidebar-nav">
             <ul>
-                <li>
-                    <a href="index.html">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="3" y="3" width="7" height="7"></rect>
-                            <rect x="14" y="3" width="7" height="7"></rect>
-                            <rect x="14" y="14" width="7" height="7"></rect>
-                            <rect x="3" y="14" width="7" height="7"></rect>
-                        </svg>
-                        Dashboard
-                    </a>
-                </li>
-                <li>
-                    <a href="pesanans.html" class="active">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                            <polyline points="14 2 14 8 20 8"></polyline>
-                            <line x1="16" y1="13" x2="8" y2="13"></line>
-                            <line x1="16" y1="17" x2="8" y2="17"></line>
-                            <polyline points="10 9 9 9 8 9"></polyline>
-                        </svg>
-                        Pesanan
-                    </a>
-                </li>
-                <li>
-                    <a href="users.html">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="9" cy="7" r="4"></circle>
-                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                        </svg>
-                        Pengguna
-                    </a>
-                </li>
-                <li>
-                    <a href="pakets.html">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
-                            <line x1="1" y1="10" x2="23" y2="10"></line>
-                        </svg>
-                        Paket Layanan
-                    </a>
-                </li>
-                <li>
-                    <a href="portofolios.html">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                            <polyline points="21 15 16 10 5 21"></polyline>
-                        </svg>
-                        Portofolio
-                    </a>
-                </li>
-                <li>
-                    <a href="blogs.html">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                        </svg>
-                        Blog
-                    </a>
-                </li>
-                <li>
-                    <a href="testimonis.html">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
-                        </svg>
-                        Testimoni
-                    </a>
-                </li>
-                <li>
-                    <a href="faqs.html">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                            <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                        </svg>
-                        FAQ
-                    </a>
-                </li>
-                <li>
-                    <a href="settings.html">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="3"></circle>
-                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-                        </svg>
-                        Pengaturan
-                    </a>
-                </li>
+                <li><a href="index.html"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg> Dashboard</a></li>
+                <li><a href="pesanans.html" class="active"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> Pesanan</a></li>
+                <li><a href="users.html"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Pengguna</a></li>
+                <li><a href="pakets.html"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg> Paket Layanan</a></li>
+                <li><a href="portofolios.html"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg> Portofolio</a></li>
+                <li><a href="blogs.html"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Blog</a></li>
+                <li><a href="testimonis.html"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Testimoni</a></li>
+                <li><a href="faqs.html"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> FAQ</a></li>
+                <li><a href="settings.html"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg> Pengaturan</a></li>
             </ul>
         </nav>
-
         <div class="sidebar-footer">
-            <a href="#" class="logout-btn" id="logoutBtn">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                    <polyline points="16 17 21 12 16 7"></polyline>
-                    <line x1="21" y1="12" x2="9" y2="12"></line>
-                </svg>
-                Keluar
-            </a>
+            <a href="#" class="logout-btn" id="logoutBtn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg> Keluar</a>
         </div>
     </aside>
 
-    <!-- Admin Main Content -->
+    <!-- ===== MAIN ===== -->
     <main class="admin-main">
         <!-- Top Bar -->
         <header class="admin-topbar">
-            <button class="sidebar-toggle" id="sidebarToggle">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="3" y1="12" x2="21" y2="12"></line>
-                    <line x1="3" y1="6" x2="21" y2="6"></line>
-                    <line x1="3" y1="18" x2="21" y2="18"></line>
-                </svg>
-            </button>
+            <button class="sidebar-toggle" id="sidebarToggle"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
             <div class="topbar-right">
-                <div class="topbar-search">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                    </svg>
-                    <input type="text" placeholder="Cari pesanan...">
-                </div>
-                <div class="topbar-notifications">
-                    <button class="notification-btn" id="notificationBtn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
-                            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                        </svg>
-                        <span class="notification-badge">5</span>
-                    </button>
-                </div>
-                <div class="topbar-user">
-                    <img src="../assets/images/admin/avatar.jpg" alt="Admin" onerror="this.src='https://via.placeholder.com/36'">
-                    <span>Admin</span>
-                </div>
+                <div class="topbar-search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" placeholder="Cari pesanan..."></div>
+                <div class="topbar-notifications"><button class="notification-btn" id="notificationBtn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="notification-badge">5</span></button></div>
+                <div class="topbar-user"><img src="../assets/images/admin/avatar.jpg" alt="Admin" onerror="this.src='https://ui-avatars.com/api/?name=Admin&background=3b82f6&color=fff&size=36'"><span>Admin</span></div>
             </div>
         </header>
 
         <!-- Page Content -->
         <div class="admin-content">
             <div class="page-header">
-                <div class="page-header-left">
-                    <h1>Kelola Pesanan</h1>
-                    <p>Kelola dan monitor semua pesanan layanan</p>
-                </div>
-                <div class="page-header-right">
-                    <button class="btn btn-primary" id="addPesananBtn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="12" y1="5" x2="12" y2="19"></line>
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                        </svg>
-                        Tambah Pesanan
-                    </button>
-                </div>
+                <div class="page-header-left"><h1>Kelola Pesanan</h1><p>Kelola dan monitor semua pesanan layanan</p></div>
+                <div class="page-header-right"><button class="btn btn-primary" id="addPesananBtn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Tambah Pesanan</button></div>
             </div>
 
-            <!-- Stats Cards -->
+            <!-- Stats -->
             <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon blue">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                            <polyline points="14 2 14 8 20 8"></polyline>
-                        </svg>
-                    </div>
-                    <div class="stat-info">
-                        <h3>156</h3>
-                        <p>Total Pesanan</p>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon orange">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <polyline points="12 6 12 12 16 14"></polyline>
-                        </svg>
-                    </div>
-                    <div class="stat-info">
-                        <h3>23</h3>
-                        <p>Menunggu</p>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon green">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                        </svg>
-                    </div>
-                    <div class="stat-info">
-                        <h3>98</h3>
-                        <p>Selesai</p>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon purple">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <line x1="12" y1="1" x2="12" y2="23"></line>
-                            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-                        </svg>
-                    </div>
-                    <div class="stat-info">
-                        <h3>Rp 487.5jt</h3>
-                        <p>Pendapatan Total</p>
-                    </div>
-                </div>
+                <div class="stat-card"><div class="stat-icon blue"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div class="stat-info"><h3>156</h3><p>Total Pesanan</p></div></div>
+                <div class="stat-card"><div class="stat-icon orange"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div class="stat-info"><h3>23</h3><p>Menunggu</p></div></div>
+                <div class="stat-card"><div class="stat-icon green"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div><div class="stat-info"><h3>98</h3><p>Selesai</p></div></div>
+                <div class="stat-card"><div class="stat-icon purple"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div class="stat-info"><h3>Rp 487.5jt</h3><p>Pendapatan Total</p></div></div>
             </div>
 
-            <!-- Filter Bar -->
+            <!-- Filter -->
             <div class="filter-bar">
                 <div class="filter-group">
-                    <select class="filter-select" id="filterStatus">
-                        <option value="all">Semua Status</option>
-                        <option value="menunggu">Menunggu Pembayaran</option>
-                        <option value="diproses">Diproses</option>
-                        <option value="development">Development</option>
-                        <option value="testing">Testing</option>
-                        <option value="selesai">Selesai</option>
-                        <option value="dibatalkan">Dibatalkan</option>
-                    </select>
-                    <select class="filter-select" id="filterPaket">
-                        <option value="all">Semua Paket</option>
-                        <option value="starter">Starter</option>
-                        <option value="business">Business</option>
-                        <option value="enterprise">Enterprise</option>
-                        <option value="custom">Custom</option>
-                    </select>
+                    <select class="filter-select" id="filterStatus"><option value="all">Semua Status</option><option value="menunggu">Menunggu Pembayaran</option><option value="diproses">Diproses</option><option value="development">Development</option><option value="testing">Testing</option><option value="selesai">Selesai</option><option value="dibatalkan">Dibatalkan</option></select>
+                    <select class="filter-select" id="filterPaket"><option value="all">Semua Paket</option><option value="starter">Starter</option><option value="business">Business</option><option value="enterprise">Enterprise</option><option value="custom">Custom</option></select>
                     <input type="date" class="filter-date" id="filterDate">
                 </div>
                 <div class="filter-actions">
-                    <button class="btn btn-outline btn-sm" id="resetFilter">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="1 4 1 10 7 10"></polyline>
-                            <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
-                        </svg>
-                        Reset
-                    </button>
-                    <button class="btn btn-outline btn-sm">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                            <polyline points="7 10 12 15 17 10"></polyline>
-                            <line x1="12" y1="15" x2="12" y2="3"></line>
-                        </svg>
-                        Export
-                    </button>
+                    <button class="btn btn-outline btn-sm" id="resetFilter"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg> Reset</button>
+                    <button class="btn btn-outline btn-sm"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Export</button>
                 </div>
             </div>
 
-            <!-- Pesanan Table -->
+            <!-- Table -->
             <div class="data-card">
                 <div class="data-card-header">
                     <h2>Daftar Pesanan</h2>
@@ -277,9 +1013,7 @@
                     <table class="data-table">
                         <thead>
                             <tr>
-                                <th>
-                                    <input type="checkbox" class="table-checkbox" id="selectAll">
-                                </th>
+                                <th><input type="checkbox" class="table-checkbox" id="selectAll"></th>
                                 <th>ID Pesanan</th>
                                 <th>Pelanggan</th>
                                 <th>Paket</th>
@@ -293,409 +1027,217 @@
                         <tbody>
                             <tr>
                                 <td><input type="checkbox" class="table-checkbox"></td>
-                                <td>
-                                    <span class="order-id">#ORD-2024-0156</span>
-                                </td>
+                                <td><span class="order-id">#ORD-2024-0156</span></td>
                                 <td>
                                     <div class="table-user">
-                                        <img src="../assets/images/users/user1.jpg" alt="Budi Santoso" onerror="this.src='https://via.placeholder.com/32'">
-                                        <div class="user-info">
-                                            <span class="user-name">Budi Santoso</span>
-                                            <span class="user-email">budi@email.com</span>
-                                        </div>
+                                        <img src="../assets/images/users/user1.jpg" alt="Budi Santoso" onerror="this.src='https://ui-avatars.com/api/?name=Budi+Santoso&background=3b82f6&color=fff&size=34'">
+                                        <div class="user-info"><span class="user-name">Budi Santoso</span><span class="user-email">budi@email.com</span></div>
                                     </div>
                                 </td>
-                                <td>
-                                    <span class="badge badge-business">Business</span>
-                                </td>
-                                <td>Rp 5.000.000</td>
+                                <td><span class="badge badge-business">Business</span></td>
+                                <td><strong>Rp 5.000.000</strong></td>
                                 <td>28 Jun 2024</td>
-                                <td>
-                                    <span class="status-badge development">Development</span>
-                                </td>
+                                <td><span class="status-badge development">Development</span></td>
                                 <td>
                                     <div class="progress-bar">
-                                        <div class="progress-fill" style="width: 65%"></div>
+                                        <div><div class="progress-fill" style="width: 65%"></div></div>
                                         <span>65%</span>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="table-actions">
-                                        <button class="action-btn view" title="Lihat Detail">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                                <circle cx="12" cy="12" r="3"></circle>
-                                            </svg>
-                                        </button>
-                                        <button class="action-btn edit" title="Update Status">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                                            </svg>
-                                        </button>
-                                        <button class="action-btn delete" title="Hapus">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <polyline points="3 6 5 6 21 6"></polyline>
-                                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                            </svg>
-                                        </button>
+                                        <button class="action-btn view" title="Lihat Detail"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+                                        <button class="action-btn edit" title="Update Status"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+                                        <button class="action-btn delete" title="Hapus"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
                                     </div>
                                 </td>
                             </tr>
                             <tr>
                                 <td><input type="checkbox" class="table-checkbox"></td>
-                                <td>
-                                    <span class="order-id">#ORD-2024-0155</span>
-                                </td>
+                                <td><span class="order-id">#ORD-2024-0155</span></td>
                                 <td>
                                     <div class="table-user">
-                                        <img src="../assets/images/users/user2.jpg" alt="Siti Aminah" onerror="this.src='https://via.placeholder.com/32'">
-                                        <div class="user-info">
-                                            <span class="user-name">Siti Aminah</span>
-                                            <span class="user-email">siti@email.com</span>
-                                        </div>
+                                        <img src="../assets/images/users/user2.jpg" alt="Siti Aminah" onerror="this.src='https://ui-avatars.com/api/?name=Siti+Aminah&background=8b5cf6&color=fff&size=34'">
+                                        <div class="user-info"><span class="user-name">Siti Aminah</span><span class="user-email">siti@email.com</span></div>
                                     </div>
                                 </td>
-                                <td>
-                                    <span class="badge badge-starter">Starter</span>
-                                </td>
-                                <td>Rp 2.500.000</td>
+                                <td><span class="badge badge-starter">Starter</span></td>
+                                <td><strong>Rp 2.500.000</strong></td>
                                 <td>27 Jun 2024</td>
-                                <td>
-                                    <span class="status-badge menunggu">Menunggu</span>
-                                </td>
+                                <td><span class="status-badge menunggu">Menunggu</span></td>
                                 <td>
                                     <div class="progress-bar">
-                                        <div class="progress-fill" style="width: 0%"></div>
+                                        <div><div class="progress-fill" style="width: 0%"></div></div>
                                         <span>0%</span>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="table-actions">
-                                        <button class="action-btn view" title="Lihat Detail">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                                <circle cx="12" cy="12" r="3"></circle>
-                                            </svg>
-                                        </button>
-                                        <button class="action-btn edit" title="Update Status">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                                            </svg>
-                                        </button>
-                                        <button class="action-btn delete" title="Hapus">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <polyline points="3 6 5 6 21 6"></polyline>
-                                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                            </svg>
-                                        </button>
+                                        <button class="action-btn view" title="Lihat Detail"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+                                        <button class="action-btn edit" title="Update Status"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+                                        <button class="action-btn delete" title="Hapus"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
                                     </div>
                                 </td>
                             </tr>
                             <tr>
                                 <td><input type="checkbox" class="table-checkbox"></td>
-                                <td>
-                                    <span class="order-id">#ORD-2024-0154</span>
-                                </td>
+                                <td><span class="order-id">#ORD-2024-0154</span></td>
                                 <td>
                                     <div class="table-user">
-                                        <img src="../assets/images/users/user3.jpg" alt="PT Maju Jaya" onerror="this.src='https://via.placeholder.com/32'">
-                                        <div class="user-info">
-                                            <span class="user-name">PT Maju Jaya</span>
-                                            <span class="user-email">info@majujaya.co.id</span>
-                                        </div>
+                                        <img src="../assets/images/users/user3.jpg" alt="PT Maju Jaya" onerror="this.src='https://ui-avatars.com/api/?name=PT+Maju+Jaya&background=10b981&color=fff&size=34'">
+                                        <div class="user-info"><span class="user-name">PT Maju Jaya</span><span class="user-email">info@majujaya.co.id</span></div>
                                     </div>
                                 </td>
-                                <td>
-                                    <span class="badge badge-enterprise">Enterprise</span>
-                                </td>
-                                <td>Rp 15.000.000</td>
+                                <td><span class="badge badge-enterprise">Enterprise</span></td>
+                                <td><strong>Rp 15.000.000</strong></td>
                                 <td>25 Jun 2024</td>
-                                <td>
-                                    <span class="status-badge testing">Testing</span>
-                                </td>
+                                <td><span class="status-badge testing">Testing</span></td>
                                 <td>
                                     <div class="progress-bar">
-                                        <div class="progress-fill" style="width: 90%"></div>
+                                        <div><div class="progress-fill" style="width: 90%"></div></div>
                                         <span>90%</span>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="table-actions">
-                                        <button class="action-btn view" title="Lihat Detail">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                                <circle cx="12" cy="12" r="3"></circle>
-                                            </svg>
-                                        </button>
-                                        <button class="action-btn edit" title="Update Status">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                                            </svg>
-                                        </button>
-                                        <button class="action-btn delete" title="Hapus">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <polyline points="3 6 5 6 21 6"></polyline>
-                                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                            </svg>
-                                        </button>
+                                        <button class="action-btn view" title="Lihat Detail"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+                                        <button class="action-btn edit" title="Update Status"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+                                        <button class="action-btn delete" title="Hapus"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
                                     </div>
                                 </td>
                             </tr>
                             <tr>
                                 <td><input type="checkbox" class="table-checkbox"></td>
-                                <td>
-                                    <span class="order-id">#ORD-2024-0153</span>
-                                </td>
+                                <td><span class="order-id">#ORD-2024-0153</span></td>
                                 <td>
                                     <div class="table-user">
-                                        <img src="../assets/images/users/user4.jpg" alt="Ahmad Fauzi" onerror="this.src='https://via.placeholder.com/32'">
-                                        <div class="user-info">
-                                            <span class="user-name">Ahmad Fauzi</span>
-                                            <span class="user-email">ahmad@email.com</span>
-                                        </div>
+                                        <img src="../assets/images/users/user4.jpg" alt="Ahmad Fauzi" onerror="this.src='https://ui-avatars.com/api/?name=Ahmad+Fauzi&background=f59e0b&color=fff&size=34'">
+                                        <div class="user-info"><span class="user-name">Ahmad Fauzi</span><span class="user-email">ahmad@email.com</span></div>
                                     </div>
                                 </td>
-                                <td>
-                                    <span class="badge badge-business">Business</span>
-                                </td>
-                                <td>Rp 5.000.000</td>
+                                <td><span class="badge badge-business">Business</span></td>
+                                <td><strong>Rp 5.000.000</strong></td>
                                 <td>24 Jun 2024</td>
-                                <td>
-                                    <span class="status-badge selesai">Selesai</span>
-                                </td>
+                                <td><span class="status-badge selesai">Selesai</span></td>
                                 <td>
                                     <div class="progress-bar">
-                                        <div class="progress-fill complete" style="width: 100%"></div>
+                                        <div><div class="progress-fill complete" style="width: 100%"></div></div>
                                         <span>100%</span>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="table-actions">
-                                        <button class="action-btn view" title="Lihat Detail">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                                <circle cx="12" cy="12" r="3"></circle>
-                                            </svg>
-                                        </button>
-                                        <button class="action-btn edit" title="Update Status">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                                            </svg>
-                                        </button>
-                                        <button class="action-btn delete" title="Hapus">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <polyline points="3 6 5 6 21 6"></polyline>
-                                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                            </svg>
-                                        </button>
+                                        <button class="action-btn view" title="Lihat Detail"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+                                        <button class="action-btn edit" title="Update Status"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+                                        <button class="action-btn delete" title="Hapus"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
                                     </div>
                                 </td>
                             </tr>
                             <tr>
                                 <td><input type="checkbox" class="table-checkbox"></td>
-                                <td>
-                                    <span class="order-id">#ORD-2024-0152</span>
-                                </td>
+                                <td><span class="order-id">#ORD-2024-0152</span></td>
                                 <td>
                                     <div class="table-user">
-                                        <img src="../assets/images/users/user5.jpg" alt="Dewi Kusuma" onerror="this.src='https://via.placeholder.com/32'">
-                                        <div class="user-info">
-                                            <span class="user-name">Dewi Kusuma</span>
-                                            <span class="user-email">dewi@email.com</span>
-                                        </div>
+                                        <img src="../assets/images/users/user5.jpg" alt="Dewi Kusuma" onerror="this.src='https://ui-avatars.com/api/?name=Dewi+Kusuma&background=ef4444&color=fff&size=34'">
+                                        <div class="user-info"><span class="user-name">Dewi Kusuma</span><span class="user-email">dewi@email.com</span></div>
                                     </div>
                                 </td>
-                                <td>
-                                    <span class="badge badge-starter">Starter</span>
-                                </td>
-                                <td>Rp 2.500.000</td>
+                                <td><span class="badge badge-starter">Starter</span></td>
+                                <td><strong>Rp 2.500.000</strong></td>
                                 <td>22 Jun 2024</td>
-                                <td>
-                                    <span class="status-badge diproses">Diproses</span>
-                                </td>
+                                <td><span class="status-badge diproses">Diproses</span></td>
                                 <td>
                                     <div class="progress-bar">
-                                        <div class="progress-fill" style="width: 25%"></div>
+                                        <div><div class="progress-fill" style="width: 25%"></div></div>
                                         <span>25%</span>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="table-actions">
-                                        <button class="action-btn view" title="Lihat Detail">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                                <circle cx="12" cy="12" r="3"></circle>
-                                            </svg>
-                                        </button>
-                                        <button class="action-btn edit" title="Update Status">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                                            </svg>
-                                        </button>
-                                        <button class="action-btn delete" title="Hapus">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <polyline points="3 6 5 6 21 6"></polyline>
-                                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                            </svg>
-                                        </button>
+                                        <button class="action-btn view" title="Lihat Detail"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+                                        <button class="action-btn edit" title="Update Status"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+                                        <button class="action-btn delete" title="Hapus"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
                                     </div>
                                 </td>
                             </tr>
                             <tr>
                                 <td><input type="checkbox" class="table-checkbox"></td>
-                                <td>
-                                    <span class="order-id">#ORD-2024-0151</span>
-                                </td>
+                                <td><span class="order-id">#ORD-2024-0151</span></td>
                                 <td>
                                     <div class="table-user">
-                                        <img src="../assets/images/users/user6.jpg" alt="CV Teknologi Nusantara" onerror="this.src='https://via.placeholder.com/32'">
-                                        <div class="user-info">
-                                            <span class="user-name">CV Teknologi Nusantara</span>
-                                            <span class="user-email">admin@teknologinusantara.com</span>
-                                        </div>
+                                        <img src="../assets/images/users/user6.jpg" alt="CV Teknologi Nusantara" onerror="this.src='https://ui-avatars.com/api/?name=CV+Teknologi+Nusantara&background=8b5cf6&color=fff&size=34'">
+                                        <div class="user-info"><span class="user-name">CV Teknologi Nusantara</span><span class="user-email">admin@teknologinusantara.com</span></div>
                                     </div>
                                 </td>
-                                <td>
-                                    <span class="badge badge-custom">Custom</span>
-                                </td>
-                                <td>Rp 35.000.000</td>
+                                <td><span class="badge badge-custom">Custom</span></td>
+                                <td><strong>Rp 35.000.000</strong></td>
                                 <td>20 Jun 2024</td>
-                                <td>
-                                    <span class="status-badge development">Development</span>
-                                </td>
+                                <td><span class="status-badge development">Development</span></td>
                                 <td>
                                     <div class="progress-bar">
-                                        <div class="progress-fill" style="width: 50%"></div>
+                                        <div><div class="progress-fill" style="width: 50%"></div></div>
                                         <span>50%</span>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="table-actions">
-                                        <button class="action-btn view" title="Lihat Detail">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                                <circle cx="12" cy="12" r="3"></circle>
-                                            </svg>
-                                        </button>
-                                        <button class="action-btn edit" title="Update Status">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                                            </svg>
-                                        </button>
-                                        <button class="action-btn delete" title="Hapus">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <polyline points="3 6 5 6 21 6"></polyline>
-                                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                            </svg>
-                                        </button>
+                                        <button class="action-btn view" title="Lihat Detail"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+                                        <button class="action-btn edit" title="Update Status"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+                                        <button class="action-btn delete" title="Hapus"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
                                     </div>
                                 </td>
                             </tr>
                             <tr>
                                 <td><input type="checkbox" class="table-checkbox"></td>
-                                <td>
-                                    <span class="order-id">#ORD-2024-0150</span>
-                                </td>
+                                <td><span class="order-id">#ORD-2024-0150</span></td>
                                 <td>
                                     <div class="table-user">
-                                        <img src="../assets/images/users/user7.jpg" alt="Rina Wati" onerror="this.src='https://via.placeholder.com/32'">
-                                        <div class="user-info">
-                                            <span class="user-name">Rina Wati</span>
-                                            <span class="user-email">rina@email.com</span>
-                                        </div>
+                                        <img src="../assets/images/users/user7.jpg" alt="Rina Wati" onerror="this.src='https://ui-avatars.com/api/?name=Rina+Wati&background=ec4899&color=fff&size=34'">
+                                        <div class="user-info"><span class="user-name">Rina Wati</span><span class="user-email">rina@email.com</span></div>
                                     </div>
                                 </td>
-                                <td>
-                                    <span class="badge badge-business">Business</span>
-                                </td>
-                                <td>Rp 5.000.000</td>
+                                <td><span class="badge badge-business">Business</span></td>
+                                <td><strong>Rp 5.000.000</strong></td>
                                 <td>18 Jun 2024</td>
-                                <td>
-                                    <span class="status-badge dibatalkan">Dibatalkan</span>
-                                </td>
+                                <td><span class="status-badge dibatalkan">Dibatalkan</span></td>
                                 <td>
                                     <div class="progress-bar">
-                                        <div class="progress-fill cancelled" style="width: 10%"></div>
+                                        <div><div class="progress-fill cancelled" style="width: 10%"></div></div>
                                         <span>10%</span>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="table-actions">
-                                        <button class="action-btn view" title="Lihat Detail">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                                <circle cx="12" cy="12" r="3"></circle>
-                                            </svg>
-                                        </button>
-                                        <button class="action-btn edit" title="Update Status">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                                            </svg>
-                                        </button>
-                                        <button class="action-btn delete" title="Hapus">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <polyline points="3 6 5 6 21 6"></polyline>
-                                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                            </svg>
-                                        </button>
+                                        <button class="action-btn view" title="Lihat Detail"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+                                        <button class="action-btn edit" title="Update Status"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+                                        <button class="action-btn delete" title="Hapus"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
                                     </div>
                                 </td>
                             </tr>
                             <tr>
                                 <td><input type="checkbox" class="table-checkbox"></td>
-                                <td>
-                                    <span class="order-id">#ORD-2024-0149</span>
-                                </td>
+                                <td><span class="order-id">#ORD-2024-0149</span></td>
                                 <td>
                                     <div class="table-user">
-                                        <img src="../assets/images/users/user8.jpg" alt="PT Digital Sejahtera" onerror="this.src='https://via.placeholder.com/32'">
-                                        <div class="user-info">
-                                            <span class="user-name">PT Digital Sejahtera</span>
-                                            <span class="user-email">info@digitalsejahtera.id</span>
-                                        </div>
+                                        <img src="../assets/images/users/user8.jpg" alt="PT Digital Sejahtera" onerror="this.src='https://ui-avatars.com/api/?name=PT+Digital+Sejahtera&background=3b82f6&color=fff&size=34'">
+                                        <div class="user-info"><span class="user-name">PT Digital Sejahtera</span><span class="user-email">info@digitalsejahtera.id</span></div>
                                     </div>
                                 </td>
-                                <td>
-                                    <span class="badge badge-enterprise">Enterprise</span>
-                                </td>
-                                <td>Rp 12.000.000</td>
+                                <td><span class="badge badge-enterprise">Enterprise</span></td>
+                                <td><strong>Rp 12.000.000</strong></td>
                                 <td>15 Jun 2024</td>
-                                <td>
-                                    <span class="status-badge selesai">Selesai</span>
-                                </td>
+                                <td><span class="status-badge selesai">Selesai</span></td>
                                 <td>
                                     <div class="progress-bar">
-                                        <div class="progress-fill complete" style="width: 100%"></div>
+                                        <div><div class="progress-fill complete" style="width: 100%"></div></div>
                                         <span>100%</span>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="table-actions">
-                                        <button class="action-btn view" title="Lihat Detail">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                                                <circle cx="12" cy="12" r="3"></circle>
-                                            </svg>
-                                        </button>
-                                        <button class="action-btn edit" title="Update Status">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
-                                                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
-                                            </svg>
-                                        </button>
-                                        <button class="action-btn delete" title="Hapus">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                                <polyline points="3 6 5 6 21 6"></polyline>
-                                                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                                            </svg>
-                                        </button>
+                                        <button class="action-btn view" title="Lihat Detail"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+                                        <button class="action-btn edit" title="Update Status"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+                                        <button class="action-btn delete" title="Hapus"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
                                     </div>
                                 </td>
                             </tr>
@@ -703,49 +1245,31 @@
                     </table>
                 </div>
                 <div class="data-card-footer">
-                    <div class="pagination-info">
-                        Menampilkan 1-8 dari 156 pesanan
-                    </div>
+                    <div class="pagination-info">Menampilkan 1-8 dari 156 pesanan</div>
                     <div class="pagination">
-                        <button class="page-btn" disabled>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="15 18 9 12 15 6"></polyline>
-                            </svg>
-                        </button>
+                        <button class="page-btn" disabled><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></button>
                         <button class="page-btn active">1</button>
                         <button class="page-btn">2</button>
                         <button class="page-btn">3</button>
                         <span class="page-dots">...</span>
                         <button class="page-btn">20</button>
-                        <button class="page-btn">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <polyline points="9 18 15 12 9 6"></polyline>
-                            </svg>
-                        </button>
+                        <button class="page-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
                     </div>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- Update Status Modal -->
+    <!-- ===== MODAL UPDATE STATUS ===== -->
     <div class="modal" id="statusModal">
         <div class="modal-overlay"></div>
         <div class="modal-content modal-sm">
-            <div class="modal-header">
-                <h3>Update Status Pesanan</h3>
-                <button class="modal-close" id="statusModalClose">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                    </svg>
-                </button>
-            </div>
+            <div class="modal-header"><h3>Update Status Pesanan</h3><button class="modal-close" id="statusModalClose"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
             <div class="modal-body">
                 <form id="statusForm">
                     <div class="form-group">
                         <label for="orderStatus">Status Pesanan <span class="required">*</span></label>
-                        <select id="orderStatus" name="orderStatus" required>
+                        <select id="orderStatus" required>
                             <option value="menunggu">Menunggu Pembayaran</option>
                             <option value="diproses">Diproses</option>
                             <option value="development">Development</option>
@@ -756,80 +1280,57 @@
                     </div>
                     <div class="form-group">
                         <label for="orderProgress">Progress (%)</label>
-                        <input type="range" id="orderProgress" name="orderProgress" min="0" max="100" value="0" class="progress-range">
+                        <input type="range" id="orderProgress" min="0" max="100" value="0" class="progress-range">
                         <span class="progress-value" id="progressValue">0%</span>
                     </div>
                     <div class="form-group">
                         <label for="statusNote">Catatan (Opsional)</label>
-                        <textarea id="statusNote" name="statusNote" rows="3" placeholder="Tambahkan catatan untuk pelanggan..."></textarea>
+                        <textarea id="statusNote" rows="3" placeholder="Tambahkan catatan untuk pelanggan..."></textarea>
                     </div>
                 </form>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-outline" id="statusCancel">Batal</button>
-                <button type="submit" class="btn btn-primary" form="statusForm">Update Status</button>
-            </div>
+            <div class="modal-footer"><button type="button" class="btn btn-outline" id="statusCancel">Batal</button><button type="submit" class="btn btn-primary" form="statusForm">Update Status</button></div>
         </div>
     </div>
 
-    <!-- Delete Confirmation Modal -->
+    <!-- ===== MODAL HAPUS ===== -->
     <div class="modal" id="deleteModal">
         <div class="modal-overlay"></div>
         <div class="modal-content modal-sm">
-            <div class="modal-header">
-                <h3>Konfirmasi Hapus</h3>
-                <button class="modal-close" id="deleteModalClose">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                    </svg>
-                </button>
-            </div>
+            <div class="modal-header"><h3>Konfirmasi Hapus</h3><button class="modal-close" id="deleteModalClose"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
             <div class="modal-body text-center">
-                <div class="delete-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="3 6 5 6 21 6"></polyline>
-                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                    </svg>
-                </div>
+                <div class="delete-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></div>
                 <p>Apakah Anda yakin ingin menghapus pesanan <strong id="deleteOrderId">#ORD-2024-0156</strong>?</p>
                 <p class="text-muted">Tindakan ini tidak dapat dibatalkan.</p>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-outline" id="deleteCancel">Batal</button>
-                <button type="button" class="btn btn-danger" id="deleteConfirm">Hapus</button>
-            </div>
+            <div class="modal-footer"><button type="button" class="btn btn-outline" id="deleteCancel">Batal</button><button type="button" class="btn btn-danger" id="deleteConfirm">Hapus</button></div>
         </div>
     </div>
 
-    <script src="../assets/js/main.js"></script>
     <script>
-        // Sidebar Toggle
+        // ===== SIDEBAR TOGGLE =====
         const sidebarToggle = document.getElementById('sidebarToggle');
         const adminSidebar = document.getElementById('adminSidebar');
-        
         sidebarToggle.addEventListener('click', () => {
             adminSidebar.classList.toggle('collapsed');
             document.body.classList.toggle('sidebar-collapsed');
         });
 
-        // Select All Checkbox
+        // ===== SELECT ALL =====
         const selectAll = document.getElementById('selectAll');
         const checkboxes = document.querySelectorAll('.table-checkbox:not(#selectAll)');
-
         selectAll.addEventListener('change', () => {
             checkboxes.forEach(cb => cb.checked = selectAll.checked);
         });
 
-        // Progress Range
+        // ===== PROGRESS RANGE =====
         const progressRange = document.getElementById('orderProgress');
         const progressValue = document.getElementById('progressValue');
-
         progressRange.addEventListener('input', () => {
             progressValue.textContent = progressRange.value + '%';
         });
 
-        // Status Modal
+        // ===== STATUS MODAL =====
         const statusModal = document.getElementById('statusModal');
         const editBtns = document.querySelectorAll('.action-btn.edit');
         const statusModalClose = document.getElementById('statusModalClose');
@@ -839,28 +1340,22 @@
             statusModal.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
-
         function closeStatusModal() {
             statusModal.classList.remove('active');
             document.body.style.overflow = '';
         }
-
-        editBtns.forEach(btn => {
-            btn.addEventListener('click', openStatusModal);
-        });
-
+        editBtns.forEach(btn => btn.addEventListener('click', openStatusModal));
         statusModalClose.addEventListener('click', closeStatusModal);
         statusCancel.addEventListener('click', closeStatusModal);
         statusModal.querySelector('.modal-overlay').addEventListener('click', closeStatusModal);
 
-        // Status Form Submit
         document.getElementById('statusForm').addEventListener('submit', (e) => {
             e.preventDefault();
             closeStatusModal();
-            alert('Status pesanan berhasil diupdate!');
+            alert('✅ Status pesanan berhasil diupdate!');
         });
 
-        // Delete Modal
+        // ===== DELETE MODAL =====
         const deleteModal = document.getElementById('deleteModal');
         const deleteBtns = document.querySelectorAll('.action-btn.delete');
         const deleteModalClose = document.getElementById('deleteModalClose');
@@ -870,26 +1365,22 @@
         deleteBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 const row = btn.closest('tr');
-                const orderId = row.querySelector('.order-id').textContent;
-                document.getElementById('deleteOrderId').textContent = orderId;
+                document.getElementById('deleteOrderId').textContent = row.querySelector('.order-id').textContent;
                 deleteModal.classList.add('active');
             });
         });
 
-        function closeDeleteModal() {
-            deleteModal.classList.remove('active');
-        }
-
+        function closeDeleteModal() { deleteModal.classList.remove('active'); }
         deleteModalClose.addEventListener('click', closeDeleteModal);
         deleteCancel.addEventListener('click', closeDeleteModal);
         deleteModal.querySelector('.modal-overlay').addEventListener('click', closeDeleteModal);
 
         deleteConfirm.addEventListener('click', () => {
             closeDeleteModal();
-            alert('Pesanan berhasil dihapus!');
+            alert('🗑️ Pesanan berhasil dihapus!');
         });
 
-        // Reset Filter
+        // ===== RESET FILTER =====
         document.getElementById('resetFilter').addEventListener('click', () => {
             document.getElementById('filterStatus').value = 'all';
             document.getElementById('filterPaket').value = 'all';

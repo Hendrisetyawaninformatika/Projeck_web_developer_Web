@@ -6,8 +6,867 @@
     <title>Harga | WebDevPro</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        /* ========================================
+           ANIMASI DEVELOPER PREMIUM
+           ======================================== */
+
+        /* ===== HERO SECTION ===== */
+        .page-hero {
+            background: linear-gradient(135deg, #0f172a 0%, #1a1a3e 50%, #0f172a 100%);
+            padding: 140px 20px 100px;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+        }
+
+        /* ===== PARTICLE BACKGROUND ===== */
+        .hero-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .hero-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(245, 176, 20, 0.3);
+            border-radius: 50%;
+            animation: floatParticle linear infinite;
+        }
+
+        .hero-particle:nth-child(1) { left: 5%; animation-duration: 18s; animation-delay: 0s; width: 6px; height: 6px; }
+        .hero-particle:nth-child(2) { left: 12%; animation-duration: 22s; animation-delay: 2s; width: 4px; height: 4px; }
+        .hero-particle:nth-child(3) { left: 20%; animation-duration: 15s; animation-delay: 4s; width: 8px; height: 8px; }
+        .hero-particle:nth-child(4) { left: 28%; animation-duration: 20s; animation-delay: 1s; width: 5px; height: 5px; }
+        .hero-particle:nth-child(5) { left: 35%; animation-duration: 16s; animation-delay: 3s; width: 7px; height: 7px; }
+        .hero-particle:nth-child(6) { left: 42%; animation-duration: 24s; animation-delay: 5s; width: 4px; height: 4px; }
+        .hero-particle:nth-child(7) { left: 50%; animation-duration: 19s; animation-delay: 2.5s; width: 6px; height: 6px; }
+        .hero-particle:nth-child(8) { left: 58%; animation-duration: 14s; animation-delay: 4.5s; width: 5px; height: 5px; }
+        .hero-particle:nth-child(9) { left: 65%; animation-duration: 21s; animation-delay: 1.5s; width: 8px; height: 8px; }
+        .hero-particle:nth-child(10) { left: 72%; animation-duration: 17s; animation-delay: 3.5s; width: 4px; height: 4px; }
+        .hero-particle:nth-child(11) { left: 80%; animation-duration: 23s; animation-delay: 5.5s; width: 6px; height: 6px; }
+        .hero-particle:nth-child(12) { left: 88%; animation-duration: 18s; animation-delay: 0.8s; width: 5px; height: 5px; }
+        .hero-particle:nth-child(13) { left: 95%; animation-duration: 20s; animation-delay: 2.8s; width: 7px; height: 7px; }
+
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(100vh) translateX(0) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+                transform: translateY(80vh) translateX(20px) scale(1);
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(-20px) scale(0);
+                opacity: 0;
+            }
+        }
+
+        /* ===== FLOATING PRICE TAGS ===== */
+        .floating-tags {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .floating-tag {
+            position: absolute;
+            font-family: 'Courier New', monospace;
+            color: rgba(245, 176, 20, 0.06);
+            font-size: 14px;
+            font-weight: 700;
+            animation: floatTag linear infinite;
+        }
+
+        .floating-tag:nth-child(1) { top: 15%; left: 8%; animation-duration: 25s; }
+        .floating-tag:nth-child(2) { top: 25%; right: 5%; animation-duration: 20s; animation-delay: -5s; }
+        .floating-tag:nth-child(3) { bottom: 30%; left: 12%; animation-duration: 28s; animation-delay: -10s; }
+        .floating-tag:nth-child(4) { bottom: 20%; right: 8%; animation-duration: 22s; animation-delay: -7s; }
+        .floating-tag:nth-child(5) { top: 50%; left: 50%; animation-duration: 30s; animation-delay: -12s; }
+
+        @keyframes floatTag {
+            0% { transform: translate(0, 0) rotate(0deg); opacity: 0.3; }
+            25% { transform: translate(60px, -30px) rotate(90deg); opacity: 0.6; }
+            50% { transform: translate(-40px, 50px) rotate(180deg); opacity: 0.4; }
+            75% { transform: translate(50px, -20px) rotate(270deg); opacity: 0.7; }
+            100% { transform: translate(0, 0) rotate(360deg); opacity: 0.3; }
+        }
+
+        /* ===== HERO CONTENT ===== */
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+        }
+
+        .page-hero h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .page-hero h1::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #f5b014, transparent);
+            animation: expandLine 2s ease forwards;
+        }
+
+        @keyframes expandLine {
+            0% { width: 0; }
+            100% { width: 100%; }
+        }
+
+        .page-hero h1 span {
+            color: #f5b014;
+            position: relative;
+        }
+
+        .page-hero h1 span::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -10px;
+            right: -10px;
+            bottom: -5px;
+            background: rgba(245, 176, 20, 0.1);
+            border-radius: 8px;
+            transform: scaleX(0);
+            transform-origin: left;
+            animation: highlightText 1.5s ease forwards 0.5s;
+        }
+
+        @keyframes highlightText {
+            0% { transform: scaleX(0); }
+            100% { transform: scaleX(1); }
+        }
+
+        .page-hero p {
+            color: rgba(255,255,255,0.7);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 15px auto 0;
+            animation: fadeInUp 1s ease forwards 0.3s;
+            opacity: 0;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ========================================
+           PRICING TOGGLE
+           ======================================== */
+        .pricing-toggle-section {
+            padding: 30px 0;
+            background: white;
+            border-bottom: 1px solid #f1f5f9;
+            position: sticky;
+            top: 70px;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            background: rgba(255,255,255,0.95);
+        }
+
+        .toggle-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .toggle-label {
+            font-weight: 600;
+            color: #64748b;
+            transition: color 0.3s ease;
+        }
+
+        .toggle-label.active {
+            color: #f5b014;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 32px;
+            cursor: pointer;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            inset: 0;
+            background: #e2e8f0;
+            border-radius: 40px;
+            transition: all 0.4s ease;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.06);
+        }
+
+        .toggle-slider::before {
+            content: '';
+            position: absolute;
+            height: 24px;
+            width: 24px;
+            left: 4px;
+            bottom: 4px;
+            background: white;
+            border-radius: 50%;
+            transition: all 0.4s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .toggle-switch input:checked + .toggle-slider {
+            background: linear-gradient(135deg, #f5b014, #d49a0e);
+        }
+
+        .toggle-switch input:checked + .toggle-slider::before {
+            transform: translateX(28px);
+        }
+
+        .toggle-badge {
+            background: linear-gradient(135deg, #f5b014, #d49a0e);
+            color: #0f172a;
+            padding: 4px 14px;
+            border-radius: 40px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            animation: pulseBadge 2s ease-in-out infinite;
+        }
+
+        @keyframes pulseBadge {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* ========================================
+           PRICING CARDS
+           ======================================== */
+        .pricing-section {
+            padding: 60px 0;
+            background: #f8fafc;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: 24px;
+            padding: 40px 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.04);
+        }
+
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #e2e8f0, #e2e8f0);
+            transition: all 0.4s ease;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+
+        .pricing-card:hover::before {
+            background: linear-gradient(90deg, #f5b014, #d49a0e, #f5b014);
+            background-size: 200% 100%;
+            animation: shimmerBorder 2s ease infinite;
+        }
+
+        @keyframes shimmerBorder {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        /* Popular Card */
+        .pricing-card.popular {
+            border: 2px solid #f5b014;
+            transform: scale(1.05);
+            box-shadow: 0 20px 60px rgba(245, 176, 20, 0.12);
+        }
+
+        .pricing-card.popular::before {
+            background: linear-gradient(90deg, #f5b014, #d49a0e, #f5b014);
+            background-size: 200% 100%;
+            animation: shimmerBorder 2s ease infinite;
+        }
+
+        .pricing-card.popular:hover {
+            transform: scale(1.05) translateY(-12px);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: linear-gradient(135deg, #f5b014, #d49a0e);
+            color: #0f172a;
+            padding: 4px 16px;
+            border-radius: 40px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            animation: pulseBadge 2s ease-in-out infinite;
+        }
+
+        .pricing-header h3 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 5px;
+        }
+
+        .pricing-header p {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .pricing-price {
+            margin: 25px 0 20px;
+            display: flex;
+            align-items: baseline;
+            gap: 4px;
+        }
+
+        .pricing-price .currency {
+            font-size: 24px;
+            font-weight: 700;
+            color: #f5b014;
+        }
+
+        .pricing-price .amount {
+            font-size: 48px;
+            font-weight: 800;
+            color: #0f172a;
+            letter-spacing: -2px;
+            transition: all 0.4s ease;
+        }
+
+        .pricing-price .amount.hidden {
+            display: none;
+        }
+
+        .pricing-price .period {
+            font-size: 16px;
+            color: #94a3b8;
+            font-weight: 500;
+        }
+
+        /* Features */
+        .pricing-features {
+            list-style: none;
+            margin: 20px 0 30px;
+        }
+
+        .pricing-features li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 0;
+            color: #475569;
+            font-size: 14px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+
+        .pricing-features li svg {
+            flex-shrink: 0;
+            color: #f5b014;
+            stroke-width: 2.5;
+        }
+
+        .pricing-features li.disabled {
+            color: #cbd5e1;
+        }
+
+        .pricing-features li.disabled svg {
+            color: #e2e8f0;
+        }
+
+        /* Buttons */
+        .btn-block {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #f5b014, #d49a0e);
+            color: #0f172a;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            font-family: inherit;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(245, 176, 20, 0.35);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #e2e8f0;
+            color: #475569;
+            padding: 14px 28px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            font-family: inherit;
+            cursor: pointer;
+            justify-content: center;
+        }
+
+        .btn-outline:hover {
+            border-color: #f5b014;
+            color: #f5b014;
+            transform: translateY(-3px);
+        }
+
+        .btn-sm {
+            padding: 8px 18px;
+            font-size: 13px;
+        }
+
+        /* ========================================
+           COMPARISON TABLE
+           ======================================== */
+        .comparison-section {
+            padding: 60px 0;
+            background: white;
+        }
+
+        .comparison-table-wrapper {
+            overflow-x: auto;
+            margin-top: 30px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 600px;
+        }
+
+        .comparison-table th {
+            padding: 16px 20px;
+            text-align: center;
+            font-weight: 700;
+            color: #0f172a;
+            border-bottom: 2px solid #f1f5f9;
+            font-size: 14px;
+        }
+
+        .comparison-table th:first-child {
+            text-align: left;
+        }
+
+        .comparison-table td {
+            padding: 14px 20px;
+            text-align: center;
+            color: #475569;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 14px;
+            transition: background 0.3s ease;
+        }
+
+        .comparison-table td:first-child {
+            text-align: left;
+            font-weight: 600;
+            color: #0f172a;
+        }
+
+        .comparison-table tr:hover td {
+            background: #f8fafc;
+        }
+
+        .comparison-table .action-row td {
+            border-bottom: none;
+            padding-top: 20px;
+        }
+
+        .comparison-table svg {
+            color: #f5b014;
+            stroke-width: 2.5;
+        }
+
+        /* ========================================
+           CUSTOM PRICING
+           ======================================== */
+        .custom-pricing-section {
+            background: linear-gradient(135deg, #0f172a, #1a1a3e);
+            padding: 60px 0;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .custom-pricing-section::before {
+            content: '</>';
+            position: absolute;
+            font-size: 300px;
+            opacity: 0.03;
+            bottom: -50px;
+            right: -50px;
+            font-weight: 800;
+            font-family: 'Courier New', monospace;
+        }
+
+        .custom-pricing-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .custom-pricing-text h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .custom-pricing-text h2 span {
+            color: #f5b014;
+        }
+
+        .custom-pricing-text p {
+            color: rgba(255,255,255,0.7);
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .custom-features {
+            list-style: none;
+            margin-bottom: 25px;
+        }
+
+        .custom-features li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 0;
+            color: rgba(255,255,255,0.8);
+            font-size: 14px;
+        }
+
+        .custom-features li svg {
+            color: #f5b014;
+            flex-shrink: 0;
+        }
+
+        .visual-card {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 40px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.06);
+            transition: all 0.4s ease;
+        }
+
+        .visual-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(245, 176, 20, 0.2);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+
+        .visual-card svg {
+            color: #f5b014;
+            margin-bottom: 20px;
+        }
+
+        .visual-card h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .visual-card p {
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* ========================================
+           FAQ SECTION
+           ======================================== */
+        .faq-section {
+            background: #f8fafc;
+            padding: 60px 0;
+        }
+
+        .faq-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: white;
+            border-radius: 16px;
+            margin-bottom: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+        }
+
+        .faq-question {
+            width: 100%;
+            padding: 18px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 600;
+            color: #0f172a;
+            gap: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            color: #f5b014;
+        }
+
+        .faq-icon {
+            flex-shrink: 0;
+            color: #94a3b8;
+            transition: transform 0.4s ease;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+            color: #f5b014;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 300px;
+        }
+
+        .faq-answer-inner {
+            padding: 0 24px 20px;
+            color: #64748b;
+            line-height: 1.8;
+            font-size: 14px;
+        }
+
+        /* ========================================
+           CTA SECTION
+           ======================================== */
+        .cta-section {
+            background: linear-gradient(135deg, #0f172a, #1a1a3e);
+            padding: 60px 0;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '⭐';
+            position: absolute;
+            font-size: 200px;
+            opacity: 0.03;
+            top: -50px;
+            right: -50px;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-content h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .cta-content p {
+            color: rgba(255,255,255,0.7);
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+        }
+
+        .btn-white {
+            background: white;
+            color: #0f172a;
+            padding: 16px 40px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 16px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-white:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(255,255,255,0.2);
+        }
+
+        /* ========================================
+           RESPONSIVE
+           ======================================== */
+        @media (max-width: 992px) {
+            .pricing-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 25px;
+            }
+            .pricing-card.popular {
+                transform: scale(1);
+            }
+            .pricing-card.popular:hover {
+                transform: translateY(-12px);
+            }
+            .custom-pricing-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .custom-features {
+                text-align: left;
+                max-width: 400px;
+                margin: 0 auto 25px;
+            }
+            .custom-features li {
+                justify-content: center;
+            }
+            .page-hero h1 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-hero {
+                padding: 120px 16px 80px;
+                min-height: 300px;
+            }
+            .page-hero h1 {
+                font-size: 2rem;
+            }
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+            }
+            .toggle-wrapper {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            .comparison-table-wrapper {
+                margin: 0 -16px;
+            }
+            .pricing-price .amount {
+                font-size: 36px;
+            }
+            .cta-content h2 {
+                font-size: 1.8rem;
+            }
+            .floating-tags {
+                display: none;
+            }
+            .hero-particles {
+                opacity: 0.4;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-hero h1 {
+                font-size: 1.6rem;
+            }
+            .pricing-card {
+                padding: 30px 20px;
+            }
+            .pricing-price .amount {
+                font-size: 30px;
+            }
+            .pricing-price .currency {
+                font-size: 18px;
+            }
+            .toggle-badge {
+                font-size: 10px;
+                padding: 3px 10px;
+            }
+        }
+    </style>
 </head>
 <body>
+    <!-- ===== NAVBAR ===== -->
     <nav class="navbar" id="navbar">
         <div class="container">
             <a href="index.html" class="logo">Web<span>Dev</span>Pro</a>
@@ -35,19 +894,45 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- ===== HERO SECTION ===== -->
     <section class="page-hero">
-        <div class="container">
-            <h1>Paket Harga</h1>
+        <!-- Particles -->
+        <div class="hero-particles">
+            <div class="hero-particle"></div>
+            <div class="hero-particle"></div>
+            <div class="hero-particle"></div>
+            <div class="hero-particle"></div>
+            <div class="hero-particle"></div>
+            <div class="hero-particle"></div>
+            <div class="hero-particle"></div>
+            <div class="hero-particle"></div>
+            <div class="hero-particle"></div>
+            <div class="hero-particle"></div>
+            <div class="hero-particle"></div>
+            <div class="hero-particle"></div>
+            <div class="hero-particle"></div>
+        </div>
+
+        <!-- Floating Tags -->
+        <div class="floating-tags">
+            <span class="floating-tag">$</span>
+            <span class="floating-tag">Rp</span>
+            <span class="floating-tag">%</span>
+            <span class="floating-tag">✓</span>
+            <span class="floating-tag">⭐</span>
+        </div>
+
+        <div class="container hero-content">
+            <h1>Paket <span>Harga</span></h1>
             <p>Pilih paket yang sesuai dengan kebutuhan dan budget bisnis Anda</p>
         </div>
     </section>
 
-    <!-- Pricing Toggle -->
+    <!-- ===== PRICING TOGGLE ===== -->
     <section class="pricing-toggle-section">
         <div class="container">
             <div class="toggle-wrapper">
-                <span class="toggle-label" id="monthlyLabel">Bulanan</span>
+                <span class="toggle-label active" id="monthlyLabel">Bulanan</span>
                 <label class="toggle-switch">
                     <input type="checkbox" id="pricingToggle">
                     <span class="toggle-slider"></span>
@@ -58,7 +943,7 @@
         </div>
     </section>
 
-    <!-- Pricing Cards -->
+    <!-- ===== PRICING CARDS ===== -->
     <section class="pricing-section section-padding">
         <div class="container">
             <div class="pricing-grid">
@@ -76,38 +961,14 @@
                     </div>
                     <div class="pricing-body">
                         <ul class="pricing-features">
-                            <li>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                1 Halaman Website
-                            </li>
-                            <li>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                Desain Responsif
-                            </li>
-                            <li>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                SEO Dasar
-                            </li>
-                            <li>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                Form Kontak
-                            </li>
-                            <li>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                SSL Certificate
-                            </li>
-                            <li class="disabled">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                                Domain Gratis
-                            </li>
-                            <li class="disabled">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                                CMS Dashboard
-                            </li>
-                            <li class="disabled">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                                Support 24/7
-                            </li>
+                            <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> 1 Halaman Website</li>
+                            <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Desain Responsif</li>
+                            <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> SEO Dasar</li>
+                            <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Form Kontak</li>
+                            <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> SSL Certificate</li>
+                            <li class="disabled"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> Domain Gratis</li>
+                            <li class="disabled"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> CMS Dashboard</li>
+                            <li class="disabled"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> Support 24/7</li>
                         </ul>
                     </div>
                     <div class="pricing-footer">
@@ -117,7 +978,7 @@
 
                 <!-- Business (Popular) -->
                 <div class="pricing-card popular">
-                    <div class="popular-badge">Paling Populer</div>
+                    <div class="popular-badge">⭐ Paling Populer</div>
                     <div class="pricing-header">
                         <h3>Business</h3>
                         <p>Ideal untuk bisnis kecil dan menengah</p>
@@ -130,38 +991,14 @@
                     </div>
                     <div class="pricing-body">
                         <ul class="pricing-features">
-                            <li>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                5-10 Halaman Website
-                            </li>
-                            <li>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                Desain Responsif
-                            </li>
-                            <li>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                SEO Lengkap
-                            </li>
-                            <li>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                Form Kontak & Maps
-                            </li>
-                            <li>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                SSL Certificate
-                            </li>
-                            <li>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                Domain Gratis (.com)
-                            </li>
-                            <li>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                CMS Dashboard
-                            </li>
-                            <li class="disabled">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                                Support 24/7
-                            </li>
+                            <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> 5-10 Halaman Website</li>
+                            <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Desain Responsif</li>
+                            <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> SEO Lengkap</li>
+                            <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Form Kontak & Maps</li>
+                            <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> SSL Certificate</li>
+                            <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Domain Gratis (.com)</li>
+                            <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> CMS Dashboard</li>
+                            <li class="disabled"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> Support 24/7</li>
                         </ul>
                     </div>
                     <div class="pricing-footer">
@@ -183,38 +1020,14 @@
                     </div>
                     <div class="pricing-body">
                         <ul class="pricing-features">
-                            <li>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                Unlimited Halaman
-                            </li>
-                            <li>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                Desain Custom Premium
-                            </li>
-                            <li>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                SEO + Marketing Tools
-                            </li>
-                            <li>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                E-Commerce Ready
-                            </li>
-                            <li>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                SSL Certificate
-                            </li>
-                            <li>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                Domain Gratis + Hosting
-                            </li>
-                            <li>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                CMS + Admin Panel
-                            </li>
-                            <li>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                Support 24/7 Prioritas
-                            </li>
+                            <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Unlimited Halaman</li>
+                            <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Desain Custom Premium</li>
+                            <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> SEO + Marketing Tools</li>
+                            <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> E-Commerce Ready</li>
+                            <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> SSL Certificate</li>
+                            <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Domain Gratis + Hosting</li>
+                            <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> CMS + Admin Panel</li>
+                            <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Support 24/7 Prioritas</li>
                         </ul>
                     </div>
                     <div class="pricing-footer">
@@ -225,32 +1038,20 @@
         </div>
     </section>
 
-    <!-- Custom Pricing -->
-    <section class="custom-pricing-section section-padding bg-light">
+    <!-- ===== CUSTOM PRICING ===== -->
+    <section class="custom-pricing-section">
         <div class="container">
             <div class="custom-pricing-content">
                 <div class="custom-pricing-text">
-                    <h2>Butuh Solusi Kustom?</h2>
+                    <h2>Butuh Solusi <span>Kustom</span>?</h2>
                     <p>Tidak menemukan paket yang sesuai? Kami dapat merancang solusi khusus sesuai kebutuhan spesifik bisnis Anda. Dari aplikasi mobile, sistem ERP, hingga platform e-commerce skala besar.</p>
                     <ul class="custom-features">
-                        <li>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            Aplikasi Mobile Native & Hybrid
-                        </li>
-                        <li>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            Sistem Manajemen Berbasis Web
-                        </li>
-                        <li>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            Integrasi API & Third-party Services
-                        </li>
-                        <li>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            Maintenance & Support Jangka Panjang
-                        </li>
+                        <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Aplikasi Mobile Native & Hybrid</li>
+                        <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Sistem Manajemen Berbasis Web</li>
+                        <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Integrasi API & Third-party Services</li>
+                        <li><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Maintenance & Support Jangka Panjang</li>
                     </ul>
-                    <a href="kontak.html" class="btn btn-primary btn-lg">Diskusikan Proyek Anda</a>
+                    <a href="kontak.html" class="btn-primary btn-lg" style="display:inline-flex;">Diskusikan Proyek Anda →</a>
                 </div>
                 <div class="custom-pricing-visual">
                     <div class="visual-card">
@@ -267,8 +1068,8 @@
         </div>
     </section>
 
-    <!-- Comparison Table -->
-    <section class="comparison-section section-padding">
+    <!-- ===== COMPARISON TABLE ===== -->
+    <section class="comparison-section">
         <div class="container">
             <div class="section-header">
                 <h2>Perbandingan Paket</h2>
@@ -286,90 +1087,17 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Jumlah Halaman</td>
-                            <td>1 Halaman</td>
-                            <td>5-10 Halaman</td>
-                            <td>Unlimited</td>
-                        </tr>
-                        <tr>
-                            <td>Desain Responsif</td>
-                            <td>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            </td>
-                            <td>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            </td>
-                            <td>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>SEO Optimization</td>
-                            <td>Dasar</td>
-                            <td>Lengkap</td>
-                            <td>Advanced + Marketing</td>
-                        </tr>
-                        <tr>
-                            <td>Domain</td>
-                            <td>-</td>
-                            <td>.com Gratis 1 Tahun</td>
-                            <td>Gratis + Premium Option</td>
-                        </tr>
-                        <tr>
-                            <td>Hosting</td>
-                            <td>Shared</td>
-                            <td>Cloud</td>
-                            <td>Dedicated Server</td>
-                        </tr>
-                        <tr>
-                            <td>SSL Certificate</td>
-                            <td>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            </td>
-                            <td>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            </td>
-                            <td>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>CMS Dashboard</td>
-                            <td>-</td>
-                            <td>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            </td>
-                            <td>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>E-Commerce</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Revisi</td>
-                            <td>1x</td>
-                            <td>3x</td>
-                            <td>Unlimited</td>
-                        </tr>
-                        <tr>
-                            <td>Support</td>
-                            <td>Email</td>
-                            <td>Email & Chat</td>
-                            <td>24/7 Prioritas</td>
-                        </tr>
-                        <tr>
-                            <td>Garansi</td>
-                            <td>1 Bulan</td>
-                            <td>3 Bulan</td>
-                            <td>6 Bulan</td>
-                        </tr>
+                        <tr><td>Jumlah Halaman</td><td>1 Halaman</td><td>5-10 Halaman</td><td>Unlimited</td></tr>
+                        <tr><td>Desain Responsif</td><td><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg></td><td><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg></td><td><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg></td></tr>
+                        <tr><td>SEO Optimization</td><td>Dasar</td><td>Lengkap</td><td>Advanced + Marketing</td></tr>
+                        <tr><td>Domain</td><td>-</td><td>.com Gratis 1 Tahun</td><td>Gratis + Premium Option</td></tr>
+                        <tr><td>Hosting</td><td>Shared</td><td>Cloud</td><td>Dedicated Server</td></tr>
+                        <tr><td>SSL Certificate</td><td><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg></td><td><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg></td><td><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg></td></tr>
+                        <tr><td>CMS Dashboard</td><td>-</td><td><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg></td><td><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg></td></tr>
+                        <tr><td>E-Commerce</td><td>-</td><td>-</td><td><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg></td></tr>
+                        <tr><td>Revisi</td><td>1x</td><td>3x</td><td>Unlimited</td></tr>
+                        <tr><td>Support</td><td>Email</td><td>Email & Chat</td><td>24/7 Prioritas</td></tr>
+                        <tr><td>Garansi</td><td>1 Bulan</td><td>3 Bulan</td><td>6 Bulan</td></tr>
                         <tr class="action-row">
                             <td></td>
                             <td><a href="pemesanan.html?paket=starter" class="btn btn-outline btn-sm">Pilih</a></td>
@@ -382,8 +1110,8 @@
         </div>
     </section>
 
-    <!-- FAQ -->
-    <section class="faq-section section-padding bg-light">
+    <!-- ===== FAQ ===== -->
+    <section class="faq-section">
         <div class="container">
             <div class="section-header">
                 <h2>Pertanyaan Seputar Harga</h2>
@@ -394,66 +1122,66 @@
                 <div class="faq-item">
                     <button class="faq-question" aria-expanded="false">
                         <span>Apakah harga sudah termasuk domain dan hosting?</span>
-                        <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
+                        <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
                     </button>
                     <div class="faq-answer">
-                        <p>Paket Starter sudah termasuk hosting shared, namun domain perlu dibeli terpisah. Paket Business sudah termasuk domain .com gratis selama 1 tahun dan hosting cloud. Paket Enterprise sudah termasuk domain premium dan dedicated server hosting.</p>
+                        <div class="faq-answer-inner">
+                            <p>Paket Starter sudah termasuk hosting shared, namun domain perlu dibeli terpisah. Paket Business sudah termasuk domain .com gratis selama 1 tahun dan hosting cloud. Paket Enterprise sudah termasuk domain premium dan dedicated server hosting.</p>
+                        </div>
                     </div>
                 </div>
 
                 <div class="faq-item">
                     <button class="faq-question" aria-expanded="false">
                         <span>Bisakah saya upgrade paket di kemudian hari?</span>
-                        <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
+                        <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
                     </button>
                     <div class="faq-answer">
-                        <p>Tentu saja! Anda dapat melakukan upgrade paket kapan saja. Kami akan menghitung selisih harga secara pro-rata dan membantu migrasi data Anda tanpa downtime.</p>
+                        <div class="faq-answer-inner">
+                            <p>Tentu saja! Anda dapat melakukan upgrade paket kapan saja. Kami akan menghitung selisih harga secara pro-rata dan membantu migrasi data Anda tanpa downtime.</p>
+                        </div>
                     </div>
                 </div>
 
                 <div class="faq-item">
                     <button class="faq-question" aria-expanded="false">
                         <span>Apakah ada biaya tambahan yang perlu saya perhatikan?</span>
-                        <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
+                        <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
                     </button>
                     <div class="faq-answer">
-                        <p>Tidak ada biaya tersembunyi. Harga yang tertera sudah final untuk fitur-fitur yang disebutkan. Biaya tambahan hanya muncul jika Anda meminta fitur di luar scope paket, yang akan kami diskusikan dan setujui terlebih dahulu.</p>
+                        <div class="faq-answer-inner">
+                            <p>Tidak ada biaya tersembunyi. Harga yang tertera sudah final untuk fitur-fitur yang disebutkan. Biaya tambahan hanya muncul jika Anda meminta fitur di luar scope paket, yang akan kami diskusikan dan setujui terlebih dahulu.</p>
+                        </div>
                     </div>
                 </div>
 
                 <div class="faq-item">
                     <button class="faq-question" aria-expanded="false">
                         <span>Bagaimana sistem pembayarannya?</span>
-                        <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="6 9 12 15 18 9"></polyline>
-                        </svg>
+                        <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
                     </button>
                     <div class="faq-answer">
-                        <p>Kami menerima pembayaran via transfer bank, e-wallet (OVO, GoPay, DANA), dan kartu kredit. Untuk proyek besar, pembayaran dapat dilakukan secara bertahap: 30% di awal, 40% saat progress 50%, dan 30% setelah proyek selesai.</p>
+                        <div class="faq-answer-inner">
+                            <p>Kami menerima pembayaran via transfer bank, e-wallet (OVO, GoPay, DANA), dan kartu kredit. Untuk proyek besar, pembayaran dapat dilakukan secara bertahap: 30% di awal, 40% saat progress 50%, dan 30% setelah proyek selesai.</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- CTA -->
+    <!-- ===== CTA ===== -->
     <section class="cta-section">
         <div class="container">
             <div class="cta-content">
                 <h2>Masih Ragu?</h2>
                 <p>Konsultasi gratis dengan tim kami untuk menemukan solusi terbaik untuk bisnis Anda</p>
-                <a href="kontak.html" class="btn btn-white btn-lg">Konsultasi Gratis</a>
+                <a href="kontak.html" class="btn-white btn-lg">Konsultasi Gratis →</a>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
+    <!-- ===== FOOTER ===== -->
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
@@ -461,30 +1189,10 @@
                     <a href="index.html" class="logo">Web<span>Dev</span>Pro</a>
                     <p>Partner tepercaya untuk solusi digital bisnis Anda. Kami menghadirkan inovasi dan kualitas dalam setiap proyek.</p>
                     <div class="social-links">
-                        <a href="#" aria-label="Facebook">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-                            </svg>
-                        </a>
-                        <a href="#" aria-label="Twitter">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
-                            </svg>
-                        </a>
-                        <a href="#" aria-label="Instagram">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                            </svg>
-                        </a>
-                        <a href="#" aria-label="LinkedIn">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                                <rect x="2" y="9" width="4" height="12"></rect>
-                                <circle cx="4" cy="4" r="2"></circle>
-                            </svg>
-                        </a>
+                        <a href="#" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
+                        <a href="#" aria-label="Twitter"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a>
+                        <a href="#" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+                        <a href="#" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
                     </div>
                 </div>
                 <div class="footer-links">
@@ -510,8 +1218,8 @@
                 <div class="footer-contact">
                     <h4>Kontak</h4>
                     <ul>
-                        <li>📍 Jl. Sudirman No. 123, Jakarta</li>
-                        <li>📞 +62 812-3456-7890</li>
+                        <li>📍 Batang, Jawa Tengah</li>
+                        <li>📞 +62 812-4814-1031</li>
                         <li>✉️ info@webdevpro.id</li>
                         <li>🕐 Senin - Jumat: 09.00 - 17.00</li>
                     </ul>
@@ -523,27 +1231,40 @@
         </div>
     </footer>
 
+    <!-- ===== WHATSAPP FLOAT ===== -->
+    <a href="https://wa.me/6281248141031" class="whatsapp-float" target="_blank">💬</a>
+
     <script src="assets/js/main.js"></script>
     <script>
-        // Pricing Toggle
+        // ============================================
+        // PRICING TOGGLE
+        // ============================================
         const pricingToggle = document.getElementById('pricingToggle');
         const monthlyPrices = document.querySelectorAll('.monthly-price');
         const yearlyPrices = document.querySelectorAll('.yearly-price');
         const periodTexts = document.querySelectorAll('.period-text');
+        const monthlyLabel = document.getElementById('monthlyLabel');
+        const yearlyLabel = document.getElementById('yearlyLabel');
 
         pricingToggle.addEventListener('change', function() {
             if (this.checked) {
                 monthlyPrices.forEach(el => el.classList.add('hidden'));
                 yearlyPrices.forEach(el => el.classList.remove('hidden'));
                 periodTexts.forEach(el => el.textContent = 'tahun');
+                monthlyLabel.classList.remove('active');
+                yearlyLabel.classList.add('active');
             } else {
                 monthlyPrices.forEach(el => el.classList.remove('hidden'));
                 yearlyPrices.forEach(el => el.classList.add('hidden'));
                 periodTexts.forEach(el => el.textContent = 'bulan');
+                monthlyLabel.classList.add('active');
+                yearlyLabel.classList.remove('active');
             }
         });
 
-        // FAQ Accordion
+        // ============================================
+        // FAQ ACCORDION
+        // ============================================
         document.querySelectorAll('.faq-question').forEach(button => {
             button.addEventListener('click', () => {
                 const faqItem = button.parentElement;
@@ -559,6 +1280,13 @@
                     button.setAttribute('aria-expanded', 'true');
                 }
             });
+        });
+
+        // ============================================
+        // NAVBAR SCROLL
+        // ============================================
+        window.addEventListener('scroll', () => {
+            document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
         });
     </script>
 </body>

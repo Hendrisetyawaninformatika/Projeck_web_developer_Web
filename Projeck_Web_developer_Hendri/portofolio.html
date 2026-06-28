@@ -3,11 +3,828 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portofolio | WebDevPro</title>
+    <title>Kontak Kami | WebDevPro</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        /* ========================================
+           ANIMASI UNIK UNTUK KONTAK
+           ======================================== */
+
+        /* ===== HERO ===== */
+        .page-hero {
+            background: linear-gradient(135deg, #0f172a 0%, #1a1a3e 50%, #0f172a 100%);
+            padding: 140px 20px 100px;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* ===== PARTICLE NETWORK ===== */
+        .particle-network {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .particle-dot {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(245, 176, 20, 0.6);
+            border-radius: 50%;
+            animation: floatParticle linear infinite;
+        }
+
+        .particle-dot:nth-child(1) { left: 10%; animation-duration: 15s; animation-delay: 0s; width: 6px; height: 6px; }
+        .particle-dot:nth-child(2) { left: 20%; animation-duration: 18s; animation-delay: 2s; width: 4px; height: 4px; }
+        .particle-dot:nth-child(3) { left: 30%; animation-duration: 12s; animation-delay: 4s; width: 8px; height: 8px; }
+        .particle-dot:nth-child(4) { left: 40%; animation-duration: 20s; animation-delay: 1s; width: 5px; height: 5px; }
+        .particle-dot:nth-child(5) { left: 50%; animation-duration: 14s; animation-delay: 3s; width: 7px; height: 7px; }
+        .particle-dot:nth-child(6) { left: 60%; animation-duration: 16s; animation-delay: 5s; width: 4px; height: 4px; }
+        .particle-dot:nth-child(7) { left: 70%; animation-duration: 19s; animation-delay: 2.5s; width: 6px; height: 6px; }
+        .particle-dot:nth-child(8) { left: 80%; animation-duration: 13s; animation-delay: 4.5s; width: 5px; height: 5px; }
+        .particle-dot:nth-child(9) { left: 90%; animation-duration: 17s; animation-delay: 1.5s; width: 8px; height: 8px; }
+        .particle-dot:nth-child(10) { left: 15%; animation-duration: 21s; animation-delay: 3.5s; width: 4px; height: 4px; }
+        .particle-dot:nth-child(11) { left: 45%; animation-duration: 11s; animation-delay: 5.5s; width: 6px; height: 6px; }
+        .particle-dot:nth-child(12) { left: 75%; animation-duration: 16s; animation-delay: 0.8s; width: 5px; height: 5px; }
+
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(100vh) translateX(0) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8;
+                transform: translateY(80vh) translateX(20px) scale(1);
+            }
+            90% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-100vh) translateX(-20px) scale(0);
+                opacity: 0;
+            }
+        }
+
+        /* ===== GLITCH EFFECT ===== */
+        .glitch-text {
+            position: relative;
+            display: inline-block;
+            animation: glitch 4s infinite;
+        }
+
+        @keyframes glitch {
+            0%, 100% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(2px, -2px); }
+            60% { transform: translate(-1px, 1px); }
+            80% { transform: translate(1px, -1px); }
+        }
+
+        .glitch-text::before,
+        .glitch-text::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.3;
+        }
+
+        .glitch-text::before {
+            color: #ff6b6b;
+            animation: glitchBefore 3s infinite;
+            clip-path: inset(20% 0 60% 0);
+        }
+
+        .glitch-text::after {
+            color: #4ecdc4;
+            animation: glitchAfter 3s infinite;
+            clip-path: inset(60% 0 20% 0);
+        }
+
+        @keyframes glitchBefore {
+            0%, 100% { transform: translate(0); }
+            50% { transform: translate(-3px, 3px); }
+        }
+
+        @keyframes glitchAfter {
+            0%, 100% { transform: translate(0); }
+            50% { transform: translate(3px, -3px); }
+        }
+
+        /* ===== DEVELOPER PROFILE ===== */
+        .developer-profile {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 25px;
+            margin: 20px auto 0;
+            max-width: 500px;
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px 30px;
+            border: 1px solid rgba(245, 176, 20, 0.15);
+            animation: slideUp 0.8s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .developer-profile .avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            border: 3px solid #f5b014;
+            object-fit: cover;
+            flex-shrink: 0;
+            animation: pulseAvatar 3s ease-in-out infinite;
+        }
+
+        @keyframes pulseAvatar {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(245, 176, 20, 0.4); }
+            50% { box-shadow: 0 0 0 15px rgba(245, 176, 20, 0); }
+        }
+
+        .developer-profile .info {
+            text-align: left;
+        }
+
+        .developer-profile .info .name {
+            font-size: 18px;
+            font-weight: 700;
+            color: #f5b014;
+            margin-bottom: 2px;
+        }
+
+        .developer-profile .info .role {
+            font-size: 13px;
+            color: rgba(255,255,255,0.6);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .developer-profile .info .role .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #10b981;
+            animation: blinkDot 1.5s ease-in-out infinite;
+        }
+
+        @keyframes blinkDot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .developer-profile .info .typing-status {
+            font-size: 12px;
+            color: rgba(255,255,255,0.4);
+            font-family: 'Courier New', monospace;
+            animation: typingDots 1.5s steps(4) infinite;
+        }
+
+        @keyframes typingDots {
+            0% { content: '.'; }
+            25% { content: '..'; }
+            50% { content: '...'; }
+            75% { content: '....'; }
+            100% { content: '.'; }
+        }
+
+        /* ===== ROTATING BORDER ===== */
+        .rotating-border {
+            position: relative;
+            z-index: 1;
+        }
+
+        .rotating-border::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: conic-gradient(from 0deg, #f5b014, #d49a0e, #f5b014, #d49a0e, #f5b014);
+            border-radius: inherit;
+            z-index: -1;
+            animation: rotateBorder 6s linear infinite;
+            opacity: 0.3;
+        }
+
+        @keyframes rotateBorder {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* ========================================
+           CONTACT INFO CARDS
+           ======================================== */
+        .contact-info-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            margin-top: -50px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .contact-info-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            transition: all 0.4s ease;
+            border: 1px solid rgba(0,0,0,0.04);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #f5b014, #d49a0e, #f5b014);
+            background-size: 200% 100%;
+            transform: scaleX(0);
+            transition: transform 0.5s ease;
+        }
+
+        .contact-info-card:hover::before {
+            transform: scaleX(1);
+            animation: shimmerBorder 1.5s ease infinite;
+        }
+
+        @keyframes shimmerBorder {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        .contact-info-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+        }
+
+        .contact-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(245, 176, 20, 0.12), rgba(245, 176, 20, 0.05));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 18px;
+            color: #f5b014;
+            transition: all 0.4s ease;
+        }
+
+        .contact-info-card:hover .contact-icon {
+            background: linear-gradient(135deg, #f5b014, #d49a0e);
+            color: white;
+            transform: scale(1.05) rotate(-5deg) translateY(-5px);
+        }
+
+        .contact-info-card h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+
+        .contact-info-card p {
+            font-size: 14px;
+            color: #64748b;
+            line-height: 1.7;
+        }
+
+        /* ========================================
+           FORM
+           ======================================== */
+        .contact-main-grid {
+            display: grid;
+            grid-template-columns: 1.3fr 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        .contact-form-wrapper {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-form-wrapper::before {
+            content: '</>';
+            position: absolute;
+            top: -20px;
+            right: -10px;
+            font-size: 120px;
+            font-weight: 800;
+            color: rgba(245, 176, 20, 0.03);
+            font-family: 'Courier New', monospace;
+        }
+
+        .section-header h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 5px;
+        }
+
+        .section-header h2 span {
+            color: #f5b014;
+        }
+
+        .section-header p {
+            color: #64748b;
+            font-size: 15px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 13px;
+            color: #1e293b;
+            margin-bottom: 5px;
+        }
+        .form-group .required {
+            color: #ef4444;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            background: #fafcff;
+            color: #1e293b;
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #f5b014;
+            box-shadow: 0 0 0 4px rgba(245, 176, 20, 0.08);
+            background: #fff;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #f5b014;
+            cursor: pointer;
+        }
+        .checkbox-group label {
+            font-size: 13px;
+            color: #64748b;
+            cursor: pointer;
+            margin: 0;
+        }
+        .checkbox-group a {
+            color: #f5b014;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #f5b014, #d49a0e);
+            color: #0f172a;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-family: inherit;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(245, 176, 20, 0.35);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #e2e8f0;
+            color: #475569;
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .btn-outline:hover {
+            border-color: #f5b014;
+            color: #f5b014;
+        }
+
+        .btn-whatsapp {
+            background: #25d366;
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            font-family: inherit;
+        }
+
+        .btn-whatsapp:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(37, 211, 102, 0.35);
+        }
+
+        .btn-lg {
+            padding: 16px 40px;
+            font-size: 16px;
+        }
+
+        /* Success Message */
+        .success-message {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .success-message .success-icon {
+            font-size: 60px;
+            color: #10b981;
+            margin-bottom: 15px;
+        }
+        .success-message h3 {
+            font-size: 24px;
+            color: #0f172a;
+            margin-bottom: 10px;
+        }
+        .success-message p {
+            color: #64748b;
+            margin-bottom: 25px;
+        }
+
+        /* ========================================
+           SOCIAL MEDIA
+           ======================================== */
+        .social-connect {
+            background: white;
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .social-connect h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 5px;
+        }
+
+        .social-connect p {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .social-links-large {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .social-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            padding: 15px 10px;
+            background: #f8fafc;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #475569;
+            transition: all 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .social-link:hover {
+            background: linear-gradient(135deg, rgba(245, 176, 20, 0.08), rgba(245, 176, 20, 0.02));
+            border-color: #f5b014;
+            color: #f5b014;
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+
+        .social-link svg {
+            width: 28px;
+            height: 28px;
+            transition: transform 0.3s ease;
+        }
+
+        .social-link:hover svg {
+            transform: scale(1.1) rotate(-5deg);
+        }
+
+        .social-link span {
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* Map Container */
+        .map-container {
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+        .map-container iframe {
+            display: block;
+            width: 100%;
+            height: 300px;
+        }
+
+        /* WhatsApp CTA */
+        .whatsapp-cta {
+            background: linear-gradient(135deg, #0f172a, #1a1a3e);
+            border-radius: 24px;
+            padding: 30px;
+            text-align: center;
+            margin-top: 20px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .whatsapp-cta::before {
+            content: '💬';
+            position: absolute;
+            font-size: 120px;
+            opacity: 0.05;
+            bottom: -30px;
+            right: -20px;
+        }
+
+        .whatsapp-cta h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .whatsapp-cta p {
+            color: rgba(255,255,255,0.7);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        /* ========================================
+           FOOTER
+           ======================================== */
+        footer {
+            background: #0f172a;
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+            gap: 40px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .footer-about .logo {
+            font-size: 26px;
+            font-weight: 800;
+            color: white;
+            text-decoration: none;
+        }
+        .footer-about .logo span {
+            color: #f5b014;
+        }
+        .footer-about p {
+            color: rgba(255,255,255,0.6);
+            font-size: 14px;
+            line-height: 1.8;
+            margin: 15px 0 20px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 10px;
+        }
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255,255,255,0.6);
+            transition: all 0.3s ease;
+        }
+        .social-links a:hover {
+            background: #f5b014;
+            color: #0f172a;
+            transform: translateY(-3px);
+        }
+
+        .footer-links h4,
+        .footer-contact h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        .footer-links a {
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        .footer-links a:hover {
+            color: #f5b014;
+            padding-left: 5px;
+        }
+
+        .footer-contact li {
+            color: rgba(255,255,255,0.6);
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            font-size: 13px;
+            color: rgba(255,255,255,0.4);
+        }
+        .footer-bottom a {
+            color: rgba(255,255,255,0.4);
+            text-decoration: none;
+            margin-left: 20px;
+        }
+        .footer-bottom a:hover {
+            color: #f5b014;
+        }
+
+        /* ========================================
+           RESPONSIVE
+           ======================================== */
+        @media (max-width: 992px) {
+            .contact-info-grid {
+                grid-template-columns: repeat(2, 1fr);
+                margin-top: -30px;
+            }
+            .contact-main-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .social-links-large {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-hero {
+                padding: 120px 16px 80px;
+            }
+            .page-hero h1 {
+                font-size: 2rem;
+            }
+            .developer-profile {
+                flex-direction: column;
+                padding: 20px;
+                text-align: center;
+            }
+            .developer-profile .info {
+                text-align: center;
+            }
+            .contact-info-grid {
+                grid-template-columns: 1fr;
+                margin-top: -20px;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            .social-links-large {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .contact-form-wrapper {
+                padding: 24px;
+            }
+            .particle-network {
+                opacity: 0.5;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .page-hero h1 {
+                font-size: 1.6rem;
+            }
+            .developer-profile .avatar {
+                width: 60px;
+                height: 60px;
+            }
+            .developer-profile .info .name {
+                font-size: 16px;
+            }
+            .social-links-large {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .contact-info-card {
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
+    <!-- ===== NAVBAR ===== -->
     <nav class="navbar" id="navbar">
         <div class="container">
             <a href="index.html" class="logo">Web<span>Dev</span>Pro</a>
@@ -15,10 +832,10 @@
                 <li><a href="index.html">Beranda</a></li>
                 <li><a href="tentang.html">Tentang</a></li>
                 <li><a href="layanan.html">Layanan</a></li>
-                <li><a href="portofolio.html" class="active">Portofolio</a></li>
+                <li><a href="portofolio.html">Portofolio</a></li>
                 <li><a href="harga.html">Harga</a></li>
                 <li><a href="blog.html">Blog</a></li>
-                <li><a href="kontak.html">Kontak</a></li>
+                <li><a href="kontak.html" class="active">Kontak</a></li>
             </ul>
             <div class="nav-buttons">
                 <a href="login.html" class="btn btn-outline btn-sm" id="loginBtn">Masuk</a>
@@ -35,424 +852,322 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- ===== HERO SECTION ===== -->
     <section class="page-hero">
-        <div class="container">
-            <h1>Portofolio Kami</h1>
-            <p>Lihat hasil karya terbaik yang telah kami buat untuk klien dari berbagai industri</p>
+        <!-- Particle Network -->
+        <div class="particle-network">
+            <div class="particle-dot"></div>
+            <div class="particle-dot"></div>
+            <div class="particle-dot"></div>
+            <div class="particle-dot"></div>
+            <div class="particle-dot"></div>
+            <div class="particle-dot"></div>
+            <div class="particle-dot"></div>
+            <div class="particle-dot"></div>
+            <div class="particle-dot"></div>
+            <div class="particle-dot"></div>
+            <div class="particle-dot"></div>
+            <div class="particle-dot"></div>
         </div>
-    </section>
 
-    <!-- Stats Section -->
-    <section class="stats-section section-padding">
-        <div class="container">
-            <div class="stats-grid-simple">
-                <div class="stat-item">
-                    <h3>150+</h3>
-                    <p>Proyek Selesai</p>
-                </div>
-                <div class="stat-item">
-                    <h3>98%</h3>
-                    <p>Kepuasan Klien</p>
-                </div>
-                <div class="stat-item">
-                    <h3>50+</h3>
-                    <p>Klien Aktif</p>
-                </div>
-                <div class="stat-item">
-                    <h3>5+</h3>
-                    <p>Tahun Pengalaman</p>
+        <div class="container" style="position:relative; z-index:1;">
+            <h1>
+                <span class="glitch-text" data-text="Hubungi Kami">Hubungi Kami</span>
+            </h1>
+            <p>Kami siap membantu mewujudkan ide digital Anda. Jangan ragu untuk menghubungi kami!</p>
+
+            <!-- Developer Profile with YOUR PHOTO -->
+            <div class="developer-profile rotating-border">
+                <img 
+                    src="https://i.ibb.co.com/FqBHZPN8/1782472907234.png" 
+                    alt="Hendri Setyawan - Web Developer" 
+                    class="avatar"
+                >
+                <div class="info">
+                    <div class="name">Hendri Setyawan</div>
+                    <div class="role">
+                        <span class="dot"></span>
+                        Web Developer &amp; Founder
+                    </div>
+                    <div class="typing-status">▸ Available for chat</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Portfolio Filter -->
-    <section class="portfolio-filter-section">
+    <!-- ===== CONTACT INFO ===== -->
+    <section class="contact-info-section section-padding">
         <div class="container">
-            <div class="filter-buttons">
-                <button class="filter-btn active" data-filter="all">Semua</button>
-                <button class="filter-btn" data-filter="website">Website</button>
-                <button class="filter-btn" data-filter="ecommerce">E-Commerce</button>
-                <button class="filter-btn" data-filter="mobile">Mobile App</button>
-                <button class="filter-btn" data-filter="corporate">Corporate</button>
+            <div class="contact-info-grid">
+                <div class="contact-info-card">
+                    <div class="contact-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg>
+                    </div>
+                    <h3>Alamat Kantor</h3>
+                    <p>Jl. Mangga Subah<br>Batang, Jawa Tengah<br>Indonesia</p>
+                </div>
+
+                <div class="contact-info-card">
+                    <div class="contact-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                        </svg>
+                    </div>
+                    <h3>Telepon & WhatsApp</h3>
+                    <p>+62 812-4814-1031<br>+62 21-5555-8888</p>
+                </div>
+
+                <div class="contact-info-card">
+                    <div class="contact-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                    </div>
+                    <h3>Email</h3>
+                    <p>info@webdevpro.id<br>support@webdevpro.id</p>
+                </div>
+
+                <div class="contact-info-card">
+                    <div class="contact-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                    </div>
+                    <h3>Jam Operasional</h3>
+                    <p>Senin - Jumat: 09.00 - 17.00<br>Sabtu: 09.00 - 14.00<br>Minggu: Tutup</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Portfolio Grid -->
-    <section class="portfolio-grid-section section-padding bg-light">
+    <!-- ===== CONTACT FORM & MAP ===== -->
+    <section class="contact-main-section section-padding bg-light">
         <div class="container">
-            <div class="portfolio-grid">
-                <!-- Project 1 -->
-                <div class="portfolio-card" data-category="website">
-                    <div class="portfolio-image">
-                        <img src="assets/images/portfolio/project1.jpg" alt="Website PT Maju Jaya" onerror="this.style.display='none'; this.parentElement.classList.add('placeholder-image');">
-                        <div class="portfolio-overlay">
-                            <a href="#" class="portfolio-link">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                                    <polyline points="15 3 21 3 21 9"></polyline>
-                                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                                </svg>
-                                Lihat Proyek
-                            </a>
-                        </div>
+            <div class="contact-main-grid">
+                <!-- Contact Form -->
+                <div class="contact-form-wrapper">
+                    <div class="section-header">
+                        <h2>Kirim <span>Pesan</span></h2>
+                        <p>Isi formulir di bawah ini dan tim kami akan menghubungi Anda segera</p>
                     </div>
-                    <div class="portfolio-content">
-                        <span class="portfolio-category">Website</span>
-                        <h3>Website PT Maju Jaya</h3>
-                        <p>Company profile modern dengan CMS untuk perusahaan manufaktur terkemuka di Indonesia.</p>
-                        <div class="portfolio-tags">
-                            <span>React</span>
-                            <span>Node.js</span>
-                            <span>MongoDB</span>
+
+                    <form id="contactForm" class="contact-form" action="#" method="POST">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="nama">Nama Lengkap <span class="required">*</span></label>
+                                <input type="text" id="nama" name="nama" placeholder="Masukkan nama lengkap Anda" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email <span class="required">*</span></label>
+                                <input type="email" id="email" name="email" placeholder="contoh@email.com" required>
+                            </div>
                         </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="telepon">Nomor Telepon</label>
+                                <input type="tel" id="telepon" name="telepon" placeholder="+62 8xx-xxxx-xxxx">
+                            </div>
+                            <div class="form-group">
+                                <label for="subjek">Subjek <span class="required">*</span></label>
+                                <select id="subjek" name="subjek" required>
+                                    <option value="" disabled selected>Pilih subjek pesan</option>
+                                    <option value="konsultasi">Konsultasi Gratis</option>
+                                    <option value="website">Pengembangan Website</option>
+                                    <option value="mobile">Aplikasi Mobile</option>
+                                    <option value="design">UI/UX Design</option>
+                                    <option value="marketing">Digital Marketing</option>
+                                    <option value="lainnya">Lainnya</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="pesan">Pesan <span class="required">*</span></label>
+                            <textarea id="pesan" name="pesan" rows="6" placeholder="Ceritakan tentang proyek atau kebutuhan Anda..." required></textarea>
+                        </div>
+
+                        <div class="form-group checkbox-group">
+                            <input type="checkbox" id="setuju" name="setuju" required>
+                            <label for="setuju">Saya menyetujui <a href="#">kebijakan privasi</a> dan bersedia dihubungi oleh tim WebDevPro</label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <span>Kirim Pesan</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="22" y1="2" x2="11" y2="13"></line>
+                                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                            </svg>
+                        </button>
+                    </form>
+
+                    <!-- Success Message -->
+                    <div id="successMessage" class="success-message hidden">
+                        <div class="success-icon">✅</div>
+                        <h3>Pesan Terkirim!</h3>
+                        <p>Terima kasih telah menghubungi kami. Tim kami akan merespons pesan Anda dalam waktu 1x24 jam.</p>
+                        <button class="btn btn-outline" onclick="resetForm()">Kirim Pesan Lain</button>
                     </div>
                 </div>
 
-                <!-- Project 2 -->
-                <div class="portfolio-card" data-category="ecommerce">
-                    <div class="portfolio-image">
-                        <img src="assets/images/portfolio/project2.jpg" alt="Toko Online Fashion Hub" onerror="this.style.display='none'; this.parentElement.classList.add('placeholder-image');">
-                        <div class="portfolio-overlay">
-                            <a href="#" class="portfolio-link">
+                <!-- Map & Social -->
+                <div>
+                    <div class="map-container">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.521260322283!2d106.819045!3d-6.194742!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f5390917b759%3A0x6b45e67356080477!2sJl.%20Jend.%20Sudirman%2C%20Jakarta!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid" 
+                            width="100%" 
+                            height="300" 
+                            style="border:0; border-radius: 12px;" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade"
+                            title="Lokasi Kantor WebDevPro">
+                        </iframe>
+                    </div>
+
+                    <div class="social-connect">
+                        <h3>Ikuti Kami</h3>
+                        <p>Dapatkan update terbaru tentang layanan dan promo kami</p>
+                        <div class="social-links-large">
+                            <a href="#" class="social-link" aria-label="Facebook">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                                    <polyline points="15 3 21 3 21 9"></polyline>
-                                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
                                 </svg>
-                                Lihat Proyek
+                                <span>Facebook</span>
+                            </a>
+                            <a href="#" class="social-link" aria-label="Instagram">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                                </svg>
+                                <span>Instagram</span>
+                            </a>
+                            <a href="#" class="social-link" aria-label="Twitter">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+                                </svg>
+                                <span>Twitter</span>
+                            </a>
+                            <a href="#" class="social-link" aria-label="LinkedIn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                                    <rect x="2" y="9" width="4" height="12"></rect>
+                                    <circle cx="4" cy="4" r="2"></circle>
+                                </svg>
+                                <span>LinkedIn</span>
+                            </a>
+                            <a href="#" class="social-link" aria-label="YouTube">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
+                                    <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+                                </svg>
+                                <span>YouTube</span>
+                            </a>
+                            <a href="#" class="social-link" aria-label="TikTok">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M18.5 4h-13C3.5 4 2 5.5 2 7.5v9c0 2 1.5 3.5 3.5 3.5h13c2 0 3.5-1.5 3.5-3.5v-9c0-2-1.5-3.5-3.5-3.5z"></path>
+                                    <path d="M10 9.5v5c0 .8-.7 1.5-1.5 1.5S7 15.3 7 14.5c0-.8.7-1.5 1.5-1.5.3 0 .5.1.7.2"></path>
+                                    <path d="M10 11l4-2v4.5c0 .8-.7 1.5-1.5 1.5s-1.5-.7-1.5-1.5c0-.8.7-1.5 1.5-1.5.3 0 .5.1.7.2"></path>
+                                </svg>
+                                <span>TikTok</span>
                             </a>
                         </div>
                     </div>
-                    <div class="portfolio-content">
-                        <span class="portfolio-category">E-Commerce</span>
-                        <h3>Toko Online Fashion Hub</h3>
-                        <p>Platform e-commerce lengkap dengan sistem pembayaran terintegrasi dan manajemen inventori real-time.</p>
-                        <div class="portfolio-tags">
-                            <span>Next.js</span>
-                            <span>Stripe</span>
-                            <span>PostgreSQL</span>
-                        </div>
+
+                    <div class="whatsapp-cta">
+                        <h3>💬 Butuh Respon Cepat?</h3>
+                        <p>Chat langsung dengan tim kami via WhatsApp</p>
+                        <a href="https://wa.me/6281248141031" target="_blank" class="btn-whatsapp btn-lg" style="width:100%; justify-content:center;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                            </svg>
+                            Chat WhatsApp
+                        </a>
                     </div>
                 </div>
-
-                <!-- Project 3 -->
-                <div class="portfolio-card" data-category="mobile">
-                    <div class="portfolio-image">
-                        <img src="assets/images/portfolio/project3.jpg" alt="Aplikasi Fitness Tracker" onerror="this.style.display='none'; this.parentElement.classList.add('placeholder-image');">
-                        <div class="portfolio-overlay">
-                            <a href="#" class="portfolio-link">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                                    <polyline points="15 3 21 3 21 9"></polyline>
-                                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                                </svg>
-                                Lihat Proyek
-                            </a>
-                        </div>
-                    </div>
-                    <div class="portfolio-content">
-                        <span class="portfolio-category">Mobile App</span>
-                        <h3>Aplikasi Fitness Tracker</h3>
-                        <p>Aplikasi tracking kesehatan dan fitness dengan integrasi smartwatch dan analitik personal.</p>
-                        <div class="portfolio-tags">
-                            <span>Flutter</span>
-                            <span>Firebase</span>
-                            <span>REST API</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 4 -->
-                <div class="portfolio-card" data-category="corporate">
-                    <div class="portfolio-image">
-                        <img src="assets/images/portfolio/project4.jpg" alt="Sistem ERP Digital Sejahtera" onerror="this.style.display='none'; this.parentElement.classList.add('placeholder-image');">
-                        <div class="portfolio-overlay">
-                            <a href="#" class="portfolio-link">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                                    <polyline points="15 3 21 3 21 9"></polyline>
-                                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                                </svg>
-                                Lihat Proyek
-                            </a>
-                        </div>
-                    </div>
-                    <div class="portfolio-content">
-                        <span class="portfolio-category">Corporate</span>
-                        <h3>Sistem ERP Digital Sejahtera</h3>
-                        <p>Sistem manajemen perusahaan terintegrasi untuk mengelola HR, keuangan, dan operasional.</p>
-                        <div class="portfolio-tags">
-                            <span>Vue.js</span>
-                            <span>Laravel</span>
-                            <span>MySQL</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 5 -->
-                <div class="portfolio-card" data-category="website">
-                    <div class="portfolio-image">
-                        <img src="assets/images/portfolio/project5.jpg" alt="Website Kampus Merdeka" onerror="this.style.display='none'; this.parentElement.classList.add('placeholder-image');">
-                        <div class="portfolio-overlay">
-                            <a href="#" class="portfolio-link">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                                    <polyline points="15 3 21 3 21 9"></polyline>
-                                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                                </svg>
-                                Lihat Proyek
-                            </a>
-                        </div>
-                    </div>
-                    <div class="portfolio-content">
-                        <span class="portfolio-category">Website</span>
-                        <h3>Website Kampus Merdeka</h3>
-                        <p>Portal edukasi dengan sistem pembelajaran online, jadwal, dan manajemen mahasiswa.</p>
-                        <div class="portfolio-tags">
-                            <span>React</span>
-                            <span>Django</span>
-                            <span>AWS</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 6 -->
-                <div class="portfolio-card" data-category="ecommerce">
-                    <div class="portfolio-image">
-                        <img src="assets/images/portfolio/project6.jpg" alt="Marketplace UMKM Lokal" onerror="this.style.display='none'; this.parentElement.classList.add('placeholder-image');">
-                        <div class="portfolio-overlay">
-                            <a href="#" class="portfolio-link">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                                    <polyline points="15 3 21 3 21 9"></polyline>
-                                    <line x1="10" y1="14" x2="21" y2="3"></line>
-                                </svg>
-                                Lihat Proyek
-                            </a>
-                        </div>
-                    </div>
-                    <div class="portfolio-content">
-                        <span class="portfolio-category">E-Commerce</span>
-                        <h3>Marketplace UMKM Lokal</h3>
-                        <p>Platform marketplace untuk mendukung produk lokal dengan sistem dropship dan affiliate.</p>
-                        <div class="portfolio-tags">
-                            <span>Next.js</span>
-                            <span>Midtrans</span>
-                            <span>Firebase</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="portfolio-load-more">
-                <button class="btn btn-outline btn-lg" id="loadMoreBtn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                    Muat Lebih Banyak
-                </button>
             </div>
         </div>
     </section>
 
-    <!-- Team Section -->
-    <section class="team-section section-padding">
+    <!-- ===== FAQ SECTION ===== -->
+    <section class="faq-section section-padding">
         <div class="container">
             <div class="section-header">
-                <h2>Tim Kami</h2>
-                <p>Profesional berpengalaman yang siap mewujudkan visi digital Anda</p>
+                <h2>Pertanyaan <span>Umum</span></h2>
+                <p>Temukan jawaban atas pertanyaan yang sering diajukan</p>
             </div>
 
-            <div class="team-grid">
-                <!-- Team Member 1 -->
-                <div class="team-card">
-                    <div class="team-image">
-                        <img src="assets/images/team/member1.jpg" alt="Ahmad Rizki" onerror="this.src='https://via.placeholder.com/300'">
-                    </div>
-                    <div class="team-info">
-                        <h3>Ahmad Rizki</h3>
-                        <span class="team-role">Founder & Lead Developer</span>
-                        <p>10+ tahun pengalaman dalam pengembangan web dan arsitektur sistem.</p>
-                        <div class="team-social">
-                            <a href="#" aria-label="LinkedIn">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                                    <rect x="2" y="9" width="4" height="12"></rect>
-                                    <circle cx="4" cy="4" r="2"></circle>
-                                </svg>
-                            </a>
-                            <a href="#" aria-label="GitHub">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
-                                </svg>
-                            </a>
-                        </div>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>Berapa lama waktu pengerjaan sebuah website?</span>
+                        <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Waktu pengerjaan tergantung pada kompleksitas proyek. Website company profile biasanya membutuhkan 2-4 minggu, sementara e-commerce atau aplikasi custom dapat memakan waktu 1-3 bulan. Kami akan memberikan timeline detail setelah diskusi kebutuhan.</p>
                     </div>
                 </div>
 
-                <!-- Team Member 2 -->
-                <div class="team-card">
-                    <div class="team-image">
-                        <img src="assets/images/team/member2.jpg" alt="Dina Sari" onerror="this.src='https://via.placeholder.com/300'">
-                    </div>
-                    <div class="team-info">
-                        <h3>Dina Sari</h3>
-                        <span class="team-role">Frontend Developer</span>
-                        <p>Spesialis React dan Vue.js dengan fokus pada performa dan animasi.</p>
-                        <div class="team-social">
-                            <a href="#" aria-label="LinkedIn">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                                    <rect x="2" y="9" width="4" height="12"></rect>
-                                    <circle cx="4" cy="4" r="2"></circle>
-                                </svg>
-                            </a>
-                            <a href="#" aria-label="GitHub">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
-                                </svg>
-                            </a>
-                        </div>
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>Apakah ada biaya konsultasi?</span>
+                        <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Tidak, konsultasi pertama kami adalah GRATIS. Anda dapat mendiskusikan ide dan kebutuhan proyek Anda tanpa biaya apapun. Kami akan memberikan estimasi dan rekomendasi terbaik untuk solusi digital Anda.</p>
                     </div>
                 </div>
 
-                <!-- Team Member 3 - FOTO ANDA -->
-                <div class="team-card">
-                    <div class="team-image">
-                        <img src="assets/images/team/member3.jpg" alt="Muhammad Rizal" onerror="this.src='https://via.placeholder.com/300'">
-                    </div>
-                    <div class="team-info">
-                        <h3>Muhammad Rizal</h3>
-                        <span class="team-role">Full Stack Developer</span>
-                        <p>Mahasiswa Akademi Kebsani Yogyakarta dengan keahlian dalam pengembangan web modern dan aplikasi berbasis cloud.</p>
-                        <div class="team-social">
-                            <a href="#" aria-label="LinkedIn">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                                    <rect x="2" y="9" width="4" height="12"></rect>
-                                    <circle cx="4" cy="4" r="2"></circle>
-                                </svg>
-                            </a>
-                            <a href="#" aria-label="GitHub">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
-                                </svg>
-                            </a>
-                        </div>
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>Bagaimana sistem pembayarannya?</span>
+                        <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Kami menggunakan sistem pembayaran termin. Biasanya 30% di awal sebagai down payment, 40% di tengah proyek, dan 30% setelah proyek selesai dan disetujui. Untuk proyek besar, kami dapat menyesuaikan skema pembayaran.</p>
                     </div>
                 </div>
 
-                <!-- Team Member 4 -->
-                <div class="team-card">
-                    <div class="team-image">
-                        <img src="assets/images/team/member4.jpg" alt="Maya Wulandari" onerror="this.src='https://via.placeholder.com/300'">
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>Apakah website yang dibuat sudah SEO-friendly?</span>
+                        <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Ya, semua website yang kami bangun sudah mengikuti best practice SEO on-page, termasuk struktur URL yang bersih, meta tags, schema markup, dan kecepatan loading yang optimal. Kami juga menyediakan layanan SEO lanjutan jika diperlukan.</p>
                     </div>
-                    <div class="team-info">
-                        <h3>Maya Wulandari</h3>
-                        <span class="team-role">UI/UX Designer</span>
-                        <p>Desainer kreatif dengan fokus pada user experience dan design system.</p>
-                        <div class="team-social">
-                            <a href="#" aria-label="LinkedIn">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                                    <rect x="2" y="9" width="4" height="12"></rect>
-                                    <circle cx="4" cy="4" r="2"></circle>
-                                </svg>
-                            </a>
-                            <a href="#" aria-label="Dribbble">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="10"></circle>
-                                    <path d="M8.56 2.75c4.37 6.03 6.02 9.42 8.03 17.72m2.54-15.38c-3.72 4.35-8.94 5.66-16.88 5.85m19.5 1.9c-3.5-.93-6.63-.82-8.94 0-2.58.92-5.01 2.86-7.44 6.32"></path>
-                                </svg>
-                            </a>
-                        </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" aria-expanded="false">
+                        <span>Apakah ada garansi setelah website selesai?</span>
+                        <svg class="faq-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Tentu! Kami memberikan garansi bug fixing selama 3 bulan setelah website diluncurkan. Selain itu, kami menyediakan paket maintenance bulanan yang mencakup update, backup, dan monitoring keamanan.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Testimonials -->
-    <section class="testimonials-section section-padding bg-light">
-        <div class="container">
-            <div class="section-header">
-                <h2>Apa Kata Klien Kami</h2>
-                <p>Testimoni dari klien yang telah mempercayakan proyek mereka kepada kami</p>
-            </div>
-
-            <div class="testimonials-grid">
-                <div class="testimonial-card">
-                    <div class="testimonial-rating">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                    </div>
-                    <p class="testimonial-text">"WebDevPro memberikan hasil yang luar biasa. Website company profile kami sekarang terlihat profesional dan modern. Proses pengerjaan sangat transparan dan tim sangat responsif."</p>
-                    <div class="testimonial-author">
-                        <img src="assets/images/testimonials/client1.jpg" alt="Budi Santoso" onerror="this.src='https://via.placeholder.com/48'">
-                        <div>
-                            <span class="author-name">Budi Santoso</span>
-                            <span class="author-company">PT Maju Jaya</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card">
-                    <div class="testimonial-rating">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                    </div>
-                    <p class="testimonial-text">"Sangat puas dengan aplikasi mobile yang dibangun. Fitur tracking dan integrasi dengan smartwatch berjalan sempurna. Tim development sangat memahami kebutuhan kami."</p>
-                    <div class="testimonial-author">
-                        <img src="assets/images/testimonials/client2.jpg" alt="Dr. Rina Wati" onerror="this.src='https://via.placeholder.com/48'">
-                        <div>
-                            <span class="author-name">Dr. Rina Wati</span>
-                            <span class="author-company">FitLife Indonesia</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card">
-                    <div class="testimonial-rating">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                    </div>
-                    <p class="testimonial-text">"E-commerce kami mengalami peningkatan konversi 40% setelah redesign oleh WebDevPro. UI/UX yang intuitif benar-benar membuat perbedaan besar."</p>
-                    <div class="testimonial-author">
-                        <img src="assets/images/testimonials/client3.jpg" alt="Andi Pratama" onerror="this.src='https://via.placeholder.com/48'">
-                        <div>
-                            <span class="author-name">Andi Pratama</span>
-                            <span class="author-company">Fashion Hub</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="cta-section">
-        <div class="container">
-            <div class="cta-content">
-                <h2>Ingin Hasil Seperti Ini?</h2>
-                <p>Mari diskusikan proyek Anda bersama tim profesional kami</p>
-                <a href="kontak.html" class="btn btn-white btn-lg">Mulai Proyek Anda</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
+    <!-- ===== FOOTER ===== -->
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
@@ -460,30 +1175,10 @@
                     <a href="index.html" class="logo">Web<span>Dev</span>Pro</a>
                     <p>Partner tepercaya untuk solusi digital bisnis Anda. Kami menghadirkan inovasi dan kualitas dalam setiap proyek.</p>
                     <div class="social-links">
-                        <a href="#" aria-label="Facebook">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-                            </svg>
-                        </a>
-                        <a href="#" aria-label="Twitter">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
-                            </svg>
-                        </a>
-                        <a href="#" aria-label="Instagram">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                            </svg>
-                        </a>
-                        <a href="#" aria-label="LinkedIn">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-                                <rect x="2" y="9" width="4" height="12"></rect>
-                                <circle cx="4" cy="4" r="2"></circle>
-                            </svg>
-                        </a>
+                        <a href="#" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
+                        <a href="#" aria-label="Twitter"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a>
+                        <a href="#" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+                        <a href="#" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
                     </div>
                 </div>
                 <div class="footer-links">
@@ -509,8 +1204,8 @@
                 <div class="footer-contact">
                     <h4>Kontak</h4>
                     <ul>
-                        <li>📍 Jl. Sudirman No. 123, Jakarta</li>
-                        <li>📞 +62 812-3456-7890</li>
+                        <li>📍 Batang, Jawa Tengah</li>
+                        <li>📞 +62 812-4814-1031</li>
                         <li>✉️ info@webdevpro.id</li>
                         <li>🕐 Senin - Jumat: 09.00 - 17.00</li>
                     </ul>
@@ -518,53 +1213,68 @@
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2024 WebDevPro. Hak Cipta Dilindungi.</p>
+                <div>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
             </div>
         </div>
     </footer>
 
+    <!-- ===== SCRIPTS ===== -->
     <script src="assets/js/main.js"></script>
     <script>
-        // Portfolio Filter
-        const filterBtns = document.querySelectorAll('.filter-btn');
-        const portfolioCards = document.querySelectorAll('.portfolio-card');
+        // ============================================
+        // CONTACT FORM
+        // ============================================
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span>⏳ Mengirim...</span>';
+            
+            setTimeout(() => {
+                this.classList.add('hidden');
+                document.getElementById('successMessage').classList.remove('hidden');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+            }, 1500);
+        });
 
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                filterBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
+        function resetForm() {
+            document.getElementById('contactForm').reset();
+            document.getElementById('contactForm').classList.remove('hidden');
+            document.getElementById('successMessage').classList.add('hidden');
+        }
 
-                const filter = btn.dataset.filter;
-
-                portfolioCards.forEach(card => {
-                    if (filter === 'all' || card.dataset.category === filter) {
-                        card.style.display = 'block';
-                        setTimeout(() => {
-                            card.style.opacity = '1';
-                            card.style.transform = 'translateY(0)';
-                        }, 10);
-                    } else {
-                        card.style.opacity = '0';
-                        card.style.transform = 'translateY(20px)';
-                        setTimeout(() => {
-                            card.style.display = 'none';
-                        }, 300);
-                    }
+        // ============================================
+        // FAQ ACCORDION
+        // ============================================
+        document.querySelectorAll('.faq-question').forEach(button => {
+            button.addEventListener('click', () => {
+                const faqItem = button.parentElement;
+                const isOpen = faqItem.classList.contains('active');
+                
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('active');
+                    item.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
                 });
+                
+                if (!isOpen) {
+                    faqItem.classList.add('active');
+                    button.setAttribute('aria-expanded', 'true');
+                }
             });
         });
 
-        // Load More Button
-        document.getElementById('loadMoreBtn').addEventListener('click', function() {
-            this.innerHTML = '<span>Memuat...</span>';
-            setTimeout(() => {
-                this.innerHTML = `
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                    Muat Lebih Banyak
-                `;
-                alert('Fitur ini akan memuat lebih banyak proyek dari database.');
-            }, 1000);
+        // ============================================
+        // NAVBAR SCROLL
+        // ============================================
+        window.addEventListener('scroll', () => {
+            document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
         });
     </script>
 </body>
