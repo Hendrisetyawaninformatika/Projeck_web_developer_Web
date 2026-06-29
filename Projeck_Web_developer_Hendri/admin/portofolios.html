@@ -1,41 +1,24 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kelola Portofolio | Admin WebDevPro</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="assets/css/style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manajemen Portofolio | Admin WebDevPro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* ========================================
-           RESET & BASE
-           ======================================== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        /* ===== RESET & BASE ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Poppins', sans-serif;
-            background: #f0f4f9;
-            color: #1e293b;
+            background: #0f172a;
+            color: #e2e8f0;
             display: flex;
+            overflow-x: hidden;
         }
-        a {
-            text-decoration: none;
-        }
-        button {
-            cursor: pointer;
-            font-family: inherit;
-        }
-        .admin-body {
-            min-height: 100vh;
-            background: #f0f4f9;
-        }
+        a { text-decoration: none; }
+        button { cursor: pointer; font-family: inherit; }
 
-        /* ========================================
-           BACKGROUND ANIMATION
-           ======================================== */
+        /* ===== ANIMATED BACKGROUND ===== */
         .bg-animation {
             position: fixed;
             top: 0;
@@ -43,656 +26,342 @@
             width: 100%;
             height: 100%;
             z-index: 0;
-            pointer-events: none;
             overflow: hidden;
+            pointer-events: none;
         }
-
-        .bg-particle {
+        .bg-animation .code-line {
             position: absolute;
-            width: 4px;
-            height: 4px;
-            background: rgba(245, 176, 20, 0.06);
-            border-radius: 50%;
-            animation: floatBgParticle linear infinite;
-        }
-
-        .bg-particle:nth-child(1) { left: 5%; animation-duration: 22s; }
-        .bg-particle:nth-child(2) { left: 15%; animation-duration: 28s; animation-delay: 2s; width: 6px; }
-        .bg-particle:nth-child(3) { left: 25%; animation-duration: 18s; animation-delay: 4s; }
-        .bg-particle:nth-child(4) { left: 35%; animation-duration: 32s; animation-delay: 1s; width: 8px; }
-        .bg-particle:nth-child(5) { left: 45%; animation-duration: 24s; animation-delay: 3s; }
-        .bg-particle:nth-child(6) { left: 55%; animation-duration: 30s; animation-delay: 5s; width: 5px; }
-        .bg-particle:nth-child(7) { left: 65%; animation-duration: 20s; animation-delay: 2.5s; }
-        .bg-particle:nth-child(8) { left: 75%; animation-duration: 26s; animation-delay: 4.5s; width: 7px; }
-        .bg-particle:nth-child(9) { left: 85%; animation-duration: 23s; animation-delay: 1.5s; }
-        .bg-particle:nth-child(10) { left: 95%; animation-duration: 29s; animation-delay: 3.5s; width: 6px; }
-        .bg-particle:nth-child(11) { left: 50%; animation-duration: 35s; animation-delay: 0.5s; width: 10px; }
-
-        @keyframes floatBgParticle {
-            0% { transform: translateY(100vh) translateX(0) scale(0); opacity: 0; }
-            10% { opacity: 0.6; transform: translateY(80vh) translateX(20px) scale(1); }
-            90% { opacity: 0.6; }
-            100% { transform: translateY(-100vh) translateX(-20px) scale(0); opacity: 0; }
-        }
-
-        .gradient-orb {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(120px);
-            pointer-events: none;
-            z-index: 0;
-            animation: orbFloat 20s ease-in-out infinite;
-        }
-
-        .gradient-orb:nth-child(1) {
-            width: 500px;
-            height: 500px;
-            background: rgba(245, 176, 20, 0.03);
-            top: -200px;
-            right: -100px;
-        }
-
-        .gradient-orb:nth-child(2) {
-            width: 400px;
-            height: 400px;
-            background: rgba(99, 102, 241, 0.02);
-            bottom: -150px;
-            left: -100px;
-            animation-delay: -10s;
-        }
-
-        @keyframes orbFloat {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(50px, -50px) scale(1.1); }
-            66% { transform: translate(-30px, 30px) scale(0.9); }
-        }
-
-        .floating-code-bg {
-            position: fixed;
+            color: rgba(96, 165, 250, 0.06);
             font-family: 'Courier New', monospace;
-            color: rgba(245, 176, 20, 0.03);
-            font-weight: 700;
-            font-size: 20px;
-            pointer-events: none;
-            z-index: 0;
-            animation: floatCodeBg linear infinite;
+            font-size: 13px;
+            white-space: nowrap;
+            animation: floatCode linear infinite;
+            font-weight: 300;
+        }
+        @keyframes floatCode {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(2deg); opacity: 0; }
+        }
+        .bg-animation .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: rgba(96, 165, 250, 0.12);
+            border-radius: 50%;
+            animation: floatParticle linear infinite;
+        }
+        @keyframes floatParticle {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { transform: translateY(-100vh) scale(1); opacity: 0; }
+        }
+        .bg-animation .glow-orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: pulseGlow 8s ease-in-out infinite alternate;
+        }
+        @keyframes pulseGlow {
+            0% { transform: scale(1) translate(0, 0); opacity: 0.25; }
+            100% { transform: scale(1.4) translate(40px, -40px); opacity: 0.5; }
         }
 
-        .floating-code-bg:nth-child(1) { top: 10%; left: 5%; animation-duration: 25s; }
-        .floating-code-bg:nth-child(2) { top: 20%; right: 10%; animation-duration: 20s; animation-delay: -5s; }
-        .floating-code-bg:nth-child(3) { bottom: 30%; left: 8%; animation-duration: 28s; animation-delay: -10s; }
-        .floating-code-bg:nth-child(4) { bottom: 20%; right: 5%; animation-duration: 22s; animation-delay: -7s; }
-        .floating-code-bg:nth-child(5) { top: 50%; left: 50%; animation-duration: 30s; animation-delay: -12s; }
-        .floating-code-bg:nth-child(6) { top: 5%; left: 40%; animation-duration: 18s; animation-delay: -3s; }
-        .floating-code-bg:nth-child(7) { bottom: 10%; left: 60%; animation-duration: 24s; animation-delay: -8s; }
-
-        @keyframes floatCodeBg {
-            0% { transform: translate(0, 0) rotate(0deg); opacity: 0.03; }
-            25% { transform: translate(100px, -50px) rotate(90deg); opacity: 0.06; }
-            50% { transform: translate(-60px, 70px) rotate(180deg); opacity: 0.04; }
-            75% { transform: translate(70px, -40px) rotate(270deg); opacity: 0.07; }
-            100% { transform: translate(0, 0) rotate(360deg); opacity: 0.03; }
-        }
-
-        /* ========================================
-           SIDEBAR
-           ======================================== */
-        .admin-sidebar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 260px;
-            height: 100vh;
-            background: linear-gradient(180deg, #0f172a 0%, #1a1a3e 100%);
-            padding: 24px 16px;
+        /* ===== SIDEBAR ===== */
+        .admin-layout {
             display: flex;
-            flex-direction: column;
-            transition: transform 0.3s ease, width 0.3s ease;
-            z-index: 1000;
-            overflow-y: auto;
-            box-shadow: 4px 0 24px rgba(0, 0, 0, 0.15);
-        }
-        .admin-sidebar::-webkit-scrollbar {
-            width: 4px;
-        }
-        .admin-sidebar::-webkit-scrollbar-thumb {
-            background: #f5b014;
-            border-radius: 10px;
-        }
-        .sidebar-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding-bottom: 24px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-            margin-bottom: 20px;
-        }
-        .sidebar-header .logo {
-            font-size: 22px;
-            font-weight: 800;
-            color: #fff;
-        }
-        .sidebar-header .logo span {
-            color: #f5b014;
-        }
-        .admin-badge {
-            background: rgba(245, 176, 20, 0.15);
-            color: #f5b014;
-            font-size: 10px;
-            font-weight: 600;
-            padding: 2px 12px;
-            border-radius: 20px;
-            letter-spacing: 0.3px;
-            border: 1px solid rgba(245, 176, 20, 0.1);
-        }
-        .sidebar-nav ul {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-        .sidebar-nav ul li a {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 12px 16px;
-            border-radius: 12px;
-            color: rgba(255,255,255,0.6);
-            font-weight: 500;
-            font-size: 14px;
-            transition: all 0.3s ease;
-        }
-        .sidebar-nav ul li a svg {
-            flex-shrink: 0;
-            opacity: 0.6;
-            transition: opacity 0.2s;
-        }
-        .sidebar-nav ul li a:hover {
-            background: rgba(255, 255, 255, 0.05);
-            color: #fff;
-        }
-        .sidebar-nav ul li a:hover svg {
-            opacity: 1;
-        }
-        .sidebar-nav ul li a.active {
-            background: rgba(245, 176, 20, 0.08);
-            color: #f5b014;
-        }
-        .sidebar-nav ul li a.active svg {
-            opacity: 1;
-            stroke: #f5b014;
-        }
-        .sidebar-footer {
-            margin-top: auto;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
-        }
-        .logout-btn {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 12px 16px;
-            border-radius: 12px;
-            color: #ef4444;
-            font-weight: 500;
-            font-size: 14px;
-            transition: all 0.3s ease;
-            background: none;
-            border: none;
-            width: 100%;
-            cursor: pointer;
-            font-family: inherit;
-        }
-        .logout-btn:hover {
-            background: rgba(239, 68, 68, 0.1);
-        }
-
-        /* ========================================
-           MAIN CONTENT
-           ======================================== */
-        .admin-main {
-            margin-left: 260px;
-            flex: 1;
-            padding: 24px 32px 40px;
-            transition: margin-left 0.3s ease;
             min-height: 100vh;
+            width: 100%;
             position: relative;
             z-index: 1;
         }
-
-        /* ========================================
-           TOPBAR
-           ======================================== */
-        .admin-topbar {
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 250px;
+            height: 100vh;
+            background: rgba(15, 23, 42, 0.92);
+            backdrop-filter: blur(20px);
+            padding: 24px 16px;
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 12px 24px;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
-            border-radius: 20px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
-            margin-bottom: 28px;
-            border: 1px solid rgba(255, 255, 255, 0.6);
+            flex-direction: column;
+            transition: transform 0.3s ease;
+            z-index: 1000;
+            overflow-y: auto;
+            border-right: 1px solid rgba(255, 255, 255, 0.06);
         }
-        .sidebar-toggle {
-            background: none;
-            border: none;
-            color: #475569;
-            padding: 6px;
-            border-radius: 10px;
-            transition: background 0.2s;
-        }
-        .sidebar-toggle:hover {
-            background: #f1f5f9;
-        }
-        .topbar-right {
-            display: flex;
-            align-items: center;
-            gap: 18px;
-        }
-        .topbar-search {
-            display: flex;
-            align-items: center;
-            background: #f1f5f9;
-            padding: 6px 16px;
-            border-radius: 40px;
-            gap: 10px;
-            transition: all 0.25s;
-            border: 1.5px solid transparent;
-        }
-        .topbar-search:focus-within {
-            background: #fff;
-            border-color: #f5b014;
-            box-shadow: 0 0 0 4px rgba(245, 176, 20, 0.12);
-        }
-        .topbar-search input {
-            border: none;
-            background: transparent;
-            padding: 8px 0;
-            font-size: 13px;
-            color: #1e293b;
-            outline: none;
-            width: 160px;
-        }
-        .topbar-search input::placeholder {
-            color: #94a3b8;
-        }
-        .topbar-search svg {
-            color: #94a3b8;
-            flex-shrink: 0;
-        }
-        .notification-btn {
-            position: relative;
-            background: none;
-            border: none;
-            padding: 6px;
-            border-radius: 10px;
-            color: #475569;
-            transition: background 0.2s;
-        }
-        .notification-btn:hover {
-            background: #f1f5f9;
-        }
-        .notification-badge {
-            position: absolute;
-            top: -2px;
-            right: -2px;
-            background: linear-gradient(135deg, #ef4444, #dc2626);
+        .sidebar::-webkit-scrollbar { width: 4px; }
+        .sidebar::-webkit-scrollbar-thumb { background: #475569; border-radius: 10px; }
+        .sidebar-brand h3 {
+            font-size: 22px;
+            font-weight: 800;
             color: #fff;
-            font-size: 9px;
-            font-weight: 700;
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 2px solid #fff;
-            box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+            margin-bottom: 2px;
+            background: linear-gradient(135deg, #60a5fa, #a78bfa);
+           
+            -webkit-text-fill-color: transparent;
         }
-        .topbar-user {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-weight: 600;
-            font-size: 14px;
-            color: #1e293b;
-            padding: 4px 12px 4px 4px;
-            border-radius: 40px;
-            background: #f1f5f9;
-            transition: background 0.2s;
-        }
-        .topbar-user:hover {
-            background: #e2e8f0;
-        }
-        .topbar-user img {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid #e2e8f0;
-            background: #e2e8f0;
-        }
-
-        /* ========================================
-           PAGE HEADER
-           ======================================== */
-        .page-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 16px;
-            margin-bottom: 28px;
-        }
-        .page-header-left h1 {
-            font-size: 28px;
-            font-weight: 700;
-            color: #0f172a;
-            letter-spacing: -0.3px;
-        }
-        .page-header-left p {
+        .sidebar-brand small { color: #94a3b8; font-size: 11px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; }
+        .sidebar-menu { margin-top: 24px; flex: 1; }
+        .menu-header {
             color: #64748b;
-            font-size: 15px;
-            margin-top: 2px;
-        }
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 22px;
-            border: none;
-            border-radius: 40px;
+            font-size: 11px;
             font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 12px 12px 6px;
+            margin-top: 8px;
+        }
+        .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 14px;
+            border-radius: 12px;
+            color: #94a3b8;
+            font-weight: 500;
             font-size: 14px;
             transition: all 0.3s ease;
+            margin-bottom: 2px;
+            position: relative;
         }
-        .btn-primary {
-            background: linear-gradient(135deg, #f5b014, #d49a0e);
-            color: #0f172a;
-            box-shadow: 0 6px 16px rgba(245, 176, 20, 0.25);
+        .menu-item:hover { background: rgba(255, 255, 255, 0.06); color: #e2e8f0; transform: translateX(4px); }
+        .menu-item.active {
+            background: linear-gradient(135deg, rgba(96, 165, 250, 0.2), rgba(167, 139, 250, 0.2));
+            color: #60a5fa;
+            border: 1px solid rgba(96, 165, 250, 0.15);
         }
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 24px rgba(245, 176, 20, 0.35);
-        }
-        .btn-outline {
-            background: transparent;
-            border: 1.5px solid #e2e8f0;
-            color: #475569;
-        }
-        .btn-outline:hover {
-            background: #f1f5f9;
-            border-color: #f5b014;
-            color: #f5b014;
-        }
-        .btn-sm {
-            padding: 6px 14px;
-            font-size: 12px;
-            border-radius: 30px;
-        }
-        .btn-danger {
-            background: linear-gradient(135deg, #ef4444, #dc2626);
-            color: #fff;
-            box-shadow: 0 6px 16px rgba(239, 68, 68, 0.25);
-        }
-        .btn-danger:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 24px rgba(239, 68, 68, 0.35);
-        }
-        .btn-icon {
-            padding: 6px 8px;
-            border-radius: 8px;
-            background: transparent;
-            border: none;
+        .menu-item.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 3px;
+            height: 20px;
+            background: linear-gradient(180deg, #60a5fa, #a78bfa);
+            border-radius: 0 4px 4px 0;
         }
 
-        /* ========================================
-           STATS
-           ======================================== */
+        /* ===== MAIN CONTENT ===== */
+        .admin-main {
+            margin-left: 250px;
+            flex: 1;
+            padding: 24px 32px 40px;
+            min-height: 100vh;
+            position: relative;
+            z-index: 2;
+        }
+        .admin-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 24px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            margin-bottom: 28px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+        }
+        .admin-header h3 {
+            font-size: 20px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #f1f5f9, #94a3b8);
+            
+            -webkit-text-fill-color: transparent;
+        }
+        .admin-header > div {
+            font-weight: 500;
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .admin-header > div span {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: #fff;
+            padding: 4px 14px;
+            border-radius: 40px;
+            font-size: 13px;
+        }
+
+        /* ===== STATS ===== */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 18px;
-            margin-bottom: 28px;
+            gap: 16px;
+            margin-bottom: 24px;
         }
         .stat-card {
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(12px);
-            padding: 20px 22px;
-            border-radius: 20px;
+            padding: 18px 22px;
+            border-radius: 18px;
             display: flex;
             align-items: center;
-            gap: 16px;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            transition: transform 0.25s, box-shadow 0.25s;
+            gap: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         }
-        .stat-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.07);
-        }
+        .stat-card:hover { transform: translateY(-4px); border-color: rgba(96, 165, 250, 0.3); }
         .stat-icon {
-            width: 48px;
-            height: 48px;
+            width: 44px;
+            height: 44px;
             border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 22px;
             flex-shrink: 0;
         }
-        .stat-icon.blue {
-            background: linear-gradient(135deg, #eff6ff, #dbeafe);
-            color: #3b82f6;
-        }
-        .stat-icon.green {
-            background: linear-gradient(135deg, #ecfdf5, #d1fae5);
-            color: #10b981;
-        }
-        .stat-icon.orange {
-            background: linear-gradient(135deg, #fffbeb, #fef3c7);
-            color: #f59e0b;
-        }
-        .stat-icon.purple {
-            background: linear-gradient(135deg, #f5f3ff, #ede9fe);
-            color: #8b5cf6;
-        }
-        .stat-info h3 {
+        .stat-icon.blue { background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.2); }
+        .stat-icon.green { background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.2); }
+        .stat-icon.yellow { background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.2); }
+        .stat-icon.purple { background: rgba(139, 92, 246, 0.15); border: 1px solid rgba(139, 92, 246, 0.2); }
+        .stat-value {
             font-size: 24px;
             font-weight: 700;
-            color: #0f172a;
+            background: linear-gradient(135deg, #f1f5f9, #94a3b8);
+            
+            -webkit-text-fill-color: transparent;
             line-height: 1.2;
         }
-        .stat-info p {
-            font-size: 13px;
-            color: #64748b;
-            font-weight: 500;
-        }
+        .stat-label { font-size: 13px; color: #94a3b8; font-weight: 500; }
 
-        /* ========================================
-           FILTER BAR
-           ======================================== */
-        .filter-bar {
+        /* ===== TOOLBAR ===== */
+        .toolbar {
             display: flex;
-            flex-wrap: wrap;
-            align-items: center;
             justify-content: space-between;
-            gap: 14px;
-            background: rgba(255, 255, 255, 0.85);
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 24px;
+            background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(12px);
             padding: 12px 20px;
             border-radius: 20px;
-            margin-bottom: 28px;
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
         }
-        .filter-group {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-        .filter-select {
-            padding: 8px 16px 8px 14px;
+        .filter-group { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+        .form-control {
+            padding: 8px 16px;
             border-radius: 40px;
-            border: 1.5px solid #e2e8f0;
-            background: #f8fafc;
+            border: 1.5px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
             font-size: 13px;
             font-weight: 500;
-            color: #1e293b;
+            color: #e2e8f0;
             outline: none;
-            transition: all 0.2s;
+            transition: all 0.3s;
+            font-family: inherit;
+            min-width: 140px;
         }
-        .filter-select:focus {
-            border-color: #f5b014;
-            box-shadow: 0 0 0 4px rgba(245, 176, 20, 0.08);
-        }
-        .filter-actions {
-            display: flex;
-            gap: 10px;
-        }
+        .form-control:focus { border-color: #3b82f6; box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15); }
+        .form-control::placeholder { color: #64748b; }
+        .form-control option { background: #1e293b; color: #e2e8f0; }
+        .form-control.search-input { min-width: 220px; }
 
-        /* ========================================
-           PORTFOLIO GRID
-           ======================================== */
-        .portfolio-admin-grid {
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            border: none;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(59, 130, 246, 0.4); }
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid rgba(255, 255, 255, 0.15);
+            color: #94a3b8;
+        }
+        .btn-outline:hover { background: rgba(255, 255, 255, 0.05); border-color: #3b82f6; color: #e2e8f0; }
+        .btn-danger {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(239, 68, 68, 0.3);
+        }
+        .btn-danger:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(239, 68, 68, 0.4); }
+
+        /* ===== PORTFOLIO GRID ===== */
+        .portfolio-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 24px;
-            margin-bottom: 30px;
+            gap: 20px;
         }
-        .portfolio-admin-card {
-            background: rgba(255, 255, 255, 0.85);
+        .portfolio-card {
+            background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(12px);
-            border-radius: 24px;
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         }
-        .portfolio-admin-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.07);
-        }
-        .portfolio-admin-image {
+        .portfolio-card:hover { transform: translateY(-6px); border-color: rgba(96, 165, 250, 0.3); }
+        .portfolio-image {
+            height: 180px;
+            overflow: hidden;
             position: relative;
-            overflow: hidden;
-            height: 190px;
-            background: #f1f5f9;
+            background: #1e293b;
         }
-        .portfolio-admin-image img {
+        .portfolio-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             transition: transform 0.4s ease;
         }
-        .portfolio-admin-card:hover .portfolio-admin-image img {
-            transform: scale(1.04);
-        }
-        .portfolio-admin-overlay {
+        .portfolio-card:hover .portfolio-image img { transform: scale(1.05); }
+        .portfolio-image .status-badge {
             position: absolute;
-            inset: 0;
-            background: rgba(15, 23, 42, 0.55);
-            backdrop-filter: blur(2px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .portfolio-admin-card:hover .portfolio-admin-overlay {
-            opacity: 1;
-        }
-        .portfolio-admin-actions {
-            display: flex;
-            gap: 12px;
-        }
-        .action-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: none;
-            background: rgba(255, 255, 255, 0.92);
-            color: #1e293b;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
-        }
-        .action-btn:hover {
-            transform: scale(1.1);
-        }
-        .action-btn.view:hover {
-            background: #3b82f6;
-            color: #fff;
-        }
-        .action-btn.edit:hover {
-            background: #f59e0b;
-            color: #fff;
-        }
-        .action-btn.delete:hover {
-            background: #ef4444;
-            color: #fff;
-        }
-        .portfolio-status {
-            position: absolute;
-            top: 14px;
-            right: 14px;
+            top: 12px;
+            right: 12px;
             padding: 4px 14px;
             border-radius: 40px;
             font-size: 11px;
             font-weight: 600;
-            letter-spacing: 0.3px;
             text-transform: uppercase;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(4px);
-            color: #fff;
+            letter-spacing: 0.3px;
         }
-        .portfolio-status.published {
-            background: rgba(16, 185, 129, 0.85);
-        }
-        .portfolio-status.draft {
-            background: rgba(245, 158, 11, 0.85);
-        }
-        .portfolio-admin-content {
-            padding: 18px 20px 20px;
-        }
-        .portfolio-category-badge {
+        .status-badge.published { background: rgba(16, 185, 129, 0.85); color: #fff; }
+        .status-badge.draft { background: rgba(245, 158, 11, 0.85); color: #fff; }
+        .portfolio-content { padding: 16px 18px 18px; }
+        .portfolio-content .category {
             display: inline-block;
             padding: 2px 12px;
             border-radius: 40px;
             font-size: 10px;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.3px;
-            background: #eef2ff;
-            color: #4f46e5;
-            margin-bottom: 8px;
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+            margin-bottom: 6px;
         }
-        .portfolio-category-badge.ecommerce {
-            background: #fce7f3;
-            color: #db2777;
-        }
-        .portfolio-category-badge.mobile {
-            background: #dbeafe;
-            color: #2563eb;
-        }
-        .portfolio-category-badge.corporate {
-            background: #e0e7ff;
-            color: #4338ca;
-        }
-        .portfolio-admin-content h3 {
-            font-size: 17px;
+        .portfolio-content h4 {
+            font-size: 16px;
             font-weight: 700;
-            color: #0f172a;
+            color: #f1f5f9;
             margin-bottom: 4px;
         }
-        .portfolio-admin-content p {
+        .portfolio-content p {
             font-size: 13px;
-            color: #64748b;
+            color: #94a3b8;
             line-height: 1.5;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             display: -webkit-box;
             overflow: hidden;
         }
@@ -700,969 +369,738 @@
             display: flex;
             justify-content: space-between;
             font-size: 12px;
-            color: #94a3b8;
-            margin-bottom: 12px;
-        }
-        .portfolio-meta span {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .portfolio-tech {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-        }
-        .tech-tag {
-            background: #f1f5f9;
-            padding: 2px 12px;
-            border-radius: 40px;
-            font-size: 11px;
-            font-weight: 500;
-            color: #334155;
-        }
-
-        /* ========================================
-           PAGINATION
-           ======================================== */
-        .data-card-footer {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            gap: 16px;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
-            padding: 16px 20px;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
-        }
-        .pagination-info {
-            font-size: 14px;
             color: #64748b;
+            margin-bottom: 10px;
         }
-        .pagination {
+        .tech-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 12px; }
+        .tech-tag {
+            padding: 2px 10px;
+            border-radius: 40px;
+            font-size: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            color: #94a3b8;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .portfolio-actions {
             display: flex;
-            align-items: center;
-            gap: 4px;
+            gap: 6px;
+            justify-content: flex-end;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
         }
-        .page-btn {
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
+        .action-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
             border: none;
             background: transparent;
-            color: #475569;
-            font-weight: 600;
-            font-size: 14px;
-            transition: all 0.2s;
+            color: #94a3b8;
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: all 0.3s;
+            font-size: 14px;
         }
-        .page-btn:hover {
-            background: #f1f5f9;
-        }
-        .page-btn.active {
-            background: #f5b014;
-            color: #0f172a;
-            box-shadow: 0 4px 10px rgba(245, 176, 20, 0.3);
-        }
-        .page-btn:disabled {
-            opacity: 0.3;
-            pointer-events: none;
-        }
-        .page-dots {
-            color: #94a3b8;
-            padding: 0 4px;
-        }
+        .action-btn:hover { background: rgba(255, 255, 255, 0.05); color: #e2e8f0; }
+        .action-btn.view:hover { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
+        .action-btn.edit:hover { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+        .action-btn.delete:hover { background: rgba(239, 68, 68, 0.15); color: #f87171; }
 
-        /* ========================================
-           MODAL
-           ======================================== */
+        /* ===== MODAL ===== */
         .modal {
             position: fixed;
             inset: 0;
-            display: flex;
+            display: none;
             align-items: center;
             justify-content: center;
             z-index: 2000;
-            visibility: hidden;
-            opacity: 0;
-            transition: all 0.3s ease;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            animation: fadeIn 0.3s ease;
         }
-        .modal.active {
-            visibility: visible;
-            opacity: 1;
-        }
-        .modal-overlay {
-            position: absolute;
-            inset: 0;
-            background: rgba(15, 23, 42, 0.5);
-            backdrop-filter: blur(6px);
+        .modal.show { display: flex; }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         .modal-content {
-            position: relative;
-            background: #fff;
+            background: #1e293b;
             border-radius: 28px;
-            max-width: 640px;
+            max-width: 580px;
             width: 92%;
             max-height: 90vh;
             overflow-y: auto;
-            padding: 0;
-            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.25);
-            transform: scale(0.95) translateY(10px);
-            transition: transform 0.3s ease;
+            padding: 28px 32px;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            animation: slideUp 0.35s ease;
         }
-        .modal.active .modal-content {
-            transform: scale(1) translateY(0);
-        }
-        .modal-lg {
-            max-width: 720px;
-        }
-        .modal-sm {
-            max-width: 440px;
+        .modal-content::-webkit-scrollbar { width: 4px; }
+        .modal-content::-webkit-scrollbar-thumb { background: #475569; border-radius: 10px; }
+        @keyframes slideUp {
+            from { transform: translateY(20px) scale(0.98); opacity: 0; }
+            to { transform: translateY(0) scale(1); opacity: 1; }
         }
         .modal-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 22px 28px 12px;
-            border-bottom: 1px solid #f1f5f9;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         }
-        .modal-header h3 {
+        .modal-header h4 {
             font-size: 20px;
             font-weight: 700;
-            color: #0f172a;
+            background: linear-gradient(135deg, #f1f5f9, #94a3b8);
+            
+            -webkit-text-fill-color: transparent;
         }
-        .modal-close {
-            background: none;
+        .modal-header .btn-close {
+            padding: 4px 12px;
+            font-size: 18px;
+            line-height: 1;
+            background: transparent;
             border: none;
             color: #94a3b8;
-            padding: 4px;
-            border-radius: 8px;
-            transition: all 0.2s;
+            cursor: pointer;
         }
-        .modal-close:hover {
-            background: #f1f5f9;
-            color: #1e293b;
-        }
-        .modal-body {
-            padding: 24px 28px 10px;
-        }
-        .modal-footer {
-            display: flex;
-            justify-content: flex-end;
-            gap: 12px;
-            padding: 16px 28px 24px;
-            border-top: 1px solid #f1f5f9;
-        }
-        .text-center {
-            text-align: center;
-        }
-        .text-muted {
-            color: #94a3b8;
-            font-size: 14px;
-        }
+        .modal-header .btn-close:hover { color: #f87171; }
 
-        /* ========================================
-           FORM
-           ======================================== */
+        /* ===== FORM ===== */
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 18px;
+            gap: 16px;
         }
-        .form-group {
-            margin-bottom: 18px;
-        }
+        .form-group { margin-bottom: 18px; }
         .form-group label {
             display: block;
             font-weight: 600;
-            font-size: 14px;
-            color: #1e293b;
+            font-size: 13px;
+            color: #94a3b8;
             margin-bottom: 4px;
         }
-        .form-group .required {
-            color: #ef4444;
-        }
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
+        .form-group .form-control {
             width: 100%;
             padding: 10px 16px;
             border-radius: 14px;
-            border: 1.5px solid #e2e8f0;
-            background: #fafcff;
+            border: 1.5px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
             font-size: 14px;
-            transition: all 0.2s;
+            transition: all 0.3s;
             outline: none;
             font-family: inherit;
+            color: #e2e8f0;
+            min-width: unset;
         }
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            border-color: #f5b014;
-            box-shadow: 0 0 0 4px rgba(245, 176, 20, 0.08);
-        }
-        .form-group textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
+        .form-group .form-control:focus { border-color: #3b82f6; box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15); }
+        .form-group .form-control::placeholder { color: #64748b; }
+        .form-group textarea.form-control { resize: vertical; min-height: 80px; }
         .checkbox-label {
             display: flex;
             align-items: center;
             gap: 10px;
             font-weight: 500;
             font-size: 14px;
-            color: #1e293b;
+            color: #e2e8f0;
             cursor: pointer;
-            margin-top: 4px;
         }
-        .checkbox-label input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            accent-color: #f5b014;
-            border-radius: 4px;
-        }
+        .checkbox-label input[type="checkbox"] { width: 18px; height: 18px; accent-color: #3b82f6; }
         .image-upload {
-            border: 2px dashed #e2e8f0;
-            border-radius: 16px;
-            padding: 28px 16px;
+            border: 2px dashed rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            padding: 24px;
             text-align: center;
-            transition: all 0.25s;
-            background: #fafcff;
             cursor: pointer;
+            transition: all 0.3s;
         }
-        .image-upload:hover,
-        .image-upload.dragover {
-            border-color: #f5b014;
-            background: #f0f7ff;
-        }
-        .image-upload svg {
-            color: #94a3b8;
-        }
-        .image-upload p {
-            color: #94a3b8;
-            font-size: 14px;
-            margin-top: 6px;
-        }
-        .upload-link {
-            color: #f5b014;
-            font-weight: 600;
-        }
-        .tech-input-list {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-bottom: 10px;
-        }
-        .tech-input-row {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-        .tech-input-row input {
-            flex: 1;
-            padding: 8px 14px;
-            border-radius: 12px;
-            border: 1.5px solid #e2e8f0;
-            font-size: 13px;
-            outline: none;
-            transition: all 0.2s;
-            background: #fafcff;
-        }
-        .tech-input-row input:focus {
-            border-color: #f5b014;
-            box-shadow: 0 0 0 4px rgba(245, 176, 20, 0.08);
-        }
-        .remove-tech {
-            color: #94a3b8;
-            transition: color 0.2s;
-        }
-        .remove-tech:hover {
-            color: #ef4444;
-        }
+        .image-upload:hover { border-color: #3b82f6; background: rgba(59, 130, 246, 0.05); }
+        .image-upload p { color: #94a3b8; font-size: 13px; }
+        .image-upload .upload-link { color: #60a5fa; font-weight: 600; }
 
-        /* ========================================
-           DELETE ICON
-           ======================================== */
-        .delete-icon {
-            color: #ef4444;
-            margin-bottom: 12px;
-        }
-
-        /* ========================================
-           TOAST
-           ======================================== */
+        /* ===== TOAST ===== */
         .toast {
             position: fixed;
             top: 24px;
             right: 24px;
             padding: 14px 24px;
             border-radius: 16px;
-            color: white;
+            color: #fff;
             font-weight: 600;
             font-size: 14px;
-            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
-            z-index: 99999;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+            z-index: 9999;
             animation: slideInRight 0.4s ease;
             display: flex;
             align-items: center;
             gap: 10px;
+            backdrop-filter: blur(12px);
         }
-        .toast.success {
-            background: linear-gradient(135deg, #10b981, #059669);
-        }
-        .toast.error {
-            background: linear-gradient(135deg, #ef4444, #dc2626);
-        }
-        .toast.warning {
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-        }
-
+        .toast.success { background: linear-gradient(135deg, rgba(16, 185, 129, 0.9), rgba(5, 150, 105, 0.9)); border: 1px solid rgba(16, 185, 129, 0.3); }
+        .toast.error { background: linear-gradient(135deg, rgba(239, 68, 68, 0.9), rgba(220, 38, 38, 0.9)); border: 1px solid rgba(239, 68, 68, 0.3); }
+        .toast.warning { background: linear-gradient(135deg, rgba(245, 158, 11, 0.9), rgba(217, 119, 6, 0.9)); border: 1px solid rgba(245, 158, 11, 0.3); }
+        .toast.hide { animation: slideOutRight 0.4s ease forwards; }
         @keyframes slideInRight {
             from { transform: translateX(100%); opacity: 0; }
             to { transform: translateX(0); opacity: 1; }
-        }
-        .toast.hide {
-            animation: slideOutRight 0.4s ease forwards;
         }
         @keyframes slideOutRight {
             from { transform: translateX(0); opacity: 1; }
             to { transform: translateX(100%); opacity: 0; }
         }
 
-        /* ========================================
-           RESPONSIVE
-           ======================================== */
+        /* ===== RESPONSIVE ===== */
         @media (max-width: 1024px) {
-            .admin-sidebar {
-                transform: translateX(-100%);
-            }
-            .admin-sidebar.collapsed {
-                transform: translateX(0);
-            }
-            .admin-main {
-                margin-left: 0;
-                padding: 16px;
-            }
-            .form-row {
-                grid-template-columns: 1fr;
-            }
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.open { transform: translateX(0); }
+            .admin-main { margin-left: 0; padding: 16px; }
+            .form-row { grid-template-columns: 1fr; }
         }
         @media (max-width: 768px) {
-            .page-header-left h1 {
-                font-size: 22px;
-            }
-            .stats-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-            .filter-bar {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .filter-group {
-                flex-wrap: wrap;
-            }
-            .filter-actions {
-                justify-content: flex-start;
-            }
-            .portfolio-admin-grid {
-                grid-template-columns: 1fr;
-            }
-            .data-card-footer {
-                flex-direction: column;
-                align-items: center;
-            }
-            .gradient-orb {
-                opacity: 0.4;
-            }
-            .bg-particle {
-                opacity: 0.5;
-            }
-            .floating-code-bg {
-                display: none;
-            }
-            .admin-topbar {
-                padding: 10px 16px;
-                flex-wrap: wrap;
-                gap: 10px;
-            }
-            .topbar-search input {
-                width: 120px;
-            }
+            .toolbar { flex-direction: column; align-items: stretch; }
+            .filter-group { flex-direction: column; }
+            .filter-group .form-control { width: 100%; }
+            .form-control.search-input { min-width: unset; }
+            .portfolio-grid { grid-template-columns: 1fr; }
+            .modal-content { padding: 20px; }
+            .admin-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+            .stats-grid { grid-template-columns: 1fr 1fr; }
         }
         @media (max-width: 480px) {
-            .page-header-left h1 {
-                font-size: 18px;
-            }
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-            .stat-card {
-                padding: 14px 16px;
-            }
-            .stat-info h3 {
-                font-size: 18px;
-            }
-            .topbar-user span {
-                display: none;
-            }
-            .portfolio-admin-card {
-                border-radius: 16px;
-            }
-            .portfolio-admin-image {
-                height: 150px;
-            }
-            .action-btn {
-                width: 34px;
-                height: 34px;
-            }
+            .admin-main { padding: 12px; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .stat-card { padding: 14px 16px; }
+            .stat-value { font-size: 18px; }
         }
 
-        /* ========================================
-           SCROLLBAR
-           ======================================== */
-        .admin-main::-webkit-scrollbar {
-            width: 6px;
+        .sidebar-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: #e2e8f0;
+            font-size: 24px;
+            cursor: pointer;
         }
-        .admin-main::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        .admin-main::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 10px;
-        }
-        .admin-main::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
+        @media (max-width: 1024px) {
+            .sidebar-toggle { display: block; }
         }
     </style>
 </head>
-<body class="admin-body">
-    <!-- ===== BACKGROUND ANIMATION ===== -->
-    <div class="bg-animation">
-        <div class="bg-particle"></div>
-        <div class="bg-particle"></div>
-        <div class="bg-particle"></div>
-        <div class="bg-particle"></div>
-        <div class="bg-particle"></div>
-        <div class="bg-particle"></div>
-        <div class="bg-particle"></div>
-        <div class="bg-particle"></div>
-        <div class="bg-particle"></div>
-        <div class="bg-particle"></div>
-        <div class="bg-particle"></div>
-        <div class="gradient-orb"></div>
-        <div class="gradient-orb"></div>
-        <div class="floating-code-bg">&lt;/&gt;</div>
-        <div class="floating-code-bg">{ }</div>
-        <div class="floating-code-bg">function</div>
-        <div class="floating-code-bg">const</div>
-        <div class="floating-code-bg">return</div>
-        <div class="floating-code-bg">if</div>
-        <div class="floating-code-bg">else</div>
-        <div class="floating-code-bg">for</div>
-    </div>
+<body>
+    <!-- ===== ANIMATED BACKGROUND ===== -->
+    <div class="bg-animation" id="bgAnimation"></div>
 
-    <!-- ===== SIDEBAR ===== -->
-    <aside class="admin-sidebar" id="adminSidebar">
-        <div class="sidebar-header">
-            <a href="../index.html" class="logo">Web<span>Dev</span>Pro</a>
-            <span class="admin-badge">Admin</span>
-        </div>
-        <nav class="sidebar-nav">
-            <ul>
-                <li><a href="index.html"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg> Dashboard</a></li>
-                <li><a href="pesanans.html"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> Pesanan</a></li>
-                <li><a href="users.html"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Pengguna</a></li>
-                <li><a href="pakets.html"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg> Paket Layanan</a></li>
-                <li><a href="portofolios.html" class="active"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg> Portofolio</a></li>
-                <li><a href="blogs.html"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Blog</a></li>
-                <li><a href="testimonis.html"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Testimoni</a></li>
-                <li><a href="faqs.html"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> FAQ</a></li>
-                <li><a href="settings.html"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg> Pengaturan</a></li>
-            </ul>
-        </nav>
-        <div class="sidebar-footer">
-            <button class="logout-btn" id="logoutBtn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg> Keluar</button>
-        </div>
-    </aside>
-
-    <!-- ===== MAIN ===== -->
-    <main class="admin-main">
-        <!-- Top Bar -->
-        <header class="admin-topbar">
-            <button class="sidebar-toggle" id="sidebarToggle"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
-            <div class="topbar-right">
-                <div class="topbar-search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" placeholder="Cari portofolio..."></div>
-                <div class="topbar-notifications"><button class="notification-btn" id="notificationBtn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="notification-badge">2</span></button></div>
-                <div class="topbar-user"><img src="../assets/images/admin/avatar.jpg" alt="Admin" onerror="this.src='https://ui-avatars.com/api/?name=Admin&background=f5b014&color=0f172a&size=36'"><span>Admin</span></div>
+    <div class="admin-layout">
+        <!-- ===== SIDEBAR ===== -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <h3>Web<span style="background:transparent; -webkit-text-fill-color:#f5b014;">Dev</span>Pro</h3>
+                <small>Admin Panel</small>
             </div>
-        </header>
+            <div class="sidebar-menu">
+                <div class="menu-header">Menu Utama</div>
+                <a href="index.html" class="menu-item">📊 Dashboard</a>
 
-        <!-- Page Content -->
-        <div class="admin-content">
-            <div class="page-header">
-                <div class="page-header-left"><h1>Kelola Portofolio</h1><p>Kelola dan atur proyek portofolio yang ditampilkan</p></div>
-                <div class="page-header-right"><button class="btn btn-primary" id="addPortofolioBtn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Tambah Portofolio</button></div>
+                <div class="menu-header">Manajemen</div>
+                <a href="users.html" class="menu-item">👥 Users</a>
+                <a href="pesanans.html" class="menu-item">🛒 Pesanan</a>
+                <a href="pakets.html" class="menu-item">📦 Paket</a>
+                <a href="portofolios.html" class="menu-item active">🎨 Portofolio</a>
+                <a href="blogs.html" class="menu-item">📝 Blog</a>
+                <a href="testimonials.html" class="menu-item">⭐ Testimoni</a>
+                <a href="faqs.html" class="menu-item">❓ FAQ</a>
+
+                <div class="menu-header">Pengaturan</div>
+                <a href="settings.html" class="menu-item">⚙️ Pengaturan</a>
+
+                <div style="margin-top:30px; padding:20px 0; border-top:1px solid rgba(255,255,255,0.06);">
+                    <a href="../index.html" class="menu-item">🌐 Lihat Website</a>
+                    <a href="#" onclick="logout()" class="menu-item">🚪 Logout</a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- ===== MAIN ===== -->
+        <div class="admin-main">
+            <button class="sidebar-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+
+            <div class="admin-header">
+                <h3>🎨 Manajemen Portofolio</h3>
+                <div>
+                    <span id="adminName">Hendri Setyawan</span> 👤
+                </div>
             </div>
 
             <!-- Stats -->
-            <div class="stats-grid" id="statsGrid">
-                <div class="stat-card"><div class="stat-icon blue"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div><div class="stat-info"><h3 id="statTotal">24</h3><p>Total Proyek</p></div></div>
-                <div class="stat-card"><div class="stat-icon green"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div><div class="stat-info"><h3 id="statPublished">20</h3><p>Ditampilkan</p></div></div>
-                <div class="stat-card"><div class="stat-icon orange"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><div class="stat-info"><h3 id="statDraft">4</h3><p>Draft</p></div></div>
-                <div class="stat-card"><div class="stat-icon purple"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div><div class="stat-info"><h3 id="statViews">12.5K</h3><p>Total Views</p></div></div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon blue">🎨</div>
+                    <div>
+                        <div class="stat-value" id="totalProjects">0</div>
+                        <div class="stat-label">Total Proyek</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon green">✅</div>
+                    <div>
+                        <div class="stat-value" id="publishedProjects">0</div>
+                        <div class="stat-label">Dipublikasikan</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon yellow">📝</div>
+                    <div>
+                        <div class="stat-value" id="draftProjects">0</div>
+                        <div class="stat-label">Draft</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon purple">👁️</div>
+                    <div>
+                        <div class="stat-value" id="totalViews">0</div>
+                        <div class="stat-label">Total Views</div>
+                    </div>
+                </div>
             </div>
 
-            <!-- Filter -->
-            <div class="filter-bar">
+            <!-- Toolbar -->
+            <div class="toolbar">
                 <div class="filter-group">
-                    <select class="filter-select" id="filterKategori"><option value="all">Semua Kategori</option><option value="website">Website</option><option value="ecommerce">E-Commerce</option><option value="mobile">Mobile App</option><option value="corporate">Corporate</option></select>
-                    <select class="filter-select" id="filterStatus"><option value="all">Semua Status</option><option value="published">Ditampilkan</option><option value="draft">Draft</option></select>
+                    <select id="filterCategory" class="form-control" onchange="loadPortofolios()">
+                        <option value="">Semua Kategori</option>
+                        <option value="website">Website</option>
+                        <option value="ecommerce">E-Commerce</option>
+                        <option value="mobile">Mobile App</option>
+                        <option value="corporate">Corporate</option>
+                    </select>
+                    <select id="filterStatus" class="form-control" onchange="loadPortofolios()">
+                        <option value="">Semua Status</option>
+                        <option value="published">Dipublikasikan</option>
+                        <option value="draft">Draft</option>
+                    </select>
+                    <input type="text" id="searchProject" class="form-control search-input" placeholder="🔍 Cari proyek..." onkeyup="searchProjects()" />
                 </div>
-                <div class="filter-actions">
-                    <button class="btn btn-outline btn-sm" id="resetFilter"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg> Reset</button>
-                    <button class="btn btn-outline btn-sm"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Export</button>
-                </div>
+                <button class="btn btn-primary" onclick="openModal()">➕ Tambah Proyek</button>
             </div>
 
             <!-- Portfolio Grid -->
-            <div class="portfolio-admin-grid" id="portfolioGrid">
-                <!-- Card 1 -->
-                <div class="portfolio-admin-card" data-category="website" data-status="published">
-                    <div class="portfolio-admin-image">
-                        <img src="../assets/images/portfolio/project1.jpg" alt="Website PT Maju Jaya" onerror="this.src='https://picsum.photos/seed/1/400/250'">
-                        <div class="portfolio-admin-overlay">
-                            <div class="portfolio-admin-actions">
-                                <button class="action-btn view" title="Lihat"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
-                                <button class="action-btn edit" title="Edit"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
-                                <button class="action-btn delete" title="Hapus" onclick="openDeleteModal(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
-                            </div>
-                        </div>
-                        <span class="portfolio-status published">Ditampilkan</span>
-                    </div>
-                    <div class="portfolio-admin-content">
-                        <span class="portfolio-category-badge">Website</span>
-                        <h3>Website PT Maju Jaya</h3>
-                        <p>Company profile modern dengan CMS untuk perusahaan manufaktur.</p>
-                        <div class="portfolio-meta"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> 2.4K views</span><span>15 Jun 2024</span></div>
-                        <div class="portfolio-tech"><span class="tech-tag">React</span><span class="tech-tag">Node.js</span><span class="tech-tag">MongoDB</span></div>
-                    </div>
-                </div>
-                <!-- Card 2 -->
-                <div class="portfolio-admin-card" data-category="ecommerce" data-status="published">
-                    <div class="portfolio-admin-image">
-                        <img src="../assets/images/portfolio/project2.jpg" alt="Toko Online Fashion Hub" onerror="this.src='https://picsum.photos/seed/2/400/250'">
-                        <div class="portfolio-admin-overlay">
-                            <div class="portfolio-admin-actions">
-                                <button class="action-btn view" title="Lihat"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
-                                <button class="action-btn edit" title="Edit"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
-                                <button class="action-btn delete" title="Hapus" onclick="openDeleteModal(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
-                            </div>
-                        </div>
-                        <span class="portfolio-status published">Ditampilkan</span>
-                    </div>
-                    <div class="portfolio-admin-content">
-                        <span class="portfolio-category-badge ecommerce">E-Commerce</span>
-                        <h3>Toko Online Fashion Hub</h3>
-                        <p>Platform e-commerce lengkap dengan sistem pembayaran terintegrasi.</p>
-                        <div class="portfolio-meta"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> 3.1K views</span><span>10 Jun 2024</span></div>
-                        <div class="portfolio-tech"><span class="tech-tag">Next.js</span><span class="tech-tag">Stripe</span><span class="tech-tag">PostgreSQL</span></div>
-                    </div>
-                </div>
-                <!-- Card 3 -->
-                <div class="portfolio-admin-card" data-category="mobile" data-status="published">
-                    <div class="portfolio-admin-image">
-                        <img src="../assets/images/portfolio/project3.jpg" alt="Aplikasi Fitness Tracker" onerror="this.src='https://picsum.photos/seed/3/400/250'">
-                        <div class="portfolio-admin-overlay">
-                            <div class="portfolio-admin-actions">
-                                <button class="action-btn view" title="Lihat"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
-                                <button class="action-btn edit" title="Edit"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
-                                <button class="action-btn delete" title="Hapus" onclick="openDeleteModal(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
-                            </div>
-                        </div>
-                        <span class="portfolio-status published">Ditampilkan</span>
-                    </div>
-                    <div class="portfolio-admin-content">
-                        <span class="portfolio-category-badge mobile">Mobile App</span>
-                        <h3>Aplikasi Fitness Tracker</h3>
-                        <p>App tracking kesehatan dengan integrasi smartwatch.</p>
-                        <div class="portfolio-meta"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> 1.8K views</span><span>5 Jun 2024</span></div>
-                        <div class="portfolio-tech"><span class="tech-tag">Flutter</span><span class="tech-tag">Firebase</span><span class="tech-tag">REST API</span></div>
-                    </div>
-                </div>
-                <!-- Card 4 -->
-                <div class="portfolio-admin-card" data-category="corporate" data-status="draft">
-                    <div class="portfolio-admin-image">
-                        <img src="../assets/images/portfolio/project4.jpg" alt="Sistem ERP Digital Sejahtera" onerror="this.src='https://picsum.photos/seed/4/400/250'">
-                        <div class="portfolio-admin-overlay">
-                            <div class="portfolio-admin-actions">
-                                <button class="action-btn view" title="Lihat"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
-                                <button class="action-btn edit" title="Edit"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
-                                <button class="action-btn delete" title="Hapus" onclick="openDeleteModal(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
-                            </div>
-                        </div>
-                        <span class="portfolio-status draft">Draft</span>
-                    </div>
-                    <div class="portfolio-admin-content">
-                        <span class="portfolio-category-badge corporate">Corporate</span>
-                        <h3>Sistem ERP Digital Sejahtera</h3>
-                        <p>Sistem manajemen perusahaan terintegrasi.</p>
-                        <div class="portfolio-meta"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> 0 views</span><span>1 Jun 2024</span></div>
-                        <div class="portfolio-tech"><span class="tech-tag">Vue.js</span><span class="tech-tag">Laravel</span><span class="tech-tag">MySQL</span></div>
-                    </div>
-                </div>
-                <!-- Card 5 -->
-                <div class="portfolio-admin-card" data-category="website" data-status="published">
-                    <div class="portfolio-admin-image">
-                        <img src="../assets/images/portfolio/project5.jpg" alt="Website Kampus Merdeka" onerror="this.src='https://picsum.photos/seed/5/400/250'">
-                        <div class="portfolio-admin-overlay">
-                            <div class="portfolio-admin-actions">
-                                <button class="action-btn view" title="Lihat"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
-                                <button class="action-btn edit" title="Edit"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
-                                <button class="action-btn delete" title="Hapus" onclick="openDeleteModal(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
-                            </div>
-                        </div>
-                        <span class="portfolio-status published">Ditampilkan</span>
-                    </div>
-                    <div class="portfolio-admin-content">
-                        <span class="portfolio-category-badge">Website</span>
-                        <h3>Website Kampus Merdeka</h3>
-                        <p>Portal edukasi dengan sistem pembelajaran online.</p>
-                        <div class="portfolio-meta"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> 4.2K views</span><span>28 Mei 2024</span></div>
-                        <div class="portfolio-tech"><span class="tech-tag">React</span><span class="tech-tag">Django</span><span class="tech-tag">AWS</span></div>
-                    </div>
-                </div>
-                <!-- Card 6 -->
-                <div class="portfolio-admin-card" data-category="ecommerce" data-status="draft">
-                    <div class="portfolio-admin-image">
-                        <img src="../assets/images/portfolio/project6.jpg" alt="Marketplace UMKM Lokal" onerror="this.src='https://picsum.photos/seed/6/400/250'">
-                        <div class="portfolio-admin-overlay">
-                            <div class="portfolio-admin-actions">
-                                <button class="action-btn view" title="Lihat"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
-                                <button class="action-btn edit" title="Edit"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
-                                <button class="action-btn delete" title="Hapus" onclick="openDeleteModal(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
-                            </div>
-                        </div>
-                        <span class="portfolio-status draft">Draft</span>
-                    </div>
-                    <div class="portfolio-admin-content">
-                        <span class="portfolio-category-badge ecommerce">E-Commerce</span>
-                        <h3>Marketplace UMKM Lokal</h3>
-                        <p>Platform marketplace untuk produk lokal.</p>
-                        <div class="portfolio-meta"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> 0 views</span><span>20 Mei 2024</span></div>
-                        <div class="portfolio-tech"><span class="tech-tag">Next.js</span><span class="tech-tag">Midtrans</span><span class="tech-tag">Firebase</span></div>
-                    </div>
-                </div>
+            <div class="portfolio-grid" id="portfolioGrid">
+                <div style="grid-column:1/-1; text-align:center; padding:40px; color:#64748b;">⏳ Memuat data...</div>
             </div>
-
-            <!-- Pagination -->
-            <div class="data-card-footer">
-                <div class="pagination-info" id="paginationInfo">Menampilkan 1-6 dari 24 proyek</div>
-                <div class="pagination" id="paginationContainer">
-                    <button class="page-btn" id="prevPage" disabled><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></button>
-                    <button class="page-btn active" data-page="1">1</button>
-                    <button class="page-btn" data-page="2">2</button>
-                    <button class="page-btn" data-page="3">3</button>
-                    <span class="page-dots">...</span>
-                    <button class="page-btn" data-page="4">4</button>
-                    <button class="page-btn" id="nextPage"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- ===== MODAL TAMBAH/EDIT ===== -->
-    <div class="modal" id="portofolioModal">
-        <div class="modal-overlay"></div>
-        <div class="modal-content modal-lg">
-            <div class="modal-header"><h3 id="modalTitle">Tambah Portofolio Baru</h3><button class="modal-close" id="modalClose"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
-            <div class="modal-body">
-                <form id="portofolioForm">
-                    <div class="form-row">
-                        <div class="form-group"><label for="projectName">Nama Proyek <span class="required">*</span></label><input type="text" id="projectName" placeholder="Contoh: Website Company Profile" required></div>
-                        <div class="form-group"><label for="projectCategory">Kategori <span class="required">*</span></label><select id="projectCategory" required><option value="" disabled selected>Pilih kategori</option><option value="website">Website</option><option value="ecommerce">E-Commerce</option><option value="mobile">Mobile App</option><option value="corporate">Corporate</option></select></div>
-                    </div>
-                    <div class="form-group"><label for="projectClient">Nama Klien</label><input type="text" id="projectClient" placeholder="Contoh: PT Maju Jaya"></div>
-                    <div class="form-group"><label for="projectDesc">Deskripsi Proyek</label><textarea id="projectDesc" rows="3" placeholder="Deskripsikan proyek ini..."></textarea></div>
-                    <div class="form-group">
-                        <label>Gambar Proyek</label>
-                        <div class="image-upload" id="imageUpload"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><p>Drag & drop gambar di sini atau <span class="upload-link">klik untuk upload</span></p><input type="file" id="projectImage" accept="image/*" hidden></div>
-                    </div>
-                    <div class="form-group">
-                        <label>Tech Stack</label>
-                        <div class="tech-input-list" id="techList"><div class="tech-input-row"><input type="text" class="tech-input" placeholder="Contoh: React"><button type="button" class="btn btn-icon remove-tech"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div></div>
-                        <button type="button" class="btn btn-outline btn-sm" id="addTechBtn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Tambah Tech Stack</button>
-                    </div>
-                    <div class="form-group"><label for="projectUrl">URL Proyek (Opsional)</label><input type="url" id="projectUrl" placeholder="https://..."></div>
-                    <div class="form-row">
-                        <div class="form-group"><label class="checkbox-label"><input type="checkbox" name="isPublished" checked> <span>Publikasikan sekarang</span></label></div>
-                        <div class="form-group"><label class="checkbox-label"><input type="checkbox" name="isFeatured"> <span>Tampilkan di halaman utama</span></label></div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer"><button type="button" class="btn btn-outline" id="modalCancel">Batal</button><button type="submit" class="btn btn-primary" form="portofolioForm">Simpan Portofolio</button></div>
         </div>
     </div>
 
-    <!-- ===== MODAL HAPUS ===== -->
-    <div class="modal" id="deleteModal">
-        <div class="modal-overlay"></div>
-        <div class="modal-content modal-sm">
-            <div class="modal-header"><h3>Konfirmasi Hapus</h3><button class="modal-close" id="deleteModalClose"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
-            <div class="modal-body text-center">
-                <div class="delete-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></div>
-                <p>Apakah Anda yakin ingin menghapus proyek <strong id="deleteProjectName">Website PT Maju Jaya</strong>?</p>
-                <p class="text-muted">Tindakan ini tidak dapat dibatalkan.</p>
+    <!-- ===== MODAL FORM ===== -->
+    <div id="projectModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 id="modalTitle">🎨 Tambah Proyek</h4>
+                <button class="btn-close" onclick="closeModal()">✕</button>
             </div>
-            <div class="modal-footer"><button type="button" class="btn btn-outline" id="deleteCancel">Batal</button><button type="button" class="btn btn-danger" id="deleteConfirm">Hapus</button></div>
+            <form id="projectForm" onsubmit="saveProject(event)">
+                <input type="hidden" id="projectId" />
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Nama Proyek <span style="color:#ef4444;">*</span></label>
+                        <input type="text" id="projectName" class="form-control" required placeholder="Contoh: Website Company Profile" />
+                    </div>
+                    <div class="form-group">
+                        <label>Kategori <span style="color:#ef4444;">*</span></label>
+                        <select id="projectCategory" class="form-control" required>
+                            <option value="">Pilih kategori</option>
+                            <option value="website">Website</option>
+                            <option value="ecommerce">E-Commerce</option>
+                            <option value="mobile">Mobile App</option>
+                            <option value="corporate">Corporate</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Nama Klien</label>
+                    <input type="text" id="projectClient" class="form-control" placeholder="Contoh: PT Maju Jaya" />
+                </div>
+
+                <div class="form-group">
+                    <label>Deskripsi</label>
+                    <textarea id="projectDesc" class="form-control" rows="3" placeholder="Deskripsikan proyek ini..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>URL Proyek</label>
+                    <input type="url" id="projectUrl" class="form-control" placeholder="https://..." />
+                </div>
+
+                <div class="form-group">
+                    <label>Gambar Proyek</label>
+                    <div class="image-upload" onclick="document.getElementById('projectImage').click()">
+                        <p>📸 Drag & drop atau <span class="upload-link">klik untuk upload</span></p>
+                        <input type="file" id="projectImage" accept="image/*" hidden />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Tech Stack</label>
+                    <div id="techList" style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+                        <span class="tech-tag" style="background:rgba(59,130,246,0.15); color:#60a5fa; padding:4px 12px;">React</span>
+                        <span class="tech-tag" style="background:rgba(59,130,246,0.15); color:#60a5fa; padding:4px 12px;">Node.js</span>
+                    </div>
+                    <div style="display:flex; gap:8px;">
+                        <input type="text" id="techInput" class="form-control" placeholder="Tambahkan teknologi..." style="min-width:unset;" />
+                        <button type="button" class="btn btn-outline btn-sm" onclick="addTech()">➕</button>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="isPublished" checked />
+                            <span>✅ Publikasikan</span>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="isFeatured" />
+                            <span>⭐ Tampilkan di Utama</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:24px; padding-top:16px; border-top:1px solid rgba(255,255,255,0.06);">
+                    <button type="button" class="btn btn-outline" onclick="closeModal()">Batal</button>
+                    <button type="submit" class="btn btn-primary">💾 Simpan</button>
+                </div>
+            </form>
         </div>
     </div>
+
+    <!-- ===== DELETE MODAL ===== -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content" style="max-width:400px; text-align:center;">
+            <div class="modal-header" style="justify-content:center; border-bottom:none;">
+                <h4 style="color:#f87171;">⚠️ Konfirmasi Hapus</h4>
+            </div>
+            <div style="font-size:48px; margin-bottom:12px;">🗑️</div>
+            <p style="font-size:16px; font-weight:500; color:#e2e8f0;">Apakah Anda yakin ingin menghapus proyek ini?</p>
+            <p style="color:#94a3b8; font-size:14px; margin-top:4px;">Tindakan ini tidak dapat dibatalkan.</p>
+            <div style="display:flex; justify-content:center; gap:12px; margin-top:24px; padding-top:16px; border-top:1px solid rgba(255,255,255,0.06);">
+                <button class="btn btn-outline" onclick="closeDeleteModal()">Batal</button>
+                <button class="btn btn-danger" onclick="confirmDelete()">🗑️ Hapus</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== FIREBASE SDK ===== -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
     <script>
-        // ============================================
-        // SIDEBAR TOGGLE
-        // ============================================
-        const sidebarToggle = document.getElementById('sidebarToggle');
-        const adminSidebar = document.getElementById('adminSidebar');
-        sidebarToggle.addEventListener('click', () => {
-            adminSidebar.classList.toggle('collapsed');
-            document.body.classList.toggle('sidebar-collapsed');
-        });
+        // ===== FIREBASE CONFIG =====
+        const firebaseConfig = {
+            apiKey: "AIzaSyDummyKeyForDemo",
+            authDomain: "webdevpro-demo.firebaseapp.com",
+            projectId: "webdevpro-demo",
+            storageBucket: "webdevpro-demo.appspot.com",
+            messagingSenderId: "123456789",
+            appId: "1:123456789:web:abcdef123456"
+        };
 
-        // ============================================
-        // STATS ANIMATION
-        // ============================================
-        function animateStats() {
-            const stats = document.querySelectorAll('.stat-info h3');
-            stats.forEach(stat => {
-                const text = stat.textContent;
-                const num = parseInt(text.replace(/[^0-9]/g, ''));
-                if (isNaN(num)) return;
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
 
-                let current = 0;
-                const target = num;
-                const duration = 1500;
-                const steps = 30;
-                const increment = Math.ceil(target / steps);
-                const stepTime = duration / steps;
+        const auth = firebase.auth();
+        const db = firebase.firestore();
 
-                const timer = setInterval(() => {
-                    current += increment;
-                    if (current >= target) {
-                        current = target;
-                        clearInterval(timer);
+        let deleteId = null;
+        let allProjects = [];
+
+        // ===== CHECK ADMIN =====
+        function checkAdmin() {
+            return new Promise((resolve, reject) => {
+                auth.onAuthStateChanged(async (user) => {
+                    if (!user) {
+                        window.location.href = '../login.html';
+                        return reject();
                     }
-                    stat.textContent = current;
-                }, stepTime);
+
+                    try {
+                        const doc = await db.collection('users').doc(user.uid).get();
+                        if (doc.exists && doc.data().role === 'admin') {
+                            document.getElementById('adminName').textContent = doc.data().nama || 'Admin';
+                            resolve();
+                        } else {
+                            window.location.href = '../login.html';
+                            reject();
+                        }
+                    } catch (error) {
+                        console.error('Error checking admin:', error);
+                        window.location.href = '../login.html';
+                        reject();
+                    }
+                });
             });
         }
 
-        const statsObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    animateStats();
-                    statsObserver.unobserve(entry.target);
+        // ===== LOAD PORTOFOLIOS =====
+        async function loadPortofolios() {
+            try {
+                const categoryFilter = document.getElementById('filterCategory').value;
+                const statusFilter = document.getElementById('filterStatus').value;
+
+                let query = db.collection('portofolios').orderBy('createdAt', 'desc');
+
+                const snapshot = await query.get();
+                allProjects = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+                let filteredProjects = allProjects;
+                if (categoryFilter) {
+                    filteredProjects = allProjects.filter(p => p.kategori === categoryFilter);
                 }
-            });
-        }, { threshold: 0.3 });
+                if (statusFilter) {
+                    filteredProjects = allProjects.filter(p => p.status === statusFilter);
+                }
 
-        const statsGrid = document.getElementById('statsGrid');
-        if (statsGrid) {
-            statsObserver.observe(statsGrid);
+                updateStats(allProjects);
+                renderGrid(filteredProjects);
+            } catch (error) {
+                console.error('Error loading portofolios:', error);
+                document.getElementById('portfolioGrid').innerHTML =
+                    '<div style="grid-column:1/-1; text-align:center; padding:40px; color:#f87171;">❌ Gagal memuat data</div>';
+            }
         }
 
-        // ============================================
-        // MODAL TAMBAH
-        // ============================================
-        const portofolioModal = document.getElementById('portofolioModal');
-        const addBtn = document.getElementById('addPortofolioBtn');
-        const modalClose = document.getElementById('modalClose');
-        const modalCancel = document.getElementById('modalCancel');
+        // ===== UPDATE STATS =====
+        function updateStats(projects) {
+            document.getElementById('totalProjects').textContent = projects.length;
+            document.getElementById('publishedProjects').textContent = projects.filter(p => p.status === 'published').length;
+            document.getElementById('draftProjects').textContent = projects.filter(p => p.status === 'draft').length;
+            const views = projects.reduce((sum, p) => sum + (p.views || 0), 0);
+            document.getElementById('totalViews').textContent = views.toLocaleString();
+        }
 
-        function openModal() {
-            portofolioModal.classList.add('active');
+        // ===== RENDER GRID =====
+        function renderGrid(projects) {
+            const grid = document.getElementById('portfolioGrid');
+            grid.innerHTML = '';
+
+            if (projects.length === 0) {
+                grid.innerHTML =
+                    '<div style="grid-column:1/-1; text-align:center; padding:40px; color:#64748b;">📭 Tidak ada proyek</div>';
+                return;
+            }
+
+            projects.forEach(p => {
+                const statusClass = p.status === 'published' ? 'published' : 'draft';
+                const statusText = p.status === 'published' ? 'Dipublikasikan' : 'Draft';
+                const imageUrl = p.imageUrl || 'https://picsum.photos/seed/' + p.id + '/400/250';
+                const categoryMap = {
+                    'website': 'Website',
+                    'ecommerce': 'E-Commerce',
+                    'mobile': 'Mobile App',
+                    'corporate': 'Corporate'
+                };
+                const category = categoryMap[p.kategori] || p.kategori || 'Website';
+                const techs = p.techs || ['React', 'Node.js'];
+
+                grid.innerHTML += `
+                    <div class="portfolio-card">
+                        <div class="portfolio-image">
+                            <img src="${imageUrl}" alt="${p.nama || 'Project'}" onerror="this.src='https://picsum.photos/seed/${p.id || '1'}/400/250'" />
+                            <span class="status-badge ${statusClass}">${statusText}</span>
+                        </div>
+                        <div class="portfolio-content">
+                            <span class="category">${category}</span>
+                            <h4>${p.nama || 'Unnamed Project'} ${p.isFeatured ? '⭐' : ''}</h4>
+                            <p>${p.deskripsi || '-'}</p>
+                            <div class="portfolio-meta">
+                                <span>👤 ${p.klien || 'N/A'}</span>
+                                <span>👁️ ${(p.views || 0).toLocaleString()} views</span>
+                            </div>
+                            <div class="tech-tags">
+                                ${techs.map(t => `<span class="tech-tag">${t}</span>`).join('')}
+                            </div>
+                            <div class="portfolio-actions">
+                                ${p.url ? `<button class="action-btn view" onclick="window.open('${p.url}', '_blank')" title="Lihat">🔗</button>` : ''}
+                                <button class="action-btn edit" onclick="editProject('${p.id}')" title="Edit">✏️</button>
+                                <button class="action-btn delete" onclick="deleteProject('${p.id}')" title="Hapus">🗑️</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // ===== SEARCH PROJECTS =====
+        function searchProjects() {
+            const keyword = document.getElementById('searchProject').value.toLowerCase();
+            const filtered = allProjects.filter(p =>
+                (p.nama && p.nama.toLowerCase().includes(keyword)) ||
+                (p.klien && p.klien.toLowerCase().includes(keyword)) ||
+                (p.deskripsi && p.deskripsi.toLowerCase().includes(keyword))
+            );
+            renderGrid(filtered);
+        }
+
+        // ===== TECH STACK =====
+        let techs = ['React', 'Node.js'];
+
+        function addTech() {
+            const input = document.getElementById('techInput');
+            const value = input.value.trim();
+            if (value && !techs.includes(value)) {
+                techs.push(value);
+                renderTechs();
+                input.value = '';
+            }
+        }
+
+        function removeTech(index) {
+            techs.splice(index, 1);
+            renderTechs();
+        }
+
+        function renderTechs() {
+            const container = document.getElementById('techList');
+            container.innerHTML = techs.map((t, i) => `
+                <span class="tech-tag" style="background:rgba(59,130,246,0.15); color:#60a5fa; padding:4px 12px; display:inline-flex; align-items:center; gap:4px;">
+                    ${t}
+                    <button type="button" onclick="removeTech(${i})" style="background:transparent; border:none; color:#94a3b8; cursor:pointer; font-size:12px;">✕</button>
+                </span>
+            `).join('');
+        }
+
+        // ===== OPEN MODAL =====
+        function openModal(id = null) {
+            document.getElementById('projectForm').reset();
+            document.getElementById('projectId').value = '';
+            techs = ['React', 'Node.js'];
+            renderTechs();
+
+            if (id) {
+                document.getElementById('modalTitle').textContent = '✏️ Edit Proyek';
+                loadProjectData(id);
+            } else {
+                document.getElementById('modalTitle').textContent = '🎨 Tambah Proyek';
+            }
+
+            document.getElementById('projectModal').classList.add('show');
             document.body.style.overflow = 'hidden';
         }
 
         function closeModal() {
-            portofolioModal.classList.remove('active');
+            document.getElementById('projectModal').classList.remove('show');
             document.body.style.overflow = '';
-            document.getElementById('portofolioForm').reset();
         }
 
-        addBtn.addEventListener('click', openModal);
-        modalClose.addEventListener('click', closeModal);
-        modalCancel.addEventListener('click', closeModal);
-        portofolioModal.querySelector('.modal-overlay').addEventListener('click', closeModal);
+        // ===== LOAD PROJECT DATA =====
+        async function loadProjectData(id) {
+            try {
+                const doc = await db.collection('portofolios').doc(id).get();
+                if (!doc.exists) return;
 
-        // ============================================
-        // TECH STACK
-        // ============================================
-        const addTechBtn = document.getElementById('addTechBtn');
-        const techList = document.getElementById('techList');
+                const data = doc.data();
+                document.getElementById('projectId').value = id;
+                document.getElementById('projectName').value = data.nama || '';
+                document.getElementById('projectCategory').value = data.kategori || '';
+                document.getElementById('projectClient').value = data.klien || '';
+                document.getElementById('projectDesc').value = data.deskripsi || '';
+                document.getElementById('projectUrl').value = data.url || '';
+                document.getElementById('isPublished').checked = data.status === 'published';
+                document.getElementById('isFeatured').checked = data.isFeatured || false;
 
-        addTechBtn.addEventListener('click', () => {
-            const row = document.createElement('div');
-            row.className = 'tech-input-row';
-            row.innerHTML = `
-                <input type="text" class="tech-input" placeholder="Nama teknologi">
-                <button type="button" class="btn btn-icon remove-tech"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-            `;
-            techList.appendChild(row);
-        });
-
-        techList.addEventListener('click', (e) => {
-            if (e.target.closest('.remove-tech') && techList.querySelectorAll('.tech-input-row').length > 1) {
-                e.target.closest('.tech-input-row').remove();
+                techs = data.techs || ['React', 'Node.js'];
+                renderTechs();
+            } catch (error) {
+                console.error('Error loading project:', error);
+                showToast('Gagal memuat data proyek', 'error');
             }
-        });
-
-        // ============================================
-        // IMAGE UPLOAD
-        // ============================================
-        const imageUpload = document.getElementById('imageUpload');
-        const projectImage = document.getElementById('projectImage');
-
-        imageUpload.addEventListener('click', () => projectImage.click());
-        imageUpload.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            imageUpload.classList.add('dragover');
-        });
-        imageUpload.addEventListener('dragleave', () => {
-            imageUpload.classList.remove('dragover');
-        });
-        imageUpload.addEventListener('drop', (e) => {
-            e.preventDefault();
-            imageUpload.classList.remove('dragover');
-        });
-        projectImage.addEventListener('change', () => {
-            if (projectImage.files.length) {
-                imageUpload.querySelector('p').textContent = `📎 ${projectImage.files[0].name}`;
-            }
-        });
-
-        // ============================================
-        // FILTER
-        // ============================================
-        const filterKategori = document.getElementById('filterKategori');
-        const filterStatus = document.getElementById('filterStatus');
-        const cards = document.querySelectorAll('.portfolio-admin-card');
-
-        function applyFilter() {
-            const kat = filterKategori.value;
-            const stat = filterStatus.value;
-
-            cards.forEach(c => {
-                const match = (kat === 'all' || c.dataset.category === kat) &&
-                              (stat === 'all' || c.dataset.status === stat);
-                c.style.display = match ? 'block' : 'none';
-            });
         }
 
-        filterKategori.addEventListener('change', applyFilter);
-        filterStatus.addEventListener('change', applyFilter);
+        // ===== SAVE PROJECT =====
+        async function saveProject(event) {
+            event.preventDefault();
 
-        document.getElementById('resetFilter').addEventListener('click', () => {
-            filterKategori.value = 'all';
-            filterStatus.value = 'all';
-            applyFilter();
-        });
+            const id = document.getElementById('projectId').value;
+            const nama = document.getElementById('projectName').value.trim();
+            const kategori = document.getElementById('projectCategory').value;
+            const klien = document.getElementById('projectClient').value.trim();
+            const deskripsi = document.getElementById('projectDesc').value.trim();
+            const url = document.getElementById('projectUrl').value.trim();
+            const isPublished = document.getElementById('isPublished').checked;
+            const isFeatured = document.getElementById('isFeatured').checked;
 
-        // ============================================
-        // PAGINATION
-        // ============================================
-        let currentPage = 1;
-        const totalPages = 4;
-
-        document.getElementById('prevPage').addEventListener('click', function() {
-            if (currentPage > 1) {
-                currentPage--;
-                updatePagination();
+            if (!nama || !kategori) {
+                showToast('Nama dan kategori wajib diisi!', 'warning');
+                return;
             }
-        });
 
-        document.getElementById('nextPage').addEventListener('click', function() {
-            if (currentPage < totalPages) {
-                currentPage++;
-                updatePagination();
+            try {
+                const data = {
+                    nama,
+                    kategori,
+                    klien,
+                    deskripsi,
+                    url,
+                    status: isPublished ? 'published' : 'draft',
+                    isFeatured,
+                    techs: techs,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                };
+
+                if (id) {
+                    await db.collection('portofolios').doc(id).update(data);
+                    showToast('✅ Proyek berhasil diperbarui!', 'success');
+                } else {
+                    data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+                    data.views = 0;
+                    await db.collection('portofolios').add(data);
+                    showToast('✅ Proyek berhasil ditambahkan!', 'success');
+                }
+
+                closeModal();
+                loadPortofolios();
+            } catch (error) {
+                console.error('Error saving project:', error);
+                showToast('❌ Gagal menyimpan proyek: ' + error.message, 'error');
             }
-        });
-
-        document.querySelectorAll('.page-btn[data-page]').forEach(btn => {
-            btn.addEventListener('click', function() {
-                currentPage = parseInt(this.dataset.page);
-                updatePagination();
-            });
-        });
-
-        function updatePagination() {
-            document.querySelectorAll('.page-btn[data-page]').forEach(btn => {
-                btn.classList.toggle('active', parseInt(btn.dataset.page) === currentPage);
-            });
-
-            document.getElementById('prevPage').disabled = currentPage === 1;
-            document.getElementById('nextPage').disabled = currentPage === totalPages;
-
-            const start = (currentPage - 1) * 6 + 1;
-            const end = Math.min(currentPage * 6, 24);
-            document.getElementById('paginationInfo').textContent = `Menampilkan ${start}-${end} dari 24 proyek`;
-
-            // Smooth scroll to top of grid
-            document.getElementById('portfolioGrid').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
-        // ============================================
-        // DELETE MODAL
-        // ============================================
-        const deleteModal = document.getElementById('deleteModal');
-        const deleteModalClose = document.getElementById('deleteModalClose');
-        const deleteCancel = document.getElementById('deleteCancel');
-        const deleteConfirm = document.getElementById('deleteConfirm');
-        let currentDeleteCard = null;
+        // ===== EDIT PROJECT =====
+        function editProject(id) {
+            openModal(id);
+        }
 
-        function openDeleteModal(btn) {
-            const card = btn.closest('.portfolio-admin-card');
-            currentDeleteCard = card;
-            const projectName = card.querySelector('h3').textContent;
-            document.getElementById('deleteProjectName').textContent = projectName;
-            deleteModal.classList.add('active');
+        // ===== DELETE PROJECT =====
+        function deleteProject(id) {
+            deleteId = id;
+            document.getElementById('deleteModal').classList.add('show');
             document.body.style.overflow = 'hidden';
         }
 
         function closeDeleteModal() {
-            deleteModal.classList.remove('active');
+            deleteId = null;
+            document.getElementById('deleteModal').classList.remove('show');
             document.body.style.overflow = '';
-            currentDeleteCard = null;
         }
 
-        deleteModalClose.addEventListener('click', closeDeleteModal);
-        deleteCancel.addEventListener('click', closeDeleteModal);
-        deleteModal.querySelector('.modal-overlay').addEventListener('click', closeDeleteModal);
+        async function confirmDelete() {
+            if (!deleteId) return;
 
-        deleteConfirm.addEventListener('click', () => {
-            if (currentDeleteCard) {
-                currentDeleteCard.style.display = 'none';
-                showToast('🗑️ Portofolio berhasil dihapus!', 'success');
+            try {
+                await db.collection('portofolios').doc(deleteId).delete();
+                showToast('✅ Proyek berhasil dihapus!', 'success');
+                closeDeleteModal();
+                loadPortofolios();
+            } catch (error) {
+                showToast('❌ Gagal menghapus: ' + error.message, 'error');
             }
-            closeDeleteModal();
-        });
+        }
 
-        // ============================================
-        // FORM SUBMIT
-        // ============================================
-        document.getElementById('portofolioForm').addEventListener('submit', (e) => {
-            e.preventDefault();
-            closeModal();
-            showToast('✅ Portofolio berhasil disimpan!', 'success');
-        });
-
-        // ============================================
-        // TOAST
-        // ============================================
+        // ===== SHOW TOAST =====
         function showToast(message, type = 'success') {
             const existing = document.querySelector('.toast');
             if (existing) existing.remove();
@@ -1679,7 +1117,109 @@
             }, 3500);
         }
 
-        console.log('🚀 Portofolio Management page loaded successfully!');
+        // ===== CLOSE MODAL ON OVERLAY =====
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('show');
+                    document.body.style.overflow = '';
+                }
+            });
+        });
+
+        // ===== KEYBOARD SHORTCUT =====
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal.show').forEach(modal => {
+                    modal.classList.remove('show');
+                });
+                document.body.style.overflow = '';
+            }
+            if (e.key === 'Enter' && document.activeElement === document.getElementById('techInput')) {
+                e.preventDefault();
+                addTech();
+            }
+        });
+
+        // ===== IMAGE UPLOAD =====
+        document.getElementById('projectImage').addEventListener('change', function() {
+            if (this.files && this.files[0]) {
+                const uploadDiv = this.parentElement;
+                uploadDiv.querySelector('p').textContent = '📎 ' + this.files[0].name;
+            }
+        });
+
+        // ===== ANIMATED BACKGROUND =====
+        function createBgAnimation() {
+            const container = document.getElementById('bgAnimation');
+            const codeSnippets = [
+                'const project = new Project({ ... });',
+                'function renderPortfolio() { return true }',
+                'import { db } from "firebase"',
+                'useEffect(() => { loadProjects() }, [])',
+                'const router = useRouter()',
+                'export default function PortfolioPanel() {',
+                'const [projects, setProjects] = useState([])',
+                'async function fetchProjects() {',
+                'console.log("Loading projects...")',
+                'const response = await db.collection("portofolios")',
+                '.orderBy("createdAt", "desc")',
+                'class PortfolioManager { constructor() }',
+                'render() { return <PortfolioGrid /> }'
+            ];
+
+            for (let i = 0; i < 16; i++) {
+                const line = document.createElement('div');
+                line.className = 'code-line';
+                line.textContent = codeSnippets[i % codeSnippets.length];
+                line.style.left = Math.random() * 100 + '%';
+                line.style.fontSize = (11 + Math.random() * 9) + 'px';
+                line.style.animationDuration = (18 + Math.random() * 22) + 's';
+                line.style.animationDelay = (Math.random() * 20) + 's';
+                line.style.opacity = 0.2 + Math.random() * 0.4;
+                container.appendChild(line);
+            }
+
+            for (let i = 0; i < 25; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.width = (2 + Math.random() * 5) + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.animationDuration = (12 + Math.random() * 18) + 's';
+                particle.style.animationDelay = (Math.random() * 15) + 's';
+                container.appendChild(particle);
+            }
+
+            const colors = ['#3b82f6', '#8b5cf6', '#06b6d4', '#10b981'];
+            for (let i = 0; i < 3; i++) {
+                const orb = document.createElement('div');
+                orb.className = 'glow-orb';
+                orb.style.width = (120 + Math.random() * 180) + 'px';
+                orb.style.height = orb.style.width;
+                orb.style.background = colors[i % colors.length];
+                orb.style.left = (Math.random() * 80) + '%';
+                orb.style.top = (Math.random() * 80) + '%';
+                orb.style.animationDuration = (6 + Math.random() * 6) + 's';
+                orb.style.animationDelay = (Math.random() * 4) + 's';
+                container.appendChild(orb);
+            }
+        }
+
+        // ===== LOGOUT =====
+        function logout() {
+            if (confirm('Apakah Anda yakin ingin keluar?')) {
+                auth.signOut().then(() => {
+                    window.location.href = '../login.html';
+                });
+            }
+        }
+
+        // ===== INIT =====
+        createBgAnimation();
+        checkAdmin().then(() => {
+            loadPortofolios();
+        });
     </script>
 </body>
 </html>
