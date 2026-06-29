@@ -5,10 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Harga | WebDevPro</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css">
     <style>
         /* ========================================
-           GLOBAL
+           GLOBAL & RESET
            ======================================== */
         * {
             margin: 0;
@@ -38,6 +37,100 @@
         }
 
         /* ========================================
+           BUTTONS
+           ======================================== */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            border: none;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            cursor: pointer;
+            font-family: inherit;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.2), transparent 60%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .btn:hover::after {
+            opacity: 1;
+        }
+
+        .btn-sm {
+            padding: 6px 16px;
+            font-size: 12px;
+        }
+
+        .btn-lg {
+            padding: 14px 32px;
+            font-size: 15px;
+        }
+
+        .btn-block {
+            display: flex;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #f5b014, #d49a0e);
+            color: #0f172a;
+            box-shadow: 0 4px 16px rgba(245, 176, 20, 0.25);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 28px rgba(245, 176, 20, 0.4);
+        }
+
+        .btn-outline-dark {
+            background: transparent;
+            border: 2px solid #e2e8f0;
+            color: #475569;
+        }
+
+        .btn-outline-dark:hover {
+            border-color: #f5b014;
+            color: #f5b014;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(245, 176, 20, 0.08);
+        }
+
+        .btn-white {
+            background: white;
+            color: #0f172a;
+            padding: 14px 36px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 15px;
+            border: none;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+        }
+
+        .btn-white:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 36px rgba(255, 255, 255, 0.2);
+        }
+
+        /* ========================================
            NAVBAR
            ======================================== */
         .navbar {
@@ -52,9 +145,9 @@
         }
 
         .navbar.scrolled {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(12px);
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(14px);
+            box-shadow: 0 2px 24px rgba(0, 0, 0, 0.06);
             padding: 10px 0;
         }
 
@@ -111,7 +204,7 @@
 
         .navbar .nav-links a.active {
             color: #f5b014;
-            background: rgba(245, 176, 20, 0.1);
+            background: rgba(245, 176, 20, 0.08);
         }
 
         .navbar .nav-links a.active::after {
@@ -132,26 +225,6 @@
             align-items: center;
         }
 
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 20px;
-            border: none;
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 13px;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            cursor: pointer;
-            font-family: inherit;
-        }
-
-        .btn-sm {
-            padding: 6px 16px;
-            font-size: 12px;
-        }
-
         .btn-outline {
             background: transparent;
             border: 2px solid rgba(255, 255, 255, 0.25);
@@ -166,17 +239,6 @@
         .btn-outline:hover {
             border-color: #f5b014;
             color: #f5b014;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #f5b014, #d49a0e);
-            color: #0f172a;
-            box-shadow: 0 4px 16px rgba(245, 176, 20, 0.25);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(245, 176, 20, 0.35);
         }
 
         .mobile-menu-btn {
@@ -194,6 +256,7 @@
             height: 2px;
             background: white;
             transition: all 0.3s ease;
+            border-radius: 4px;
         }
 
         .navbar.scrolled .mobile-menu-btn span {
@@ -201,46 +264,7 @@
         }
 
         /* ========================================
-           SECTION HEADER
-           ======================================== */
-        .section-header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .section-header .badge {
-            display: inline-block;
-            padding: 4px 16px;
-            border-radius: 50px;
-            background: rgba(245, 176, 20, 0.1);
-            color: #f5b014;
-            font-size: 12px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            margin-bottom: 8px;
-        }
-
-        .section-header h2 {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #0f172a;
-            margin-bottom: 8px;
-        }
-
-        .section-header h2 span {
-            color: #f5b014;
-        }
-
-        .section-header p {
-            color: #64748b;
-            font-size: 1rem;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-
-        /* ========================================
-           HERO SECTION
+           HERO
            ======================================== */
         .page-hero {
             background: linear-gradient(135deg, #0f172a 0%, #1a1a3e 50%, #0f172a 100%);
@@ -260,60 +284,52 @@
             z-index: 2;
         }
 
-        .page-hero .hero-badge {
+        .hero-badge {
             display: inline-block;
             padding: 6px 20px;
             border-radius: 50px;
-            background: rgba(245, 176, 20, 0.15);
+            background: rgba(245, 176, 20, 0.12);
             border: 1px solid rgba(245, 176, 20, 0.2);
             color: #f5b014;
             font-size: 12px;
             font-weight: 600;
             margin-bottom: 16px;
             letter-spacing: 0.5px;
+            backdrop-filter: blur(4px);
         }
 
         .page-hero h1 {
             font-size: 3rem;
             font-weight: 800;
             margin-bottom: 12px;
-            animation: fadeInDown 0.8s ease forwards;
+            animation: fadeInDown 0.9s ease forwards;
             opacity: 0;
         }
 
         .page-hero h1 span {
             color: #f5b014;
+            background: linear-gradient(135deg, #f5b014, #f7c948);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .page-hero p {
-            color: rgba(255, 255, 255, 0.7);
+            color: rgba(255, 255, 255, 0.75);
             font-size: 1.1rem;
             max-width: 550px;
             margin: 0 auto;
-            animation: fadeInUp 0.8s ease forwards 0.3s;
+            animation: fadeInUp 0.9s ease forwards 0.3s;
             opacity: 0;
         }
 
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* Hero Particles */
@@ -352,35 +368,62 @@
         .hero-particle:nth-child(13) { left: 95%; animation-duration: 20s; animation-delay: 2.8s; width: 7px; height: 7px; }
 
         @keyframes floatParticle {
-            0% {
-                transform: translateY(100vh) translateX(0) scale(0);
-                opacity: 0;
-            }
-            10% {
-                opacity: 0.8;
-                transform: translateY(80vh) translateX(20px) scale(1);
-            }
-            90% {
-                opacity: 0.8;
-            }
-            100% {
-                transform: translateY(-100vh) translateX(-20px) scale(0);
-                opacity: 0;
-            }
+            0% { transform: translateY(100vh) translateX(0) scale(0); opacity: 0; }
+            10% { opacity: 0.8; transform: translateY(80vh) translateX(20px) scale(1); }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(-100vh) translateX(-20px) scale(0); opacity: 0; }
         }
 
         /* ========================================
-           PRICING TOGGLE
+           SECTION HEADER
+           ======================================== */
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-header .badge {
+            display: inline-block;
+            padding: 4px 16px;
+            border-radius: 50px;
+            background: rgba(245, 176, 20, 0.08);
+            color: #f5b014;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .section-header h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+
+        .section-header h2 span {
+            color: #f5b014;
+        }
+
+        .section-header p {
+            color: #64748b;
+            font-size: 1rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* ========================================
+           TOGGLE
            ======================================== */
         .pricing-toggle-section {
             padding: 20px 0;
-            background: white;
-            border-bottom: 1px solid #f1f5f9;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(241, 245, 249, 0.6);
             position: sticky;
             top: 70px;
             z-index: 99;
-            backdrop-filter: blur(12px);
-            background: rgba(255, 255, 255, 0.92);
         }
 
         .toggle-wrapper {
@@ -421,7 +464,7 @@
             background: #e2e8f0;
             border-radius: 40px;
             transition: all 0.4s ease;
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.04);
         }
 
         .toggle-slider::before {
@@ -433,8 +476,8 @@
             bottom: 4px;
             background: white;
             border-radius: 50%;
-            transition: all 0.4s ease;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
         .toggle-switch input:checked + .toggle-slider {
@@ -453,12 +496,12 @@
             font-size: 10px;
             font-weight: 700;
             letter-spacing: 0.3px;
-            animation: pulseBadge 2s ease-in-out infinite;
+            animation: pulseBadge 2.5s ease-in-out infinite;
         }
 
         @keyframes pulseBadge {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+            50% { transform: scale(1.06); }
         }
 
         /* ========================================
@@ -472,19 +515,21 @@
         .pricing-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 25px;
+            gap: 28px;
             max-width: 1100px;
             margin: 0 auto;
         }
 
         .pricing-card {
             background: white;
-            border-radius: 20px;
-            padding: 35px 28px 30px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
-            transition: all 0.4s ease;
+            border-radius: 24px;
+            padding: 36px 28px 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.04);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
-            border: 1px solid rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(0, 0, 0, 0.03);
+            display: flex;
+            flex-direction: column;
         }
 
         .pricing-card::before {
@@ -493,26 +538,25 @@
             top: 0;
             left: 0;
             right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #e2e8f0, #e2e8f0);
+            height: 4px;
+            background: linear-gradient(90deg, #e9edf2, #e9edf2);
+            border-radius: 24px 24px 0 0;
             transition: all 0.4s ease;
-            border-radius: 20px 20px 0 0;
         }
 
         .pricing-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+            transform: translateY(-10px);
+            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.08);
         }
 
         .pricing-card:hover::before {
             background: linear-gradient(90deg, #f5b014, #d49a0e);
         }
 
-        /* Popular Card */
         .pricing-card.popular {
             border: 2px solid #f5b014;
             transform: scale(1.04);
-            box-shadow: 0 20px 60px rgba(245, 176, 20, 0.1);
+            box-shadow: 0 20px 60px rgba(245, 176, 20, 0.08);
         }
 
         .pricing-card.popular::before {
@@ -520,7 +564,7 @@
         }
 
         .pricing-card.popular:hover {
-            transform: scale(1.04) translateY(-8px);
+            transform: scale(1.04) translateY(-10px);
         }
 
         .popular-badge {
@@ -534,6 +578,7 @@
             font-size: 10px;
             font-weight: 700;
             letter-spacing: 0.3px;
+            box-shadow: 0 4px 12px rgba(245, 176, 20, 0.2);
         }
 
         .pricing-header h3 {
@@ -582,6 +627,7 @@
         .pricing-features {
             list-style: none;
             margin: 18px 0 28px;
+            flex: 1;
         }
 
         .pricing-features li {
@@ -592,6 +638,7 @@
             color: #475569;
             font-size: 13px;
             border-bottom: 1px solid #f1f5f9;
+            transition: color 0.2s;
         }
 
         .pricing-features li:last-child {
@@ -617,41 +664,6 @@
             justify-content: center;
         }
 
-        .btn-lg {
-            padding: 14px 32px;
-            font-size: 15px;
-        }
-
-        .btn-block {
-            display: flex;
-            width: 100%;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .btn-outline-dark {
-            background: transparent;
-            border: 2px solid #e2e8f0;
-            color: #475569;
-            padding: 14px 28px;
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 14px;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-family: inherit;
-            cursor: pointer;
-        }
-
-        .btn-outline-dark:hover {
-            border-color: #f5b014;
-            color: #f5b014;
-            transform: translateY(-2px);
-        }
-
         /* ========================================
            COMPARISON TABLE
            ======================================== */
@@ -663,15 +675,16 @@
         .comparison-table-wrapper {
             overflow-x: auto;
             margin-top: 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.03);
         }
 
         .comparison-table {
             width: 100%;
             border-collapse: collapse;
             min-width: 600px;
-            border-radius: 16px;
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
         }
 
         .comparison-table th {
@@ -694,7 +707,7 @@
             color: #475569;
             border-bottom: 1px solid #f1f5f9;
             font-size: 13px;
-            transition: background 0.3s ease;
+            transition: background 0.2s ease;
         }
 
         .comparison-table td:first-child {
@@ -704,11 +717,11 @@
         }
 
         .comparison-table tr:hover td {
-            background: #f8fafc;
+            background: #fafcff;
         }
 
         .comparison-table .highlight {
-            background: rgba(245, 176, 20, 0.04);
+            background: rgba(245, 176, 20, 0.03);
         }
 
         .comparison-table svg {
@@ -720,11 +733,6 @@
             border-bottom: none;
             padding: 16px 20px;
             background: #fafcff;
-        }
-
-        .btn-sm {
-            padding: 6px 18px;
-            font-size: 12px;
         }
 
         /* ========================================
@@ -786,7 +794,7 @@
         .visual-card {
             background: rgba(255, 255, 255, 0.04);
             backdrop-filter: blur(10px);
-            border-radius: 20px;
+            border-radius: 24px;
             padding: 36px 30px;
             text-align: center;
             border: 1px solid rgba(255, 255, 255, 0.06);
@@ -794,9 +802,9 @@
         }
 
         .visual-card:hover {
-            transform: translateY(-6px);
+            transform: translateY(-6px) scale(1.02);
             border-color: rgba(245, 176, 20, 0.2);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.25);
         }
 
         .visual-card svg {
@@ -816,7 +824,7 @@
         }
 
         /* ========================================
-           FAQ SECTION
+           FAQ
            ======================================== */
         .faq-section {
             background: #f8fafc;
@@ -833,7 +841,7 @@
 
         .faq-item {
             background: white;
-            border-radius: 14px;
+            border-radius: 16px;
             border: 1px solid #eef2f6;
             overflow: hidden;
             transition: all 0.3s ease;
@@ -868,7 +876,7 @@
 
         .faq-icon {
             min-width: 24px;
-            transition: transform 0.3s ease;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
             color: #94a3b8;
         }
 
@@ -897,7 +905,7 @@
         }
 
         /* ========================================
-           CTA SECTION
+           CTA
            ======================================== */
         .cta-section {
             background: linear-gradient(135deg, #0f172a, #1a1a3e);
@@ -925,149 +933,68 @@
             margin-bottom: 24px;
         }
 
-        .btn-white {
-            background: white;
-            color: #0f172a;
-            padding: 14px 36px;
-            border-radius: 40px;
-            font-weight: 700;
-            font-size: 15px;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            transition: all 0.3s ease;
-            font-family: 'Poppins', sans-serif;
-            border: none;
-            cursor: pointer;
-        }
-
-        .btn-white:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 30px rgba(255, 255, 255, 0.15);
-        }
-
         /* ========================================
-           FOOTER
+           TOAST
            ======================================== */
-        footer {
-            background: #0f172a;
-            color: white;
-            padding: 50px 0 20px;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
-            gap: 40px;
-            padding-bottom: 30px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-        }
-
-        .footer-about .logo {
-            font-size: 24px;
-            font-weight: 800;
-            color: white;
-            text-decoration: none;
-        }
-
-        .footer-about .logo span {
-            color: #f5b014;
-        }
-
-        .footer-about p {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 14px;
-            line-height: 1.8;
-            margin: 12px 0 16px;
-        }
-
-        .social-links {
+        .toast-container {
+            position: fixed;
+            top: 90px;
+            right: 20px;
+            z-index: 9999;
             display: flex;
-            gap: 8px;
-        }
-
-        .social-links a {
-            width: 38px;
-            height: 38px;
-            border-radius: 10px;
-            background: rgba(255, 255, 255, 0.05);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: rgba(255, 255, 255, 0.5);
-            transition: all 0.3s ease;
-            text-decoration: none;
-        }
-
-        .social-links a:hover {
-            background: #f5b014;
-            color: #0f172a;
-            transform: translateY(-2px);
-        }
-
-        .footer-links h4,
-        .footer-contact h4 {
-            font-size: 15px;
-            font-weight: 700;
-            margin-bottom: 14px;
-        }
-
-        .footer-links ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .footer-links li {
-            margin-bottom: 8px;
-        }
-
-        .footer-links a {
-            color: rgba(255, 255, 255, 0.5);
-            text-decoration: none;
-            font-size: 14px;
-            transition: all 0.3s ease;
-        }
-
-        .footer-links a:hover {
-            color: #f5b014;
-            padding-left: 4px;
-        }
-
-        .footer-contact ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .footer-contact li {
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 14px;
-            display: flex;
-            align-items: center;
+            flex-direction: column;
             gap: 10px;
-            margin-bottom: 8px;
+            max-width: 380px;
+            width: 100%;
         }
 
-        .footer-bottom {
+        .toast {
+            background: white;
+            border-radius: 16px;
+            padding: 16px 20px;
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #22c55e;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 20px;
-            font-size: 13px;
-            color: rgba(255, 255, 255, 0.3);
+            align-items: flex-start;
+            gap: 12px;
+            animation: slideInRight 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+            transform: translateX(120%);
         }
 
-        .footer-bottom a {
-            color: rgba(255, 255, 255, 0.3);
-            text-decoration: none;
-            margin-left: 20px;
-            transition: all 0.3s ease;
+        .toast.error { border-left-color: #ef4444; }
+        .toast.success { border-left-color: #22c55e; }
+
+        .toast-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+        .toast-content { flex: 1; }
+        .toast-title { font-weight: 600; font-size: 14px; color: #0f172a; }
+        .toast-message { font-size: 13px; color: #64748b; margin-top: 2px; }
+
+        .toast-close {
+            background: none;
+            border: none;
+            color: #94a3b8;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 0 4px;
+            transition: color 0.3s ease;
+            flex-shrink: 0;
+            margin-top: -2px;
         }
 
-        .footer-bottom a:hover {
-            color: #f5b014;
+        .toast-close:hover { color: #0f172a; }
+
+        @keyframes slideInRight {
+            from { transform: translateX(120%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideOutRight {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(120%); opacity: 0; }
+        }
+
+        .toast.removing {
+            animation: slideOutRight 0.3s ease forwards;
         }
 
         /* ========================================
@@ -1090,162 +1017,183 @@
             box-shadow: 0 4px 20px rgba(37, 211, 102, 0.35);
             z-index: 999;
             transition: all 0.3s ease;
-            animation: pulseWhatsApp 2s ease-in-out infinite;
+            animation: pulseWhatsApp 2.5s ease-in-out infinite;
         }
 
         @keyframes pulseWhatsApp {
-            0%, 100% {
-                transform: scale(1);
-                box-shadow: 0 4px 20px rgba(37, 211, 102, 0.35);
-            }
-            50% {
-                transform: scale(1.05);
-                box-shadow: 0 8px 30px rgba(37, 211, 102, 0.5);
-            }
+            0%, 100% { transform: scale(1); box-shadow: 0 4px 20px rgba(37, 211, 102, 0.35); }
+            50% { transform: scale(1.06); box-shadow: 0 8px 32px rgba(37, 211, 102, 0.5); }
         }
 
         .whatsapp-float:hover {
-            transform: scale(1.1);
+            transform: scale(1.12);
+        }
+
+        /* ========================================
+           FOOTER
+           ======================================== */
+        footer {
+            background: #0b1120;
+            color: rgba(255, 255, 255, 0.7);
+            padding: 50px 0 30px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-about .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: white;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+
+        .footer-about .logo span { color: #f5b014; }
+
+        .footer-about p {
+            font-size: 13px;
+            line-height: 1.8;
+            max-width: 300px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.04);
+            color: rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .social-links a:hover {
+            background: #f5b014;
+            color: #0f172a;
+            transform: translateY(-3px);
+        }
+
+        .footer-links h4 {
+            color: white;
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 14px;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links ul li {
+            margin-bottom: 8px;
+        }
+
+        .footer-links ul li a {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links ul li a:hover {
+            color: #f5b014;
+        }
+
+        .footer-contact ul {
+            list-style: none;
+        }
+
+        .footer-contact ul li {
+            font-size: 13px;
+            padding: 4px 0;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-size: 13px;
+        }
+
+        .footer-bottom a {
+            color: rgba(255, 255, 255, 0.4);
+            text-decoration: none;
+            margin-left: 20px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-bottom a:hover {
+            color: #f5b014;
         }
 
         /* ========================================
            RESPONSIVE
            ======================================== */
         @media (max-width: 1024px) {
-            .pricing-grid {
-                gap: 20px;
-            }
-            .footer-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .custom-pricing-content {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
-            .custom-features {
-                max-width: 400px;
-                margin: 0 auto 24px;
-                text-align: left;
-            }
-            .custom-features li {
-                justify-content: center;
-            }
+            .pricing-grid { gap: 20px; }
+            .footer-grid { grid-template-columns: repeat(2, 1fr); }
+            .custom-pricing-content { grid-template-columns: 1fr; text-align: center; }
+            .custom-features { max-width: 400px; margin: 0 auto 24px; text-align: left; }
+            .custom-features li { justify-content: center; }
         }
 
         @media (max-width: 768px) {
-            .navbar .nav-links {
-                display: none;
-            }
-            .mobile-menu-btn {
-                display: flex;
-            }
+            .navbar .nav-links { display: none; }
+            .mobile-menu-btn { display: flex; }
 
-            .page-hero {
-                padding: 130px 16px 70px;
-                min-height: 280px;
-            }
-            .page-hero h1 {
-                font-size: 2rem;
-            }
+            .page-hero { padding: 130px 16px 70px; min-height: 280px; }
+            .page-hero h1 { font-size: 2rem; }
 
-            .pricing-grid {
-                grid-template-columns: 1fr;
-                max-width: 400px;
-            }
+            .pricing-grid { grid-template-columns: 1fr; max-width: 400px; }
+            .pricing-card.popular { transform: scale(1); }
+            .pricing-card.popular:hover { transform: translateY(-8px); }
 
-            .pricing-card.popular {
-                transform: scale(1);
-            }
-            .pricing-card.popular:hover {
-                transform: translateY(-8px);
-            }
+            .pricing-toggle-section { top: 60px; padding: 14px 0; }
+            .toggle-wrapper { gap: 10px; }
 
-            .pricing-toggle-section {
-                top: 60px;
-                padding: 14px 0;
-            }
-            .toggle-wrapper {
-                gap: 10px;
-            }
+            .comparison-table-wrapper { margin: 0 -16px; padding: 0 16px; }
 
-            .comparison-table-wrapper {
-                margin: 0 -16px;
-                padding: 0 16px;
-            }
+            .footer-grid { grid-template-columns: 1fr; gap: 24px; }
+            .footer-bottom { flex-direction: column; text-align: center; }
+            .footer-bottom a { margin: 0 10px; }
 
-            .footer-grid {
-                grid-template-columns: 1fr;
-                gap: 24px;
-            }
-            .footer-bottom {
-                flex-direction: column;
-                gap: 8px;
-                text-align: center;
-            }
-            .footer-bottom a {
-                margin: 0 10px;
-            }
-
-            .hero-particles {
-                opacity: 0.4;
-            }
-
-            .cta-content h2 {
-                font-size: 1.6rem;
-            }
-
-            .whatsapp-float {
-                width: 48px;
-                height: 48px;
-                font-size: 22px;
-                bottom: 16px;
-                right: 16px;
-            }
+            .hero-particles { opacity: 0.4; }
+            .cta-content h2 { font-size: 1.6rem; }
+            .whatsapp-float { width: 48px; height: 48px; font-size: 22px; bottom: 16px; right: 16px; }
+            .toast-container { top: 80px; right: 10px; left: 10px; max-width: 100%; }
         }
 
         @media (max-width: 480px) {
-            .page-hero h1 {
-                font-size: 1.6rem;
-            }
-            .page-hero p {
-                font-size: 0.95rem;
-            }
-
-            .pricing-card {
-                padding: 28px 20px 24px;
-            }
-            .pricing-price .amount {
-                font-size: 32px;
-            }
-            .pricing-price .currency {
-                font-size: 18px;
-            }
-
-            .section-header h2 {
-                font-size: 1.5rem;
-            }
-
-            .comparison-table th,
-            .comparison-table td {
-                padding: 10px 14px;
-                font-size: 12px;
-            }
-
-            .custom-pricing-text h2 {
-                font-size: 1.5rem;
-            }
-
-            .visual-card {
-                padding: 28px 20px;
-            }
-
-            .faq-question {
-                font-size: 13px;
-                padding: 14px 16px;
-            }
-            .faq-answer p {
-                font-size: 13px;
-            }
+            .page-hero h1 { font-size: 1.6rem; }
+            .page-hero p { font-size: 0.95rem; }
+            .pricing-card { padding: 28px 20px 24px; }
+            .pricing-price .amount { font-size: 32px; }
+            .pricing-price .currency { font-size: 18px; }
+            .section-header h2 { font-size: 1.5rem; }
+            .comparison-table th, .comparison-table td { padding: 10px 14px; font-size: 12px; }
+            .custom-pricing-text h2 { font-size: 1.5rem; }
+            .visual-card { padding: 28px 20px; }
+            .faq-question { font-size: 13px; padding: 14px 16px; }
+            .faq-answer p { font-size: 13px; }
         }
     </style>
 </head>
@@ -1278,24 +1226,18 @@
         </div>
     </nav>
 
-    <!-- ===== HERO SECTION ===== -->
+    <!-- ===== TOAST ===== -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- ===== HERO ===== -->
     <section class="page-hero">
         <div class="hero-particles">
-            <div class="hero-particle"></div>
-            <div class="hero-particle"></div>
-            <div class="hero-particle"></div>
-            <div class="hero-particle"></div>
-            <div class="hero-particle"></div>
-            <div class="hero-particle"></div>
-            <div class="hero-particle"></div>
-            <div class="hero-particle"></div>
-            <div class="hero-particle"></div>
-            <div class="hero-particle"></div>
-            <div class="hero-particle"></div>
-            <div class="hero-particle"></div>
+            <div class="hero-particle"></div><div class="hero-particle"></div><div class="hero-particle"></div>
+            <div class="hero-particle"></div><div class="hero-particle"></div><div class="hero-particle"></div>
+            <div class="hero-particle"></div><div class="hero-particle"></div><div class="hero-particle"></div>
+            <div class="hero-particle"></div><div class="hero-particle"></div><div class="hero-particle"></div>
             <div class="hero-particle"></div>
         </div>
-
         <div class="container hero-content">
             <div class="hero-badge">💰 Harga</div>
             <h1>Paket <span>Harga</span></h1>
@@ -1303,7 +1245,7 @@
         </div>
     </section>
 
-    <!-- ===== PRICING TOGGLE ===== -->
+    <!-- ===== TOGGLE ===== -->
     <section class="pricing-toggle-section">
         <div class="container">
             <div class="toggle-wrapper">
@@ -1318,7 +1260,7 @@
         </div>
     </section>
 
-    <!-- ===== PRICING CARDS ===== -->
+    <!-- ===== PRICING ===== -->
     <section class="pricing-section">
         <div class="container">
             <div class="pricing-grid">
@@ -1344,11 +1286,11 @@
                         <li class="disabled"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg> CMS Dashboard</li>
                     </ul>
                     <div class="pricing-footer">
-                        <a href="pemesanan.html?paket=starter" class="btn btn-outline-dark btn-block">Pilih Paket</a>
+                        <button class="btn btn-outline-dark btn-block" data-paket="starter" data-paket-nama="Starter" data-harga="2.500.000">Pilih Paket</button>
                     </div>
                 </div>
 
-                <!-- Business (Popular) -->
+                <!-- Business -->
                 <div class="pricing-card popular">
                     <span class="popular-badge">⭐ Paling Populer</span>
                     <div class="pricing-header">
@@ -1371,7 +1313,7 @@
                         <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> SSL Certificate</li>
                     </ul>
                     <div class="pricing-footer">
-                        <a href="pemesanan.html?paket=business" class="btn btn-primary btn-block btn-lg">Pilih Paket</a>
+                        <button class="btn btn-primary btn-block btn-lg" data-paket="business" data-paket-nama="Business" data-harga="5.000.000">Pilih Paket</button>
                     </div>
                 </div>
 
@@ -1397,14 +1339,14 @@
                         <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Support 24/7 Prioritas</li>
                     </ul>
                     <div class="pricing-footer">
-                        <a href="pemesanan.html?paket=enterprise" class="btn btn-outline-dark btn-block">Pilih Paket</a>
+                        <button class="btn btn-outline-dark btn-block" data-paket="enterprise" data-paket-nama="Enterprise" data-harga="10.000.000">Pilih Paket</button>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ===== COMPARISON TABLE ===== -->
+    <!-- ===== COMPARISON ===== -->
     <section class="comparison-section">
         <div class="container">
             <div class="section-header">
@@ -1412,16 +1354,10 @@
                 <h2>Bandingkan <span>Paket</span></h2>
                 <p>Lihat detail fitur yang didapatkan di setiap paket</p>
             </div>
-
             <div class="comparison-table-wrapper">
                 <table class="comparison-table">
                     <thead>
-                        <tr>
-                            <th>Fitur</th>
-                            <th>Starter</th>
-                            <th>Business</th>
-                            <th>Enterprise</th>
-                        </tr>
+                        <tr><th>Fitur</th><th>Starter</th><th>Business</th><th>Enterprise</th></tr>
                     </thead>
                     <tbody>
                         <tr><td>Jumlah Halaman</td><td>1 Halaman</td><td>5-10 Halaman</td><td>Unlimited</td></tr>
@@ -1436,9 +1372,9 @@
                         <tr><td>Support</td><td>Email</td><td>Email & Chat</td><td>24/7 Prioritas</td></tr>
                         <tr class="action-row">
                             <td></td>
-                            <td><a href="pemesanan.html?paket=starter" class="btn btn-outline-dark btn-sm">Pilih</a></td>
-                            <td><a href="pemesanan.html?paket=business" class="btn btn-primary btn-sm">Pilih</a></td>
-                            <td><a href="pemesanan.html?paket=enterprise" class="btn btn-outline-dark btn-sm">Pilih</a></td>
+                            <td><button class="btn btn-outline-dark btn-sm" data-paket="starter" data-paket-nama="Starter" data-harga="2.500.000">Pilih</button></td>
+                            <td><button class="btn btn-primary btn-sm" data-paket="business" data-paket-nama="Business" data-harga="5.000.000">Pilih</button></td>
+                            <td><button class="btn btn-outline-dark btn-sm" data-paket="enterprise" data-paket-nama="Enterprise" data-harga="10.000.000">Pilih</button></td>
                         </tr>
                     </tbody>
                 </table>
@@ -1446,7 +1382,7 @@
         </div>
     </section>
 
-    <!-- ===== CUSTOM PRICING ===== -->
+    <!-- ===== CUSTOM ===== -->
     <section class="custom-pricing-section">
         <div class="container">
             <div class="custom-pricing-content">
@@ -1454,24 +1390,12 @@
                     <h2>Butuh Solusi <span>Kustom</span>?</h2>
                     <p>Tidak menemukan paket yang sesuai? Kami dapat merancang solusi khusus sesuai kebutuhan spesifik bisnis Anda.</p>
                     <ul class="custom-features">
-                        <li>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            Aplikasi Mobile Native & Hybrid
-                        </li>
-                        <li>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            Sistem Manajemen Berbasis Web
-                        </li>
-                        <li>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            Integrasi API & Third-party
-                        </li>
-                        <li>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                            Maintenance & Support Jangka Panjang
-                        </li>
+                        <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Aplikasi Mobile Native & Hybrid</li>
+                        <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Sistem Manajemen Berbasis Web</li>
+                        <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Integrasi API & Third-party</li>
+                        <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg> Maintenance & Support Jangka Panjang</li>
                     </ul>
-                    <a href="kontak.html" class="btn btn-primary btn-lg">Diskusikan Proyek →</a>
+                    <button id="customProjectBtn" class="btn btn-primary btn-lg">Diskusikan Proyek →</button>
                 </div>
                 <div class="custom-pricing-visual">
                     <div class="visual-card">
@@ -1496,46 +1420,34 @@
                 <h2>Pertanyaan <span>Seputar Harga</span></h2>
                 <p>Jawaban untuk pertanyaan yang sering diajukan</p>
             </div>
-
             <div class="faq-list">
                 <div class="faq-item">
                     <button class="faq-question" aria-expanded="false">
                         <span>Apakah harga sudah termasuk domain dan hosting?</span>
                         <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
                     </button>
-                    <div class="faq-answer">
-                        <p>Paket Starter sudah termasuk hosting shared, namun domain perlu dibeli terpisah. Paket Business sudah termasuk domain .com gratis selama 1 tahun dan hosting cloud. Paket Enterprise sudah termasuk domain premium dan dedicated server hosting.</p>
-                    </div>
+                    <div class="faq-answer"><p>Paket Starter sudah termasuk hosting shared, namun domain perlu dibeli terpisah. Paket Business sudah termasuk domain .com gratis selama 1 tahun dan hosting cloud. Paket Enterprise sudah termasuk domain premium dan dedicated server hosting.</p></div>
                 </div>
-
                 <div class="faq-item">
                     <button class="faq-question" aria-expanded="false">
                         <span>Bisakah saya upgrade paket di kemudian hari?</span>
                         <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
                     </button>
-                    <div class="faq-answer">
-                        <p>Tentu saja! Anda dapat melakukan upgrade paket kapan saja. Kami akan menghitung selisih harga secara pro-rata dan membantu migrasi data Anda tanpa downtime.</p>
-                    </div>
+                    <div class="faq-answer"><p>Tentu saja! Anda dapat melakukan upgrade paket kapan saja. Kami akan menghitung selisih harga secara pro-rata dan membantu migrasi data Anda tanpa downtime.</p></div>
                 </div>
-
                 <div class="faq-item">
                     <button class="faq-question" aria-expanded="false">
                         <span>Apakah ada biaya tambahan yang perlu saya perhatikan?</span>
                         <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
                     </button>
-                    <div class="faq-answer">
-                        <p>Tidak ada biaya tersembunyi. Harga yang tertera sudah final untuk fitur-fitur yang disebutkan. Biaya tambahan hanya muncul jika Anda meminta fitur di luar scope paket, yang akan kami diskusikan terlebih dahulu.</p>
-                    </div>
+                    <div class="faq-answer"><p>Tidak ada biaya tersembunyi. Harga yang tertera sudah final untuk fitur-fitur yang disebutkan. Biaya tambahan hanya muncul jika Anda meminta fitur di luar scope paket, yang akan kami diskusikan terlebih dahulu.</p></div>
                 </div>
-
                 <div class="faq-item">
                     <button class="faq-question" aria-expanded="false">
                         <span>Bagaimana sistem pembayarannya?</span>
                         <svg class="faq-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
                     </button>
-                    <div class="faq-answer">
-                        <p>Kami menerima pembayaran via transfer bank, e-wallet (OVO, GoPay, DANA), dan kartu kredit. Untuk proyek besar, pembayaran dapat dilakukan secara bertahap: 30% di awal, 40% saat progress 50%, dan 30% setelah proyek selesai.</p>
-                    </div>
+                    <div class="faq-answer"><p>Kami menerima pembayaran via transfer bank, e-wallet (OVO, GoPay, DANA), dan kartu kredit. Untuk proyek besar, pembayaran dapat dilakukan secara bertahap: 30% di awal, 40% saat progress 50%, dan 30% setelah proyek selesai.</p></div>
                 </div>
             </div>
         </div>
@@ -1547,7 +1459,7 @@
             <div class="cta-content">
                 <h2>Masih Ragu?</h2>
                 <p>Konsultasi gratis dengan tim kami untuk menemukan solusi terbaik</p>
-                <a href="kontak.html" class="btn-white">Konsultasi Gratis →</a>
+                <button id="consultationBtn" class="btn-white">Konsultasi Gratis →</button>
             </div>
         </div>
     </section>
@@ -1560,18 +1472,10 @@
                     <a href="index.html" class="logo">Web<span>Dev</span>Pro</a>
                     <p>Partner tepercaya untuk solusi digital bisnis Anda. Kami menghadirkan inovasi dan kualitas dalam setiap proyek.</p>
                     <div class="social-links">
-                        <a href="#" aria-label="Facebook">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
-                        </a>
-                        <a href="#" aria-label="Twitter">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
-                        </a>
-                        <a href="#" aria-label="Instagram">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-                        </a>
-                        <a href="#" aria-label="LinkedIn">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
-                        </a>
+                        <a href="#" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
+                        <a href="#" aria-label="Twitter"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a>
+                        <a href="#" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+                        <a href="#" aria-label="LinkedIn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
                     </div>
                 </div>
                 <div class="footer-links">
@@ -1614,75 +1518,140 @@
         </div>
     </footer>
 
-    <!-- ===== WHATSAPP FLOAT ===== -->
+    <!-- ===== WHATSAPP ===== -->
     <a href="https://wa.me/6281248141031?text=Halo%20kak%20Hendri,%20saya%20tertarik%20dengan%20produk%20Anda." 
        class="whatsapp-float" target="_blank" aria-label="Chat WhatsApp">💬</a>
 
     <!-- ===== SCRIPTS ===== -->
     <script>
-        // ============================================
-        // NAVBAR SCROLL
-        // ============================================
+        // Navbar scroll
         window.addEventListener('scroll', () => {
             document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
         });
 
-        // ============================================
-        // MOBILE MENU
-        // ============================================
+        // Mobile menu
         document.getElementById('mobileMenuBtn').addEventListener('click', function() {
-            const navLinks = document.querySelector('.nav-links');
-            navLinks.classList.toggle('active');
+            document.querySelector('.nav-links').classList.toggle('active');
             this.classList.toggle('active');
         });
 
-        // ============================================
-        // PRICING TOGGLE
-        // ============================================
-        const pricingToggle = document.getElementById('pricingToggle');
-        const monthlyPrices = document.querySelectorAll('.monthly-price');
-        const yearlyPrices = document.querySelectorAll('.yearly-price');
-        const periodTexts = document.querySelectorAll('.period-text');
-        const monthlyLabel = document.getElementById('monthlyLabel');
-        const yearlyLabel = document.getElementById('yearlyLabel');
-
-        pricingToggle.addEventListener('change', function() {
-            if (this.checked) {
-                monthlyPrices.forEach(el => el.classList.add('hidden'));
-                yearlyPrices.forEach(el => el.classList.remove('hidden'));
-                periodTexts.forEach(el => el.textContent = 'tahun');
-                monthlyLabel.classList.remove('active');
-                yearlyLabel.classList.add('active');
-            } else {
-                monthlyPrices.forEach(el => el.classList.remove('hidden'));
-                yearlyPrices.forEach(el => el.classList.add('hidden'));
-                periodTexts.forEach(el => el.textContent = 'bulan');
-                monthlyLabel.classList.add('active');
-                yearlyLabel.classList.remove('active');
-            }
+        // Pricing toggle
+        const toggle = document.getElementById('pricingToggle');
+        toggle.addEventListener('change', function() {
+            document.querySelectorAll('.monthly-price').forEach(el => el.classList.toggle('hidden', this.checked));
+            document.querySelectorAll('.yearly-price').forEach(el => el.classList.toggle('hidden', !this.checked));
+            document.querySelectorAll('.period-text').forEach(el => el.textContent = this.checked ? 'tahun' : 'bulan');
+            document.getElementById('monthlyLabel').classList.toggle('active', !this.checked);
+            document.getElementById('yearlyLabel').classList.toggle('active', this.checked);
         });
 
-        // ============================================
-        // FAQ ACCORDION
-        // ============================================
-        document.querySelectorAll('.faq-question').forEach(button => {
-            button.addEventListener('click', () => {
-                const faqItem = button.parentElement;
-                const isOpen = faqItem.classList.contains('active');
-
-                document.querySelectorAll('.faq-item').forEach(item => {
-                    item.classList.remove('active');
-                    item.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+        // FAQ
+        document.querySelectorAll('.faq-question').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const item = btn.parentElement;
+                const open = item.classList.contains('active');
+                document.querySelectorAll('.faq-item').forEach(i => {
+                    i.classList.remove('active');
+                    i.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
                 });
-
-                if (!isOpen) {
-                    faqItem.classList.add('active');
-                    button.setAttribute('aria-expanded', 'true');
+                if (!open) {
+                    item.classList.add('active');
+                    btn.setAttribute('aria-expanded', 'true');
                 }
             });
         });
 
-        console.log('💰 WebDevPro - Pricing page loaded successfully!');
+        // Toast
+        const toastContainer = document.getElementById('toastContainer');
+        function showToast(title, message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <span class="toast-icon">${type === 'success' ? '✅' : 'ℹ️'}</span>
+                <div class="toast-content">
+                    <div class="toast-title">${title}</div>
+                    <div class="toast-message">${message}</div>
+                </div>
+                <button class="toast-close" onclick="this.closest('.toast').remove()">✕</button>
+            `;
+            toastContainer.appendChild(toast);
+            setTimeout(() => {
+                if (toast.parentNode) {
+                    toast.classList.add('removing');
+                    setTimeout(() => toast.remove(), 300);
+                }
+            }, 5000);
+        }
+
+        // WhatsApp sender
+        function sendWhatsApp(paket, paketNama, harga) {
+            const phone = '6281248141031';
+            const msg = encodeURIComponent(
+                `Halo Tim WebDevPro,\n\n` +
+                `Saya tertarik dengan paket ${paketNama} dengan harga Rp${harga}.\n` +
+                `Mohon informasi lebih lanjut mengenai paket ini.\n\n` +
+                `Terima kasih.`
+            );
+            window.open(`https://wa.me/${phone}?text=${msg}`, '_blank');
+            showToast('💬 WhatsApp Terbuka', `Pesan untuk paket ${paketNama} telah disiapkan.`, 'success');
+        }
+
+        function sendConsultationWA() {
+            const phone = '6281248141031';
+            const msg = encodeURIComponent(
+                `Halo Tim WebDevPro,\n\n` +
+                `Saya ingin melakukan konsultasi gratis mengenai solusi digital untuk bisnis saya.\n` +
+                `Mohon dihubungi kembali untuk informasi lebih lanjut.\n\n` +
+                `Terima kasih.`
+            );
+            window.open(`https://wa.me/${phone}?text=${msg}`, '_blank');
+            showToast('💬 WhatsApp Terbuka', 'Pesan konsultasi telah disiapkan.', 'success');
+        }
+
+        function sendCustomProjectWA() {
+            const phone = '6281248141031';
+            const msg = encodeURIComponent(
+                `Halo Tim WebDevPro,\n\n` +
+                `Saya tertarik untuk mendiskusikan proyek kustom dengan tim Anda.\n` +
+                `Mohon informasi lebih lanjut dan jadwal konsultasi.\n\n` +
+                `Terima kasih.`
+            );
+            window.open(`https://wa.me/${phone}?text=${msg}`, '_blank');
+            showToast('💬 WhatsApp Terbuka', 'Pesan proyek kustom telah disiapkan.', 'success');
+        }
+
+        // Event listeners
+        document.querySelectorAll('[data-paket]').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                sendWhatsApp(
+                    this.getAttribute('data-paket'),
+                    this.getAttribute('data-paket-nama'),
+                    this.getAttribute('data-harga')
+                );
+            });
+        });
+
+        document.getElementById('consultationBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            sendConsultationWA();
+        });
+
+        document.getElementById('customProjectBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            sendCustomProjectWA();
+        });
+
+        // Simulate login state (demo)
+        const isLoggedIn = false;
+        if (isLoggedIn) {
+            document.getElementById('loginBtn').classList.add('hidden');
+            document.getElementById('registerBtn').classList.add('hidden');
+            document.getElementById('userMenu').classList.remove('hidden');
+            document.getElementById('userName').textContent = 'Hendri';
+        }
+
+        console.log('💰 WebDevPro - Pricing page loaded! (WhatsApp integrated)');
     </script>
 </body>
 </html>
