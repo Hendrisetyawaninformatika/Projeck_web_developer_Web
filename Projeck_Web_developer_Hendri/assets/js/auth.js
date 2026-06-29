@@ -1,182 +1,280 @@
-// ============================================
-// AUTHENTICATION FUNCTIONS
-// ============================================
+// ============================================================
+// AUTH HELPER FUNCTIONS - COMPLETE
+// ============================================================
 
-// ============================================
-// LOGIN
-// ============================================
-async function loginUser(email, password) {
+/**
+ * Get current user's role from Firestore with retry
+ * @returns {Promise<string>} - 'admin' or 'user'
+ */
+async function getUserRole() {
     try {
-        const userCredential = await auth.signInWithEmailAndPassword(email, password);
-        const user = userCredential.user;
+        const user = firebase.auth().currentUser;
+        if (!user) return null;
 
-        // Cek apakah user memiliki role admin
-        const doc = await db.collection('users').doc(user.uid).get();
-        if (doc.exists && doc.data().role === 'admin') {
-            // Simpan session
-            sessionStorage.setItem('webdevpro_session', JSON.stringify({
-                uid: user.uid,
-                email: user.email,
-                role: doc.data().role,
-                nama: doc.data().nama
-            }));
-            return { success: true, user: doc.data() };
-        } else {
-            await auth.signOut();
-            return { success: false, message: 'Akun ini bukan admin!' };
+        let retries = 3;
+        let lastError = null;
+
+        while (retries > 0) {
+            try {
+                const docRef = firebase.firestore().collection('users').doc(user.uid);
+                const docSnap = await docRef.get();
+
+                if (docSnap.exists) {
+                    return docSnap.data().role || 'user';
+                }
+                
+                // If document doesn't exist, create it
+                await docRef.set({
+                    nama: user.displayName || 'Pengguna',
+                    email: user.email,
+                    role: 'user',
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    uid: user.uid,
+                    photoURL: user.photoURL || null
+                });
+                return 'user';
+            } catch (e) {
+                lastError = e;
+                retries--;
+                if (retries > 0) {
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                }
+            }
         }
+
+        console.warn('Error getting user role after retries:', lastError);
+        return 'user';
     } catch (error) {
-        console.error('Login error:', error);
-        let message = 'Gagal login. Periksa email dan password Anda.';
-        if (error.code === 'auth/user-not-found') {
-            message = 'Email tidak ditemukan!';
-        } else if (error.code === 'auth/wrong-password') {
-            message = 'Password salah!';
-        } else if (error.code === 'auth/too-many-requests') {
-            message = 'Terlalu banyak percobaan. Coba lagi nanti.';
-        }
-        return { success: false, message };
+        console.error('Error getting user role:', error);
+        return 'user';
     }
 }
 
-// ============================================
-// REGISTER
-// ============================================
-async function registerUser(email, password, nama, telepon = '') {
+/**
+ * Check if current user is admin
+ * @returns {Promise<boolean>}
+ */
+async function isAdmin() {
     try {
-        const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-        const user = userCredential.user;
+        const role = await getUserRole();
+        return role === 'admin';
+    } catch (error) {
+        console.error('Error checking admin:', error);
+        return false;
+    }
+}
 
-        // Simpan data user ke Firestore
-        await db.collection('users').doc(user.uid).set({
-            uid: user.uid,
-            nama: nama,
-            email: email,
-            telepon: telepon,
-            role: 'user', // Default role user
-            status: 'aktif',
-            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+/**
+ * Check if user is authenticated
+ * @returns {Promise<boolean>}
+ */
+function isAuthenticated() {
+    return new Promise((resolve) => {
+        const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+            unsubscribe();
+            resolve(!!user);
         });
-
-        return { success: true, user: user };
-    } catch (error) {
-        console.error('Register error:', error);
-        let message = 'Gagal mendaftar.';
-        if (error.code === 'auth/email-already-in-use') {
-            message = 'Email sudah digunakan!';
-        } else if (error.code === 'auth/weak-password') {
-            message = 'Password terlalu lemah. Gunakan minimal 6 karakter.';
-        }
-        return { success: false, message };
-    }
+    });
 }
 
-// ============================================
-// RESET PASSWORD
-// ============================================
-async function resetPassword(email) {
-    try {
-        await auth.sendPasswordResetEmail(email);
-        return { success: true, message: 'Email reset password telah dikirim!' };
-    } catch (error) {
-        console.error('Reset password error:', error);
-        let message = 'Gagal mengirim email reset.';
-        if (error.code === 'auth/user-not-found') {
-            message = 'Email tidak ditemukan!';
-        }
-        return { success: false, message };
-    }
-}
-
-// ============================================
-// UPDATE PROFILE
-// ============================================
-async function updateUserProfile(uid, data) {
-    try {
-        await db.collection('users').doc(uid).update({
-            ...data,
-            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+/**
+ * Require authentication - redirect if not logged in
+ * @param {string} redirectUrl - URL to redirect if not authenticated
+ * @returns {Promise<boolean>} - true if authenticated
+ */
+function requireAuth(redirectUrl = 'login.html') {
+    return new Promise((resolve) => {
+        const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+            unsubscribe();
+            if (!user) {
+                window.location.href = redirectUrl;
+                resolve(false);
+            } else {
+                resolve(true);
+            }
         });
-        return { success: true };
-    } catch (error) {
-        console.error('Update profile error:', error);
-        return { success: false, message: error.message };
-    }
+    });
 }
 
-// ============================================
-// GET USER DATA
-// ============================================
-async function getUserData(uid) {
+/**
+ * Require admin - redirect if not admin
+ * @param {string} redirectUrl - URL to redirect if not admin
+ * @returns {Promise<boolean>} - true if admin
+ */
+async function requireAdmin(redirectUrl = '../index.html') {
     try {
-        const doc = await db.collection('users').doc(uid).get();
-        if (doc.exists) {
-            return { success: true, data: doc.data() };
-        } else {
-            return { success: false, message: 'User tidak ditemukan' };
+        const user = firebase.auth().currentUser;
+        if (!user) {
+            window.location.href = 'login.html';
+            return false;
         }
+
+        const role = await getUserRole();
+        if (role !== 'admin') {
+            window.location.href = redirectUrl;
+            return false;
+        }
+        return true;
     } catch (error) {
-        console.error('Get user data error:', error);
-        return { success: false, message: error.message };
+        console.error('Error checking admin:', error);
+        window.location.href = 'login.html';
+        return false;
     }
 }
 
-// ============================================
-// GET ALL USERS (Admin Only)
-// ============================================
-async function getAllUsers() {
+/**
+ * Check admin for admin pages
+ * @returns {Promise<void>}
+ */
+async function checkAdmin() {
     try {
-        const snapshot = await db.collection('users').orderBy('createdAt', 'desc').get();
-        const users = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        return { success: true, users };
+        const user = firebase.auth().currentUser;
+        if (!user) {
+            window.location.href = 'login.html';
+            return;
+        }
+
+        const role = await getUserRole();
+        if (role !== 'admin') {
+            window.location.href = '../index.html';
+            return;
+        }
+        console.log('✅ Admin access granted');
     } catch (error) {
-        console.error('Get all users error:', error);
-        return { success: false, message: error.message };
+        console.error('Error checking admin:', error);
+        window.location.href = 'login.html';
     }
 }
 
-// ============================================
-// DELETE USER (Admin Only)
-// ============================================
-async function deleteUser(uid) {
-    try {
-        await db.collection('users').doc(uid).delete();
-        return { success: true };
-    } catch (error) {
-        console.error('Delete user error:', error);
-        return { success: false, message: error.message };
-    }
+/**
+ * Logout user
+ * @param {string} redirectUrl - URL to redirect after logout
+ */
+function logoutUser(redirectUrl = 'login.html') {
+    firebase.auth().signOut()
+        .then(() => {
+            localStorage.removeItem('webdevpro_session');
+            sessionStorage.clear();
+            window.location.href = redirectUrl;
+        })
+        .catch((error) => {
+            console.error('Logout error:', error);
+            window.location.href = redirectUrl;
+        });
 }
 
-// ============================================
-// CHECK AUTH STATE
-// ============================================
-function onAuthStateChanged(callback) {
-    return auth.onAuthStateChanged(callback);
-}
-
-// ============================================
-// SESSION MANAGEMENT
-// ============================================
-function getSession() {
+/**
+ * Get current user data with retry
+ * @returns {Promise<Object|null>}
+ */
+async function getCurrentUserData() {
     try {
-        const session = sessionStorage.getItem('webdevpro_session');
-        return session ? JSON.parse(session) : null;
+        const user = firebase.auth().currentUser;
+        if (!user) return null;
+
+        let retries = 3;
+        let lastError = null;
+
+        while (retries > 0) {
+            try {
+                const docRef = firebase.firestore().collection('users').doc(user.uid);
+                const docSnap = await docRef.get();
+
+                const baseData = {
+                    uid: user.uid,
+                    email: user.email,
+                    displayName: user.displayName,
+                    photoURL: user.photoURL
+                };
+
+                if (docSnap.exists) {
+                    return {
+                        ...baseData,
+                        ...docSnap.data()
+                    };
+                }
+                return baseData;
+            } catch (e) {
+                lastError = e;
+                retries--;
+                if (retries > 0) {
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                }
+            }
+        }
+
+        console.warn('Error getting user data after retries:', lastError);
+        return null;
     } catch (error) {
+        console.error('Error getting user data:', error);
         return null;
     }
 }
 
-function setSession(data) {
-    sessionStorage.setItem('webdevpro_session', JSON.stringify(data));
+/**
+ * Update user data in Firestore
+ * @param {Object} data - Data to update
+ * @returns {Promise<boolean>}
+ */
+async function updateUserData(data) {
+    try {
+        const user = firebase.auth().currentUser;
+        if (!user) return false;
+
+        const docRef = firebase.firestore().collection('users').doc(user.uid);
+        await docRef.update({
+            ...data,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        return true;
+    } catch (error) {
+        console.error('Error updating user data:', error);
+        return false;
+    }
 }
 
-function clearSession() {
-    sessionStorage.removeItem('webdevpro_session');
+/**
+ * Create admin user (for development)
+ * @param {string} email - Admin email
+ * @returns {Promise<boolean>}
+ */
+async function makeAdmin(email) {
+    try {
+        const usersSnapshot = await firebase.firestore()
+            .collection('users')
+            .where('email', '==', email)
+            .get();
+
+        if (usersSnapshot.empty) {
+            console.error('User not found:', email);
+            return false;
+        }
+
+        const userDoc = usersSnapshot.docs[0];
+        await userDoc.ref.update({
+            role: 'admin',
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        console.log('✅ User promoted to admin:', email);
+        return true;
+    } catch (error) {
+        console.error('Error making admin:', error);
+        return false;
+    }
 }
 
-// ============================================
-// EXPORT FUNCTIONS
-// ============================================
-console.log('🔐 Auth functions loaded successfully!');
+// ============================================================
+// EXPOSE FUNCTIONS TO GLOBAL SCOPE
+// ============================================================
+window.getUserRole = getUserRole;
+window.isAdmin = isAdmin;
+window.isAuthenticated = isAuthenticated;
+window.requireAuth = requireAuth;
+window.requireAdmin = requireAdmin;
+window.checkAdmin = checkAdmin;
+window.logoutUser = logoutUser;
+window.getCurrentUserData = getCurrentUserData;
+window.updateUserData = updateUserData;
+window.makeAdmin = makeAdmin;
+
+console.log('✅ Auth helper functions loaded!');
