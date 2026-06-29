@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Testimoni Klien | WebDevPro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <style>
+        /* ===== ROOT VARIABLES ===== */
+        :root {
+            --primary: #f5b014;
+            --primary-dark: #d49a0e;
+            --primary-light: #fce6a0;
+            --secondary: #1a1a2e;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --bg: #f0f4f9;
+            --white: #ffffff;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.12);
+            --radius: 20px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ===== NAVBAR ===== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 16px 0;
+            transition: var(--transition);
+            background: transparent;
+        }
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
+            padding: 10px 0;
+        }
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--secondary);
+            text-decoration: none;
+        }
+        .logo span {
+            color: var(--primary);
+        }
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 28px;
+            margin: 0;
+            padding: 0;
+        }
+        .nav-links a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            transition: var(--transition);
+            position: relative;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            border: none;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 13px;
+            transition: var(--transition);
+            text-decoration: none;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--secondary);
+            color: var(--secondary);
+        }
+        .btn-outline:hover {
+            background: var(--secondary);
+            color: #fff;
+        }
+        .btn-primary {
+            background: var(--primary);
+            color: var(--secondary);
+        }
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(245, 176, 20, 0.35);
+        }
+        .btn-sm {
+            padding: 6px 16px;
+            font-size: 12px;
+        }
+        .btn-lg {
+            padding: 12px 32px;
+            font-size: 16px;
+        }
+        .hidden {
+            display: none !important;
+        }
+
+        /* ===== HERO ===== */
+        .testi-hero {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            padding: 140px 20px 80px;
+            text-align: center;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+        .testi-hero::before {
+            content: '⭐';
+            position: absolute;
+            font-size: 400px;
+            opacity: 0.03;
+            top: -100px;
+            right: -100px;
+            animation: float 20s infinite ease-in-out;
+        }
+        .testi-hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: linear-gradient(to top, var(--bg), transparent);
+        }
+        @keyframes float {
+            0%,
+            100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            50% {
+                transform: translate(-30px, -20px) rotate(10deg);
+            }
+        }
+        .testi-hero h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+            letter-spacing: -1px;
+        }
+        .testi-hero h1 span {
+            color: var(--primary);
+        }
+        .testi-hero p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 30px;
+            line-height: 1.8;
+        }
+
+        /* ===== RATING OVERVIEW ===== */
+        .rating-overview {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 40px 48px;
+            box-shadow: var(--shadow);
+            margin-top: -40px;
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 48px;
+            align-items: center;
+            border: 1px solid rgba(0, 0, 0, 0.04);
+        }
+        .rating-big {
+            text-align: center;
+        }
+        .rating-big .score {
+            font-size: 72px;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1;
+        }
+        .rating-big .stars {
+            font-size: 28px;
+            margin: 8px 0 4px;
+            letter-spacing: 4px;
+        }
+        .rating-big .total {
+            color: var(--text-light);
+            font-size: 14px;
+        }
+        .rating-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .rating-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+        }
+        .rating-bar .label {
+            width: 55px;
+            text-align: right;
+            font-weight: 600;
+            color: var(--text);
+            font-size: 13px;
+        }
+        .rating-bar .track {
+            flex: 1;
+            height: 8px;
+            background: #f1f5f9;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .rating-bar .fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+            border-radius: 10px;
+            transition: width 0.8s ease;
+        }
+        .rating-bar .count {
+            width: 36px;
+            text-align: left;
+            color: var(--text-light);
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        /* ===== STATS ===== */
+        .testi-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin: 40px 0;
+        }
+        .testi-stat {
+            text-align: center;
+            padding: 24px 20px;
+            background: var(--white);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            transition: var(--transition);
+        }
+        .testi-stat:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+        }
+        .testi-stat-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+            display: block;
+        }
+        .testi-stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .testi-stat-label {
+            color: var(--text-light);
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        /* ===== FILTERS ===== */
+        .testi-filters {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin: 40px 0 30px;
+        }
+        .testi-filter {
+            padding: 8px 20px;
+            border-radius: 40px;
+            border: 2px solid #e2e8f0;
+            background: transparent;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: var(--transition);
+            color: var(--text-light);
+            font-family: inherit;
+        }
+        .testi-filter:hover {
+            border-color: var(--primary);
+            color: var(--secondary);
+        }
+        .testi-filter.active {
+            background: var(--primary);
+            color: var(--secondary);
+            border-color: var(--primary);
+        }
+
+        /* ===== TESTIMONI GRID ===== */
+        .testi-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        .testi-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 28px 30px 24px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            border: 1px solid rgba(0, 0, 0, 0.04);
+        }
+        .testi-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-hover);
+        }
+        .testi-card.featured {
+            border: 2px solid var(--primary);
+            background: linear-gradient(135deg, #fffcf0, #fff8e0);
+        }
+        .testi-card.featured::before {
+            content: '⭐ Featured';
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: var(--primary);
+            color: var(--secondary);
+            padding: 3px 14px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+        .testi-quote {
+            font-size: 48px;
+            color: var(--primary);
+            opacity: 0.2;
+            line-height: 1;
+            margin-bottom: -8px;
+            font-family: Georgia, serif;
+        }
+        .testi-content {
+            color: var(--text);
+            line-height: 1.8;
+            font-size: 14px;
+            margin-bottom: 16px;
+            font-style: italic;
+            min-height: 60px;
+        }
+        .testi-stars {
+            color: #f59e0b;
+            font-size: 18px;
+            margin-bottom: 10px;
+            letter-spacing: 3px;
+        }
+        .testi-author {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding-top: 16px;
+            border-top: 1px solid #f1f5f9;
+        }
+        .testi-author img {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--primary);
+            flex-shrink: 0;
+        }
+        .testi-author-info h4 {
+            margin: 0;
+            font-size: 15px;
+            color: var(--secondary);
+            font-weight: 600;
+        }
+        .testi-author-info p {
+            margin: 2px 0 0;
+            font-size: 13px;
+            color: var(--text-light);
+        }
+        .testi-paket {
+            display: inline-block;
+            margin-top: 6px;
+            padding: 2px 12px;
+            background: rgba(245, 176, 20, 0.12);
+            border-radius: 20px;
+            font-size: 11px;
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+
+        /* ===== CTA ===== */
+        .add-testi-cta {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, rgba(245, 176, 20, 0.05), rgba(245, 176, 20, 0.12));
+            border-radius: var(--radius);
+            margin: 48px 0 24px;
+            border: 2px dashed rgba(245, 176, 20, 0.3);
+        }
+        .add-testi-cta h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 8px;
+        }
+        .add-testi-cta p {
+            color: var(--text-light);
+            margin-bottom: 24px;
+            font-size: 15px;
+        }
+
+        /* ===== VIDEO SECTION ===== */
+        .video-section {
+            background: var(--bg);
+            padding: 60px 0;
+            margin: 24px 0 0;
+        }
+        .section-title {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+        .section-title h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 4px;
+        }
+        .section-title h2 span {
+            color: var(--primary);
+        }
+        .section-title p {
+            color: var(--text-light);
+        }
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin-top: 24px;
+        }
+        .video-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+        .video-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+        }
+        .video-thumb {
+            position: relative;
+            height: 220px;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .video-thumb::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.3);
+            transition: var(--transition);
+        }
+        .video-card:hover .video-thumb::after {
+            background: rgba(0, 0, 0, 0.15);
+        }
+        .play-btn {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            z-index: 1;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 20px rgba(245, 176, 20, 0.4);
+            color: var(--secondary);
+            border: none;
+        }
+        .play-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 32px rgba(245, 176, 20, 0.5);
+        }
+        .video-info {
+            padding: 18px 24px 20px;
+        }
+        .video-info h4 {
+            margin: 0 0 4px;
+            font-size: 16px;
+            color: var(--secondary);
+        }
+        .video-info p {
+            margin: 0;
+            color: var(--text-light);
+            font-size: 13px;
+        }
+
+        /* ===== MODAL ===== */
+        .modal {
+            position: fixed;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            background: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(6px);
+            animation: fadeIn 0.3s ease;
+        }
+        .modal.show {
+            display: flex;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        .modal-content {
+            background: var(--white);
+            border-radius: var(--radius);
+            max-width: 540px;
+            width: 92%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 28px 32px;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.25);
+            animation: slideUp 0.35s ease;
+        }
+        @keyframes slideUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .modal-header h4 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+        .modal-header .btn-outline {
+            padding: 4px 12px;
+            font-size: 18px;
+            line-height: 1;
+        }
+
+        /* ===== FORM ===== */
+        .form-group {
+            margin-bottom: 16px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--secondary);
+            margin-bottom: 4px;
+        }
+        .form-group .form-control {
+            width: 100%;
+            padding: 10px 16px;
+            border-radius: 14px;
+            border: 1.5px solid #e2e8f0;
+            background: #fafcff;
+            font-size: 14px;
+            transition: var(--transition);
+            outline: none;
+            font-family: inherit;
+            color: var(--text);
+        }
+        .form-group .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(245, 176, 20, 0.12);
+        }
+        .form-group textarea.form-control {
+            resize: vertical;
+            min-height: 80px;
+        }
+        .rating-input {
+            display: flex;
+            gap: 8px;
+            font-size: 30px;
+            cursor: pointer;
+            justify-content: center;
+            padding: 8px 0;
+        }
+        .rating-input .star-select {
+            transition: var(--transition);
+            opacity: 0.3;
+            cursor: pointer;
+            user-select: none;
+        }
+        .rating-input .star-select:hover {
+            transform: scale(1.15);
+        }
+        .rating-input .star-select.active {
+            opacity: 1;
+        }
+
+        /* ===== TOAST ===== */
+        .alert-toast {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            padding: 14px 24px;
+            border-radius: 16px;
+            color: #fff;
+            font-weight: 600;
+            font-size: 14px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+            z-index: 9999;
+            animation: slideInRight 0.4s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            max-width: 400px;
+        }
+        .alert-toast.success {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+        .alert-toast.error {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+        }
+        .alert-toast.warning {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+        }
+        .alert-toast.hide {
+            animation: slideOutRight 0.4s ease forwards;
+        }
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        @keyframes slideOutRight {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--secondary);
+            color: #fff;
+            padding: 60px 0 20px;
+            margin-top: 40px;
+        }
+        footer .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .footer-grid h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #fff;
+        }
+        .footer-grid h4 span {
+            color: var(--primary);
+        }
+        .footer-grid a {
+            display: block;
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            margin-bottom: 8px;
+            font-size: 14px;
+            transition: var(--transition);
+        }
+        .footer-grid a:hover {
+            color: var(--primary);
+        }
+        .footer-grid p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+        .footer-bottom a {
+            color: rgba(255, 255, 255, 0.4);
+            text-decoration: none;
+            margin-left: 16px;
+            transition: var(--transition);
+        }
+        .footer-bottom a:hover {
+            color: var(--primary);
+        }
+
+        /* ===== WHATSAPP FLOAT ===== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: #25d366;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            text-decoration: none;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.35);
+            transition: var(--transition);
+            z-index: 999;
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 32px rgba(37, 211, 102, 0.45);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .testi-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 768px) {
+            .rating-overview {
+                grid-template-columns: 1fr;
+                gap: 24px;
+                padding: 28px 24px;
+            }
+            .testi-grid {
+                grid-template-columns: 1fr;
+            }
+            .testi-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            .footer-bottom {
+                flex-direction: column;
+                gap: 8px;
+                text-align: center;
+            }
+            .nav-links {
+                display: none;
+            }
+            .testi-hero h1 {
+                font-size: 2rem;
+            }
+            .rating-big .score {
+                font-size: 56px;
+            }
+        }
+        @media (max-width: 480px) {
+            .testi-hero {
+                padding: 120px 16px 60px;
+            }
+            .testi-hero h1 {
+                font-size: 1.6rem;
+            }
+            .testi-stats {
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+            .testi-stat {
+                padding: 16px;
+            }
+            .testi-stat-value {
+                font-size: 22px;
+            }
+            .modal-content {
+                padding: 20px;
+            }
+            .add-testi-cta h3 {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== NAVBAR ===== -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">Web<span>Dev</span>Pro</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="tentang.html">Tentang</a></li>
+                <li><a href="layanan.html">Layanan</a></li>
+                <li><a href="portofolio.html">Portofolio</a></li>
+                <li><a href="harga.html">Harga</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="kontak.html">Kontak</a></li>
+            </ul>
+            <div class="nav-buttons">
+                <a href="login.html" class="btn btn-outline btn-sm" id="loginBtn">Masuk</a>
+                <a href="register.html" class="btn btn-primary btn-sm" id="registerBtn">Daftar</a>
+                <div id="userMenu" class="hidden">
+                    <a href="user/index.html" class="btn btn-primary btn-sm">
+                        👤 <span id="userName">User</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== HERO ===== -->
+    <section class="testi-hero">
+        <h1>Testimoni <span>Klien</span></h1>
+        <p>Lihat apa kata klien kami tentang layanan dan hasil kerja yang kami berikan.</p>
+    </section>
+
+    <!-- ===== RATING OVERVIEW ===== -->
+    <section style="padding: 0 20px;">
+        <div class="container" style="max-width:1200px; margin:0 auto;">
+            <div class="rating-overview">
+                <div class="rating-big">
+                    <div class="score" id="avgRating">0.0</div>
+                    <div class="stars" id="avgStars">⭐⭐⭐⭐⭐</div>
+                    <div class="total"><span id="totalTesti">0</span> ulasan</div>
+                </div>
+                <div class="rating-bars" id="ratingBars"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== STATS ===== -->
+    <section style="padding: 40px 0 0;">
+        <div class="container" style="max-width:1200px; margin:0 auto; padding:0 20px;">
+            <div class="testi-stats">
+                <div class="testi-stat">
+                    <span class="testi-stat-icon">⭐</span>
+                    <div class="testi-stat-value" id="stat5Star">0</div>
+                    <div class="testi-stat-label">5 Bintang</div>
+                </div>
+                <div class="testi-stat">
+                    <span class="testi-stat-icon">🎯</span>
+                    <div class="testi-stat-value" id="stat4Star">0</div>
+                    <div class="testi-stat-label">4 Bintang</div>
+                </div>
+                <div class="testi-stat">
+                    <span class="testi-stat-icon">🛒</span>
+                    <div class="testi-stat-value" id="statTotal">0</div>
+                    <div class="testi-stat-label">Total Ulasan</div>
+                </div>
+                <div class="testi-stat">
+                    <span class="testi-stat-icon">✅</span>
+                    <div class="testi-stat-value" id="statVerified">0</div>
+                    <div class="testi-stat-label">Terverifikasi</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== TESTIMONI CONTENT ===== -->
+    <section style="padding: 24px 0 60px;">
+        <div class="container" style="max-width:1200px; margin:0 auto; padding:0 20px;">
+            <!-- Filters -->
+            <div class="testi-filters" id="testiFilters">
+                <button class="testi-filter active" onclick="filterTesti('all')">Semua</button>
+                <button class="testi-filter" onclick="filterTesti(5)">⭐ 5</button>
+                <button class="testi-filter" onclick="filterTesti(4)">⭐ 4</button>
+                <button class="testi-filter" onclick="filterTesti(3)">⭐ 3</button>
+                <button class="testi-filter" onclick="filterTesti('featured')">⭐ Featured</button>
+            </div>
+
+            <!-- Grid -->
+            <div class="testi-grid" id="testiGrid">
+                <div style="text-align:center; padding:60px; grid-column:1/-1; color:var(--text-light);">
+                    ⏳ Memuat testimoni...
+                </div>
+            </div>
+
+            <!-- Empty State -->
+            <div id="emptyState" style="display:none; text-align:center; padding:60px 20px;">
+                <div style="font-size:56px; margin-bottom:12px;">📭</div>
+                <h3 style="color:var(--secondary);">Belum Ada Testimoni</h3>
+                <p style="color:var(--text-light);">Jadilah yang pertama memberikan ulasan!</p>
+            </div>
+
+            <!-- CTA -->
+            <div class="add-testi-cta">
+                <h3>Punya Pengalaman dengan Kami?</h3>
+                <p>Bantu klien lain dengan berbagi pengalaman Anda menggunakan layanan WebDevPro.</p>
+                <button class="btn btn-primary btn-lg" onclick="openTestiModal()">📝 Tulis Testimoni</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== VIDEO SECTION ===== -->
+    <section class="video-section">
+        <div class="container" style="max-width:1200px; margin:0 auto; padding:0 20px;">
+            <div class="section-title">
+                <h2>Video <span>Testimoni</span></h2>
+                <p>Dengar langsung dari klien kami</p>
+            </div>
+            <div class="video-grid" id="videoGrid">
+                <div class="video-card">
+                    <div class="video-thumb" style="background-image:url('https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=600&h=400&fit=crop');">
+                        <button class="play-btn">▶</button>
+                    </div>
+                    <div class="video-info">
+                        <h4>PT Maju Jaya</h4>
+                        <p>Company Profile Website • 2:30</p>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <div class="video-thumb" style="background-image:url('https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=600&h=400&fit=crop');">
+                        <button class="play-btn">▶</button>
+                    </div>
+                    <div class="video-info">
+                        <h4>Toko Online Sejahtera</h4>
+                        <p>E-Commerce Platform • 3:15</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <div class="container" style="max-width:1200px; margin:0 auto; padding:0 20px;">
+            <div class="footer-grid">
+                <div>
+                    <h4>Web<span>Dev</span>Pro</h4>
+                    <p>Solusi digital terbaik untuk bisnis Anda.</p>
+                </div>
+                <div>
+                    <h4>Menu</h4>
+                    <a href="index.html">Beranda</a>
+                    <a href="tentang.html">Tentang Kami</a>
+                    <a href="layanan.html">Layanan</a>
+                    <a href="harga.html">Paket Harga</a>
+                </div>
+                <div>
+                    <h4>Layanan</h4>
+                    <a href="layanan.html">Company Profile</a>
+                    <a href="layanan.html">E-Commerce</a>
+                    <a href="layanan.html">Web Application</a>
+                    <a href="layanan.html">Landing Page</a>
+                </div>
+                <div>
+                    <h4>Kontak</h4>
+                    <a href="#">📍 Batang, Jawa Tengah</a>
+                    <a href="#">📧 setyawanhendri253@gmail.com</a>
+                    <a href="#">📱 +62 812-4814-1031</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 WebDevPro. All rights reserved.</p>
+                <div>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== WHATSAPP FLOAT ===== -->
+    <a href="https://wa.me/6281248141031?text=Halo%20kak%20Hendri,%20saya%20tertarik%20dengan%20produk%20Anda."
+    class="whatsapp-float" target="_blank" title="Chat WhatsApp">💬</a>
+
+    <!-- ===== MODAL ===== -->
+    <div id="testiModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>📝 Tulis Testimoni</h4>
+                <button class="btn btn-outline" onclick="closeTestiModal()" style="padding:4px 12px; font-size:18px; line-height:1;">✕</button>
+            </div>
+            <form id="testiForm" onsubmit="submitTestimoni(event)">
+                <div class="form-group">
+                    <label>Nama Lengkap <span style="color:#ef4444;">*</span></label>
+                    <input type="text" id="testiNama" class="form-control" required />
+                </div>
+                <div class="form-group">
+                    <label>Email <span style="color:#ef4444;">*</span></label>
+                    <input type="email" id="testiEmail" class="form-control" required />
+                </div>
+                <div class="form-group">
+                    <label>Perusahaan / Profesi</label>
+                    <input type="text" id="testiPerusahaan" class="form-control" placeholder="Contoh: CEO PT Maju Jaya" />
+                </div>
+                <div class="form-group">
+                    <label>Rating <span style="color:#ef4444;">*</span></label>
+                    <div class="rating-input">
+                        <span class="star-select active" data-value="1" onclick="setRating(1)">⭐</span>
+                        <span class="star-select active" data-value="2" onclick="setRating(2)">⭐</span>
+                        <span class="star-select active" data-value="3" onclick="setRating(3)">⭐</span>
+                        <span class="star-select active" data-value="4" onclick="setRating(4)">⭐</span>
+                        <span class="star-select active" data-value="5" onclick="setRating(5)">⭐</span>
+                    </div>
+                    <input type="hidden" id="testiRating" value="5" required />
+                </div>
+                <div class="form-group">
+                    <label>Testimoni <span style="color:#ef4444;">*</span></label>
+                    <textarea id="testiIsi" class="form-control" rows="4" required placeholder="Ceritakan pengalaman Anda..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Paket Layanan</label>
+                    <select id="testiPaket" class="form-control">
+                        <option value="">Pilih Paket</option>
+                    </select>
+                </div>
+                <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:24px; padding-top:16px; border-top:1px solid #f1f5f9;">
+                    <button type="button" class="btn btn-outline" onclick="closeTestiModal()">Batal</button>
+                    <button type="submit" class="btn btn-primary">📤 Kirim Testimoni</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+
+    <script src="assets/js/firebase-config.js"></script>
+    <script src="assets/js/auth.js"></script>
+    <script>
+        let allTestimonis = [];
+        let filteredTestimonis = [];
+        let selectedRating = 5;
+
+        // ===== AUTH =====
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                document.getElementById('loginBtn').style.display = 'none';
+                document.getElementById('registerBtn').style.display = 'none';
+                document.getElementById('userMenu').classList.remove('hidden');
+                document.getElementById('userName').textContent = user.displayName || user.email;
+
+                document.getElementById('testiNama').value = user.displayName || '';
+                document.getElementById('testiEmail').value = user.email || '';
+            }
+        });
+
+        // ===== LOAD TESTIMONIS =====
+        async function loadTestimonis() {
+            try {
+                const snapshot = await db.collection('testimonis')
+                    .where('status', '==', 'published')
+                    .orderBy('createdAt', 'desc')
+                    .get();
+
+                allTestimonis = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                filteredTestimonis = [...allTestimonis];
+
+                updateStats();
+                renderRatingBars();
+                loadPaketOptions();
+                renderTestimonis();
+
+            } catch (error) {
+                console.error('Error loading testimonis:', error);
+                document.getElementById('testiGrid').innerHTML =
+                    '<div style="text-align:center; padding:50px; grid-column:1/-1; color:#ef4444;">❌ Gagal memuat testimoni</div>';
+            }
+        }
+
+        // ===== UPDATE STATS =====
+        function updateStats() {
+            const total = allTestimonis.length;
+            const avg = total > 0 ?
+                (allTestimonis.reduce((sum, t) => sum + (t.rating || 0), 0) / total).toFixed(1) :
+                '0.0';
+
+            document.getElementById('avgRating').textContent = avg;
+            document.getElementById('avgStars').textContent = '⭐'.repeat(Math.round(avg) || 0);
+            document.getElementById('totalTesti').textContent = total;
+
+            document.getElementById('stat5Star').textContent = allTestimonis.filter(t => t.rating === 5).length;
+            document.getElementById('stat4Star').textContent = allTestimonis.filter(t => t.rating === 4).length;
+            document.getElementById('statTotal').textContent = total;
+            document.getElementById('statVerified').textContent = allTestimonis.filter(t => t.isVerified).length;
+        }
+
+        // ===== RATING BARS =====
+        function renderRatingBars() {
+            const container = document.getElementById('ratingBars');
+            container.innerHTML = '';
+            const total = allTestimonis.length || 1;
+
+            for (let i = 5; i >= 1; i--) {
+                const count = allTestimonis.filter(t => t.rating === i).length;
+                const percent = (count / total) * 100;
+
+                container.innerHTML += `
+                        <div class="rating-bar">
+                            <div class="label">${i} ⭐</div>
+                            <div class="track">
+                                <div class="fill" style="width:${percent}%"></div>
+                            </div>
+                            <div class="count">${count}</div>
+                        </div>
+                    `;
+            }
+        }
+
+        // ===== LOAD PAKET OPTIONS =====
+        async function loadPaketOptions() {
+            try {
+                const snapshot = await db.collection('pakets').orderBy('nama').get();
+                const select = document.getElementById('testiPaket');
+
+                snapshot.docs.forEach(doc => {
+                    const paket = doc.data();
+                    select.innerHTML += `<option value="${doc.id}">${paket.nama}</option>`;
+                });
+            } catch (error) {
+                console.error('Error loading pakets:', error);
+            }
+        }
+
+        // ===== FILTER =====
+        function filterTesti(filter) {
+            document.querySelectorAll('.testi-filter').forEach(f => {
+                f.classList.remove('active');
+                const text = f.textContent.trim();
+                if (filter === 'all' && text === 'Semua') f.classList.add('active');
+                if (filter === 'featured' && text.includes('Featured')) f.classList.add('active');
+                if (filter === 5 && text.includes('5')) f.classList.add('active');
+                if (filter === 4 && text.includes('4')) f.classList.add('active');
+                if (filter === 3 && text.includes('3')) f.classList.add('active');
+            });
+
+            if (filter === 'all') {
+                filteredTestimonis = [...allTestimonis];
+            } else if (filter === 'featured') {
+                filteredTestimonis = allTestimonis.filter(t => t.isFeatured);
+            } else {
+                filteredTestimonis = allTestimonis.filter(t => t.rating === filter);
+            }
+
+            renderTestimonis();
+        }
+
+        // ===== RENDER TESTIMONIS =====
+        function renderTestimonis() {
+            const grid = document.getElementById('testiGrid');
+            const emptyState = document.getElementById('emptyState');
+
+            if (filteredTestimonis.length === 0) {
+                grid.innerHTML = '';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            emptyState.style.display = 'none';
+            grid.innerHTML = '';
+
+            filteredTestimonis.forEach(t => {
+                const foto = t.fotoUrl ||
+                    `https://ui-avatars.com/api/?name=${encodeURIComponent(t.nama || 'User')}&background=f5b014&color=1a1a2e&size=100`;
+                const stars = '⭐'.repeat(t.rating || 5);
+
+                grid.innerHTML += `
+                        <div class="testi-card ${t.isFeatured ? 'featured' : ''}">
+                            <div class="testi-quote">"</div>
+                            <div class="testi-stars">${stars}</div>
+                            <div class="testi-content">${t.isi || ''}</div>
+                            <div class="testi-author">
+                                <img src="${foto}" alt="${t.nama}" />
+                                <div class="testi-author-info">
+                                    <h4>${t.nama || 'Anonymous'}</h4>
+                                    <p>${t.perusahaan || 'Klien'}</p>
+                                    ${t.paketNama ? `<span class="testi-paket">${t.paketNama}</span>` : ''}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+            });
+        }
+
+        // ===== MODAL =====
+        function openTestiModal() {
+            document.getElementById('testiModal').classList.add('show');
+            document.body.style.overflow = 'hidden';
+            setRating(5);
+        }
+
+        function closeTestiModal() {
+            document.getElementById('testiModal').classList.remove('show');
+            document.body.style.overflow = '';
+            document.getElementById('testiForm').reset();
+        }
+
+        function setRating(value) {
+            selectedRating = value;
+            document.getElementById('testiRating').value = value;
+            document.querySelectorAll('.star-select').forEach((star, index) => {
+                star.classList.toggle('active', index < value);
+            });
+        }
+
+        // ===== SUBMIT TESTIMONI =====
+        async function submitTestimoni(event) {
+            event.preventDefault();
+
+            const data = {
+                nama: document.getElementById('testiNama').value.trim(),
+                email: document.getElementById('testiEmail').value.trim(),
+                perusahaan: document.getElementById('testiPerusahaan').value.trim(),
+                rating: parseInt(document.getElementById('testiRating').value),
+                isi: document.getElementById('testiIsi').value.trim(),
+                paketId: document.getElementById('testiPaket').value,
+                paketNama: document.getElementById('testiPaket').options[document.getElementById('testiPaket').selectedIndex]
+                    .text,
+                status: 'pending',
+                isVerified: false,
+                isFeatured: false,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            };
+
+            if (!data.nama || !data.email || !data.isi) {
+                showAlert('⚠️ Semua field wajib diisi!', 'warning');
+                return;
+            }
+
+            try {
+                await db.collection('testimonis').add(data);
+                showAlert('✅ Testimoni berhasil dikirim! Menunggu persetujuan admin.', 'success');
+                closeTestiModal();
+            } catch (error) {
+                showAlert('❌ Gagal: ' + error.message, 'error');
+            }
+        }
+
+        // ===== TOAST =====
+        function showAlert(message, type = 'success') {
+            const existing = document.querySelector('.alert-toast');
+            if (existing) existing.remove();
+
+            const toast = document.createElement('div');
+            toast.className = `alert-toast ${type}`;
+            const icons = {
+                success: '✅',
+                error: '❌',
+                warning: '⚠️'
+            };
+            toast.innerHTML = `${icons[type] || 'ℹ️'} ${message}`;
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.add('hide');
+                setTimeout(() => toast.remove(), 400);
+            }, 3500);
+        }
+
+        // ===== CLOSE MODAL ON OVERLAY =====
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('show');
+                    document.body.style.overflow = '';
+                }
+            });
+        });
+
+        // ===== ESC KEY =====
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal.show').forEach(modal => {
+                    modal.classList.remove('show');
+                });
+                document.body.style.overflow = '';
+            }
+        });
+
+        // ===== NAVBAR SCROLL =====
+        window.addEventListener('scroll', () => {
+            document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // ===== INIT =====
+        document.addEventListener('DOMContentLoaded', loadTestimonis);
+    </script>
+</body>
+</html>

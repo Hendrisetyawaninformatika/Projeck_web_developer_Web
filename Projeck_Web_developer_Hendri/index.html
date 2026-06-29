@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jasa Web Developer Profesional | WebDevPro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        /* ========================================
+           GLOBAL RESET & OVERRIDE
+           ======================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #f5b014;
+            --primary-dark: #d49a0e;
+            --primary-light: #fce6a0;
+            --dark: #0f172a;
+            --darker: #0a0a1a;
+            --gray: #64748b;
+            --light-gray: #f1f5f9;
+            --white: #ffffff;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            --shadow-hover: 0 20px 60px rgba(0, 0, 0, 0.1);
+            --radius: 20px;
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--white);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        /* ========================================
+           NAVBAR
+           ======================================== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 16px 0;
+            transition: var(--transition);
+            background: transparent;
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
+            padding: 10px 0;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--white);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .navbar.scrolled .logo {
+            color: var(--dark);
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .navbar.scrolled .nav-links a {
+            color: var(--dark);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-buttons {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            border: none;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 13px;
+            transition: var(--transition);
+            text-decoration: none;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--dark);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(245, 176, 20, 0.35);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.25);
+            color: var(--white);
+        }
+
+        .navbar.scrolled .btn-outline {
+            border-color: #e2e8f0;
+            color: var(--dark);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-sm {
+            padding: 6px 16px;
+            font-size: 12px;
+        }
+        .btn-lg {
+            padding: 14px 32px;
+            font-size: 16px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .mobile-menu-btn span {
+            width: 25px;
+            height: 2px;
+            background: white;
+            transition: var(--transition);
+        }
+
+        .navbar.scrolled .mobile-menu-btn span {
+            background: var(--dark);
+        }
+
+        /* ========================================
+           HERO SECTION
+           ======================================== */
+        .hero {
+            background: linear-gradient(135deg, var(--darker) 0%, #1a1a3e 40%, var(--dark) 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Background Animations */
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        /* Particles */
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(245, 176, 20, 0.3);
+            border-radius: 50%;
+            animation: floatParticle linear infinite;
+        }
+
+        .particle:nth-child(1) { left: 5%; animation-duration: 22s; }
+        .particle:nth-child(2) { left: 12%; animation-duration: 26s; animation-delay: 2s; width: 6px; height: 6px; }
+        .particle:nth-child(3) { left: 20%; animation-duration: 18s; animation-delay: 4s; }
+        .particle:nth-child(4) { left: 28%; animation-duration: 30s; animation-delay: 1s; width: 8px; height: 8px; }
+        .particle:nth-child(5) { left: 35%; animation-duration: 24s; animation-delay: 3s; }
+        .particle:nth-child(6) { left: 42%; animation-duration: 28s; animation-delay: 5s; width: 5px; height: 5px; }
+        .particle:nth-child(7) { left: 50%; animation-duration: 20s; animation-delay: 2.5s; }
+        .particle:nth-child(8) { left: 58%; animation-duration: 27s; animation-delay: 4.5s; width: 7px; height: 7px; }
+        .particle:nth-child(9) { left: 65%; animation-duration: 23s; animation-delay: 1.5s; }
+        .particle:nth-child(10) { left: 72%; animation-duration: 25s; animation-delay: 3.5s; width: 6px; height: 6px; }
+        .particle:nth-child(11) { left: 80%; animation-duration: 19s; animation-delay: 5.5s; }
+        .particle:nth-child(12) { left: 88%; animation-duration: 29s; animation-delay: 0.8s; width: 8px; height: 8px; }
+        .particle:nth-child(13) { left: 95%; animation-duration: 21s; animation-delay: 2.2s; }
+        .particle:nth-child(14) { left: 50%; animation-duration: 32s; animation-delay: 3s; width: 10px; height: 10px; }
+
+        @keyframes floatParticle {
+            0% { transform: translateY(100vh) translateX(0) scale(0); opacity: 0; }
+            10% { opacity: 0.8; transform: translateY(80vh) translateX(20px) scale(1); }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(-100vh) translateX(-20px) scale(0); opacity: 0; }
+        }
+
+        /* Glowing Orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: orbFloat 18s ease-in-out infinite;
+        }
+
+        .orb:nth-child(1) {
+            width: 400px;
+            height: 400px;
+            background: rgba(245, 176, 20, 0.06);
+            top: -100px;
+            right: -100px;
+        }
+        .orb:nth-child(2) {
+            width: 300px;
+            height: 300px;
+            background: rgba(245, 176, 20, 0.04);
+            bottom: -50px;
+            left: -50px;
+            animation-delay: -6s;
+        }
+        .orb:nth-child(3) {
+            width: 250px;
+            height: 250px;
+            background: rgba(99, 102, 241, 0.04);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: -12s;
+        }
+
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.5; }
+            33% { transform: translate(40px, -40px) scale(1.1); opacity: 0.8; }
+            66% { transform: translate(-30px, 30px) scale(0.9); opacity: 0.6; }
+        }
+
+        /* Floating Code */
+        .code-float {
+            position: absolute;
+            font-family: 'Courier New', monospace;
+            color: rgba(245, 176, 20, 0.04);
+            font-weight: 700;
+            animation: codeFloat linear infinite;
+        }
+
+        .code-float:nth-child(1) { top: 10%; left: 5%; animation-duration: 25s; font-size: 18px; }
+        .code-float:nth-child(2) { top: 20%; right: 10%; animation-duration: 20s; animation-delay: -5s; font-size: 14px; }
+        .code-float:nth-child(3) { bottom: 30%; left: 8%; animation-duration: 28s; animation-delay: -10s; font-size: 22px; }
+        .code-float:nth-child(4) { bottom: 20%; right: 5%; animation-duration: 22s; animation-delay: -7s; font-size: 16px; }
+        .code-float:nth-child(5) { top: 50%; left: 50%; animation-duration: 30s; animation-delay: -12s; font-size: 20px; }
+        .code-float:nth-child(6) { top: 5%; left: 40%; animation-duration: 18s; animation-delay: -3s; font-size: 24px; }
+        .code-float:nth-child(7) { bottom: 10%; left: 60%; animation-duration: 24s; animation-delay: -8s; font-size: 15px; }
+        .code-float:nth-child(8) { top: 35%; right: 20%; animation-duration: 26s; animation-delay: -6s; font-size: 19px; }
+
+        @keyframes codeFloat {
+            0% { transform: translate(0, 0) rotate(0deg); opacity: 0.04; }
+            25% { transform: translate(100px, -50px) rotate(90deg); opacity: 0.07; }
+            50% { transform: translate(-60px, 70px) rotate(180deg); opacity: 0.05; }
+            75% { transform: translate(70px, -40px) rotate(270deg); opacity: 0.08; }
+            100% { transform: translate(0, 0) rotate(360deg); opacity: 0.04; }
+        }
+
+        /* Hero Content */
+        .hero .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content {
+            animation: fadeSlideIn 1s ease forwards;
+        }
+
+        @keyframes fadeSlideIn {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(245, 176, 20, 0.12);
+            padding: 6px 18px;
+            border-radius: 50px;
+            margin-bottom: 20px;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 13px;
+            border: 1px solid rgba(245, 176, 20, 0.15);
+            animation: pulseBadge 2s ease-in-out infinite;
+        }
+
+        @keyframes pulseBadge {
+            0%, 100% { box-shadow: 0 0 20px rgba(245, 176, 20, 0.05); }
+            50% { box-shadow: 0 0 40px rgba(245, 176, 20, 0.15); }
+        }
+
+        .hero-content h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            color: var(--white);
+            line-height: 1.15;
+            margin-bottom: 18px;
+            letter-spacing: -0.5px;
+        }
+
+        .hero-content h1 span {
+            color: var(--primary);
+            position: relative;
+        }
+
+        .hero-content p {
+            font-size: 1.05rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 30px;
+            line-height: 1.8;
+            max-width: 500px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 40px;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .hero-stats .stat-item h3 {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1.2;
+        }
+
+        .hero-stats .stat-item small {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 13px;
+            font-weight: 400;
+            display: block;
+        }
+
+        .hero-image {
+            animation: fadeSlideRight 1s ease forwards;
+        }
+
+        @keyframes fadeSlideRight {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .hero-image img {
+            width: 100%;
+            max-width: 520px;
+            display: block;
+            margin: 0 auto;
+            border-radius: 20px;
+            animation: floatImage 5s ease-in-out infinite;
+        }
+
+        @keyframes floatImage {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-18px); }
+        }
+
+        /* ========================================
+           SECTION HEADER
+           ======================================== */
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .section-title h2 span {
+            color: var(--primary);
+        }
+
+        .section-title p {
+            color: var(--gray);
+            font-size: 15px;
+        }
+
+        /* ========================================
+           SERVICES
+           ======================================== */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-top: 10px;
+        }
+
+        .service-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 32px 28px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .service-icon {
+            font-size: 2.8rem;
+            margin-bottom: 14px;
+            display: block;
+        }
+
+        .service-card h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .service-card p {
+            color: var(--gray);
+            font-size: 14px;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        /* ========================================
+           PRICING
+           ======================================== */
+        .pricing-section {
+            background: var(--light-gray);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 10px;
+        }
+
+        .pricing-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 35px 28px 32px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            position: relative;
+        }
+
+        .pricing-card.featured {
+            border: 2px solid var(--primary);
+            transform: scale(1.04);
+            box-shadow: 0 20px 60px rgba(245, 176, 20, 0.1);
+        }
+
+        .pricing-card.featured::before {
+            content: '⭐ Paling Populer';
+            position: absolute;
+            top: -12px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--dark);
+            padding: 4px 16px;
+            border-radius: 40px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .pricing-card.featured:hover {
+            transform: scale(1.04) translateY(-8px);
+        }
+
+        .pricing-card h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 4px;
+        }
+
+        .pricing-card .price {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 16px 0 18px;
+        }
+
+        .pricing-card .price span {
+            font-size: 14px;
+            color: var(--gray);
+            font-weight: 400;
+        }
+
+        .pricing-card ul {
+            list-style: none;
+            margin: 0 0 24px;
+            padding: 0;
+            text-align: left;
+        }
+
+        .pricing-card ul li {
+            padding: 8px 0;
+            color: var(--gray);
+            font-size: 14px;
+            border-bottom: 1px solid var(--light-gray);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pricing-card ul li:last-child {
+            border-bottom: none;
+        }
+
+        .pricing-card ul li::before {
+            content: '✓';
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .pricing-card .btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+        /* ========================================
+           CTA SECTION
+           ======================================== */
+        .cta-section {
+            padding: 70px 0;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+
+        .cta-section h2 span {
+            color: var(--primary);
+        }
+
+        .cta-section p {
+            color: var(--gray);
+            font-size: 1.05rem;
+            margin-bottom: 28px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-outline-dark {
+            background: transparent;
+            border: 2px solid #e2e8f0;
+            color: var(--dark);
+        }
+
+        .btn-outline-dark:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* ========================================
+           FOOTER
+           ======================================== */
+        footer {
+            background: var(--dark);
+            color: var(--white);
+            padding: 60px 0 25px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+            gap: 40px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .footer-grid h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .footer-grid h4 span {
+            color: var(--primary);
+        }
+
+        .footer-grid p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .footer-grid a {
+            display: block;
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 8px;
+            transition: var(--transition);
+        }
+
+        .footer-grid a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 25px;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .footer-bottom a {
+            color: rgba(255, 255, 255, 0.3);
+            text-decoration: none;
+            margin-left: 20px;
+            transition: var(--transition);
+        }
+
+        .footer-bottom a:hover {
+            color: var(--primary);
+        }
+
+        /* ========================================
+           WHATSAPP FLOAT
+           ======================================== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: #25d366;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            text-decoration: none;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.35);
+            transition: var(--transition);
+            z-index: 999;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 32px rgba(37, 211, 102, 0.45);
+        }
+
+        /* ========================================
+           RESPONSIVE
+           ======================================== */
+        @media (max-width: 1024px) {
+            .hero .container {
+                gap: 40px;
+            }
+            .hero-content h1 {
+                font-size: 2.6rem;
+            }
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .pricing-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+            .pricing-card.featured:hover {
+                transform: translateY(-8px);
+            }
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            .hero {
+                min-height: auto;
+                padding: 120px 0 60px;
+            }
+            .hero .container {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 30px;
+            }
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+            .hero-content p {
+                max-width: 100%;
+            }
+            .hero-buttons {
+                justify-content: center;
+            }
+            .hero-stats {
+                justify-content: center;
+                gap: 30px;
+            }
+            .hero-image img {
+                max-width: 400px;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+                margin: 0 auto;
+            }
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+                margin: 0 auto;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            .footer-bottom {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+
+            section {
+                padding: 60px 0;
+            }
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+            .orb {
+                opacity: 0.4;
+            }
+            .particle {
+                opacity: 0.5;
+            }
+            .code-float {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-content h1 {
+                font-size: 1.7rem;
+            }
+            .hero-stats {
+                gap: 20px;
+                flex-wrap: wrap;
+            }
+            .hero-stats .stat-item h3 {
+                font-size: 1.4rem;
+            }
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            .hero-buttons .btn {
+                width: 100%;
+                max-width: 280px;
+                justify-content: center;
+            }
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            .cta-buttons .btn {
+                width: 100%;
+                max-width: 280px;
+                justify-content: center;
+            }
+            .whatsapp-float {
+                width: 48px;
+                height: 48px;
+                font-size: 22px;
+                bottom: 16px;
+                right: 16px;
+            }
+            .section-title h2 {
+                font-size: 1.5rem;
+            }
+            .pricing-card {
+                padding: 28px 20px 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== NAVBAR ===== -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">Web<span>Dev</span>Pro</a>
+
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Beranda</a></li>
+                <li><a href="tentang.html">Tentang</a></li>
+                <li><a href="layanan.html">Layanan</a></li>
+                <li><a href="portofolio.html">Portofolio</a></li>
+                <li><a href="harga.html">Harga</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="kontak.html">Kontak</a></li>
+            </ul>
+
+            <div class="nav-buttons">
+                <a href="login.html" class="btn btn-outline btn-sm" id="loginBtn">Masuk</a>
+                <a href="register.html" class="btn btn-primary btn-sm" id="registerBtn">Daftar</a>
+                <div id="userMenu" class="hidden">
+                    <a href="user/index.html" class="btn btn-primary btn-sm">
+                        👤 <span id="userName">User</span>
+                    </a>
+                </div>
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== HERO SECTION ===== -->
+    <section class="hero">
+        <!-- Background Animations -->
+        <div class="hero-bg">
+            <!-- Particles -->
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+
+            <!-- Glowing Orbs -->
+            <div class="orb"></div>
+            <div class="orb"></div>
+            <div class="orb"></div>
+
+            <!-- Floating Code -->
+            <div class="code-float">&lt;/&gt;</div>
+            <div class="code-float">{ }</div>
+            <div class="code-float">function</div>
+            <div class="code-float">const</div>
+            <div class="code-float">return</div>
+            <div class="code-float">if</div>
+            <div class="code-float">else</div>
+            <div class="code-float">for</div>
+        </div>
+
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">⭐ Web Developer Batang Jawa Tengah</div>
+                <h1>Hendri Setyawan</span> Akan Wujudkan Website </span>Impian</span> Anda Bersama Kami</h1>
+                <p>Kami menyediakan jasa pembuatan website profesional dengan desain modern, responsif, dan optimasi SEO terbaik untuk mengembangkan bisnis Anda.</p>
+
+                <div class="hero-buttons">
+                    <a href="pemesanan.html" class="btn btn-primary btn-lg">🚀 Mulai Proyek</a>
+                    <a href="portofolio.html" class="btn btn-outline btn-lg">📂 Lihat Portofolio</a>
+                </div>
+
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <h3 id="statProjects">500+</h3>
+                        <small>Proyek Selesai</small>
+                    </div>
+                    <div class="stat-item">
+                        <h3 id="statSatisfaction">98%</h3>
+                        <small>Kepuasan Klien</small>
+                    </div>
+                    <div class="stat-item">
+                        <h3 id="statClients">50+</h3>
+                        <small>Klien Aktif</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-image">
+                <img src="https://i.ibb.co.com/FqBHZPN8/1782472907234.png"alt="Web Development Illustration">
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SERVICES SECTION ===== -->
+    <section>
+        <div class="container">
+            <div class="section-title">
+                <h2>Layanan <span>Unggulan</span></h2>
+                <p>Solusi lengkap untuk kebutuhan digital Anda</p>
+            </div>
+
+            <div class="services-grid">
+                <div class="service-card">
+                    <span class="service-icon">💻</span>
+                    <h3>Website Company Profile</h3>
+                    <p>Tampilkan identitas perusahaan Anda dengan website profesional yang menarik.</p>
+                </div>
+                <div class="service-card">
+                    <span class="service-icon">🛒</span>
+                    <h3>E-Commerce</h3>
+                    <p>Bangun toko online Anda dengan fitur lengkap dan sistem pembayaran terintegrasi.</p>
+                </div>
+                <div class="service-card">
+                    <span class="service-icon">⚙️</span>
+                    <h3>Web Application</h3>
+                    <p>Aplikasi web custom sesuai kebutuhan bisnis Anda dengan teknologi terkini.</p>
+                </div>
+                <div class="service-card">
+                    <span class="service-icon">🚀</span>
+                    <h3>Landing Page</h3>
+                    <p>Halaman landing yang konversi tinggi untuk campaign marketing Anda.</p>
+                </div>
+                <div class="service-card">
+                    <span class="service-icon">🔍</span>
+                    <h3>SEO Optimization</h3>
+                    <p>Optimasi mesin pencari untuk meningkatkan visibilitas website Anda.</p>
+                </div>
+                <div class="service-card">
+                    <span class="service-icon">📱</span>
+                    <h3>Mobile Responsive</h3>
+                    <p>Website yang optimal di semua perangkat, dari desktop hingga smartphone.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PRICING SECTION ===== -->
+    <section class="pricing-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Paket <span>Harga</span></h2>
+                <p>Pilih paket yang sesuai dengan kebutuhan Anda</p>
+            </div>
+
+            <div class="pricing-grid">
+                <!-- Starter -->
+                <div class="pricing-card">
+                    <h3>Starter</h3>
+                    <div class="price">Rp 2.500.000 <span>/proyek</span></div>
+                    <ul>
+                        <li>5 Halaman Website</li>
+                        <li>Responsive Design</li>
+                        <li>Basic SEO</li>
+                        <li>1x Revisi</li>
+                        <li>Gratis Domain .com</li>
+                    </ul>
+                    <a href="pemesanan.html?paket=starter" class="btn btn-outline" style="border-color:#e2e8f0; color:var(--dark);">Pilih Paket</a>
+                </div>
+
+                <!-- Professional (Popular) -->
+                <div class="pricing-card featured">
+                    <h3>Professional</h3>
+                    <div class="price">Rp 5.000.000 <span>/proyek</span></div>
+                    <ul>
+                        <li>10 Halaman Website</li>
+                        <li>Responsive Design</li>
+                        <li>Advanced SEO</li>
+                        <li>Unlimited Revisi</li>
+                        <li>Gratis Domain .com</li>
+                        <li>Panel Admin</li>
+                        <li>Blog System</li>
+                    </ul>
+                    <a href="pemesanan.html?paket=professional" class="btn btn-primary">Pilih Paket</a>
+                </div>
+
+                <!-- Enterprise -->
+                <div class="pricing-card">
+                    <h3>Enterprise</h3>
+                    <div class="price">Rp 10.000.000 <span>/proyek</span></div>
+                    <ul>
+                        <li>Unlimited Halaman</li>
+                        <li>Custom Design</li>
+                        <li>Premium SEO</li>
+                        <li>Unlimited Revisi</li>
+                        <li>Gratis Domain .com</li>
+                        <li>Panel Admin</li>
+                        <li>Multi Bahasa</li>
+                        <li>Maintenance 1 Tahun</li>
+                    </ul>
+                    <a href="pemesanan.html?paket=enterprise" class="btn btn-outline" style="border-color:#e2e8f0; color:var(--dark);">Pilih Paket</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CTA SECTION ===== -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Siap Memulai Proyek <span>Website</span> Anda?</h2>
+            <p>Konsultasikan kebutuhan website Anda secara gratis.</p>
+            <div class="cta-buttons">
+                <a href="https://wa.me/6281248141031?text=Halo%20kak%20Hendri,%20saya%20tertarik%20dengan%20produk%20Anda." class="btn btn-primary btn-lg" target="_blank">💬 Chat WhatsApp</a>
+                <a href="pemesanan.html" class="btn btn-outline-dark btn-lg">📩 Kirim Pesanan</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h4>Web<span>Dev</span>Pro</h4>
+                    <p>Solusi digital terbaik untuk bisnis Anda. Kami menghadirkan inovasi dan kualitas dalam setiap proyek.</p>
+                </div>
+                <div>
+                    <h4>Menu</h4>
+                    <a href="index.html">Beranda</a>
+                    <a href="tentang.html">Tentang Kami</a>
+                    <a href="layanan.html">Layanan</a>
+                    <a href="harga.html">Paket Harga</a>
+                </div>
+                <div>
+                    <h4>Layanan</h4>
+                    <a href="layanan.html">Company Profile</a>
+                    <a href="layanan.html">E-Commerce</a>
+                    <a href="layanan.html">Web Application</a>
+                    <a href="layanan.html">Landing Page</a>
+                </div>
+                <div>
+                    <h4>Kontak</h4>
+                    <a href="#">📍 Batang, Indonesia</a>
+                    <a href="#">📧 setyawanhendri253@gmail.com</a>
+                    <a href="#">📱 +62 812-4814-1031</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 WebDevPro. All rights reserved.</p>
+                <div>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== WHATSAPP FLOAT ===== -->
+    <a href="https://wa.me/6281248141031?text=Halo%20kak%20Hendri,%20saya%20tertarik%20dengan%20produk%20Anda." class="whatsapp-float" target="_blank" aria-label="Chat WhatsApp">💬</a>
+
+    <!-- ===== FIREBASE SDK ===== -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+
+    <script src="assets/js/firebase-config.js"></script>
+    <script src="assets/js/auth.js"></script>
+
+    <script>
+        // ============================================
+        // NAVBAR SCROLL
+        // ============================================
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // ============================================
+        // MOBILE MENU
+        // ============================================
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+            this.classList.toggle('active');
+        });
+
+        // ============================================
+        // ANIMATED STATS COUNTER
+        // ============================================
+        function animateCounter(element, target, suffix) {
+            let current = 0;
+            const duration = 2000;
+            const steps = 60;
+            const increment = Math.ceil(target / steps);
+            const stepTime = duration / steps;
+
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                element.textContent = current + suffix;
+            }, stepTime);
+        }
+
+        // Intersection Observer untuk trigger counter
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const stat = entry.target;
+                    const text = stat.textContent;
+                    if (text.includes('+')) {
+                        const num = parseInt(text.replace('+', ''));
+                        animateCounter(stat, num, '+');
+                    } else if (text.includes('%')) {
+                        const num = parseInt(text.replace('%', ''));
+                        animateCounter(stat, num, '%');
+                    }
+                    observer.unobserve(stat);
+                }
+            });
+        }, { threshold: 0.3 });
+
+        document.querySelectorAll('.hero-stats .stat-item h3').forEach(stat => {
+            observer.observe(stat);
+        });
+
+        // ============================================
+        // AUTH STATE
+        // ============================================
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                document.getElementById('loginBtn').style.display = 'none';
+                document.getElementById('registerBtn').style.display = 'none';
+                document.getElementById('userMenu').classList.remove('hidden');
+                document.getElementById('userName').textContent = user.displayName || user.email;
+            }
+        });
+
+        // ============================================
+        // SMOOTH SCROLL
+        // ============================================
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        console.log('🚀 WebDevPro - Website loaded successfully!');
+    </script>
+</body>
+</html>
