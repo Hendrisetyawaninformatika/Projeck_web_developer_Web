@@ -30,7 +30,7 @@
         }
 
         /* ========================================
-           NAVBAR (KONSISTEN)
+           NAVBAR (KONSISTEN - TANPA LOGIN/REGISTER)
            ======================================== */
         .navbar {
             position: fixed;
@@ -118,61 +118,136 @@
             border-radius: 4px;
         }
 
-        .nav-buttons {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 20px;
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
             border: none;
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 13px;
-            transition: all 0.3s ease;
-            text-decoration: none;
             cursor: pointer;
-            font-family: inherit;
+            padding: 5px;
+            margin-left: 10px;
+            z-index: 1002;
         }
 
-        .btn-sm {
-            padding: 6px 16px;
-            font-size: 12px;
+        .mobile-menu-btn span {
+            width: 25px;
+            height: 2px;
+            background: white;
+            transition: all 0.3s ease;
+            display: block;
         }
 
-        .btn-outline {
-            background: transparent;
-            border: 2px solid rgba(255, 255, 255, 0.25);
-            color: white;
+        .navbar.scrolled .mobile-menu-btn span {
+            background: #0f172a;
         }
 
-        .navbar.scrolled .btn-outline {
-            border-color: #e2e8f0;
-            color: #1e293b;
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+            background: #0f172a;
+        }
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+            background: #0f172a;
         }
 
-        .btn-outline:hover {
-            border-color: #f5b014;
+        /* ========================================
+           MOBILE NAV OVERLAY
+           ======================================== */
+        .nav-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 10, 26, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* ========================================
+           MOBILE MENU SIDEBAR
+           ======================================== */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -320px;
+            width: 300px;
+            height: 100vh;
+            background: white;
+            z-index: 1001;
+            padding: 80px 30px 30px;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            box-shadow: -20px 0 60px rgba(0, 0, 0, 0.1);
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-menu .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: #0f172a;
+            cursor: pointer;
+            padding: 5px;
+            line-height: 1;
+        }
+
+        .mobile-menu .mobile-logo {
+            font-size: 22px;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 30px;
+        }
+
+        .mobile-menu .mobile-logo span {
             color: #f5b014;
         }
 
-        .btn-primary {
-            background: linear-gradient(135deg, #f5b014, #d49a0e);
+        .mobile-menu .mobile-nav-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .mobile-menu .mobile-nav-links li {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .mobile-menu .mobile-nav-links a {
+            display: block;
+            padding: 14px 0;
             color: #0f172a;
-            box-shadow: 0 4px 16px rgba(245, 176, 20, 0.25);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px;
+            transition: all 0.3s ease;
         }
 
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(245, 176, 20, 0.35);
+        .mobile-menu .mobile-nav-links a:hover {
+            color: #f5b014;
+            padding-left: 8px;
         }
 
-        .hidden {
-            display: none !important;
+        .mobile-menu .mobile-nav-links a.active {
+            color: #f5b014;
         }
 
         /* ========================================
@@ -319,27 +394,6 @@
             display: inline-block;
         }
 
-        /* ROTATING BORDER PADA SPAN */
-        .blog-hero h1 span::before {
-            content: '';
-            position: absolute;
-            inset: -8px -12px;
-            border-radius: 16px;
-            padding: 2px;
-            background: conic-gradient(from 0deg, #f5b014, #d49a0e, #f5b014, #d49a0e, #f5b014);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            animation: rotateBorder 4s linear infinite;
-            opacity: 0.6;
-            z-index: -1;
-        }
-
-        @keyframes rotateBorder {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
         .blog-hero p {
             color: rgba(255, 255, 255, 0.7);
             font-size: 1.1rem;
@@ -354,7 +408,9 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* DEVELOPER PROFILE */
+        /* ========================================
+           DEVELOPER PROFILE
+           ======================================== */
         .developer-profile {
             display: flex;
             align-items: center;
@@ -370,22 +426,6 @@
             animation: slideUp 0.8s ease forwards;
             opacity: 0;
             position: relative;
-        }
-
-        /* Rotating border on developer profile */
-        .developer-profile::before {
-            content: '';
-            position: absolute;
-            inset: -2px;
-            border-radius: 22px;
-            padding: 2px;
-            background: conic-gradient(from 0deg, #f5b014, #d49a0e, #f5b014, #d49a0e, #f5b014);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            animation: rotateBorder 6s linear infinite;
-            opacity: 0.4;
-            z-index: -1;
         }
 
         @keyframes slideUp {
@@ -445,7 +485,9 @@
             font-family: 'Courier New', monospace;
         }
 
-        /* TERMINAL */
+        /* ========================================
+           TERMINAL
+           ======================================== */
         .terminal-code {
             max-width: 520px;
             margin: 20px auto 0;
@@ -462,22 +504,6 @@
             animation: fadeInUp 1s ease forwards 0.6s;
             opacity: 0;
             position: relative;
-        }
-
-        /* Rotating border on terminal */
-        .terminal-code::before {
-            content: '';
-            position: absolute;
-            inset: -1px;
-            border-radius: 13px;
-            padding: 1px;
-            background: conic-gradient(from 0deg, #f5b014, #d49a0e, #f5b014, #d49a0e, #f5b014);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            animation: rotateBorder 8s linear infinite;
-            opacity: 0.3;
-            z-index: -1;
         }
 
         .terminal-code .term-header {
@@ -561,23 +587,6 @@
 
         .section-title h2 span {
             color: #f5b014;
-            position: relative;
-        }
-
-        /* Rotating border on section title span */
-        .section-title h2 span::before {
-            content: '';
-            position: absolute;
-            inset: -4px -8px;
-            border-radius: 12px;
-            padding: 2px;
-            background: conic-gradient(from 0deg, #f5b014, #d49a0e, #f5b014, #d49a0e, #f5b014);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            animation: rotateBorder 5s linear infinite;
-            opacity: 0.3;
-            z-index: -1;
         }
 
         .section-title p {
@@ -687,28 +696,6 @@
             margin-bottom: 40px;
             border: 1px solid rgba(0, 0, 0, 0.04);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-        }
-
-        /* Rotating border on featured post */
-        .featured-post::before {
-            content: '';
-            position: absolute;
-            inset: -1px;
-            border-radius: 21px;
-            padding: 1px;
-            background: conic-gradient(from 0deg, #f5b014, #d49a0e, #f5b014, #d49a0e, #f5b014);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            animation: rotateBorder 10s linear infinite;
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            z-index: -1;
-        }
-
-        .featured-post:hover::before {
-            opacity: 0.5;
         }
 
         .featured-post:hover {
@@ -864,27 +851,6 @@
             z-index: 2;
         }
 
-        /* Rotating border on blog card */
-        .blog-card::after {
-            content: '';
-            position: absolute;
-            inset: -1px;
-            border-radius: 17px;
-            padding: 1px;
-            background: conic-gradient(from 0deg, #f5b014, #d49a0e, #f5b014, #d49a0e, #f5b014);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            animation: rotateBorder 12s linear infinite;
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            z-index: -1;
-        }
-
-        .blog-card:hover::after {
-            opacity: 0.4;
-        }
-
         .blog-card:hover::before {
             transform: scaleX(1);
         }
@@ -1025,22 +991,6 @@
             transition: all 0.3s ease;
             color: #475569;
             font-family: inherit;
-            position: relative;
-        }
-
-        /* Rotating border on active page button */
-        .page-btn.active::before {
-            content: '';
-            position: absolute;
-            inset: -2px;
-            border-radius: 14px;
-            padding: 2px;
-            background: conic-gradient(from 0deg, #f5b014, #d49a0e, #f5b014, #d49a0e, #f5b014);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            animation: rotateBorder 3s linear infinite;
-            z-index: -1;
         }
 
         .page-btn:hover:not(:disabled) {
@@ -1083,7 +1033,7 @@
         }
 
         /* ========================================
-           FOOTER (KONSISTEN)
+           FOOTER
            ======================================== */
         footer {
             background: #0f172a;
@@ -1215,7 +1165,7 @@
             .blog-hero h1 { font-size: 2.2rem; }
             
             .navbar .nav-links { display: none; }
-            .nav-buttons .btn-outline { display: none; }
+            .mobile-menu-btn { display: flex; }
             
             .blog-toolbar {
                 flex-direction: column;
@@ -1275,15 +1225,31 @@
                 <li><a href="blog.html" class="active">Blog</a></li>
                 <li><a href="kontak.html">Kontak</a></li>
             </ul>
-            <div class="nav-buttons">
-                <a href="login.html" class="btn btn-outline btn-sm" id="loginBtn">Masuk</a>
-                <a href="register.html" class="btn btn-primary btn-sm" id="registerBtn">Daftar</a>
-                <div id="userMenu" class="hidden">
-                    <a href="user/index.html" class="btn btn-primary btn-sm">👤 <span id="userName">User</span></a>
-                </div>
-            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </nav>
+
+    <!-- ===== MOBILE MENU OVERLAY ===== -->
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <!-- ===== MOBILE MENU SIDEBAR ===== -->
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="close-btn" id="closeMenuBtn">&times;</button>
+        <div class="mobile-logo">Web<span>Dev</span>Pro</div>
+        <ul class="mobile-nav-links">
+            <li><a href="index.html">Beranda</a></li>
+            <li><a href="tentang.html">Tentang</a></li>
+            <li><a href="layanan.html">Layanan</a></li>
+            <li><a href="portofolio.html">Portofolio</a></li>
+            <li><a href="harga.html">Harga</a></li>
+            <li><a href="blog.html" class="active">Blog</a></li>
+            <li><a href="kontak.html">Kontak</a></li>
+        </ul>
+    </div>
 
     <!-- ===== HERO SECTION ===== -->
     <section class="blog-hero">
@@ -1471,11 +1437,9 @@
 
     <!-- ===== FIREBASE SDK ===== -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     
     <script src="assets/js/firebase-config.js"></script>
-    <script src="assets/js/auth.js"></script>
     <script>
         // ============================================
         // NAVBAR SCROLL
@@ -1485,16 +1449,66 @@
         });
 
         // ============================================
-        // AUTH STATE
+        // MOBILE MENU
         // ============================================
-        auth.onAuthStateChanged((user) => {
-            if (user) {
-                document.getElementById('loginBtn').style.display = 'none';
-                document.getElementById('registerBtn').style.display = 'none';
-                document.getElementById('userMenu').classList.remove('hidden');
-                document.getElementById('userName').textContent = user.displayName || user.email;
+        (function() {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const closeMenuBtn = document.getElementById('closeMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const navOverlay = document.getElementById('navOverlay');
+            const body = document.body;
+
+            let isMenuOpen = false;
+
+            function openMenu() {
+                mobileMenu.classList.add('active');
+                navOverlay.classList.add('active');
+                mobileMenuBtn.classList.add('active');
+                body.style.overflow = 'hidden';
+                isMenuOpen = true;
             }
-        });
+
+            function closeMenu() {
+                mobileMenu.classList.remove('active');
+                navOverlay.classList.remove('active');
+                mobileMenuBtn.classList.remove('active');
+                body.style.overflow = '';
+                isMenuOpen = false;
+            }
+
+            mobileMenuBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (isMenuOpen) {
+                    closeMenu();
+                } else {
+                    openMenu();
+                }
+            });
+
+            closeMenuBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                closeMenu();
+            });
+
+            navOverlay.addEventListener('click', function(e) {
+                e.stopPropagation();
+                closeMenu();
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && isMenuOpen) {
+                    closeMenu();
+                }
+            });
+
+            document.querySelectorAll('.mobile-nav-links a').forEach(function(link) {
+                link.addEventListener('click', function() {
+                    closeMenu();
+                });
+            });
+
+            console.log('✅ Mobile menu initialized successfully!');
+        })();
 
         // ============================================
         // BLOG DATA

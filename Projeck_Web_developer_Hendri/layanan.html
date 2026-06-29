@@ -30,7 +30,7 @@
         }
 
         /* ========================================
-           NAVBAR (KONSISTEN)
+           NAVBAR
            ======================================== */
         .navbar {
             position: fixed;
@@ -118,65 +118,140 @@
             border-radius: 4px;
         }
 
-        .nav-buttons {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 20px;
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
             border: none;
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 13px;
-            transition: all 0.3s ease;
-            text-decoration: none;
             cursor: pointer;
-            font-family: inherit;
+            padding: 5px;
+            margin-left: 10px;
+            z-index: 1002;
         }
 
-        .btn-sm {
-            padding: 6px 16px;
-            font-size: 12px;
+        .mobile-menu-btn span {
+            width: 25px;
+            height: 2px;
+            background: white;
+            transition: all 0.3s ease;
+            display: block;
         }
 
-        .btn-outline {
-            background: transparent;
-            border: 2px solid rgba(255, 255, 255, 0.25);
-            color: white;
+        .navbar.scrolled .mobile-menu-btn span {
+            background: #0f172a;
         }
 
-        .navbar.scrolled .btn-outline {
-            border-color: #e2e8f0;
-            color: #1e293b;
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+            background: #0f172a;
         }
-
-        .btn-outline:hover {
-            border-color: #f5b014;
-            color: #f5b014;
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
         }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #f5b014, #d49a0e);
-            color: #0f172a;
-            box-shadow: 0 4px 16px rgba(245, 176, 20, 0.25);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(245, 176, 20, 0.35);
-        }
-
-        .hidden {
-            display: none !important;
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+            background: #0f172a;
         }
 
         /* ========================================
-           HERO SECTION (KONSISTEN)
+           MOBILE NAV OVERLAY
+           ======================================== */
+        .nav-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 10, 26, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* ========================================
+           MOBILE MENU SIDEBAR
+           ======================================== */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -320px;
+            width: 300px;
+            height: 100vh;
+            background: white;
+            z-index: 1001;
+            padding: 80px 30px 30px;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            box-shadow: -20px 0 60px rgba(0, 0, 0, 0.1);
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-menu .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: #0f172a;
+            cursor: pointer;
+            padding: 5px;
+            line-height: 1;
+        }
+
+        .mobile-menu .mobile-logo {
+            font-size: 22px;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 30px;
+        }
+
+        .mobile-menu .mobile-logo span {
+            color: #f5b014;
+        }
+
+        .mobile-menu .mobile-nav-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .mobile-menu .mobile-nav-links li {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .mobile-menu .mobile-nav-links a {
+            display: block;
+            padding: 14px 0;
+            color: #0f172a;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu .mobile-nav-links a:hover {
+            color: #f5b014;
+            padding-left: 8px;
+        }
+
+        .mobile-menu .mobile-nav-links a.active {
+            color: #f5b014;
+        }
+
+        /* ========================================
+           HERO SECTION
            ======================================== */
         .page-hero {
             background: linear-gradient(135deg, #0f172a 0%, #1a1a3e 50%, #0f172a 100%);
@@ -319,27 +394,6 @@
             display: inline-block;
         }
 
-        /* ===== ROTATING BORDER PADA SPAN ===== */
-        .page-hero h1 span::before {
-            content: '';
-            position: absolute;
-            inset: -8px -12px;
-            border-radius: 16px;
-            padding: 2px;
-            background: conic-gradient(from 0deg, #f5b014, #d49a0e, #f5b014, #d49a0e, #f5b014);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            animation: rotateBorder 4s linear infinite;
-            opacity: 0.6;
-            z-index: -1;
-        }
-
-        @keyframes rotateBorder {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
         .page-hero p {
             color: rgba(255, 255, 255, 0.7);
             font-size: 1.1rem;
@@ -354,7 +408,9 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* ===== ROTATING BORDER PADA DEVELOPER PROFILE ===== */
+        /* ========================================
+           DEVELOPER PROFILE
+           ======================================== */
         .developer-profile {
             display: flex;
             align-items: center;
@@ -370,21 +426,6 @@
             animation: slideUp 0.8s ease forwards;
             opacity: 0;
             position: relative;
-        }
-
-        .developer-profile::before {
-            content: '';
-            position: absolute;
-            inset: -2px;
-            border-radius: 22px;
-            padding: 2px;
-            background: conic-gradient(from 0deg, #f5b014, #d49a0e, #f5b014, #d49a0e, #f5b014);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            animation: rotateBorder 6s linear infinite;
-            opacity: 0.4;
-            z-index: -1;
         }
 
         @keyframes slideUp {
@@ -474,23 +515,6 @@
 
         .section-title h2 span {
             color: #f5b014;
-            position: relative;
-        }
-
-        /* Rotating border pada section title span */
-        .section-title h2 span::before {
-            content: '';
-            position: absolute;
-            inset: -4px -8px;
-            border-radius: 12px;
-            padding: 2px;
-            background: conic-gradient(from 0deg, #f5b014, #d49a0e, #f5b014, #d49a0e, #f5b014);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            animation: rotateBorder 5s linear infinite;
-            opacity: 0.3;
-            z-index: -1;
         }
 
         .section-title p {
@@ -522,27 +546,6 @@
             position: relative;
             overflow: hidden;
             border: 1px solid rgba(0, 0, 0, 0.04);
-        }
-
-        /* Rotating border pada service card */
-        .service-card::before {
-            content: '';
-            position: absolute;
-            inset: -1px;
-            border-radius: 21px;
-            padding: 1px;
-            background: conic-gradient(from 0deg, #f5b014, #d49a0e, #f5b014, #d49a0e, #f5b014);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            animation: rotateBorder 10s linear infinite;
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            z-index: -1;
-        }
-
-        .service-card:hover::before {
-            opacity: 0.4;
         }
 
         .service-card:hover {
@@ -731,22 +734,6 @@
             position: relative;
         }
 
-        /* Rotating border pada step number */
-        .step-number::before {
-            content: '';
-            position: absolute;
-            inset: -3px;
-            border-radius: 50%;
-            padding: 2px;
-            background: conic-gradient(from 0deg, #f5b014, #d49a0e, #f5b014, #d49a0e, #f5b014);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            animation: rotateBorder 3s linear infinite;
-            opacity: 0.6;
-            z-index: -1;
-        }
-
         .process-step:hover .step-number {
             transform: scale(1.1) rotate(-5deg);
             box-shadow: 0 12px 40px rgba(245, 176, 20, 0.4);
@@ -781,22 +768,6 @@
             color: white;
             position: relative;
             overflow: hidden;
-        }
-
-        /* Rotating border pada CTA box */
-        .cta-box::before {
-            content: '';
-            position: absolute;
-            inset: -1px;
-            border-radius: 31px;
-            padding: 1px;
-            background: conic-gradient(from 0deg, #f5b014, #d49a0e, #f5b014, #d49a0e, #f5b014);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            animation: rotateBorder 8s linear infinite;
-            opacity: 0.3;
-            z-index: 0;
         }
 
         .cta-box .cta-content {
@@ -843,7 +814,7 @@
         }
 
         /* ========================================
-           FOOTER (KONSISTEN)
+           FOOTER
            ======================================== */
         footer {
             background: #0f172a;
@@ -975,7 +946,7 @@
             .page-hero h1 { font-size: 2.2rem; }
             
             .navbar .nav-links { display: none; }
-            .nav-buttons .btn-outline { display: none; }
+            .mobile-menu-btn { display: flex; }
             
             .services-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
             .process-steps { grid-template-columns: repeat(2, 1fr); gap: 25px; }
@@ -992,7 +963,6 @@
             .section-title h2 { font-size: 1.8rem; }
             .cta-box { padding: 30px 20px; }
             .cta-box h2 { font-size: 1.6rem; }
-            .page-hero h1 span::before { inset: -4px -8px; }
         }
 
         @media (max-width: 480px) {
@@ -1003,7 +973,6 @@
             .service-card { padding: 24px 18px; }
             .section-title h2 { font-size: 1.5rem; }
             .cta-box h2 { font-size: 1.3rem; }
-            .page-hero h1 span::before { inset: -2px -6px; }
         }
     </style>
 </head>
@@ -1021,15 +990,31 @@
                 <li><a href="blog.html">Blog</a></li>
                 <li><a href="kontak.html">Kontak</a></li>
             </ul>
-            <div class="nav-buttons">
-                <a href="login.html" class="btn btn-outline btn-sm" id="loginBtn">Masuk</a>
-                <a href="register.html" class="btn btn-primary btn-sm" id="registerBtn">Daftar</a>
-                <div id="userMenu" class="hidden">
-                    <a href="user/index.html" class="btn btn-primary btn-sm">👤 <span id="userName">User</span></a>
-                </div>
-            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </nav>
+
+    <!-- ===== MOBILE MENU OVERLAY ===== -->
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <!-- ===== MOBILE MENU SIDEBAR ===== -->
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="close-btn" id="closeMenuBtn">&times;</button>
+        <div class="mobile-logo">Web<span>Dev</span>Pro</div>
+        <ul class="mobile-nav-links">
+            <li><a href="index.html">Beranda</a></li>
+            <li><a href="tentang.html">Tentang</a></li>
+            <li><a href="layanan.html" class="active">Layanan</a></li>
+            <li><a href="portofolio.html">Portofolio</a></li>
+            <li><a href="harga.html">Harga</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="kontak.html">Kontak</a></li>
+        </ul>
+    </div>
 
     <!-- ===== HERO SECTION ===== -->
     <section class="page-hero">
@@ -1326,13 +1311,7 @@
     <a href="https://wa.me/6281248141031?text=Halo%20kak%20Hendri,%20saya%20tertarik%20dengan%20produk%20Anda." 
        class="whatsapp-float" target="_blank" aria-label="WhatsApp">💬</a>
 
-    <!-- ===== FIREBASE SDK ===== -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-    
-    <script src="assets/js/firebase-config.js"></script>
-    <script src="assets/js/auth.js"></script>
+    <!-- ===== SCRIPTS ===== -->
     <script>
         // ============================================
         // NAVBAR SCROLL
@@ -1342,16 +1321,66 @@
         });
 
         // ============================================
-        // AUTH STATE
+        // MOBILE MENU
         // ============================================
-        auth.onAuthStateChanged((user) => {
-            if (user) {
-                document.getElementById('loginBtn').style.display = 'none';
-                document.getElementById('registerBtn').style.display = 'none';
-                document.getElementById('userMenu').classList.remove('hidden');
-                document.getElementById('userName').textContent = user.displayName || user.email;
+        (function() {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const closeMenuBtn = document.getElementById('closeMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const navOverlay = document.getElementById('navOverlay');
+            const body = document.body;
+
+            let isMenuOpen = false;
+
+            function openMenu() {
+                mobileMenu.classList.add('active');
+                navOverlay.classList.add('active');
+                mobileMenuBtn.classList.add('active');
+                body.style.overflow = 'hidden';
+                isMenuOpen = true;
             }
-        });
+
+            function closeMenu() {
+                mobileMenu.classList.remove('active');
+                navOverlay.classList.remove('active');
+                mobileMenuBtn.classList.remove('active');
+                body.style.overflow = '';
+                isMenuOpen = false;
+            }
+
+            mobileMenuBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (isMenuOpen) {
+                    closeMenu();
+                } else {
+                    openMenu();
+                }
+            });
+
+            closeMenuBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                closeMenu();
+            });
+
+            navOverlay.addEventListener('click', function(e) {
+                e.stopPropagation();
+                closeMenu();
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && isMenuOpen) {
+                    closeMenu();
+                }
+            });
+
+            document.querySelectorAll('.mobile-nav-links a').forEach(function(link) {
+                link.addEventListener('click', function() {
+                    closeMenu();
+                });
+            });
+
+            console.log('✅ Mobile menu initialized successfully!');
+        })();
 
         console.log('🔥 WebDevPro - Services page loaded successfully!');
     </script>

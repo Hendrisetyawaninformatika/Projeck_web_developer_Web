@@ -327,18 +327,6 @@
             color: var(--primary);
         }
 
-        .mobile-menu .mobile-auth-buttons {
-            margin-top: 30px;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .mobile-menu .mobile-auth-buttons .btn {
-            width: 100%;
-            justify-content: center;
-        }
-
         /* ========================================
            HERO SECTION
            ======================================== */
@@ -1069,13 +1057,6 @@
             </ul>
 
             <div class="nav-buttons">
-                <a href="login.html" class="btn btn-outline btn-sm" id="loginBtn">Masuk</a>
-                <a href="register.html" class="btn btn-primary btn-sm" id="registerBtn">Daftar</a>
-                <div id="userMenu" class="hidden">
-                    <a href="user/index.html" class="btn btn-primary btn-sm">
-                        👤 <span id="userName">User</span>
-                    </a>
-                </div>
                 <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
                     <span></span>
                     <span></span>
@@ -1101,10 +1082,6 @@
             <li><a href="blog.html">Blog</a></li>
             <li><a href="kontak.html">Kontak</a></li>
         </ul>
-        <div class="mobile-auth-buttons">
-            <a href="login.html" class="btn btn-outline" id="mobileLoginBtn" style="border-color:#e2e8f0; color:var(--dark);">Masuk</a>
-            <a href="register.html" class="btn btn-primary" id="mobileRegisterBtn">Daftar</a>
-        </div>
     </div>
 
     <!-- ===== HERO SECTION ===== -->
@@ -1332,15 +1309,7 @@
     <!-- ===== WHATSAPP FLOAT ===== -->
     <a href="https://wa.me/6281248141031?text=Halo%20kak%20Hendri,%20saya%20tertarik%20dengan%20produk%20Anda." class="whatsapp-float" target="_blank" aria-label="Chat WhatsApp">💬</a>
 
-    <!-- ===== FIREBASE SDK ===== -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
-
-    <script src="assets/js/firebase-config.js"></script>
-    <script src="assets/js/auth.js"></script>
-
+    <!-- ===== SCRIPTS ===== -->
     <script>
         // ============================================
         // NAVBAR SCROLL
@@ -1351,7 +1320,7 @@
         });
 
         // ============================================
-        // MOBILE MENU - FIXED VERSION
+        // MOBILE MENU
         // ============================================
         (function() {
             const mobileMenuBtn = document.getElementById('mobileMenuBtn');
@@ -1386,7 +1355,6 @@
                 }
             }
 
-            // Event listeners
             mobileMenuBtn.addEventListener('click', function(e) {
                 e.stopPropagation();
                 toggleMenu();
@@ -1402,26 +1370,17 @@
                 closeMenu();
             });
 
-            // Close on Escape key
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'Escape' && isMenuOpen) {
                     closeMenu();
                 }
             });
 
-            // Close when clicking on mobile nav links
             document.querySelectorAll('.mobile-nav-links a').forEach(function(link) {
                 link.addEventListener('click', function() {
                     closeMenu();
                 });
             });
-
-            // Prevent body scroll when menu is open
-            document.addEventListener('touchmove', function(e) {
-                if (isMenuOpen) {
-                    e.preventDefault();
-                }
-            }, { passive: false });
 
             console.log('✅ Mobile menu initialized successfully!');
         })();
@@ -1446,7 +1405,6 @@
             }, stepTime);
         }
 
-        // Intersection Observer untuk trigger counter
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -1467,24 +1425,6 @@
         document.querySelectorAll('.hero-stats .stat-item h3').forEach(stat => {
             observer.observe(stat);
         });
-
-        // ============================================
-        // AUTH STATE
-        // ============================================
-        if (typeof auth !== 'undefined') {
-            auth.onAuthStateChanged((user) => {
-                if (user) {
-                    document.getElementById('loginBtn').style.display = 'none';
-                    document.getElementById('registerBtn').style.display = 'none';
-                    document.getElementById('userMenu').classList.remove('hidden');
-                    document.getElementById('userName').textContent = user.displayName || user.email;
-
-                    // Also update mobile menu
-                    document.getElementById('mobileLoginBtn').style.display = 'none';
-                    document.getElementById('mobileRegisterBtn').style.display = 'none';
-                }
-            });
-        }
 
         // ============================================
         // SMOOTH SCROLL
