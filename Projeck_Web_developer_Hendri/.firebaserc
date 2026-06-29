@@ -1,0 +1,10 @@
+{
+  "projects": {
+    "default": "web-defeloper-hendri",
+    "y": "web-defeloper-hendri",
+    "staging": "web-defeloper-hendri",
+    "web-defeloper-hendri": "web-defeloper-hendri"
+  },
+  "targets": {},
+  "etags": {}
+}
