@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manajemen Testimoni | Admin WebDevPro</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manajemen Testimoni | WebDevPro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../assets/css/style.css" />
     <style>
         /* ===== RESET & BASE ===== */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         body {
             font-family: 'Poppins', sans-serif;
             background: #0f172a;
@@ -15,8 +20,13 @@
             display: flex;
             overflow-x: hidden;
         }
-        a { text-decoration: none; }
-        button { cursor: pointer; font-family: inherit; }
+        a {
+            text-decoration: none;
+        }
+        button {
+            cursor: pointer;
+            font-family: inherit;
+        }
 
         /* ===== ANIMATED BACKGROUND ===== */
         .bg-animation {
@@ -31,32 +41,52 @@
         }
         .bg-animation .code-line {
             position: absolute;
-            color: rgba(96, 165, 250, 0.06);
+            color: rgba(96, 165, 250, 0.08);
             font-family: 'Courier New', monospace;
-            font-size: 13px;
+            font-size: 14px;
             white-space: nowrap;
             animation: floatCode linear infinite;
-            font-weight: 300;
+            pointer-events: none;
         }
         @keyframes floatCode {
-            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-100vh) rotate(2deg); opacity: 0; }
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(3deg);
+                opacity: 0;
+            }
         }
         .bg-animation .particle {
             position: absolute;
-            width: 3px;
-            height: 3px;
-            background: rgba(96, 165, 250, 0.12);
+            width: 4px;
+            height: 4px;
+            background: rgba(96, 165, 250, 0.15);
             border-radius: 50%;
             animation: floatParticle linear infinite;
         }
         @keyframes floatParticle {
-            0% { transform: translateY(100vh) scale(0); opacity: 0; }
-            20% { opacity: 1; }
-            80% { opacity: 1; }
-            100% { transform: translateY(-100vh) scale(1); opacity: 0; }
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            20% {
+                opacity: 1;
+            }
+            80% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) scale(1);
+                opacity: 0;
+            }
         }
         .bg-animation .glow-orb {
             position: absolute;
@@ -65,8 +95,14 @@
             animation: pulseGlow 8s ease-in-out infinite alternate;
         }
         @keyframes pulseGlow {
-            0% { transform: scale(1) translate(0, 0); opacity: 0.25; }
-            100% { transform: scale(1.4) translate(40px, -40px); opacity: 0.5; }
+            0% {
+                transform: scale(1) translate(0, 0);
+                opacity: 0.3;
+            }
+            100% {
+                transform: scale(1.5) translate(50px, -50px);
+                opacity: 0.6;
+            }
         }
 
         /* ===== SIDEBAR ===== */
@@ -93,8 +129,13 @@
             overflow-y: auto;
             border-right: 1px solid rgba(255, 255, 255, 0.06);
         }
-        .sidebar::-webkit-scrollbar { width: 4px; }
-        .sidebar::-webkit-scrollbar-thumb { background: #475569; border-radius: 10px; }
+        .sidebar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .sidebar::-webkit-scrollbar-thumb {
+            background: #475569;
+            border-radius: 10px;
+        }
         .sidebar-brand h3 {
             font-size: 22px;
             font-weight: 800;
@@ -104,8 +145,17 @@
             
             -webkit-text-fill-color: transparent;
         }
-        .sidebar-brand small { color: #94a3b8; font-size: 11px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; }
-        .sidebar-menu { margin-top: 24px; flex: 1; }
+        .sidebar-brand small {
+            color: #94a3b8;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .sidebar-menu {
+            margin-top: 24px;
+            flex: 1;
+        }
         .menu-header {
             color: #64748b;
             font-size: 11px;
@@ -128,7 +178,11 @@
             margin-bottom: 2px;
             position: relative;
         }
-        .menu-item:hover { background: rgba(255, 255, 255, 0.06); color: #e2e8f0; transform: translateX(4px); }
+        .menu-item:hover {
+            background: rgba(255, 255, 255, 0.06);
+            color: #e2e8f0;
+            transform: translateX(4px);
+        }
         .menu-item.active {
             background: linear-gradient(135deg, rgba(96, 165, 250, 0.2), rgba(167, 139, 250, 0.2));
             color: #60a5fa;
@@ -171,7 +225,7 @@
             font-size: 20px;
             font-weight: 700;
             background: linear-gradient(135deg, #f1f5f9, #94a3b8);
-            
+           
             -webkit-text-fill-color: transparent;
         }
         .admin-header > div {
@@ -189,49 +243,44 @@
             font-size: 13px;
         }
 
-        /* ===== STATS ===== */
-        .stats-grid {
+        /* ===== STATS CARDS ===== */
+        .stats-row {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 16px;
             margin-bottom: 24px;
         }
         .stat-card {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(12px);
-            padding: 18px 22px;
-            border-radius: 18px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
             border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            padding: 16px 20px;
             transition: all 0.3s ease;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         }
-        .stat-card:hover { transform: translateY(-4px); border-color: rgba(96, 165, 250, 0.3); }
-        .stat-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-            flex-shrink: 0;
+        .stat-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(96, 165, 250, 0.3);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
         }
-        .stat-icon.blue { background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.2); }
-        .stat-icon.green { background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.2); }
-        .stat-icon.yellow { background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.2); }
-        .stat-icon.purple { background: rgba(139, 92, 246, 0.15); border: 1px solid rgba(139, 92, 246, 0.2); }
-        .stat-value {
-            font-size: 24px;
-            font-weight: 700;
-            background: linear-gradient(135deg, #f1f5f9, #94a3b8);
-            
+        .stat-card .stat-number {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #60a5fa, #a78bfa);
+
             -webkit-text-fill-color: transparent;
-            line-height: 1.2;
         }
-        .stat-label { font-size: 13px; color: #94a3b8; font-weight: 500; }
+        .stat-card .stat-label {
+            font-size: 13px;
+            color: #94a3b8;
+            font-weight: 500;
+        }
+        .stat-card .stat-icon {
+            float: right;
+            font-size: 28px;
+            opacity: 0.5;
+        }
 
         /* ===== TOOLBAR ===== */
         .toolbar {
@@ -246,8 +295,13 @@
             padding: 12px 20px;
             border-radius: 20px;
             border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         }
-        .filter-group { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+        .filter-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
         .form-control {
             padding: 8px 16px;
             border-radius: 40px;
@@ -261,10 +315,17 @@
             font-family: inherit;
             min-width: 140px;
         }
-        .form-control:focus { border-color: #3b82f6; box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15); }
-        .form-control::placeholder { color: #64748b; }
-        .form-control option { background: #1e293b; color: #e2e8f0; }
-        .form-control.search-input { min-width: 220px; }
+        .form-control:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+        }
+        .form-control::placeholder {
+            color: #64748b;
+        }
+        .form-control option {
+            background: #1e293b;
+            color: #e2e8f0;
+        }
 
         .btn {
             display: inline-flex;
@@ -283,97 +344,112 @@
             color: #fff;
             box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
         }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(59, 130, 246, 0.4); }
+        .btn-primary:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 30px rgba(59, 130, 246, 0.4);
+        }
         .btn-outline {
             background: transparent;
             border: 1.5px solid rgba(255, 255, 255, 0.15);
             color: #94a3b8;
         }
-        .btn-outline:hover { background: rgba(255, 255, 255, 0.05); border-color: #3b82f6; color: #e2e8f0; }
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: #3b82f6;
+            color: #e2e8f0;
+        }
         .btn-danger {
             background: linear-gradient(135deg, #ef4444, #dc2626);
             color: #fff;
             box-shadow: 0 4px 20px rgba(239, 68, 68, 0.3);
         }
-        .btn-danger:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(239, 68, 68, 0.4); }
-
-        /* ===== TESTIMONIAL GRID ===== */
-        .testimonial-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 20px;
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(239, 68, 68, 0.4);
         }
-        .testimonial-card {
+        .btn-sm {
+            padding: 4px 12px;
+            font-size: 12px;
+            border-radius: 8px;
+        }
+        .btn-success {
+            background: #10b981;
+            color: #fff;
+        }
+        .btn-success:hover {
+            background: #059669;
+            transform: translateY(-2px);
+        }
+
+        /* ===== TABLE ===== */
+        .table-container {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(12px);
             border-radius: 20px;
-            padding: 20px 22px;
             border: 1px solid rgba(255, 255, 255, 0.06);
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-        }
-        .testimonial-card:hover { transform: translateY(-4px); border-color: rgba(96, 165, 250, 0.3); }
-        .testimonial-header {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            margin-bottom: 12px;
-        }
-        .testimonial-header img {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            background: #1e293b;
-        }
-        .testimonial-header .client-info h4 {
-            font-weight: 600;
-            color: #f1f5f9;
-            font-size: 16px;
-        }
-        .testimonial-header .client-info span {
-            font-size: 12px;
-            color: #94a3b8;
-        }
-        .testimonial-text {
-            font-size: 14px;
-            color: #cbd5e1;
-            line-height: 1.7;
-            margin-bottom: 12px;
-            display: -webkit-box;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
             overflow: hidden;
         }
-        .testimonial-rating {
-            display: flex;
-            gap: 4px;
-            margin-bottom: 10px;
+        .table-container table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
         }
-        .testimonial-rating .star { color: #f59e0b; font-size: 16px; }
-        .testimonial-rating .star.empty { color: #475569; }
-        .testimonial-actions {
-            display: flex;
-            gap: 6px;
-            justify-content: flex-end;
-            padding-top: 12px;
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        .table-container thead {
+            background: rgba(255, 255, 255, 0.03);
         }
-        .action-btn {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            border: none;
-            background: transparent;
+        .table-container th {
+            text-align: left;
+            padding: 14px 18px;
+            font-weight: 600;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
             color: #94a3b8;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-            font-size: 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            white-space: nowrap;
         }
-        .action-btn:hover { background: rgba(255, 255, 255, 0.05); color: #e2e8f0; }
-        .action-btn.edit:hover { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
-        .action-btn.delete:hover { background: rgba(239, 68, 68, 0.15); color: #f87171; }
+        .table-container td {
+            padding: 14px 18px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            vertical-align: middle;
+            color: #e2e8f0;
+        }
+        .table-container tbody tr {
+            transition: all 0.3s;
+        }
+        .table-container tbody tr:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .table-container tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* ===== BADGES ===== */
+        .badge {
+            display: inline-block;
+            padding: 2px 12px;
+            border-radius: 40px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        .badge-success {
+            background: rgba(16, 185, 129, 0.2);
+            color: #34d399;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+        .badge-warning {
+            background: rgba(245, 158, 11, 0.2);
+            color: #fbbf24;
+            border: 1px solid rgba(245, 158, 11, 0.2);
+        }
+        .badge-danger {
+            background: rgba(239, 68, 68, 0.2);
+            color: #f87171;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
 
         /* ===== MODAL ===== */
         .modal {
@@ -387,15 +463,21 @@
             backdrop-filter: blur(12px);
             animation: fadeIn 0.3s ease;
         }
-        .modal.show { display: flex; }
+        .modal.show {
+            display: flex;
+        }
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
         .modal-content {
             background: #1e293b;
             border-radius: 28px;
-            max-width: 550px;
+            max-width: 600px;
             width: 92%;
             max-height: 90vh;
             overflow-y: auto;
@@ -404,11 +486,22 @@
             border: 1px solid rgba(255, 255, 255, 0.06);
             animation: slideUp 0.35s ease;
         }
-        .modal-content::-webkit-scrollbar { width: 4px; }
-        .modal-content::-webkit-scrollbar-thumb { background: #475569; border-radius: 10px; }
         @keyframes slideUp {
-            from { transform: translateY(20px) scale(0.98); opacity: 0; }
-            to { transform: translateY(0) scale(1); opacity: 1; }
+            from {
+                transform: translateY(20px) scale(0.98);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+        .modal-content::-webkit-scrollbar {
+            width: 4px;
+        }
+        .modal-content::-webkit-scrollbar-thumb {
+            background: #475569;
+            border-radius: 10px;
         }
         .modal-header {
             display: flex;
@@ -422,22 +515,18 @@
             font-size: 20px;
             font-weight: 700;
             background: linear-gradient(135deg, #f1f5f9, #94a3b8);
-           
             -webkit-text-fill-color: transparent;
         }
-        .modal-header .btn-close {
-            padding: 4px 12px;
+        .modal-header .btn-outline {
+            padding: 4px 10px;
             font-size: 18px;
             line-height: 1;
-            background: transparent;
-            border: none;
-            color: #94a3b8;
-            cursor: pointer;
         }
-        .modal-header .btn-close:hover { color: #f87171; }
 
         /* ===== FORM ===== */
-        .form-group { margin-bottom: 18px; }
+        .form-group {
+            margin-bottom: 18px;
+        }
         .form-group label {
             display: block;
             font-weight: 600;
@@ -458,26 +547,123 @@
             color: #e2e8f0;
             min-width: unset;
         }
-        .form-group .form-control:focus { border-color: #3b82f6; box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15); }
-        .form-group .form-control::placeholder { color: #64748b; }
-        .form-group textarea.form-control { resize: vertical; min-height: 80px; }
+        .form-group .form-control:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+        }
+        .form-group .form-control::placeholder {
+            color: #64748b;
+        }
+        .form-group textarea.form-control {
+            resize: vertical;
+            min-height: 80px;
+        }
+        .form-group small {
+            color: #64748b;
+            font-size: 12px;
+            display: block;
+            margin-top: 4px;
+        }
+        .form-group .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+            font-size: 14px;
+            color: #e2e8f0;
+            cursor: pointer;
+        }
+        .form-group .checkbox-label input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #3b82f6;
+            border-radius: 4px;
+        }
 
-        /* ===== RATING ===== */
-        .rating-selector {
+        /* ===== RATING STARS ===== */
+        .rating-input {
             display: flex;
             gap: 6px;
             font-size: 28px;
-        }
-        .rating-selector .star {
-            color: #475569;
             cursor: pointer;
-            transition: all 0.2s;
         }
-        .rating-selector .star.active { color: #f59e0b; }
-        .rating-selector .star:hover { transform: scale(1.15); }
+        .rating-input .star {
+            transition: all 0.3s;
+            opacity: 0.2;
+            filter: grayscale(1);
+        }
+        .rating-input .star:hover {
+            transform: scale(1.2) rotate(-5deg);
+            opacity: 1;
+            filter: grayscale(0);
+        }
+        .rating-input .star.active {
+            opacity: 1;
+            filter: grayscale(0);
+        }
+
+        /* ===== USER AVATAR ===== */
+        .user-cell {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .user-cell img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            background: #1e293b;
+            flex-shrink: 0;
+        }
+        .user-cell .user-name {
+            font-weight: 600;
+            color: #f1f5f9;
+        }
+        .user-cell .user-company {
+            font-size: 12px;
+            color: #94a3b8;
+        }
+
+        /* ===== ACTION BUTTONS ===== */
+        .action-group {
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+        .action-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: none;
+            background: transparent;
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: #e2e8f0;
+        }
+        .action-btn.edit:hover {
+            background: rgba(245, 158, 11, 0.15);
+            color: #fbbf24;
+        }
+        .action-btn.toggle:hover {
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+        }
+        .action-btn.delete:hover {
+            background: rgba(239, 68, 68, 0.15);
+            color: #f87171;
+        }
 
         /* ===== TOAST ===== */
-        .toast {
+        .alert-toast {
             position: fixed;
             top: 24px;
             right: 24px;
@@ -492,54 +678,102 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            max-width: 400px;
             backdrop-filter: blur(12px);
         }
-        .toast.success { background: linear-gradient(135deg, rgba(16, 185, 129, 0.9), rgba(5, 150, 105, 0.9)); border: 1px solid rgba(16, 185, 129, 0.3); }
-        .toast.error { background: linear-gradient(135deg, rgba(239, 68, 68, 0.9), rgba(220, 38, 38, 0.9)); border: 1px solid rgba(239, 68, 68, 0.3); }
-        .toast.warning { background: linear-gradient(135deg, rgba(245, 158, 11, 0.9), rgba(217, 119, 6, 0.9)); border: 1px solid rgba(245, 158, 11, 0.3); }
-        .toast.hide { animation: slideOutRight 0.4s ease forwards; }
+        .alert-toast.success {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.9), rgba(5, 150, 105, 0.9));
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+        .alert-toast.error {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.9), rgba(220, 38, 38, 0.9));
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+        .alert-toast.warning {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.9), rgba(217, 119, 6, 0.9));
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+        .alert-toast.hide {
+            animation: slideOutRight 0.4s ease forwards;
+        }
         @keyframes slideInRight {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
         @keyframes slideOutRight {
-            from { transform: translateX(0); opacity: 1; }
-            to { transform: translateX(100%); opacity: 0; }
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
         }
 
         /* ===== RESPONSIVE ===== */
         @media (max-width: 1024px) {
-            .sidebar { transform: translateX(-100%); }
-            .sidebar.open { transform: translateX(0); }
-            .admin-main { margin-left: 0; padding: 16px; }
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            .admin-main {
+                margin-left: 0;
+                padding: 16px;
+            }
         }
         @media (max-width: 768px) {
-            .toolbar { flex-direction: column; align-items: stretch; }
-            .filter-group { flex-direction: column; }
-            .filter-group .form-control { width: 100%; }
-            .form-control.search-input { min-width: unset; }
-            .testimonial-grid { grid-template-columns: 1fr; }
-            .modal-content { padding: 20px; }
-            .admin-header { flex-direction: column; align-items: flex-start; gap: 8px; }
-            .stats-grid { grid-template-columns: 1fr 1fr; }
+            .toolbar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .filter-group {
+                flex-direction: column;
+            }
+            .filter-group .form-control {
+                width: 100%;
+            }
+            .table-container {
+                overflow-x: auto;
+            }
+            .table-container table {
+                font-size: 12px;
+                min-width: 700px;
+            }
+            .modal-content {
+                padding: 20px;
+            }
+            .admin-header h3 {
+                font-size: 17px;
+            }
+            .admin-header > div {
+                font-size: 13px;
+            }
+            .stats-row {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
         @media (max-width: 480px) {
-            .admin-main { padding: 12px; }
-            .stats-grid { grid-template-columns: 1fr; }
-            .stat-card { padding: 14px 16px; }
-            .stat-value { font-size: 18px; }
-        }
-
-        .sidebar-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: #e2e8f0;
-            font-size: 24px;
-            cursor: pointer;
-        }
-        @media (max-width: 1024px) {
-            .sidebar-toggle { display: block; }
+            .admin-main {
+                padding: 12px;
+            }
+            .admin-header {
+                padding: 12px 16px;
+                flex-direction: column;
+                gap: 8px;
+                align-items: flex-start;
+            }
+            .stats-row {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -551,7 +785,7 @@
         <!-- ===== SIDEBAR ===== -->
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-brand">
-                <h3>Web<span style="background:transparent; -webkit-text-fill-color:#f5b014;">Dev</span>Pro</h3>
+                <h3>Web<span>Dev</span>Pro</h3>
                 <small>Admin Panel</small>
             </div>
             <div class="sidebar-menu">
@@ -560,12 +794,12 @@
 
                 <div class="menu-header">Manajemen</div>
                 <a href="users.html" class="menu-item">👥 Users</a>
-                <a href="pesanans.html" class="menu-item">🛒 Pesanan</a>
                 <a href="pakets.html" class="menu-item">📦 Paket</a>
                 <a href="portofolios.html" class="menu-item">🎨 Portofolio</a>
                 <a href="blogs.html" class="menu-item">📝 Blog</a>
-                <a href="testimonials.html" class="menu-item active">⭐ Testimoni</a>
+                <a href="testimonis.html" class="menu-item active">⭐ Testimoni</a>
                 <a href="faqs.html" class="menu-item">❓ FAQ</a>
+                <a href="pesanans.html" class="menu-item">🛒 Pesanan</a>
 
                 <div class="menu-header">Pengaturan</div>
                 <a href="settings.html" class="menu-item">⚙️ Pengaturan</a>
@@ -579,8 +813,6 @@
 
         <!-- ===== MAIN ===== -->
         <div class="admin-main">
-            <button class="sidebar-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
-
             <div class="admin-header">
                 <h3>⭐ Manajemen Testimoni</h3>
                 <div>
@@ -589,95 +821,144 @@
             </div>
 
             <!-- Stats -->
-            <div class="stats-grid">
+            <div class="stats-row" id="statsRow">
                 <div class="stat-card">
-                    <div class="stat-icon blue">⭐</div>
-                    <div>
-                        <div class="stat-value" id="totalTestimonials">0</div>
-                        <div class="stat-label">Total Testimoni</div>
-                    </div>
+                    <span class="stat-icon">📊</span>
+                    <div class="stat-number" id="totalCount">0</div>
+                    <div class="stat-label">Total Testimoni</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon green">✅</div>
-                    <div>
-                        <div class="stat-value" id="avgRating">0.0</div>
-                        <div class="stat-label">Rating Rata-rata</div>
-                    </div>
+                    <span class="stat-icon">✅</span>
+                    <div class="stat-number" id="publishedCount">0</div>
+                    <div class="stat-label">Published</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon yellow">⭐</div>
-                    <div>
-                        <div class="stat-value" id="fiveStars">0</div>
-                        <div class="stat-label">Rating 5 Bintang</div>
-                    </div>
+                    <span class="stat-icon">⏳</span>
+                    <div class="stat-number" id="pendingCount">0</div>
+                    <div class="stat-label">Pending</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-icon purple">📊</div>
-                    <div>
-                        <div class="stat-value" id="responseRate">0%</div>
-                        <div class="stat-label">Respon Rate</div>
-                    </div>
+                    <span class="stat-icon">⭐</span>
+                    <div class="stat-number" id="avgRating">0.0</div>
+                    <div class="stat-label">Rata-rata Rating</div>
                 </div>
             </div>
 
-            <!-- Toolbar -->
-            <div class="toolbar">
-                <div class="filter-group">
-                    <input type="text" id="searchTestimonial" class="form-control search-input" placeholder="🔍 Cari testimoni..." onkeyup="searchTestimonials()" />
+            <div class="admin-content">
+                <!-- Toolbar -->
+                <div class="toolbar">
+                    <div class="filter-group">
+                        <select id="filterStatus" class="form-control" onchange="loadTestimonis()">
+                            <option value="">Semua Status</option>
+                            <option value="published">Published</option>
+                            <option value="pending">Pending</option>
+                            <option value="rejected">Rejected</option>
+                        </select>
+                        <select id="filterRating" class="form-control" onchange="loadTestimonis()">
+                            <option value="">Semua Rating</option>
+                            <option value="5">⭐⭐⭐⭐⭐ (5)</option>
+                            <option value="4">⭐⭐⭐⭐ (4)</option>
+                            <option value="3">⭐⭐⭐ (3)</option>
+                            <option value="2">⭐⭐ (2)</option>
+                            <option value="1">⭐ (1)</option>
+                        </select>
+                        <input type="text" id="searchInput" class="form-control" placeholder="🔍 Cari testimoni..." oninput="loadTestimonis()" />
+                    </div>
+                    <button class="btn btn-primary" onclick="openModal()">➕ Tambah Testimoni</button>
                 </div>
-                <button class="btn btn-primary" onclick="openModal()">➕ Tambah Testimoni</button>
-            </div>
 
-            <!-- Testimonial Grid -->
-            <div class="testimonial-grid" id="testimonialGrid">
-                <div style="grid-column:1/-1; text-align:center; padding:40px; color:#64748b;">⏳ Memuat data...</div>
+                <!-- Table -->
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width:50px;">No</th>
+                                <th>Pelanggan</th>
+                                <th>Rating</th>
+                                <th>Testimoni</th>
+                                <th>Paket</th>
+                                <th>Status</th>
+                                <th>Tanggal</th>
+                                <th style="width:140px;">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="testimoniTable">
+                            <tr><td colspan="8" style="text-align:center; padding:40px; color:#64748b;">⏳ Memuat data...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- ===== MODAL FORM ===== -->
-    <div id="testimonialModal" class="modal">
+    <div id="testimoniModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 id="modalTitle">⭐ Tambah Testimoni</h4>
-                <button class="btn-close" onclick="closeModal()">✕</button>
+                <h4 id="modalTitle">Tambah Testimoni</h4>
+                <button class="btn btn-outline" onclick="closeModal()" style="padding:4px 12px; font-size:18px; line-height:1;">✕</button>
             </div>
-            <form id="testimonialForm" onsubmit="saveTestimonial(event)">
-                <input type="hidden" id="testimonialId" />
+            <form id="testimoniForm" onsubmit="saveTestimoni(event)">
+                <input type="hidden" id="testimoniId" />
 
                 <div class="form-group">
-                    <label>Nama Klien <span style="color:#ef4444;">*</span></label>
-                    <input type="text" id="clientName" class="form-control" required placeholder="Nama klien..." />
+                    <label>Nama Pelanggan <span style="color:#ef4444;">*</span></label>
+                    <input type="text" id="nama" class="form-control" required placeholder="Nama pelanggan" />
                 </div>
 
                 <div class="form-group">
-                    <label>Perusahaan / Jabatan</label>
-                    <input type="text" id="clientRole" class="form-control" placeholder="Contoh: CEO PT Maju Jaya" />
+                    <label>Email</label>
+                    <input type="email" id="email" class="form-control" placeholder="Email pelanggan (opsional)" />
                 </div>
 
                 <div class="form-group">
-                    <label>Testimoni <span style="color:#ef4444;">*</span></label>
-                    <textarea id="testimonialText" class="form-control" rows="4" required placeholder="Tulis testimoni di sini..."></textarea>
+                    <label>Perusahaan / Profesi</label>
+                    <input type="text" id="perusahaan" class="form-control" placeholder="Contoh: CEO PT Maju Jaya" />
                 </div>
 
                 <div class="form-group">
                     <label>Rating <span style="color:#ef4444;">*</span></label>
-                    <div class="rating-selector" id="ratingSelector">
-                        <span class="star" data-value="1">★</span>
-                        <span class="star" data-value="2">★</span>
-                        <span class="star" data-value="3">★</span>
-                        <span class="star" data-value="4">★</span>
-                        <span class="star" data-value="5">★</span>
+                    <div class="rating-input">
+                        <span class="star active" data-value="1" onclick="setRating(1)">⭐</span>
+                        <span class="star active" data-value="2" onclick="setRating(2)">⭐</span>
+                        <span class="star active" data-value="3" onclick="setRating(3)">⭐</span>
+                        <span class="star active" data-value="4" onclick="setRating(4)">⭐</span>
+                        <span class="star active" data-value="5" onclick="setRating(5)">⭐</span>
                     </div>
-                    <input type="hidden" id="ratingValue" value="5" />
+                    <input type="hidden" id="rating" value="5" required />
                 </div>
 
                 <div class="form-group">
-                    <label>Foto Klien</label>
-                    <div style="border:2px dashed rgba(255,255,255,0.1); border-radius:14px; padding:16px; text-align:center; cursor:pointer;" onclick="document.getElementById('clientImage').click()">
-                        <p style="color:#94a3b8; font-size:13px;">📸 Klik untuk upload foto</p>
-                        <input type="file" id="clientImage" accept="image/*" hidden />
-                    </div>
+                    <label>Testimoni <span style="color:#ef4444;">*</span></label>
+                    <textarea id="isi" class="form-control" rows="4" required placeholder="Isi testimoni pelanggan..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Paket Layanan</label>
+                    <select id="paketId" class="form-control">
+                        <option value="">Pilih Paket</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Foto Profil (URL)</label>
+                    <input type="url" id="fotoUrl" class="form-control" placeholder="https://example.com/foto.jpg" />
+                    <small>Kosongkan untuk menggunakan avatar default</small>
+                </div>
+
+                <div class="form-group">
+                    <label>Status</label>
+                    <select id="status" class="form-control">
+                        <option value="published">Published</option>
+                        <option value="pending">Pending</option>
+                        <option value="rejected">Rejected</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="isFeatured" /> Tampilkan di Beranda (Featured)
+                    </label>
                 </div>
 
                 <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:24px; padding-top:16px; border-top:1px solid rgba(255,255,255,0.06);">
@@ -699,297 +980,369 @@
             <p style="color:#94a3b8; font-size:14px; margin-top:4px;">Tindakan ini tidak dapat dibatalkan.</p>
             <div style="display:flex; justify-content:center; gap:12px; margin-top:24px; padding-top:16px; border-top:1px solid rgba(255,255,255,0.06);">
                 <button class="btn btn-outline" onclick="closeDeleteModal()">Batal</button>
-                <button class="btn btn-danger" onclick="confirmDelete()">🗑️ Hapus</button>
+                <button class="btn btn-danger" id="confirmDeleteBtn" onclick="confirmDelete()">🗑️ Hapus</button>
             </div>
         </div>
     </div>
 
-    <!-- ===== FIREBASE SDK ===== -->
+    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
+    <script src="../assets/js/firebase-config.js"></script>
+    <script src="../assets/js/auth.js"></script>
     <script>
-        // ===== FIREBASE CONFIG =====
-        const firebaseConfig = {
-            apiKey: "AIzaSyDummyKeyForDemo",
-            authDomain: "webdevpro-demo.firebaseapp.com",
-            projectId: "webdevpro-demo",
-            storageBucket: "webdevpro-demo.appspot.com",
-            messagingSenderId: "123456789",
-            appId: "1:123456789:web:abcdef123456"
-        };
-
-        if (!firebase.apps.length) {
-            firebase.initializeApp(firebaseConfig);
-        }
-
-        const auth = firebase.auth();
-        const db = firebase.firestore();
-
         let deleteId = null;
-        let allTestimonials = [];
+        let paketList = [];
+        let allTestimonis = [];
+
+        // ===== ANIMATED BACKGROUND =====
+        function createBgAnimation() {
+            const container = document.getElementById('bgAnimation');
+
+            // Code lines
+            const codeSnippets = [
+                'const app = new Vue({ ... });',
+                'function Testimonial() { return <div /> }',
+                'import { useState } from "react"',
+                'useEffect(() => { fetchData() }, [])',
+                'const router = useRouter()',
+                'export default function Page() {',
+                'return ( <div className="app"> )',
+                'const [data, setData] = useState([])',
+                'async function handleSubmit() {',
+                'console.log("Hello World!")',
+                'const response = await fetch("/api")',
+                '.then(res => res.json())',
+                'class Developer { constructor() }',
+                'render() { return <Testimonial /> }',
+                '/* This is a comment */'
+            ];
+
+            for (let i = 0; i < 18; i++) {
+                const line = document.createElement('div');
+                line.className = 'code-line';
+                line.textContent = codeSnippets[i % codeSnippets.length];
+                line.style.left = Math.random() * 100 + '%';
+                line.style.fontSize = (12 + Math.random() * 8) + 'px';
+                line.style.animationDuration = (15 + Math.random() * 20) + 's';
+                line.style.animationDelay = (Math.random() * 20) + 's';
+                line.style.opacity = 0.3 + Math.random() * 0.4;
+                container.appendChild(line);
+            }
+
+            // Particles
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.width = (2 + Math.random() * 4) + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.animationDuration = (10 + Math.random() * 15) + 's';
+                particle.style.animationDelay = (Math.random() * 15) + 's';
+                container.appendChild(particle);
+            }
+
+            // Glow orbs
+            const colors = ['#3b82f6', '#8b5cf6', '#06b6d4', '#10b981'];
+            for (let i = 0; i < 3; i++) {
+                const orb = document.createElement('div');
+                orb.className = 'glow-orb';
+                orb.style.width = (150 + Math.random() * 200) + 'px';
+                orb.style.height = orb.style.width;
+                orb.style.background = colors[i % colors.length];
+                orb.style.left = (Math.random() * 80) + '%';
+                orb.style.top = (Math.random() * 80) + '%';
+                orb.style.animationDuration = (6 + Math.random() * 6) + 's';
+                orb.style.animationDelay = (Math.random() * 4) + 's';
+                container.appendChild(orb);
+            }
+        }
 
         // ===== CHECK ADMIN =====
-        function checkAdmin() {
-            return new Promise((resolve, reject) => {
-                auth.onAuthStateChanged(async (user) => {
-                    if (!user) {
-                        window.location.href = '../login.html';
-                        return reject();
-                    }
+        checkAdmin().then(() => {
+            loadPaketOptions();
+            loadTestimonis();
+        });
 
-                    try {
-                        const doc = await db.collection('users').doc(user.uid).get();
-                        if (doc.exists && doc.data().role === 'admin') {
-                            document.getElementById('adminName').textContent = doc.data().nama || 'Admin';
-                            resolve();
-                        } else {
-                            window.location.href = '../login.html';
-                            reject();
-                        }
-                    } catch (error) {
-                        console.error('Error checking admin:', error);
-                        window.location.href = '../login.html';
-                        reject();
-                    }
+        // ===== LOAD PAKET OPTIONS =====
+        async function loadPaketOptions() {
+            try {
+                const snapshot = await db.collection('pakets').orderBy('nama', 'asc').get();
+                paketList = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+                const select = document.getElementById('paketId');
+                paketList.forEach(paket => {
+                    select.innerHTML += `<option value="${paket.id}">${paket.nama}</option>`;
                 });
-            });
+            } catch (error) {
+                console.error('Error loading pakets:', error);
+            }
         }
 
-        // ===== LOAD TESTIMONIALS =====
-        async function loadTestimonials() {
+        // ===== LOAD TESTIMONIS =====
+        async function loadTestimonis() {
             try {
-                const snapshot = await db.collection('testimonials').orderBy('createdAt', 'desc').get();
-                allTestimonials = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                const statusFilter = document.getElementById('filterStatus').value;
+                const ratingFilter = document.getElementById('filterRating').value;
+                const searchQuery = document.getElementById('searchInput').value.toLowerCase().trim();
 
-                updateStats(allTestimonials);
-                renderGrid(allTestimonials);
+                let query = db.collection('testimonis').orderBy('createdAt', 'desc');
+
+                if (statusFilter) {
+                    query = query.where('status', '==', statusFilter);
+                }
+
+                const snapshot = await query.get();
+                allTestimonis = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+                // Apply filters
+                let filtered = allTestimonis;
+
+                if (ratingFilter) {
+                    filtered = filtered.filter(t => t.rating == ratingFilter);
+                }
+
+                if (searchQuery) {
+                    filtered = filtered.filter(t =>
+                        (t.nama || '').toLowerCase().includes(searchQuery) ||
+                        (t.isi || '').toLowerCase().includes(searchQuery) ||
+                        (t.perusahaan || '').toLowerCase().includes(searchQuery)
+                    );
+                }
+
+                renderTable(filtered);
+                updateStats(allTestimonis);
             } catch (error) {
-                console.error('Error loading testimonials:', error);
-                document.getElementById('testimonialGrid').innerHTML =
-                    '<div style="grid-column:1/-1; text-align:center; padding:40px; color:#f87171;">❌ Gagal memuat data</div>';
+                console.error('Error loading testimonis:', error);
+                document.getElementById('testimoniTable').innerHTML =
+                    '<tr><td colspan="8" style="text-align:center; padding:40px; color:#f87171;">❌ Gagal memuat data</td></tr>';
             }
         }
 
         // ===== UPDATE STATS =====
-        function updateStats(testimonials) {
-            document.getElementById('totalTestimonials').textContent = testimonials.length;
+        function updateStats(testimonis) {
+            const total = testimonis.length;
+            const published = testimonis.filter(t => t.status === 'published').length;
+            const pending = testimonis.filter(t => t.status === 'pending').length;
+            const ratings = testimonis.map(t => t.rating || 0);
+            const avg = ratings.length ? (ratings.reduce((a, b) => a + b, 0) / ratings.length) : 0;
 
-            const totalRating = testimonials.reduce((sum, t) => sum + (t.rating || 0), 0);
-            const avg = testimonials.length ? (totalRating / testimonials.length) : 0;
+            document.getElementById('totalCount').textContent = total;
+            document.getElementById('publishedCount').textContent = published;
+            document.getElementById('pendingCount').textContent = pending;
             document.getElementById('avgRating').textContent = avg.toFixed(1);
-
-            document.getElementById('fiveStars').textContent = testimonials.filter(t => t.rating === 5).length;
-
-            const responded = testimonials.filter(t => t.respon).length;
-            const rate = testimonials.length ? Math.round((responded / testimonials.length) * 100) : 0;
-            document.getElementById('responseRate').textContent = rate + '%';
         }
 
-        // ===== RENDER GRID =====
-        function renderGrid(testimonials) {
-            const grid = document.getElementById('testimonialGrid');
-            grid.innerHTML = '';
+        // ===== RENDER TABLE =====
+        function renderTable(testimonis) {
+            const tbody = document.getElementById('testimoniTable');
+            tbody.innerHTML = '';
 
-            if (testimonials.length === 0) {
-                grid.innerHTML =
-                    '<div style="grid-column:1/-1; text-align:center; padding:40px; color:#64748b;">📭 Belum ada testimoni</div>';
+            if (testimonis.length === 0) {
+                tbody.innerHTML =
+                    '<tr><td colspan="8" style="text-align:center; padding:40px; color:#64748b;">📭 Tidak ada data testimoni</td></tr>';
                 return;
             }
 
-            testimonials.forEach(t => {
-                const rating = t.rating || 5;
-                const stars = Array(5).fill(0).map((_, i) =>
-                    `<span class="star ${i < rating ? 'active' : 'empty'}">★</span>`
-                ).join('');
+            testimonis.forEach((t, index) => {
+                const statusBadge = {
+                    'published': '<span class="badge badge-success">Published</span>',
+                    'pending': '<span class="badge badge-warning">Pending</span>',
+                    'rejected': '<span class="badge badge-danger">Rejected</span>'
+                }[t.status] || '<span class="badge badge-warning">Pending</span>';
 
-                const imageUrl = t.imageUrl || `https://ui-avatars.com/api/?name=${encodeURIComponent(t.nama || 'Client')}&background=3b82f6&color=fff&size=48`;
+                const stars = '⭐'.repeat(t.rating || 0) + '☆'.repeat(5 - (t.rating || 0));
+                const paketNama = paketList.find(p => p.id === t.paketId)?.nama || t.paketNama || '-';
+                const foto = t.fotoUrl ||
+                    `https://ui-avatars.com/api/?name=${encodeURIComponent(t.nama || 'User')}&background=3b82f6&color=fff&size=40&bold=true`;
 
-                grid.innerHTML += `
-                    <div class="testimonial-card">
-                        <div class="testimonial-header">
-                            <img src="${imageUrl}" alt="${t.nama || 'Client'}" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(t.nama || 'Client')}&background=3b82f6&color=fff&size=48'" />
-                            <div class="client-info">
-                                <h4>${t.nama || 'Anonymous'}</h4>
-                                <span>${t.role || 'Klien'}</span>
-                            </div>
-                        </div>
-                        <div class="testimonial-rating">${stars}</div>
-                        <div class="testimonial-text">"${t.testimoni || 'No testimonial'}"</div>
-                        ${t.respon ? `<div style="font-size:12px; color:#94a3b8; padding:8px 12px; background:rgba(255,255,255,0.03); border-radius:8px; margin-bottom:8px;">💬 Respon: ${t.respon}</div>` : ''}
-                        <div class="testimonial-actions">
-                            <button class="action-btn edit" onclick="editTestimonial('${t.id}')" title="Edit">✏️</button>
-                            <button class="action-btn delete" onclick="deleteTestimonial('${t.id}')" title="Hapus">🗑️</button>
-                        </div>
-                    </div>
-                `;
+                tbody.innerHTML += `
+                        <tr>
+                            <td>${index + 1}</td>
+                            <td>
+                                <div class="user-cell">
+                                    <img src="${foto}" alt="${t.nama || 'User'}" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(t.nama || 'User')}&background=3b82f6&color=fff&size=40'" />
+                                    <div>
+                                        <div class="user-name">${t.nama || 'Unknown'}</div>
+                                        <div class="user-company">${t.perusahaan || ''}</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="font-size:14px;">${stars}</td>
+                            <td style="max-width:220px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;" title="${t.isi || ''}">
+                                ${t.isi || '-'}
+                            </td>
+                            <td><span style="font-weight:500; font-size:12px; background:rgba(255,255,255,0.06); padding:2px 12px; border-radius:20px; color:#94a3b8;">${paketNama}</span></td>
+                            <td>${statusBadge}</td>
+                            <td style="font-size:12px; color:#64748b;">${t.createdAt ? new Date(t.createdAt.toDate()).toLocaleDateString('id-ID') : '-'}</td>
+                            <td>
+                                <div class="action-group">
+                                    <button class="action-btn edit" onclick="editTestimoni('${t.id}')" title="Edit">✏️</button>
+                                    <button class="action-btn toggle" onclick="toggleStatus('${t.id}', '${t.status}')" title="Ubah Status">
+                                        ${t.status === 'published' ? '🚫' : '✅'}
+                                    </button>
+                                    <button class="action-btn delete" onclick="deleteTestimoni('${t.id}')" title="Hapus">🗑️</button>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
             });
         }
 
-        // ===== SEARCH TESTIMONIALS =====
-        function searchTestimonials() {
-            const keyword = document.getElementById('searchTestimonial').value.toLowerCase();
-            const filtered = allTestimonials.filter(t =>
-                (t.nama && t.nama.toLowerCase().includes(keyword)) ||
-                (t.testimoni && t.testimoni.toLowerCase().includes(keyword)) ||
-                (t.role && t.role.toLowerCase().includes(keyword))
-            );
-            renderGrid(filtered);
+        // ===== SET RATING =====
+        function setRating(value) {
+            document.getElementById('rating').value = value;
+            const stars = document.querySelectorAll('.rating-input .star');
+            stars.forEach((star, index) => {
+                star.classList.toggle('active', index < value);
+            });
         }
-
-        // ===== RATING SELECTOR =====
-        document.querySelectorAll('#ratingSelector .star').forEach(star => {
-            star.addEventListener('click', function() {
-                const value = parseInt(this.dataset.value);
-                document.getElementById('ratingValue').value = value;
-                document.querySelectorAll('#ratingSelector .star').forEach(s => {
-                    s.classList.toggle('active', parseInt(s.dataset.value) <= value);
-                });
-            });
-            star.addEventListener('mouseenter', function() {
-                const value = parseInt(this.dataset.value);
-                document.querySelectorAll('#ratingSelector .star').forEach(s => {
-                    s.style.color = parseInt(s.dataset.value) <= value ? '#f59e0b' : '#475569';
-                });
-            });
-            star.addEventListener('mouseleave', function() {
-                const value = parseInt(document.getElementById('ratingValue').value);
-                document.querySelectorAll('#ratingSelector .star').forEach(s => {
-                    s.style.color = '';
-                    s.classList.toggle('active', parseInt(s.dataset.value) <= value);
-                });
-            });
-        });
 
         // ===== OPEN MODAL =====
         function openModal(id = null) {
-            document.getElementById('testimonialForm').reset();
-            document.getElementById('testimonialId').value = '';
-            document.getElementById('ratingValue').value = 5;
-            document.querySelectorAll('#ratingSelector .star').forEach(s => {
-                s.classList.toggle('active', parseInt(s.dataset.value) <= 5);
-            });
+            document.getElementById('testimoniForm').reset();
+            document.getElementById('testimoniId').value = '';
+            setRating(5);
 
             if (id) {
                 document.getElementById('modalTitle').textContent = '✏️ Edit Testimoni';
-                loadTestimonialData(id);
+                loadTestimoniData(id);
             } else {
-                document.getElementById('modalTitle').textContent = '⭐ Tambah Testimoni';
+                document.getElementById('modalTitle').textContent = '➕ Tambah Testimoni';
             }
 
-            document.getElementById('testimonialModal').classList.add('show');
+            document.getElementById('testimoniModal').classList.add('show');
             document.body.style.overflow = 'hidden';
         }
 
+        // ===== CLOSE MODAL =====
         function closeModal() {
-            document.getElementById('testimonialModal').classList.remove('show');
+            document.getElementById('testimoniModal').classList.remove('show');
             document.body.style.overflow = '';
         }
 
-        // ===== LOAD TESTIMONIAL DATA =====
-        async function loadTestimonialData(id) {
+        // ===== LOAD SINGLE TESTIMONI =====
+        async function loadTestimoniData(id) {
             try {
-                const doc = await db.collection('testimonials').doc(id).get();
+                const doc = await db.collection('testimonis').doc(id).get();
                 if (!doc.exists) return;
 
                 const data = doc.data();
-                document.getElementById('testimonialId').value = id;
-                document.getElementById('clientName').value = data.nama || '';
-                document.getElementById('clientRole').value = data.role || '';
-                document.getElementById('testimonialText').value = data.testimoni || '';
-
-                const rating = data.rating || 5;
-                document.getElementById('ratingValue').value = rating;
-                document.querySelectorAll('#ratingSelector .star').forEach(s => {
-                    s.classList.toggle('active', parseInt(s.dataset.value) <= rating);
-                });
+                document.getElementById('testimoniId').value = id;
+                document.getElementById('nama').value = data.nama || '';
+                document.getElementById('email').value = data.email || '';
+                document.getElementById('perusahaan').value = data.perusahaan || '';
+                document.getElementById('isi').value = data.isi || '';
+                document.getElementById('fotoUrl').value = data.fotoUrl || '';
+                document.getElementById('paketId').value = data.paketId || '';
+                document.getElementById('status').value = data.status || 'pending';
+                document.getElementById('isFeatured').checked = data.isFeatured || false;
+                setRating(data.rating || 5);
             } catch (error) {
-                console.error('Error loading testimonial:', error);
-                showToast('Gagal memuat data testimoni', 'error');
+                console.error('Error loading testimoni:', error);
+                showAlert('Gagal memuat data testimoni', 'error');
             }
         }
 
-        // ===== SAVE TESTIMONIAL =====
-        async function saveTestimonial(event) {
+        // ===== SAVE TESTIMONI =====
+        async function saveTestimoni(event) {
             event.preventDefault();
 
-            const id = document.getElementById('testimonialId').value;
-            const nama = document.getElementById('clientName').value.trim();
-            const role = document.getElementById('clientRole').value.trim();
-            const testimoni = document.getElementById('testimonialText').value.trim();
-            const rating = parseInt(document.getElementById('ratingValue').value) || 5;
-
-            if (!nama || !testimoni) {
-                showToast('Nama dan testimoni wajib diisi!', 'warning');
-                return;
-            }
+            const id = document.getElementById('testimoniId').value;
+            const data = {
+                nama: document.getElementById('nama').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                perusahaan: document.getElementById('perusahaan').value.trim(),
+                rating: parseInt(document.getElementById('rating').value),
+                isi: document.getElementById('isi').value.trim(),
+                paketId: document.getElementById('paketId').value,
+                paketNama: paketList.find(p => p.id === document.getElementById('paketId').value)?.nama || '',
+                fotoUrl: document.getElementById('fotoUrl').value.trim(),
+                status: document.getElementById('status').value,
+                isFeatured: document.getElementById('isFeatured').checked,
+                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+            };
 
             try {
-                const data = {
-                    nama,
-                    role,
-                    testimoni,
-                    rating,
-                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-                };
-
                 if (id) {
-                    await db.collection('testimonials').doc(id).update(data);
-                    showToast('✅ Testimoni berhasil diperbarui!', 'success');
+                    await db.collection('testimonis').doc(id).update(data);
+                    showAlert('✅ Testimoni berhasil diperbarui!', 'success');
                 } else {
                     data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
-                    await db.collection('testimonials').add(data);
-                    showToast('✅ Testimoni berhasil ditambahkan!', 'success');
+                    await db.collection('testimonis').add(data);
+                    showAlert('✅ Testimoni berhasil ditambahkan!', 'success');
                 }
 
                 closeModal();
-                loadTestimonials();
+                loadTestimonis();
             } catch (error) {
-                console.error('Error saving testimonial:', error);
-                showToast('❌ Gagal menyimpan testimoni: ' + error.message, 'error');
+                console.error('Error saving testimoni:', error);
+                showAlert('❌ Gagal menyimpan testimoni: ' + error.message, 'error');
             }
         }
 
-        // ===== EDIT TESTIMONIAL =====
-        function editTestimonial(id) {
+        // ===== EDIT TESTIMONI =====
+        function editTestimoni(id) {
             openModal(id);
         }
 
-        // ===== DELETE TESTIMONIAL =====
-        function deleteTestimonial(id) {
+        // ===== TOGGLE STATUS =====
+        async function toggleStatus(id, currentStatus) {
+            const newStatus = currentStatus === 'published' ? 'pending' : 'published';
+            try {
+                await db.collection('testimonis').doc(id).update({
+                    status: newStatus,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                showAlert(`✅ Status diubah ke ${newStatus}`, 'success');
+                loadTestimonis();
+            } catch (error) {
+                showAlert('❌ Gagal mengubah status: ' + error.message, 'error');
+            }
+        }
+
+        // ===== DELETE TESTIMONI =====
+        function deleteTestimoni(id) {
             deleteId = id;
             document.getElementById('deleteModal').classList.add('show');
             document.body.style.overflow = 'hidden';
         }
 
+        // ===== CLOSE DELETE MODAL =====
         function closeDeleteModal() {
             deleteId = null;
             document.getElementById('deleteModal').classList.remove('show');
             document.body.style.overflow = '';
         }
 
+        // ===== CONFIRM DELETE =====
         async function confirmDelete() {
             if (!deleteId) return;
 
             try {
-                await db.collection('testimonials').doc(deleteId).delete();
-                showToast('✅ Testimoni berhasil dihapus!', 'success');
+                await db.collection('testimonis').doc(deleteId).delete();
+                showAlert('✅ Testimoni berhasil dihapus!', 'success');
                 closeDeleteModal();
-                loadTestimonials();
+                loadTestimonis();
             } catch (error) {
-                showToast('❌ Gagal menghapus: ' + error.message, 'error');
+                showAlert('❌ Gagal menghapus: ' + error.message, 'error');
             }
         }
 
-        // ===== SHOW TOAST =====
-        function showToast(message, type = 'success') {
-            const existing = document.querySelector('.toast');
+        // ===== SHOW ALERT =====
+        function showAlert(message, type = 'success') {
+            const existing = document.querySelector('.alert-toast');
             if (existing) existing.remove();
 
             const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            const icons = { success: '✅', error: '❌', warning: '⚠️' };
+            toast.className = `alert-toast ${type}`;
+            const icons = {
+                success: '✅',
+                error: '❌',
+                warning: '⚠️'
+            };
             toast.innerHTML = `${icons[type] || 'ℹ️'} ${message}`;
             document.body.appendChild(toast);
 
@@ -999,7 +1352,7 @@
             }, 3500);
         }
 
-        // ===== CLOSE MODAL ON OVERLAY =====
+        // ===== CLOSE MODAL ON OVERLAY CLICK =====
         document.querySelectorAll('.modal').forEach(modal => {
             modal.addEventListener('click', function(e) {
                 if (e.target === this) {
@@ -1019,85 +1372,8 @@
             }
         });
 
-        // ===== IMAGE UPLOAD =====
-        document.getElementById('clientImage').addEventListener('change', function() {
-            if (this.files && this.files[0]) {
-                const uploadDiv = this.parentElement;
-                uploadDiv.querySelector('p').textContent = '📎 ' + this.files[0].name;
-            }
-        });
-
-        // ===== ANIMATED BACKGROUND =====
-        function createBgAnimation() {
-            const container = document.getElementById('bgAnimation');
-            const codeSnippets = [
-                'const review = new Review({ ... });',
-                'function getRating() { return 5 }',
-                'import { db } from "firebase"',
-                'useEffect(() => { loadTestimonials() }, [])',
-                'const router = useRouter()',
-                'export default function TestimonialPanel() {',
-                'const [reviews, setReviews] = useState([])',
-                'async function fetchReviews() {',
-                'console.log("Loading testimonials...")',
-                'const response = await db.collection("testimonials")',
-                '.orderBy("createdAt", "desc")',
-                'class ReviewManager { constructor() }',
-                'render() { return <ReviewList /> }'
-            ];
-
-            for (let i = 0; i < 16; i++) {
-                const line = document.createElement('div');
-                line.className = 'code-line';
-                line.textContent = codeSnippets[i % codeSnippets.length];
-                line.style.left = Math.random() * 100 + '%';
-                line.style.fontSize = (11 + Math.random() * 9) + 'px';
-                line.style.animationDuration = (18 + Math.random() * 22) + 's';
-                line.style.animationDelay = (Math.random() * 20) + 's';
-                line.style.opacity = 0.2 + Math.random() * 0.4;
-                container.appendChild(line);
-            }
-
-            for (let i = 0; i < 25; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.width = (2 + Math.random() * 5) + 'px';
-                particle.style.height = particle.style.width;
-                particle.style.animationDuration = (12 + Math.random() * 18) + 's';
-                particle.style.animationDelay = (Math.random() * 15) + 's';
-                container.appendChild(particle);
-            }
-
-            const colors = ['#3b82f6', '#8b5cf6', '#06b6d4', '#10b981'];
-            for (let i = 0; i < 3; i++) {
-                const orb = document.createElement('div');
-                orb.className = 'glow-orb';
-                orb.style.width = (120 + Math.random() * 180) + 'px';
-                orb.style.height = orb.style.width;
-                orb.style.background = colors[i % colors.length];
-                orb.style.left = (Math.random() * 80) + '%';
-                orb.style.top = (Math.random() * 80) + '%';
-                orb.style.animationDuration = (6 + Math.random() * 6) + 's';
-                orb.style.animationDelay = (Math.random() * 4) + 's';
-                container.appendChild(orb);
-            }
-        }
-
-        // ===== LOGOUT =====
-        function logout() {
-            if (confirm('Apakah Anda yakin ingin keluar?')) {
-                auth.signOut().then(() => {
-                    window.location.href = '../login.html';
-                });
-            }
-        }
-
         // ===== INIT =====
         createBgAnimation();
-        checkAdmin().then(() => {
-            loadTestimonials();
-        });
     </script>
 </body>
 </html>

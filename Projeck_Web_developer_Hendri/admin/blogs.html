@@ -3,268 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manajemen Blog | Admin WebDevPro</title>
+    <title>Blog | WebDevPro</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
     <style>
-        /* ===== RESET & BASE ===== */
+        /* ========================================
+           ANIMASI DEVELOPER PREMIUM
+           ======================================== */
+
+        :root {
+            --primary: #f5b014;
+            --primary-dark: #d49a0e;
+            --dark: #0f172a;
+            --gray: #64748b;
+            --light: #f8fafc;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
             font-family: 'Poppins', sans-serif;
-            background: #0f172a;
-            color: #e2e8f0;
-            display: flex;
-            overflow-x: hidden;
+            line-height: 1.6;
+            color: #1e293b;
+            background: #f0f4f9;
         }
-        a { text-decoration: none; }
-        button { cursor: pointer; font-family: inherit; }
 
-        /* ===== ANIMATED BACKGROUND ===== */
-        .bg-animation {
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ========================================
+           NAVBAR
+           ======================================== */
+        .navbar {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            overflow: hidden;
-            pointer-events: none;
-        }
-        .bg-animation .code-line {
-            position: absolute;
-            color: rgba(96, 165, 250, 0.06);
-            font-family: 'Courier New', monospace;
-            font-size: 13px;
-            white-space: nowrap;
-            animation: floatCode linear infinite;
-            font-weight: 300;
-        }
-        @keyframes floatCode {
-            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-100vh) rotate(2deg); opacity: 0; }
-        }
-        .bg-animation .particle {
-            position: absolute;
-            width: 3px;
-            height: 3px;
-            background: rgba(96, 165, 250, 0.12);
-            border-radius: 50%;
-            animation: floatParticle linear infinite;
-        }
-        @keyframes floatParticle {
-            0% { transform: translateY(100vh) scale(0); opacity: 0; }
-            20% { opacity: 1; }
-            80% { opacity: 1; }
-            100% { transform: translateY(-100vh) scale(1); opacity: 0; }
-        }
-        .bg-animation .glow-orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            animation: pulseGlow 8s ease-in-out infinite alternate;
-        }
-        @keyframes pulseGlow {
-            0% { transform: scale(1) translate(0, 0); opacity: 0.25; }
-            100% { transform: scale(1.4) translate(40px, -40px); opacity: 0.5; }
-        }
-
-        /* ===== SIDEBAR ===== */
-        .admin-layout {
-            display: flex;
-            min-height: 100vh;
-            width: 100%;
-            position: relative;
-            z-index: 1;
-        }
-        .sidebar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 250px;
-            height: 100vh;
-            background: rgba(15, 23, 42, 0.92);
-            backdrop-filter: blur(20px);
-            padding: 24px 16px;
-            display: flex;
-            flex-direction: column;
-            transition: transform 0.3s ease;
+            right: 0;
             z-index: 1000;
-            overflow-y: auto;
-            border-right: 1px solid rgba(255, 255, 255, 0.06);
+            padding: 16px 0;
+            transition: all 0.3s ease;
+            background: transparent;
         }
-        .sidebar::-webkit-scrollbar { width: 4px; }
-        .sidebar::-webkit-scrollbar-thumb { background: #475569; border-radius: 10px; }
-        .sidebar-brand h3 {
-            font-size: 22px;
-            font-weight: 800;
-            color: #fff;
-            margin-bottom: 2px;
-            background: linear-gradient(135deg, #60a5fa, #a78bfa);
-            
-            -webkit-text-fill-color: transparent;
+
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+            padding: 10px 0;
         }
-        .sidebar-brand small { color: #94a3b8; font-size: 11px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; }
-        .sidebar-menu { margin-top: 24px; flex: 1; }
-        .menu-header {
-            color: #64748b;
-            font-size: 11px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            padding: 12px 12px 6px;
-            margin-top: 8px;
-        }
-        .menu-item {
+
+        .navbar .container {
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 12px;
-            padding: 10px 14px;
-            border-radius: 12px;
-            color: #94a3b8;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .navbar.scrolled .logo {
+            color: var(--dark);
+        }
+
+        .logo span {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: rgba(255,255,255,0.85);
+            text-decoration: none;
             font-weight: 500;
             font-size: 14px;
-            transition: all 0.3s ease;
-            margin-bottom: 2px;
+            transition: all 0.3s;
             position: relative;
         }
-        .menu-item:hover { background: rgba(255, 255, 255, 0.06); color: #e2e8f0; transform: translateX(4px); }
-        .menu-item.active {
-            background: linear-gradient(135deg, rgba(96, 165, 250, 0.2), rgba(167, 139, 250, 0.2));
-            color: #60a5fa;
-            border: 1px solid rgba(96, 165, 250, 0.15);
+
+        .navbar.scrolled .nav-links a {
+            color: #1e293b;
         }
-        .menu-item.active::before {
+
+        .nav-links a::after {
             content: '';
             position: absolute;
+            bottom: -4px;
             left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 3px;
-            height: 20px;
-            background: linear-gradient(180deg, #60a5fa, #a78bfa);
-            border-radius: 0 4px 4px 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s;
         }
 
-        /* ===== MAIN CONTENT ===== */
-        .admin-main {
-            margin-left: 250px;
-            flex: 1;
-            padding: 24px 32px 40px;
-            min-height: 100vh;
-            position: relative;
-            z-index: 2;
-        }
-        .admin-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 16px 24px;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(12px);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            margin-bottom: 28px;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-        }
-        .admin-header h3 {
-            font-size: 20px;
-            font-weight: 700;
-            background: linear-gradient(135deg, #f1f5f9, #94a3b8);
-            
-            -webkit-text-fill-color: transparent;
-        }
-        .admin-header > div {
-            font-weight: 500;
-            color: #94a3b8;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .admin-header > div span {
-            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-            color: #fff;
-            padding: 4px 14px;
-            border-radius: 40px;
-            font-size: 13px;
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
         }
 
-        /* ===== STATS ===== */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 16px;
-            margin-bottom: 24px;
+        .nav-links a:hover {
+            color: var(--primary);
         }
-        .stat-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(12px);
-            padding: 18px 22px;
-            border-radius: 18px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-        }
-        .stat-card:hover { transform: translateY(-4px); border-color: rgba(96, 165, 250, 0.3); }
-        .stat-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-            flex-shrink: 0;
-        }
-        .stat-icon.blue { background: rgba(59, 130, 246, 0.15); border: 1px solid rgba(59, 130, 246, 0.2); }
-        .stat-icon.green { background: rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.2); }
-        .stat-icon.yellow { background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.2); }
-        .stat-icon.purple { background: rgba(139, 92, 246, 0.15); border: 1px solid rgba(139, 92, 246, 0.2); }
-        .stat-value {
-            font-size: 24px;
-            font-weight: 700;
-            background: linear-gradient(135deg, #f1f5f9, #94a3b8);
-           
-            -webkit-text-fill-color: transparent;
-            line-height: 1.2;
-        }
-        .stat-label { font-size: 13px; color: #94a3b8; font-weight: 500; }
 
-        /* ===== TOOLBAR ===== */
-        .toolbar {
+        .nav-buttons {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-bottom: 24px;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(12px);
-            padding: 12px 20px;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            gap: 10px;
         }
-        .filter-group { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
-        .form-control {
-            padding: 8px 16px;
-            border-radius: 40px;
-            border: 1.5px solid rgba(255, 255, 255, 0.1);
-            background: rgba(255, 255, 255, 0.05);
-            font-size: 13px;
-            font-weight: 500;
-            color: #e2e8f0;
-            outline: none;
-            transition: all 0.3s;
-            font-family: inherit;
-            min-width: 140px;
-        }
-        .form-control:focus { border-color: #3b82f6; box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15); }
-        .form-control::placeholder { color: #64748b; }
-        .form-control option { background: #1e293b; color: #e2e8f0; }
-        .form-control.search-input { min-width: 220px; }
 
         .btn {
             display: inline-flex;
@@ -276,885 +132,1453 @@
             font-weight: 600;
             font-size: 13px;
             transition: all 0.3s ease;
+            text-decoration: none;
+            cursor: pointer;
             font-family: inherit;
         }
+
         .btn-primary {
-            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-            color: #fff;
-            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+            background: var(--primary);
+            color: var(--dark);
         }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(59, 130, 246, 0.4); }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(245, 176, 20, 0.35);
+        }
+
         .btn-outline {
             background: transparent;
-            border: 1.5px solid rgba(255, 255, 255, 0.15);
-            color: #94a3b8;
+            border: 2px solid rgba(255,255,255,0.25);
+            color: white;
         }
-        .btn-outline:hover { background: rgba(255, 255, 255, 0.05); border-color: #3b82f6; color: #e2e8f0; }
-        .btn-danger {
-            background: linear-gradient(135deg, #ef4444, #dc2626);
-            color: #fff;
-            box-shadow: 0 4px 20px rgba(239, 68, 68, 0.3);
-        }
-        .btn-danger:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(239, 68, 68, 0.4); }
 
-        /* ===== TABLE ===== */
-        .table-container {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(12px);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+        .navbar.scrolled .btn-outline {
+            border-color: #e2e8f0;
+            color: var(--dark);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-sm { padding: 6px 16px; font-size: 12px; }
+
+        .hidden { display: none !important; }
+
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .mobile-menu-btn span {
+            width: 25px;
+            height: 2px;
+            background: white;
+            transition: all 0.3s;
+        }
+
+        .navbar.scrolled .mobile-menu-btn span {
+            background: var(--dark);
+        }
+
+        /* ========================================
+           HERO SECTION
+           ======================================== */
+        .page-hero {
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3e 50%, #0a0a1a 100%);
+            padding: 160px 20px 120px;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+        }
+
+        /* ===== CODE RAIN ===== */
+        .code-rain {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            opacity: 0.1;
+        }
+
+        .code-char {
+            position: absolute;
+            font-family: 'Courier New', monospace;
+            color: var(--primary);
+            font-size: 14px;
+            animation: codeFall linear infinite;
+            opacity: 0;
+        }
+
+        .code-char:nth-child(1) { left: 5%; animation-duration: 12s; animation-delay: 0s; font-size: 16px; }
+        .code-char:nth-child(2) { left: 10%; animation-duration: 15s; animation-delay: 2s; font-size: 12px; }
+        .code-char:nth-child(3) { left: 15%; animation-duration: 10s; animation-delay: 4s; font-size: 18px; }
+        .code-char:nth-child(4) { left: 20%; animation-duration: 18s; animation-delay: 1s; font-size: 14px; }
+        .code-char:nth-child(5) { left: 25%; animation-duration: 13s; animation-delay: 3s; font-size: 20px; }
+        .code-char:nth-child(6) { left: 30%; animation-duration: 16s; animation-delay: 5s; font-size: 11px; }
+        .code-char:nth-child(7) { left: 35%; animation-duration: 11s; animation-delay: 2.5s; font-size: 15px; }
+        .code-char:nth-child(8) { left: 40%; animation-duration: 19s; animation-delay: 4.5s; font-size: 13px; }
+        .code-char:nth-child(9) { left: 45%; animation-duration: 14s; animation-delay: 1.5s; font-size: 17px; }
+        .code-char:nth-child(10) { left: 50%; animation-duration: 17s; animation-delay: 3.5s; font-size: 12px; }
+        .code-char:nth-child(11) { left: 55%; animation-duration: 12.5s; animation-delay: 5.5s; font-size: 19px; }
+        .code-char:nth-child(12) { left: 60%; animation-duration: 15.5s; animation-delay: 0.5s; font-size: 14px; }
+        .code-char:nth-child(13) { left: 65%; animation-duration: 10.5s; animation-delay: 2.2s; font-size: 16px; }
+        .code-char:nth-child(14) { left: 70%; animation-duration: 18.5s; animation-delay: 4.2s; font-size: 11px; }
+        .code-char:nth-child(15) { left: 75%; animation-duration: 13.5s; animation-delay: 1.8s; font-size: 18px; }
+        .code-char:nth-child(16) { left: 80%; animation-duration: 16.5s; animation-delay: 3.8s; font-size: 13px; }
+        .code-char:nth-child(17) { left: 85%; animation-duration: 11.5s; animation-delay: 5.2s; font-size: 15px; }
+        .code-char:nth-child(18) { left: 90%; animation-duration: 14.5s; animation-delay: 0.8s; font-size: 17px; }
+        .code-char:nth-child(19) { left: 95%; animation-duration: 17.5s; animation-delay: 2.8s; font-size: 12px; }
+
+        @keyframes codeFall {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.8; }
+            80% { opacity: 0.8; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* ===== FLOATING CODE ===== */
+        .floating-code {
+            position: absolute;
+            font-family: 'Courier New', monospace;
+            color: rgba(245, 176, 20, 0.04);
+            font-weight: 700;
+            animation: floatCode linear infinite;
+        }
+
+        .floating-code:nth-child(1) { top: 10%; left: 5%; animation-duration: 25s; font-size: 18px; }
+        .floating-code:nth-child(2) { top: 20%; right: 10%; animation-duration: 20s; animation-delay: -5s; font-size: 14px; }
+        .floating-code:nth-child(3) { bottom: 30%; left: 8%; animation-duration: 28s; animation-delay: -10s; font-size: 22px; }
+        .floating-code:nth-child(4) { bottom: 20%; right: 5%; animation-duration: 22s; animation-delay: -7s; font-size: 16px; }
+        .floating-code:nth-child(5) { top: 50%; left: 50%; animation-duration: 30s; animation-delay: -12s; font-size: 20px; }
+        .floating-code:nth-child(6) { top: 5%; left: 40%; animation-duration: 18s; animation-delay: -3s; font-size: 24px; }
+        .floating-code:nth-child(7) { bottom: 10%; left: 60%; animation-duration: 24s; animation-delay: -8s; font-size: 15px; }
+        .floating-code:nth-child(8) { top: 35%; right: 20%; animation-duration: 26s; animation-delay: -6s; font-size: 19px; }
+
+        @keyframes floatCode {
+            0% { transform: translate(0, 0) rotate(0deg); opacity: 0.04; }
+            25% { transform: translate(100px, -50px) rotate(90deg); opacity: 0.07; }
+            50% { transform: translate(-60px, 70px) rotate(180deg); opacity: 0.05; }
+            75% { transform: translate(70px, -40px) rotate(270deg); opacity: 0.08; }
+            100% { transform: translate(0, 0) rotate(360deg); opacity: 0.04; }
+        }
+
+        /* ===== TERMINAL HERO ===== */
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+        }
+
+        .page-hero h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .page-hero h1::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), transparent);
+            animation: expandLine 2s ease forwards;
+        }
+
+        @keyframes expandLine {
+            0% { width: 0; }
+            100% { width: 100%; }
+        }
+
+        .page-hero h1 span {
+            color: var(--primary);
+        }
+
+        .page-hero p {
+            color: rgba(255,255,255,0.7);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 15px auto 0;
+            animation: fadeInUp 1s ease forwards 0.3s;
+            opacity: 0;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .terminal-hero {
+            max-width: 550px;
+            margin: 25px auto 0;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 14px;
+            border: 1px solid rgba(245, 176, 20, 0.15);
+            padding: 14px 18px;
+            backdrop-filter: blur(10px);
+            text-align: left;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: #a0aec0;
+            overflow: hidden;
+            animation: fadeInUp 1s ease forwards 0.8s;
+            opacity: 0;
+        }
+
+        .terminal-hero .term-header {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        .terminal-hero .term-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .terminal-hero .term-dot.red { background: #ff5f57; }
+        .terminal-hero .term-dot.yellow { background: #ffbd2e; }
+        .terminal-hero .term-dot.green { background: #28c840; }
+
+        .terminal-hero .term-line {
+            display: flex;
+            gap: 10px;
+            line-height: 1.6;
+            animation: typeIn 1.5s ease forwards;
+            opacity: 0;
+        }
+        .terminal-hero .term-line:nth-child(2) { animation-delay: 0.3s; }
+        .terminal-hero .term-line:nth-child(3) { animation-delay: 0.8s; }
+        .terminal-hero .term-line:nth-child(4) { animation-delay: 1.3s; }
+        .terminal-hero .term-line:nth-child(5) { animation-delay: 1.8s; }
+
+        @keyframes typeIn {
+            from { opacity: 0; transform: translateX(-15px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .term-prompt { color: var(--primary); font-weight: 700; }
+        .term-output { color: #68d391; }
+        .term-cursor {
+            display: inline-block;
+            width: 8px;
+            height: 14px;
+            background: var(--primary);
+            animation: blink 1s step-end infinite;
+            vertical-align: text-bottom;
+            margin-left: 2px;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        /* ========================================
+           FEATURED POST
+           ======================================== */
+        .featured-post-section { padding: 60px 0; }
+
+        .featured-post {
+            display: grid;
+            grid-template-columns: 1.1fr 1fr;
+            gap: 0;
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.06);
+            border: 1px solid rgba(0,0,0,0.04);
+            transition: all 0.4s ease;
+        }
+
+        .featured-post:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.1);
+        }
+
+        .featured-image {
+            position: relative;
+            min-height: 450px;
             overflow: hidden;
         }
-        .table-container table { width: 100%; border-collapse: collapse; font-size: 13px; }
-        .table-container thead { background: rgba(255, 255, 255, 0.03); }
-        .table-container th {
-            text-align: left;
-            padding: 12px 18px;
-            font-weight: 600;
+
+        .featured-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .featured-post:hover .featured-image img {
+            transform: scale(1.05);
+        }
+
+        .featured-badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--dark);
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-weight: 700;
             font-size: 11px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            color: #94a3b8;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-            white-space: nowrap;
+            z-index: 1;
         }
-        .table-container td {
-            padding: 12px 18px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-            vertical-align: middle;
-            color: #e2e8f0;
-        }
-        .table-container tbody tr:hover { background: rgba(255, 255, 255, 0.05); }
-        .table-container tbody tr:last-child td { border-bottom: none; }
 
-        /* ===== BADGES ===== */
-        .badge {
-            display: inline-block;
-            padding: 2px 12px;
+        .featured-content {
+            padding: 45px 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .post-meta {
+            display: flex;
+            gap: 18px;
+            margin-bottom: 18px;
+            flex-wrap: wrap;
+        }
+
+        .post-category {
+            background: rgba(245, 176, 20, 0.1);
+            color: var(--primary-dark);
+            padding: 4px 14px;
             border-radius: 40px;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
         }
-        .badge-success { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.2); }
-        .badge-warning { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.2); }
-        .badge-danger { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.2); }
-        .badge-info { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.2); }
 
-        /* ===== ARTICLE CELL ===== */
-        .article-cell {
+        .post-date, .post-read {
+            color: var(--gray);
+            font-size: 13px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 4px;
         }
-        .article-cell img {
+
+        .featured-content h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 18px;
+            color: var(--dark);
+            transition: color 0.3s;
+        }
+
+        .featured-content h2:hover {
+            color: var(--primary);
+        }
+
+        .featured-content > p {
+            color: var(--gray);
+            line-height: 1.8;
+            margin-bottom: 28px;
+            font-size: 15px;
+        }
+
+        .post-author {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 28px;
+        }
+
+        .post-author img {
             width: 48px;
             height: 48px;
-            border-radius: 8px;
+            border-radius: 50%;
             object-fit: cover;
-            background: #1e293b;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            flex-shrink: 0;
+            border: 3px solid var(--primary);
         }
-        .article-title { font-weight: 600; color: #f1f5f9; }
-        .article-excerpt { font-size: 12px; color: #94a3b8; }
 
-        .action-group { display: flex; gap: 4px; flex-wrap: wrap; }
-        .action-btn {
-            width: 32px;
-            height: 32px;
-            border-radius: 8px;
-            border: none;
-            background: transparent;
-            color: #94a3b8;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-            font-size: 14px;
-        }
-        .action-btn:hover { background: rgba(255, 255, 255, 0.05); color: #e2e8f0; }
-        .action-btn.edit:hover { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
-        .action-btn.view:hover { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
-        .action-btn.delete:hover { background: rgba(239, 68, 68, 0.15); color: #f87171; }
-
-        /* ===== MODAL ===== */
-        .modal {
-            position: fixed;
-            inset: 0;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 2000;
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(12px);
-            animation: fadeIn 0.3s ease;
-        }
-        .modal.show { display: flex; }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        .modal-content {
-            background: #1e293b;
-            border-radius: 28px;
-            max-width: 580px;
-            width: 92%;
-            max-height: 90vh;
-            overflow-y: auto;
-            padding: 28px 32px;
-            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            animation: slideUp 0.35s ease;
-        }
-        .modal-content::-webkit-scrollbar { width: 4px; }
-        .modal-content::-webkit-scrollbar-thumb { background: #475569; border-radius: 10px; }
-        @keyframes slideUp {
-            from { transform: translateY(20px) scale(0.98); opacity: 0; }
-            to { transform: translateY(0) scale(1); opacity: 1; }
-        }
-        .modal-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 20px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-        }
-        .modal-header h4 {
-            font-size: 20px;
+        .author-name {
             font-weight: 700;
-            background: linear-gradient(135deg, #f1f5f9, #94a3b8);
-            
-            -webkit-text-fill-color: transparent;
+            color: var(--dark);
+            font-size: 15px;
         }
-        .modal-header .btn-close {
-            padding: 4px 12px;
-            font-size: 18px;
-            line-height: 1;
-            background: transparent;
-            border: none;
-            color: #94a3b8;
-            cursor: pointer;
-        }
-        .modal-header .btn-close:hover { color: #f87171; }
 
-        /* ===== FORM ===== */
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
+        .author-role {
+            color: var(--gray);
+            font-size: 13px;
         }
-        .form-group { margin-bottom: 18px; }
-        .form-group label {
-            display: block;
+
+        /* ========================================
+           CATEGORIES
+           ======================================== */
+        .categories-section {
+            padding: 25px 0;
+            background: white;
+            border-bottom: 1px solid #f1f5f9;
+            position: sticky;
+            top: 70px;
+            z-index: 99;
+            backdrop-filter: blur(10px);
+        }
+
+        .categories-list {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            padding: 8px 20px;
+            border-radius: 40px;
+            border: 2px solid #e2e8f0;
+            background: transparent;
+            cursor: pointer;
+            font-family: 'Poppins', sans-serif;
             font-weight: 600;
             font-size: 13px;
-            color: #94a3b8;
-            margin-bottom: 4px;
+            color: var(--gray);
+            transition: all 0.3s ease;
         }
-        .form-group .form-control {
+
+        .category-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .category-btn.active {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--dark);
+            border-color: var(--primary);
+        }
+
+        /* ========================================
+           BLOG GRID
+           ======================================== */
+        .blog-grid-section { padding: 60px 0; background: #f8fafc; }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .blog-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            transition: all 0.4s ease;
+            border: 1px solid rgba(0,0,0,0.04);
+            position: relative;
+        }
+
+        .blog-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--primary-dark), var(--primary));
+            background-size: 200% 100%;
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .blog-card:hover::before {
+            transform: scaleX(1);
+            animation: shimmerBorder 2s ease infinite;
+        }
+
+        @keyframes shimmerBorder {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        .blog-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+
+        .blog-image {
+            position: relative;
+            height: 220px;
+            overflow: hidden;
+        }
+
+        .blog-image img {
             width: 100%;
-            padding: 10px 16px;
-            border-radius: 14px;
-            border: 1.5px solid rgba(255, 255, 255, 0.1);
-            background: rgba(255, 255, 255, 0.05);
-            font-size: 14px;
-            transition: all 0.3s;
-            outline: none;
-            font-family: inherit;
-            color: #e2e8f0;
-            min-width: unset;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
         }
-        .form-group .form-control:focus { border-color: #3b82f6; box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15); }
-        .form-group .form-control::placeholder { color: #64748b; }
-        .form-group textarea.form-control { resize: vertical; min-height: 100px; }
-        .checkbox-label {
+
+        .blog-card:hover .blog-image img {
+            transform: scale(1.08);
+        }
+
+        .blog-category {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 5px 14px;
+            border-radius: 40px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .blog-content {
+            padding: 22px 24px 20px;
+        }
+
+        .blog-meta {
+            display: flex;
+            gap: 14px;
+            margin-bottom: 10px;
+        }
+
+        .blog-date, .blog-read {
+            font-size: 12px;
+            color: var(--gray);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .blog-card h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            line-height: 1.4;
+            margin-bottom: 10px;
+            color: var(--dark);
+            transition: color 0.3s;
+        }
+
+        .blog-card h3:hover {
+            color: var(--primary);
+        }
+
+        .blog-card > p {
+            font-size: 14px;
+            color: var(--gray);
+            line-height: 1.7;
+            margin-bottom: 18px;
+            display: -webkit-box;
+            overflow: hidden;
+        }
+
+        .blog-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 14px;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .blog-author {
             display: flex;
             align-items: center;
             gap: 10px;
-            font-weight: 500;
-            font-size: 14px;
-            color: #e2e8f0;
-            cursor: pointer;
         }
-        .checkbox-label input[type="checkbox"] { width: 18px; height: 18px; accent-color: #3b82f6; }
 
-        /* ===== TOAST ===== */
-        .toast {
-            position: fixed;
-            top: 24px;
-            right: 24px;
-            padding: 14px 24px;
-            border-radius: 16px;
-            color: #fff;
+        .blog-author img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #e2e8f0;
+        }
+
+        .blog-author span {
+            font-size: 13px;
+            font-weight: 600;
+            color: #475569;
+        }
+
+        .read-more {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 13px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .read-more:hover {
+            gap: 12px;
+        }
+
+        /* ========================================
+           PAGINATION
+           ======================================== */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin-top: 50px;
+        }
+
+        .page-btn {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            color: var(--gray);
             font-weight: 600;
             font-size: 14px;
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
-            z-index: 9999;
-            animation: slideInRight 0.4s ease;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            backdrop-filter: blur(12px);
-        }
-        .toast.success { background: linear-gradient(135deg, rgba(16, 185, 129, 0.9), rgba(5, 150, 105, 0.9)); border: 1px solid rgba(16, 185, 129, 0.3); }
-        .toast.error { background: linear-gradient(135deg, rgba(239, 68, 68, 0.9), rgba(220, 38, 38, 0.9)); border: 1px solid rgba(239, 68, 68, 0.3); }
-        .toast.warning { background: linear-gradient(135deg, rgba(245, 158, 11, 0.9), rgba(217, 119, 6, 0.9)); border: 1px solid rgba(245, 158, 11, 0.3); }
-        .toast.hide { animation: slideOutRight 0.4s ease forwards; }
-        @keyframes slideInRight {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
-        }
-        @keyframes slideOutRight {
-            from { transform: translateX(0); opacity: 1; }
-            to { transform: translateX(100%); opacity: 0; }
-        }
-
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 1024px) {
-            .sidebar { transform: translateX(-100%); }
-            .sidebar.open { transform: translateX(0); }
-            .admin-main { margin-left: 0; padding: 16px; }
-            .form-row { grid-template-columns: 1fr; }
-        }
-        @media (max-width: 768px) {
-            .toolbar { flex-direction: column; align-items: stretch; }
-            .filter-group { flex-direction: column; }
-            .filter-group .form-control { width: 100%; }
-            .form-control.search-input { min-width: unset; }
-            .table-container { overflow-x: auto; }
-            .table-container table { font-size: 12px; min-width: 700px; }
-            .modal-content { padding: 20px; }
-            .admin-header { flex-direction: column; align-items: flex-start; gap: 8px; }
-            .stats-grid { grid-template-columns: 1fr 1fr; }
-        }
-        @media (max-width: 480px) {
-            .admin-main { padding: 12px; }
-            .stats-grid { grid-template-columns: 1fr; }
-            .stat-card { padding: 14px 16px; }
-            .stat-value { font-size: 18px; }
-        }
-
-        .sidebar-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: #e2e8f0;
-            font-size: 24px;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-family: 'Poppins', sans-serif;
             cursor: pointer;
         }
-        @media (max-width: 1024px) {
-            .sidebar-toggle { display: block; }
+
+        .page-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
         }
+
+        .page-btn.active {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--dark);
+            border-color: var(--primary);
+        }
+
+        .page-btn.next {
+            width: auto;
+            padding: 0 20px;
+            gap: 8px;
+        }
+
+        .page-dots {
+            color: var(--gray);
+            padding: 0 10px;
+        }
+
+        /* ========================================
+           NEWSLETTER
+           ======================================== */
+        .newsletter-section {
+            background: linear-gradient(135deg, #0a0a1a, #1a1a3e);
+            padding: 70px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newsletter-section::before {
+            content: '✉️';
+            position: absolute;
+            font-size: 300px;
+            opacity: 0.03;
+            bottom: -80px;
+            right: -80px;
+        }
+
+        .newsletter-content {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 50px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .newsletter-text h2 {
+            color: white;
+            font-size: 2.2rem;
+            margin-bottom: 12px;
+        }
+
+        .newsletter-text p {
+            color: rgba(255,255,255,0.6);
+            font-size: 15px;
+        }
+
+        .newsletter-form {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .newsletter-input-group {
+            display: flex;
+            gap: 10px;
+            background: rgba(255,255,255,0.06);
+            padding: 6px;
+            border-radius: 14px;
+            border: 1px solid rgba(255,255,255,0.08);
+            transition: all 0.3s;
+        }
+
+        .newsletter-input-group:focus-within {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(245, 176, 20, 0.08);
+        }
+
+        .newsletter-input-group input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 12px 16px;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .newsletter-input-group input::placeholder {
+            color: rgba(255,255,255,0.4);
+        }
+
+        .newsletter-input-group .btn {
+            padding: 12px 24px;
+        }
+
+        .newsletter-note {
+            color: rgba(255,255,255,0.4);
+            font-size: 13px;
+            margin: 0;
+        }
+
+        /* ========================================
+           FOOTER
+           ======================================== */
+        .footer {
+            background: var(--dark);
+            color: white;
+            padding: 70px 0 30px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-about .logo {
+            font-size: 26px;
+            margin-bottom: 18px;
+            display: inline-block;
+            color: white;
+        }
+
+        .footer-about p {
+            color: rgba(255,255,255,0.6);
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 10px;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.06);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255,255,255,0.6);
+            transition: all 0.3s;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            color: var(--dark);
+            transform: translateY(-3px);
+        }
+
+        .footer-links h4,
+        .footer-contact h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .footer-links ul { list-style: none; }
+        .footer-links li { margin-bottom: 10px; }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.5);
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .footer-contact li {
+            color: rgba(255,255,255,0.5);
+            font-size: 14px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.06);
+            padding-top: 25px;
+            text-align: center;
+            color: rgba(255,255,255,0.3);
+            font-size: 13px;
+        }
+
+        /* ========================================
+           WHATSAPP FLOAT
+           ======================================== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: #25d366;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28px;
+            text-decoration: none;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.35);
+            transition: all 0.3s;
+            z-index: 999;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+        }
+
+        /* ========================================
+           RESPONSIVE
+           ======================================== */
+        @media (max-width: 992px) {
+            .nav-links { display: none; }
+            .mobile-menu-btn { display: flex; }
+
+            .featured-post { grid-template-columns: 1fr; }
+            .featured-image { min-height: 300px; }
+            .featured-content { padding: 30px 35px; }
+
+            .blog-grid { grid-template-columns: repeat(2, 1fr); }
+            .newsletter-content { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: repeat(2, 1fr); }
+
+            .page-hero h1 { font-size: 2.5rem; }
+            .terminal-hero { font-size: 11px; }
+        }
+
+        @media (max-width: 768px) {
+            .page-hero { padding: 130px 16px 80px; min-height: 400px; }
+            .page-hero h1 { font-size: 2rem; }
+
+            .blog-grid { grid-template-columns: 1fr; max-width: 450px; margin: 0 auto; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .newsletter-input-group { flex-direction: column; }
+            .newsletter-input-group .btn { width: 100%; justify-content: center; }
+
+            .featured-content { padding: 25px; }
+            .featured-content h2 { font-size: 1.5rem; }
+
+            .code-rain { opacity: 0.06; }
+            .floating-code { display: none; }
+        }
+
+        @media (max-width: 480px) {
+            .page-hero h1 { font-size: 1.6rem; }
+            .terminal-hero { font-size: 10px; padding: 10px 14px; }
+            .terminal-hero .term-line { flex-wrap: wrap; }
+            .categories-section { top: 60px; }
+            .category-btn { font-size: 12px; padding: 6px 14px; }
+            .post-meta { gap: 10px; }
+            .featured-content h2 { font-size: 1.3rem; }
+        }
+
+        /* ========================================
+           ANIMATIONS
+           ======================================== */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .blog-card {
+            animation: fadeInUp 0.6s ease forwards;
+            opacity: 0;
+        }
+
+        .blog-card:nth-child(1) { animation-delay: 0.1s; }
+        .blog-card:nth-child(2) { animation-delay: 0.2s; }
+        .blog-card:nth-child(3) { animation-delay: 0.3s; }
+        .blog-card:nth-child(4) { animation-delay: 0.4s; }
+        .blog-card:nth-child(5) { animation-delay: 0.5s; }
+        .blog-card:nth-child(6) { animation-delay: 0.6s; }
     </style>
 </head>
 <body>
-    <!-- ===== ANIMATED BACKGROUND ===== -->
-    <div class="bg-animation" id="bgAnimation"></div>
+    <!-- ===== NAVBAR ===== -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">Web<span>Dev</span>Pro</a>
 
-    <div class="admin-layout">
-        <!-- ===== SIDEBAR ===== -->
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-brand">
-                <h3>Web<span style="background:transparent; -webkit-text-fill-color:#f5b014;">Dev</span>Pro</h3>
-                <small>Admin Panel</small>
-            </div>
-            <div class="sidebar-menu">
-                <div class="menu-header">Menu Utama</div>
-                <a href="index.html" class="menu-item">📊 Dashboard</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="tentang.html">Tentang</a></li>
+                <li><a href="layanan.html">Layanan</a></li>
+                <li><a href="portofolio.html">Portofolio</a></li>
+                <li><a href="harga.html">Harga</a></li>
+                <li><a href="blog.html" class="active">Blog</a></li>
+                <li><a href="kontak.html">Kontak</a></li>
+            </ul>
 
-                <div class="menu-header">Manajemen</div>
-                <a href="users.html" class="menu-item">👥 Users</a>
-                <a href="pesanans.html" class="menu-item">🛒 Pesanan</a>
-                <a href="pakets.html" class="menu-item">📦 Paket</a>
-                <a href="portofolios.html" class="menu-item">🎨 Portofolio</a>
-                <a href="blogs.html" class="menu-item active">📝 Blog</a>
-                <a href="testimonials.html" class="menu-item">⭐ Testimoni</a>
-                <a href="faqs.html" class="menu-item">❓ FAQ</a>
-
-                <div class="menu-header">Pengaturan</div>
-                <a href="settings.html" class="menu-item">⚙️ Pengaturan</a>
-
-                <div style="margin-top:30px; padding:20px 0; border-top:1px solid rgba(255,255,255,0.06);">
-                    <a href="../index.html" class="menu-item">🌐 Lihat Website</a>
-                    <a href="#" onclick="logout()" class="menu-item">🚪 Logout</a>
+            <div class="nav-buttons">
+                <a href="login.html" class="btn btn-outline btn-sm" id="loginBtn">Masuk</a>
+                <a href="register.html" class="btn btn-primary btn-sm" id="registerBtn">Daftar</a>
+                <div id="userMenu" class="hidden">
+                    <a href="user/index.html" class="btn btn-primary btn-sm">👤 <span id="userName">User</span></a>
                 </div>
-            </div>
-        </aside>
-
-        <!-- ===== MAIN ===== -->
-        <div class="admin-main">
-            <button class="sidebar-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
-
-            <div class="admin-header">
-                <h3>📝 Manajemen Blog</h3>
-                <div>
-                    <span id="adminName">Hendri Setyawan</span> 👤
-                </div>
-            </div>
-
-            <!-- Stats -->
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon blue">📝</div>
-                    <div>
-                        <div class="stat-value" id="totalPosts">0</div>
-                        <div class="stat-label">Total Artikel</div>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon green">✅</div>
-                    <div>
-                        <div class="stat-value" id="publishedPosts">0</div>
-                        <div class="stat-label">Dipublikasikan</div>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon yellow">📄</div>
-                    <div>
-                        <div class="stat-value" id="draftPosts">0</div>
-                        <div class="stat-label">Draft</div>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon purple">👁️</div>
-                    <div>
-                        <div class="stat-value" id="totalViews">0</div>
-                        <div class="stat-label">Total Views</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Toolbar -->
-            <div class="toolbar">
-                <div class="filter-group">
-                    <select id="filterCategory" class="form-control" onchange="loadBlogs()">
-                        <option value="">Semua Kategori</option>
-                        <option value="tren">Tren</option>
-                        <option value="tutorial">Tutorial</option>
-                        <option value="tips">Tips</option>
-                        <option value="bisnis">Bisnis</option>
-                        <option value="desain">Desain</option>
-                    </select>
-                    <select id="filterStatus" class="form-control" onchange="loadBlogs()">
-                        <option value="">Semua Status</option>
-                        <option value="published">Dipublikasikan</option>
-                        <option value="draft">Draft</option>
-                    </select>
-                    <input type="text" id="searchPost" class="form-control search-input" placeholder="🔍 Cari artikel..." onkeyup="searchPosts()" />
-                </div>
-                <button class="btn btn-primary" onclick="openModal()">➕ Tambah Artikel</button>
-            </div>
-
-            <!-- Table -->
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Artikel</th>
-                            <th>Kategori</th>
-                            <th>Status</th>
-                            <th>Views</th>
-                            <th>Tanggal</th>
-                            <th style="width:130px;">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody id="blogsTable">
-                        <tr><td colspan="6" style="text-align:center; padding:40px; color:#64748b;">⏳ Memuat data...</td></tr>
-                    </tbody>
-                </table>
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
             </div>
         </div>
-    </div>
+    </nav>
 
-    <!-- ===== MODAL FORM ===== -->
-    <div id="blogModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 id="modalTitle">📝 Tambah Artikel</h4>
-                <button class="btn-close" onclick="closeModal()">✕</button>
-            </div>
-            <form id="blogForm" onsubmit="saveBlog(event)">
-                <input type="hidden" id="blogId" />
-
-                <div class="form-group">
-                    <label>Judul Artikel <span style="color:#ef4444;">*</span></label>
-                    <input type="text" id="blogTitle" class="form-control" required placeholder="Judul artikel..." />
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Kategori <span style="color:#ef4444;">*</span></label>
-                        <select id="blogCategory" class="form-control" required>
-                            <option value="">Pilih kategori</option>
-                            <option value="tren">Tren</option>
-                            <option value="tutorial">Tutorial</option>
-                            <option value="tips">Tips</option>
-                            <option value="bisnis">Bisnis</option>
-                            <option value="desain">Desain</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Status</label>
-                        <select id="blogStatus" class="form-control">
-                            <option value="published">Dipublikasikan</option>
-                            <option value="draft">Draft</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Konten <span style="color:#ef4444;">*</span></label>
-                    <textarea id="blogContent" class="form-control" rows="6" required placeholder="Tulis konten artikel di sini..."></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label>Gambar Cover</label>
-                    <div style="border:2px dashed rgba(255,255,255,0.1); border-radius:14px; padding:20px; text-align:center; cursor:pointer;" onclick="document.getElementById('blogImage').click()">
-                        <p style="color:#94a3b8; font-size:13px;">📸 Klik untuk upload gambar</p>
-                        <input type="file" id="blogImage" accept="image/*" hidden />
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="checkbox-label">
-                        <input type="checkbox" id="isFeatured" />
-                        <span>⭐ Tampilkan sebagai Featured</span>
-                    </label>
-                </div>
-
-                <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:24px; padding-top:16px; border-top:1px solid rgba(255,255,255,0.06);">
-                    <button type="button" class="btn btn-outline" onclick="closeModal()">Batal</button>
-                    <button type="submit" class="btn btn-primary">💾 Simpan</button>
-                </div>
-            </form>
+    <!-- ===== HERO SECTION ===== -->
+    <section class="page-hero">
+        <!-- Code Rain -->
+        <div class="code-rain">
+            <span class="code-char">&lt;/&gt;</span>
+            <span class="code-char">{ }</span>
+            <span class="code-char">function</span>
+            <span class="code-char">const</span>
+            <span class="code-char">return</span>
+            <span class="code-char">if</span>
+            <span class="code-char">else</span>
+            <span class="code-char">for</span>
+            <span class="code-char">while</span>
+            <span class="code-char">class</span>
+            <span class="code-char">import</span>
+            <span class="code-char">export</span>
+            <span class="code-char">async</span>
+            <span class="code-char">await</span>
+            <span class="code-char">try</span>
+            <span class="code-char">catch</span>
+            <span class="code-char">finally</span>
+            <span class="code-char">throw</span>
+            <span class="code-char">new</span>
         </div>
-    </div>
 
-    <!-- ===== DELETE MODAL ===== -->
-    <div id="deleteModal" class="modal">
-        <div class="modal-content" style="max-width:400px; text-align:center;">
-            <div class="modal-header" style="justify-content:center; border-bottom:none;">
-                <h4 style="color:#f87171;">⚠️ Konfirmasi Hapus</h4>
-            </div>
-            <div style="font-size:48px; margin-bottom:12px;">🗑️</div>
-            <p style="font-size:16px; font-weight:500; color:#e2e8f0;">Apakah Anda yakin ingin menghapus artikel ini?</p>
-            <p style="color:#94a3b8; font-size:14px; margin-top:4px;">Tindakan ini tidak dapat dibatalkan.</p>
-            <div style="display:flex; justify-content:center; gap:12px; margin-top:24px; padding-top:16px; border-top:1px solid rgba(255,255,255,0.06);">
-                <button class="btn btn-outline" onclick="closeDeleteModal()">Batal</button>
-                <button class="btn btn-danger" onclick="confirmDelete()">🗑️ Hapus</button>
+        <!-- Floating Code -->
+        <div class="floating-code">&lt;/&gt;</div>
+        <div class="floating-code">{ }</div>
+        <div class="floating-code">function</div>
+        <div class="floating-code">const</div>
+        <div class="floating-code">return</div>
+        <div class="floating-code">if</div>
+        <div class="floating-code">else</div>
+        <div class="floating-code">for</div>
+
+        <div class="container hero-content">
+            <h1>Blog <span>WebDevPro</span></h1>
+            <p>Tips, tutorial, dan insight terbaru seputar pengembangan web dan teknologi digital</p>
+
+            <!-- Terminal -->
+            <div class="terminal-hero">
+                <div class="term-header">
+                    <span class="term-dot red"></span>
+                    <span class="term-dot yellow"></span>
+                    <span class="term-dot green"></span>
+                    <span style="margin-left:10px; color:#64748b; font-size:10px;">developer@webdevpro:~/blog$</span>
+                </div>
+                <div class="term-line">
+                    <span class="term-prompt">$</span>
+                    <span style="color:#a0aec0;">ls -la articles</span>
+                </div>
+                <div class="term-line">
+                    <span class="term-prompt">→</span>
+                    <span class="term-output">📄 10-tren-web-development-2024.md</span>
+                </div>
+                <div class="term-line">
+                    <span class="term-prompt">→</span>
+                    <span class="term-output">📄 panduan-react-hooks.md</span>
+                </div>
+                <div class="term-line">
+                    <span class="term-prompt">→</span>
+                    <span class="term-output">📄 tips-seo-untuk-pemula.md</span>
+                </div>
+                <div class="term-line">
+                    <span class="term-prompt">$</span>
+                    <span style="color:#a0aec0;">cat README.md</span>
+                    <span class="term-cursor"></span>
+                </div>
             </div>
         </div>
-    </div>
+    </section>
+
+    <!-- ===== FEATURED POST ===== -->
+    <section class="featured-post-section">
+        <div class="container">
+            <div class="featured-post">
+                <div class="featured-image">
+                    <img src="assets/images/blog/featured.jpg" alt="Tren Web Development 2024" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #667eea, #764ba2)';">
+                    <div class="featured-badge">⭐ Unggulan</div>
+                </div>
+                <div class="featured-content">
+                    <div class="post-meta">
+                        <span class="post-category">Tren Teknologi</span>
+                        <span class="post-date">📅 15 Juni 2024</span>
+                        <span class="post-read">⏱️ 8 menit baca</span>
+                    </div>
+                    <h2>10 Tren Web Development yang Akan Mendominasi 2024</h2>
+                    <p>Dari AI-powered development hingga WebAssembly, pelajari teknologi-teknologi terbaru yang akan mengubah cara kita membangun aplikasi web di tahun ini.</p>
+                    <div class="post-author">
+                        <img src="assets/images/team/author1.jpg" alt="Ahmad Rizki" onerror="this.src='https://ui-avatars.com/api/?name=Ahmad+Rizki&background=f5b014&color=0f172a&size=100'">
+                        <div class="author-info">
+                            <span class="author-name">Ahmad Rizki</span>
+                            <span class="author-role">Lead Developer</span>
+                        </div>
+                    </div>
+                    <a href="#" class="btn btn-primary" style="align-self:flex-start;">Baca Selengkapnya →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CATEGORIES ===== -->
+    <section class="categories-section">
+        <div class="container">
+            <div class="categories-list">
+                <button class="category-btn active" data-category="all">Semua</button>
+                <button class="category-btn" data-category="tren">Tren</button>
+                <button class="category-btn" data-category="tutorial">Tutorial</button>
+                <button class="category-btn" data-category="tips">Tips</button>
+                <button class="category-btn" data-category="bisnis">Bisnis</button>
+                <button class="category-btn" data-category="desain">Desain</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== BLOG GRID ===== -->
+    <section class="blog-grid-section">
+        <div class="container">
+            <div class="blog-grid" id="blogGrid">
+                <!-- Post 1 -->
+                <article class="blog-card" data-category="tutorial">
+                    <div class="blog-image">
+                        <img src="assets/images/blog/post1.jpg" alt="React Hooks" onerror="this.src='https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=600'">
+                        <span class="blog-category">Tutorial</span>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span class="blog-date">📅 12 Jun 2024</span>
+                            <span class="blog-read">⏱️ 5 min</span>
+                        </div>
+                        <h3>Panduan Lengkap React Hooks untuk Pemula</h3>
+                        <p>Pelajari cara menggunakan useState, useEffect, dan custom hooks untuk membangun aplikasi React yang lebih efisien.</p>
+                        <div class="blog-footer">
+                            <div class="blog-author">
+                                <img src="assets/images/team/author2.jpg" alt="Dina Sari" onerror="this.src='https://ui-avatars.com/api/?name=Dina+Sari&background=f5b014&color=0f172a&size=64'">
+                                <span>Dina Sari</span>
+                            </div>
+                            <a href="#" class="read-more">Baca →</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Post 2 -->
+                <article class="blog-card" data-category="tips">
+                    <div class="blog-image">
+                        <img src="assets/images/blog/post2.jpg" alt="SEO Tips" onerror="this.src='https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=600'">
+                        <span class="blog-category">Tips</span>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span class="blog-date">📅 10 Jun 2024</span>
+                            <span class="blog-read">⏱️ 6 min</span>
+                        </div>
+                        <h3>5 Strategi SEO On-Page yang Wajib Diterapkan</h3>
+                        <p>Tingkatkan peringkat website Anda di Google dengan teknik SEO on-page yang terbukti efektif.</p>
+                        <div class="blog-footer">
+                            <div class="blog-author">
+                                <img src="assets/images/team/author3.jpg" alt="Budi Santoso" onerror="this.src='https://ui-avatars.com/api/?name=Budi+Santoso&background=f5b014&color=0f172a&size=64'">
+                                <span>Budi Santoso</span>
+                            </div>
+                            <a href="#" class="read-more">Baca →</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Post 3 -->
+                <article class="blog-card" data-category="desain">
+                    <div class="blog-image">
+                        <img src="assets/images/blog/post3.jpg" alt="UI Design" onerror="this.src='https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600'">
+                        <span class="blog-category">Desain</span>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span class="blog-date">📅 8 Jun 2024</span>
+                            <span class="blog-read">⏱️ 7 min</span>
+                        </div>
+                        <h3>Prinsip Desain Antarmuka yang Meningkatkan Konversi</h3>
+                        <p>Pelajari psychology of design untuk mempengaruhi perilaku pengguna dan meningkatkan konversi.</p>
+                        <div class="blog-footer">
+                            <div class="blog-author">
+                                <img src="assets/images/team/author4.jpg" alt="Maya Wulandari" onerror="this.src='https://ui-avatars.com/api/?name=Maya+Wulandari&background=f5b014&color=0f172a&size=64'">
+                                <span>Maya Wulandari</span>
+                            </div>
+                            <a href="#" class="read-more">Baca →</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Post 4 -->
+                <article class="blog-card" data-category="bisnis">
+                    <div class="blog-image">
+                        <img src="assets/images/blog/post4.jpg" alt="Digital Marketing" onerror="this.src='https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600'">
+                        <span class="blog-category">Bisnis</span>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span class="blog-date">📅 5 Jun 2024</span>
+                            <span class="blog-read">⏱️ 4 min</span>
+                        </div>
+                        <h3>Cara Membangun Brand Digital yang Kuat di 2024</h3>
+                        <p>Strategi branding digital untuk membedakan bisnis Anda dari kompetitor dan membangun loyalitas.</p>
+                        <div class="blog-footer">
+                            <div class="blog-author">
+                                <img src="assets/images/team/author1.jpg" alt="Ahmad Rizki" onerror="this.src='https://ui-avatars.com/api/?name=Ahmad+Rizki&background=f5b014&color=0f172a&size=64'">
+                                <span>Ahmad Rizki</span>
+                            </div>
+                            <a href="#" class="read-more">Baca →</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Post 5 -->
+                <article class="blog-card" data-category="tren">
+                    <div class="blog-image">
+                        <img src="assets/images/blog/post5.jpg" alt="AI Technology" onerror="this.src='https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600'">
+                        <span class="blog-category">Tren</span>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span class="blog-date">📅 1 Jun 2024</span>
+                            <span class="blog-read">⏱️ 10 min</span>
+                        </div>
+                        <h3>AI dalam Pengembangan Web: Peluang dan Tantangan</h3>
+                        <p>Bagaimana AI mengubah landscape pengembangan web dan apa yang perlu developer ketahui.</p>
+                        <div class="blog-footer">
+                            <div class="blog-author">
+                                <img src="assets/images/team/author5.jpg" alt="Rudi Hartono" onerror="this.src='https://ui-avatars.com/api/?name=Rudi+Hartono&background=f5b014&color=0f172a&size=64'">
+                                <span>Rudi Hartono</span>
+                            </div>
+                            <a href="#" class="read-more">Baca →</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Post 6 -->
+                <article class="blog-card" data-category="tutorial">
+                    <div class="blog-image">
+                        <img src="assets/images/blog/post6.jpg" alt="CSS Grid" onerror="this.src='https://images.unsplash.com/photo-1507721999472-8ed4421c4af2?w=600'">
+                        <span class="blog-category">Tutorial</span>
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span class="blog-date">📅 28 Mei 2024</span>
+                            <span class="blog-read">⏱️ 5 min</span>
+                        </div>
+                        <h3>Mastering CSS Grid: Layout Kompleks Jadi Mudah</h3>
+                        <p>Tutorial praktis membuat layout responsif kompleks dengan CSS Grid dan contoh kasus nyata.</p>
+                        <div class="blog-footer">
+                            <div class="blog-author">
+                                <img src="assets/images/team/author2.jpg" alt="Dina Sari" onerror="this.src='https://ui-avatars.com/api/?name=Dina+Sari&background=f5b014&color=0f172a&size=64'">
+                                <span>Dina Sari</span>
+                            </div>
+                            <a href="#" class="read-more">Baca →</a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <a href="#" class="page-btn active">1</a>
+                <a href="#" class="page-btn">2</a>
+                <a href="#" class="page-btn">3</a>
+                <span class="page-dots">...</span>
+                <a href="#" class="page-btn">8</a>
+                <a href="#" class="page-btn next">Selanjutnya →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== NEWSLETTER ===== -->
+    <section class="newsletter-section">
+        <div class="container">
+            <div class="newsletter-content">
+                <div class="newsletter-text">
+                    <h2>📬 Dapatkan Update Terbaru</h2>
+                    <p>Berlangganan newsletter kami untuk mendapatkan artikel, tutorial, dan tips eksklusif langsung di inbox Anda.</p>
+                </div>
+                <form class="newsletter-form" id="newsletterForm">
+                    <div class="newsletter-input-group">
+                        <input type="email" id="newsletterEmail" placeholder="Masukkan email Anda" required>
+                        <button type="submit" class="btn btn-primary">Berlangganan ✉️</button>
+                    </div>
+                    <p class="newsletter-note">✅ Gratis. Tidak ada spam. Bisa berhenti kapan saja.</p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <a href="index.html" class="logo">Web<span>Dev</span>Pro</a>
+                    <p>Partner tepercaya untuk solusi digital bisnis Anda. Kami menghadirkan inovasi dan kualitas dalam setiap proyek.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook">📘</a>
+                        <a href="#" aria-label="Twitter">🐦</a>
+                        <a href="#" aria-label="Instagram">📷</a>
+                        <a href="#" aria-label="LinkedIn">💼</a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h4>Tautan Cepat</h4>
+                    <ul>
+                        <li><a href="index.html">Beranda</a></li>
+                        <li><a href="tentang.html">Tentang Kami</a></li>
+                        <li><a href="layanan.html">Layanan</a></li>
+                        <li><a href="portofolio.html">Portofolio</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Layanan</h4>
+                    <ul>
+                        <li><a href="#">Website Development</a></li>
+                        <li><a href="#">Mobile Apps</a></li>
+                        <li><a href="#">UI/UX Design</a></li>
+                        <li><a href="#">Digital Marketing</a></li>
+                        <li><a href="#">Cloud Services</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Kontak</h4>
+                    <ul>
+                        <li>📍 Batang, Jawa Tengah</li>
+                        <li>📞 +62 812-4814-1031</li>
+                        <li>✉️ setyawanhendri253@gmail.com</li>
+                        <li>🕐 Senin - Jumat: 09.00 - 17.00</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 WebDevPro. Hak Cipta Dilindungi.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== WHATSAPP FLOAT ===== -->
+    <a href="https://wa.me/6281248141031?text=Halo%20kak%20Hendri,%20saya%20tertarik%20dengan%20produk%20Anda."
+       class="whatsapp-float" target="_blank" title="Chat WhatsApp">💬</a>
 
     <!-- ===== FIREBASE SDK ===== -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
+    <script src="assets/js/firebase-config.js"></script>
+    <script src="assets/js/auth.js"></script>
+
     <script>
-        // ===== FIREBASE CONFIG =====
-        const firebaseConfig = {
-            apiKey: "AIzaSyDummyKeyForDemo",
-            authDomain: "webdevpro-demo.firebaseapp.com",
-            projectId: "webdevpro-demo",
-            storageBucket: "webdevpro-demo.appspot.com",
-            messagingSenderId: "123456789",
-            appId: "1:123456789:web:abcdef123456"
-        };
+        // ============================================
+        // NAVBAR SCROLL
+        // ============================================
+        window.addEventListener('scroll', () => {
+            document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+        });
 
-        if (!firebase.apps.length) {
-            firebase.initializeApp(firebaseConfig);
-        }
+        // ============================================
+        // MOBILE MENU
+        // ============================================
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+            if (navLinks.classList.contains('active')) {
+                navLinks.style.display = 'flex';
+                navLinks.style.flexDirection = 'column';
+                navLinks.style.position = 'absolute';
+                navLinks.style.top = '70px';
+                navLinks.style.left = '0';
+                navLinks.style.right = '0';
+                navLinks.style.background = 'rgba(255,255,255,0.95)';
+                navLinks.style.backdropFilter = 'blur(10px)';
+                navLinks.style.padding = '20px';
+                navLinks.style.boxShadow = '0 10px 30px rgba(0,0,0,0.1)';
+                navLinks.style.gap = '15px';
+                navLinks.style.zIndex = '999';
+            } else {
+                navLinks.style.display = '';
+                navLinks.style.flexDirection = '';
+                navLinks.style.position = '';
+                navLinks.style.top = '';
+                navLinks.style.left = '';
+                navLinks.style.right = '';
+                navLinks.style.background = '';
+                navLinks.style.backdropFilter = '';
+                navLinks.style.padding = '';
+                navLinks.style.boxShadow = '';
+                navLinks.style.gap = '';
+                navLinks.style.zIndex = '';
+            }
+        });
 
-        const auth = firebase.auth();
-        const db = firebase.firestore();
+        // ============================================
+        // AUTH STATE
+        // ============================================
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                document.getElementById('loginBtn').style.display = 'none';
+                document.getElementById('registerBtn').style.display = 'none';
+                document.getElementById('userMenu').classList.remove('hidden');
+                document.getElementById('userName').textContent = user.displayName || user.email;
+            }
+        });
 
-        let deleteId = null;
-        let allBlogs = [];
+        // ============================================
+        // CATEGORY FILTER
+        // ============================================
+        const categoryBtns = document.querySelectorAll('.category-btn');
+        const blogCards = document.querySelectorAll('.blog-card');
 
-        // ===== CHECK ADMIN =====
-        function checkAdmin() {
-            return new Promise((resolve, reject) => {
-                auth.onAuthStateChanged(async (user) => {
-                    if (!user) {
-                        window.location.href = '../login.html';
-                        return reject();
-                    }
+        categoryBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                categoryBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
 
-                    try {
-                        const doc = await db.collection('users').doc(user.uid).get();
-                        if (doc.exists && doc.data().role === 'admin') {
-                            document.getElementById('adminName').textContent = doc.data().nama || 'Admin';
-                            resolve();
-                        } else {
-                            window.location.href = '../login.html';
-                            reject();
-                        }
-                    } catch (error) {
-                        console.error('Error checking admin:', error);
-                        window.location.href = '../login.html';
-                        reject();
+                const category = this.dataset.category;
+
+                blogCards.forEach(card => {
+                    if (category === 'all' || card.dataset.category === category) {
+                        card.style.display = 'block';
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    } else {
+                        card.style.opacity = '0';
+                        card.style.transform = 'translateY(20px)';
+                        setTimeout(() => {
+                            card.style.display = 'none';
+                        }, 300);
                     }
                 });
             });
-        }
+        });
 
-        // ===== LOAD BLOGS =====
-        async function loadBlogs() {
-            try {
-                const categoryFilter = document.getElementById('filterCategory').value;
-                const statusFilter = document.getElementById('filterStatus').value;
+        // ============================================
+        // NEWSLETTER FORM
+        // ============================================
+        document.getElementById('newsletterForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const input = document.getElementById('newsletterEmail');
+            const btn = this.querySelector('button[type="submit"]');
+            const originalText = btn.innerHTML;
 
-                let query = db.collection('blogs').orderBy('createdAt', 'desc');
-
-                const snapshot = await query.get();
-                allBlogs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-
-                let filteredBlogs = allBlogs;
-                if (categoryFilter) {
-                    filteredBlogs = allBlogs.filter(b => b.kategori === categoryFilter);
-                }
-                if (statusFilter) {
-                    filteredBlogs = allBlogs.filter(b => b.status === statusFilter);
-                }
-
-                updateStats(allBlogs);
-                renderTable(filteredBlogs);
-            } catch (error) {
-                console.error('Error loading blogs:', error);
-                document.getElementById('blogsTable').innerHTML =
-                    '<tr><td colspan="6" style="text-align:center; padding:40px; color:#f87171;">❌ Gagal memuat data</td></tr>';
-            }
-        }
-
-        // ===== UPDATE STATS =====
-        function updateStats(blogs) {
-            document.getElementById('totalPosts').textContent = blogs.length;
-            document.getElementById('publishedPosts').textContent = blogs.filter(b => b.status === 'published').length;
-            document.getElementById('draftPosts').textContent = blogs.filter(b => b.status === 'draft').length;
-            const views = blogs.reduce((sum, b) => sum + (b.views || 0), 0);
-            document.getElementById('totalViews').textContent = views.toLocaleString();
-        }
-
-        // ===== RENDER TABLE =====
-        function renderTable(blogs) {
-            const tbody = document.getElementById('blogsTable');
-            tbody.innerHTML = '';
-
-            if (blogs.length === 0) {
-                tbody.innerHTML =
-                    '<tr><td colspan="6" style="text-align:center; padding:40px; color:#64748b;">📭 Tidak ada artikel</td></tr>';
+            if (!input.value.trim()) {
+                input.style.borderColor = '#ef4444';
+                setTimeout(() => input.style.borderColor = '', 2000);
                 return;
             }
 
-            const categoryMap = {
-                'tren': 'Tren',
-                'tutorial': 'Tutorial',
-                'tips': 'Tips',
-                'bisnis': 'Bisnis',
-                'desain': 'Desain'
-            };
-
-            blogs.forEach(b => {
-                const statusBadge = b.status === 'published' ?
-                    '<span class="badge badge-success">Dipublikasikan</span>' :
-                    '<span class="badge badge-warning">Draft</span>';
-
-                const category = categoryMap[b.kategori] || b.kategori || 'Lainnya';
-                const imageUrl = b.imageUrl || 'https://picsum.photos/seed/' + b.id + '/100/80';
-                const date = b.createdAt ? new Date(b.createdAt.toDate()).toLocaleDateString('id-ID') : '-';
-
-                tbody.innerHTML += `
-                    <tr>
-                        <td>
-                            <div class="article-cell">
-                                <img src="${imageUrl}" alt="${b.judul || 'Article'}" onerror="this.src='https://picsum.photos/seed/${b.id || '1'}/100/80'" />
-                                <div>
-                                    <div class="article-title">${b.judul || 'Unnamed'} ${b.isFeatured ? '⭐' : ''}</div>
-                                    <div class="article-excerpt">${(b.konten || '').substring(0, 60)}...</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td><span class="badge badge-info">${category}</span></td>
-                        <td>${statusBadge}</td>
-                        <td>${(b.views || 0).toLocaleString()}</td>
-                        <td style="font-size:12px; color:#64748b;">${date}</td>
-                        <td>
-                            <div class="action-group">
-                                <button class="action-btn view" onclick="viewBlog('${b.id}')" title="Lihat">👁️</button>
-                                <button class="action-btn edit" onclick="editBlog('${b.id}')" title="Edit">✏️</button>
-                                <button class="action-btn delete" onclick="deleteBlog('${b.id}')" title="Hapus">🗑️</button>
-                            </div>
-                        </td>
-                    </tr>
-                `;
-            });
-        }
-
-        // ===== SEARCH POSTS =====
-        function searchPosts() {
-            const keyword = document.getElementById('searchPost').value.toLowerCase();
-            const filtered = allBlogs.filter(b =>
-                (b.judul && b.judul.toLowerCase().includes(keyword)) ||
-                (b.konten && b.konten.toLowerCase().includes(keyword))
-            );
-            renderTable(filtered);
-        }
-
-        // ===== OPEN MODAL =====
-        function openModal(id = null) {
-            document.getElementById('blogForm').reset();
-            document.getElementById('blogId').value = '';
-
-            if (id) {
-                document.getElementById('modalTitle').textContent = '✏️ Edit Artikel';
-                loadBlogData(id);
-            } else {
-                document.getElementById('modalTitle').textContent = '📝 Tambah Artikel';
-            }
-
-            document.getElementById('blogModal').classList.add('show');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeModal() {
-            document.getElementById('blogModal').classList.remove('show');
-            document.body.style.overflow = '';
-        }
-
-        // ===== LOAD BLOG DATA =====
-        async function loadBlogData(id) {
-            try {
-                const doc = await db.collection('blogs').doc(id).get();
-                if (!doc.exists) return;
-
-                const data = doc.data();
-                document.getElementById('blogId').value = id;
-                document.getElementById('blogTitle').value = data.judul || '';
-                document.getElementById('blogCategory').value = data.kategori || '';
-                document.getElementById('blogStatus').value = data.status || 'draft';
-                document.getElementById('blogContent').value = data.konten || '';
-                document.getElementById('isFeatured').checked = data.isFeatured || false;
-            } catch (error) {
-                console.error('Error loading blog:', error);
-                showToast('Gagal memuat data artikel', 'error');
-            }
-        }
-
-        // ===== SAVE BLOG =====
-        async function saveBlog(event) {
-            event.preventDefault();
-
-            const id = document.getElementById('blogId').value;
-            const judul = document.getElementById('blogTitle').value.trim();
-            const kategori = document.getElementById('blogCategory').value;
-            const status = document.getElementById('blogStatus').value;
-            const konten = document.getElementById('blogContent').value.trim();
-            const isFeatured = document.getElementById('isFeatured').checked;
-
-            if (!judul || !kategori || !konten) {
-                showToast('Judul, kategori, dan konten wajib diisi!', 'warning');
-                return;
-            }
-
-            try {
-                const data = {
-                    judul,
-                    kategori,
-                    status,
-                    konten,
-                    isFeatured,
-                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-                };
-
-                if (id) {
-                    await db.collection('blogs').doc(id).update(data);
-                    showToast('✅ Artikel berhasil diperbarui!', 'success');
-                } else {
-                    data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
-                    data.views = 0;
-                    await db.collection('blogs').add(data);
-                    showToast('✅ Artikel berhasil ditambahkan!', 'success');
-                }
-
-                closeModal();
-                loadBlogs();
-            } catch (error) {
-                console.error('Error saving blog:', error);
-                showToast('❌ Gagal menyimpan artikel: ' + error.message, 'error');
-            }
-        }
-
-        // ===== EDIT BLOG =====
-        function editBlog(id) {
-            openModal(id);
-        }
-
-        // ===== VIEW BLOG =====
-        function viewBlog(id) {
-            const blog = allBlogs.find(b => b.id === id);
-            if (!blog) return;
-
-            alert(`
-📝 ${blog.judul || 'Untitled'}
-━━━━━━━━━━━━━━━━━
-📂 Kategori: ${blog.kategori || 'N/A'}
-📊 Status: ${blog.status || 'draft'}
-👁️ Views: ${(blog.views || 0).toLocaleString()}
-⭐ Featured: ${blog.isFeatured ? '✅ Ya' : '❌ Tidak'}
-📅 Tanggal: ${blog.createdAt ? new Date(blog.createdAt.toDate()).toLocaleDateString('id-ID') : '-'}
-━━━━━━━━━━━━━━━━━
-📄 Konten:
-${(blog.konten || '').substring(0, 300)}${(blog.konten || '').length > 300 ? '...' : ''}
-            `);
-        }
-
-        // ===== DELETE BLOG =====
-        function deleteBlog(id) {
-            deleteId = id;
-            document.getElementById('deleteModal').classList.add('show');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeDeleteModal() {
-            deleteId = null;
-            document.getElementById('deleteModal').classList.remove('show');
-            document.body.style.overflow = '';
-        }
-
-        async function confirmDelete() {
-            if (!deleteId) return;
-
-            try {
-                await db.collection('blogs').doc(deleteId).delete();
-                showToast('✅ Artikel berhasil dihapus!', 'success');
-                closeDeleteModal();
-                loadBlogs();
-            } catch (error) {
-                showToast('❌ Gagal menghapus: ' + error.message, 'error');
-            }
-        }
-
-        // ===== SHOW TOAST =====
-        function showToast(message, type = 'success') {
-            const existing = document.querySelector('.toast');
-            if (existing) existing.remove();
-
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            const icons = { success: '✅', error: '❌', warning: '⚠️' };
-            toast.innerHTML = `${icons[type] || 'ℹ️'} ${message}`;
-            document.body.appendChild(toast);
+            btn.disabled = true;
+            btn.innerHTML = '⏳ Mengirim...';
 
             setTimeout(() => {
-                toast.classList.add('hide');
-                setTimeout(() => toast.remove(), 400);
-            }, 3500);
-        }
+                btn.innerHTML = '✅ Berhasil!';
+                input.value = '';
+                input.style.borderColor = '#10b981';
+                setTimeout(() => {
+                    btn.disabled = false;
+                    btn.innerHTML = originalText;
+                    input.style.borderColor = '';
+                }, 2000);
+            }, 1500);
+        });
 
-        // ===== CLOSE MODAL ON OVERLAY =====
-        document.querySelectorAll('.modal').forEach(modal => {
-            modal.addEventListener('click', function(e) {
-                if (e.target === this) {
-                    this.classList.remove('show');
-                    document.body.style.overflow = '';
-                }
+        // ============================================
+        // PAGINATION
+        // ============================================
+        document.querySelectorAll('.page-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (this.classList.contains('active')) return;
+
+                document.querySelectorAll('.page-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+
+                // Smooth scroll to top of grid
+                document.querySelector('.blog-grid-section').scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
             });
         });
 
-        // ===== KEYBOARD SHORTCUT =====
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                document.querySelectorAll('.modal.show').forEach(modal => {
-                    modal.classList.remove('show');
-                });
-                document.body.style.overflow = '';
-            }
+        // ============================================
+        // READ MORE LINKS
+        // ============================================
+        document.querySelectorAll('.read-more').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('📖 Artikel ini akan segera tersedia. Stay tuned!');
+            });
         });
 
-        // ===== IMAGE UPLOAD =====
-        document.getElementById('blogImage').addEventListener('change', function() {
-            if (this.files && this.files[0]) {
-                const uploadDiv = this.parentElement;
-                uploadDiv.querySelector('p').textContent = '📎 ' + this.files[0].name;
-            }
-        });
-
-        // ===== ANIMATED BACKGROUND =====
-        function createBgAnimation() {
-            const container = document.getElementById('bgAnimation');
-            const codeSnippets = [
-                'const post = new Post({ ... });',
-                'function publishArticle() { return true }',
-                'import { db } from "firebase"',
-                'useEffect(() => { loadBlogs() }, [])',
-                'const router = useRouter()',
-                'export default function BlogPanel() {',
-                'const [posts, setPosts] = useState([])',
-                'async function fetchPosts() {',
-                'console.log("Loading blogs...")',
-                'const response = await db.collection("blogs")',
-                '.orderBy("createdAt", "desc")',
-                'class BlogManager { constructor() }',
-                'render() { return <BlogList /> }'
-            ];
-
-            for (let i = 0; i < 16; i++) {
-                const line = document.createElement('div');
-                line.className = 'code-line';
-                line.textContent = codeSnippets[i % codeSnippets.length];
-                line.style.left = Math.random() * 100 + '%';
-                line.style.fontSize = (11 + Math.random() * 9) + 'px';
-                line.style.animationDuration = (18 + Math.random() * 22) + 's';
-                line.style.animationDelay = (Math.random() * 20) + 's';
-                line.style.opacity = 0.2 + Math.random() * 0.4;
-                container.appendChild(line);
-            }
-
-            for (let i = 0; i < 25; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.width = (2 + Math.random() * 5) + 'px';
-                particle.style.height = particle.style.width;
-                particle.style.animationDuration = (12 + Math.random() * 18) + 's';
-                particle.style.animationDelay = (Math.random() * 15) + 's';
-                container.appendChild(particle);
-            }
-
-            const colors = ['#3b82f6', '#8b5cf6', '#06b6d4', '#10b981'];
-            for (let i = 0; i < 3; i++) {
-                const orb = document.createElement('div');
-                orb.className = 'glow-orb';
-                orb.style.width = (120 + Math.random() * 180) + 'px';
-                orb.style.height = orb.style.width;
-                orb.style.background = colors[i % colors.length];
-                orb.style.left = (Math.random() * 80) + '%';
-                orb.style.top = (Math.random() * 80) + '%';
-                orb.style.animationDuration = (6 + Math.random() * 6) + 's';
-                orb.style.animationDelay = (Math.random() * 4) + 's';
-                container.appendChild(orb);
-            }
-        }
-
-        // ===== LOGOUT =====
-        function logout() {
-            if (confirm('Apakah Anda yakin ingin keluar?')) {
-                auth.signOut().then(() => {
-                    window.location.href = '../login.html';
-                });
-            }
-        }
-
-        // ===== INIT =====
-        createBgAnimation();
-        checkAdmin().then(() => {
-            loadBlogs();
-        });
+        console.log('🚀 Blog page loaded successfully!');
     </script>
 </body>
 </html>

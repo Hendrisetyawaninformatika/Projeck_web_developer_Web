@@ -4,17 +4,183 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Layanan Kami | WebDevPro</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
     <style>
         /* ========================================
-           ANIMASI DEVELOPER UNIK - NEON CIRCUIT
+           RESET & BASE
            ======================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-        /* ===== HERO SECTION ===== */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f0f4f9;
+            color: #1e293b;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ========================================
+           NAVBAR (KONSISTEN)
+           ======================================== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 16px 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: transparent;
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
+            padding: 10px 0;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .navbar.scrolled .logo {
+            color: #0f172a;
+        }
+
+        .navbar .logo span {
+            color: #f5b014;
+        }
+
+        .navbar .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 8px;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar .nav-links a {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 40px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .navbar.scrolled .nav-links a {
+            color: #1e293b;
+        }
+
+        .navbar .nav-links a:hover {
+            color: #f5b014;
+            background: rgba(245, 176, 20, 0.06);
+        }
+
+        .navbar .nav-links a.active {
+            color: #f5b014;
+            background: rgba(245, 176, 20, 0.1);
+        }
+
+        .navbar .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 2px;
+            background: #f5b014;
+            border-radius: 4px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            border: none;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .btn-sm {
+            padding: 6px 16px;
+            font-size: 12px;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.25);
+            color: white;
+        }
+
+        .navbar.scrolled .btn-outline {
+            border-color: #e2e8f0;
+            color: #1e293b;
+        }
+
+        .btn-outline:hover {
+            border-color: #f5b014;
+            color: #f5b014;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #f5b014, #d49a0e);
+            color: #0f172a;
+            box-shadow: 0 4px 16px rgba(245, 176, 20, 0.25);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(245, 176, 20, 0.35);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* ========================================
+           HERO SECTION (KONSISTEN)
+           ======================================== */
         .page-hero {
-            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3e 50%, #0a0a1a 100%);
-            padding: 140px 20px 100px;
+            background: linear-gradient(135deg, #0f172a 0%, #1a1a3e 50%, #0f172a 100%);
+            padding: 160px 20px 80px;
             text-align: center;
             color: white;
             position: relative;
@@ -25,8 +191,8 @@
             justify-content: center;
         }
 
-        /* ===== NEON CIRCUIT BACKGROUND ===== */
-        .neon-circuit {
+        /* Code Rain */
+        .code-rain {
             position: absolute;
             top: 0;
             left: 0;
@@ -34,83 +200,47 @@
             height: 100%;
             z-index: 0;
             overflow: hidden;
-            opacity: 0.15;
+            opacity: 0.1;
         }
 
-        .circuit-line {
+        .code-char {
             position: absolute;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #f5b014, transparent);
-            animation: circuitMove linear infinite;
-            border-radius: 2px;
+            font-family: 'Courier New', monospace;
+            color: #f5b014;
+            font-size: 14px;
+            animation: codeFall linear infinite;
+            opacity: 0;
         }
 
-        .circuit-line:nth-child(1) { top: 10%; left: 0; width: 30%; animation-duration: 8s; }
-        .circuit-line:nth-child(2) { top: 20%; right: 0; width: 25%; animation-duration: 10s; animation-delay: 2s; }
-        .circuit-line:nth-child(3) { top: 40%; left: 0; width: 40%; animation-duration: 12s; animation-delay: 4s; }
-        .circuit-line:nth-child(4) { top: 55%; right: 0; width: 35%; animation-duration: 9s; animation-delay: 1s; }
-        .circuit-line:nth-child(5) { top: 70%; left: 0; width: 20%; animation-duration: 11s; animation-delay: 3s; }
-        .circuit-line:nth-child(6) { top: 85%; right: 0; width: 45%; animation-duration: 13s; animation-delay: 5s; }
+        .code-char:nth-child(1) { left: 5%; animation-duration: 12s; animation-delay: 0s; font-size: 16px; }
+        .code-char:nth-child(2) { left: 10%; animation-duration: 15s; animation-delay: 2s; font-size: 12px; }
+        .code-char:nth-child(3) { left: 15%; animation-duration: 10s; animation-delay: 4s; font-size: 18px; }
+        .code-char:nth-child(4) { left: 20%; animation-duration: 18s; animation-delay: 1s; font-size: 14px; }
+        .code-char:nth-child(5) { left: 25%; animation-duration: 13s; animation-delay: 3s; font-size: 20px; }
+        .code-char:nth-child(6) { left: 30%; animation-duration: 16s; animation-delay: 5s; font-size: 11px; }
+        .code-char:nth-child(7) { left: 35%; animation-duration: 11s; animation-delay: 2.5s; font-size: 15px; }
+        .code-char:nth-child(8) { left: 40%; animation-duration: 19s; animation-delay: 4.5s; font-size: 13px; }
+        .code-char:nth-child(9) { left: 45%; animation-duration: 14s; animation-delay: 1.5s; font-size: 17px; }
+        .code-char:nth-child(10) { left: 50%; animation-duration: 17s; animation-delay: 3.5s; font-size: 12px; }
+        .code-char:nth-child(11) { left: 55%; animation-duration: 12.5s; animation-delay: 5.5s; font-size: 19px; }
+        .code-char:nth-child(12) { left: 60%; animation-duration: 15.5s; animation-delay: 0.5s; font-size: 14px; }
+        .code-char:nth-child(13) { left: 65%; animation-duration: 10.5s; animation-delay: 2.2s; font-size: 16px; }
+        .code-char:nth-child(14) { left: 70%; animation-duration: 18.5s; animation-delay: 4.2s; font-size: 11px; }
+        .code-char:nth-child(15) { left: 75%; animation-duration: 13.5s; animation-delay: 1.8s; font-size: 18px; }
+        .code-char:nth-child(16) { left: 80%; animation-duration: 16.5s; animation-delay: 3.8s; font-size: 13px; }
+        .code-char:nth-child(17) { left: 85%; animation-duration: 11.5s; animation-delay: 5.2s; font-size: 15px; }
+        .code-char:nth-child(18) { left: 90%; animation-duration: 14.5s; animation-delay: 0.8s; font-size: 17px; }
+        .code-char:nth-child(19) { left: 95%; animation-duration: 17.5s; animation-delay: 2.8s; font-size: 12px; }
 
-        @keyframes circuitMove {
-            0% {
-                transform: translateX(-100%) scaleX(0.5);
-                opacity: 0;
-            }
-            30% {
-                opacity: 1;
-            }
-            70% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateX(100%) scaleX(0.5);
-                opacity: 0;
-            }
+        @keyframes codeFall {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.8; }
+            80% { opacity: 0.8; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
         }
 
-        /* ===== NEON DOTS ===== */
-        .neon-dots {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        .neon-dot {
-            position: absolute;
-            width: 6px;
-            height: 6px;
-            background: #f5b014;
-            border-radius: 50%;
-            box-shadow: 0 0 20px rgba(245, 176, 20, 0.6);
-            animation: pulseDot 2s ease-in-out infinite;
-        }
-
-        .neon-dot:nth-child(1) { top: 15%; left: 10%; animation-delay: 0s; }
-        .neon-dot:nth-child(2) { top: 25%; right: 15%; animation-delay: 0.5s; }
-        .neon-dot:nth-child(3) { top: 45%; left: 5%; animation-delay: 1s; }
-        .neon-dot:nth-child(4) { top: 60%; right: 10%; animation-delay: 1.5s; }
-        .neon-dot:nth-child(5) { top: 80%; left: 20%; animation-delay: 2s; }
-        .neon-dot:nth-child(6) { bottom: 15%; right: 25%; animation-delay: 0.8s; }
-        .neon-dot:nth-child(7) { top: 50%; left: 50%; animation-delay: 1.2s; width: 10px; height: 10px; }
-
-        @keyframes pulseDot {
-            0%, 100% {
-                transform: scale(0.8);
-                opacity: 0.3;
-            }
-            50% {
-                transform: scale(1.5);
-                opacity: 1;
-            }
-        }
-
-        /* ===== FLOATING SERVICE ICONS ===== */
-        .floating-icons {
+        /* Floating Badges */
+        .floating-badges {
             position: absolute;
             top: 0;
             left: 0;
@@ -120,104 +250,101 @@
             pointer-events: none;
         }
 
-        .float-icon {
+        .float-badge {
             position: absolute;
-            font-size: 30px;
-            opacity: 0.06;
-            animation: floatIcon linear infinite;
+            background: rgba(245, 176, 20, 0.06);
+            border: 1px solid rgba(245, 176, 20, 0.08);
+            border-radius: 12px;
+            padding: 8px 16px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: rgba(245, 176, 20, 0.3);
+            animation: floatBadge linear infinite;
+            backdrop-filter: blur(4px);
         }
 
-        .float-icon:nth-child(1) { top: 10%; left: 5%; animation-duration: 25s; }
-        .float-icon:nth-child(2) { top: 20%; right: 8%; animation-duration: 20s; animation-delay: -5s; }
-        .float-icon:nth-child(3) { bottom: 30%; left: 10%; animation-duration: 28s; animation-delay: -10s; }
-        .float-icon:nth-child(4) { bottom: 20%; right: 5%; animation-duration: 22s; animation-delay: -7s; }
-        .float-icon:nth-child(5) { top: 50%; left: 50%; animation-duration: 30s; animation-delay: -12s; }
-        .float-icon:nth-child(6) { top: 5%; left: 40%; animation-duration: 18s; animation-delay: -3s; }
-        .float-icon:nth-child(7) { bottom: 10%; left: 60%; animation-duration: 24s; animation-delay: -8s; }
+        .float-badge:nth-child(1) { top: 15%; left: 5%; animation-duration: 25s; }
+        .float-badge:nth-child(2) { top: 20%; right: 8%; animation-duration: 20s; animation-delay: -5s; }
+        .float-badge:nth-child(3) { bottom: 25%; left: 10%; animation-duration: 28s; animation-delay: -10s; }
+        .float-badge:nth-child(4) { bottom: 30%; right: 5%; animation-duration: 22s; animation-delay: -7s; }
+        .float-badge:nth-child(5) { top: 50%; left: 50%; animation-duration: 30s; animation-delay: -12s; }
 
-        @keyframes floatIcon {
-            0% {
-                transform: translate(0, 0) rotate(0deg) scale(1);
-                opacity: 0.04;
-            }
-            25% {
-                transform: translate(80px, -40px) rotate(90deg) scale(1.2);
-                opacity: 0.08;
-            }
-            50% {
-                transform: translate(-50px, 60px) rotate(180deg) scale(0.8);
-                opacity: 0.06;
-            }
-            75% {
-                transform: translate(60px, -30px) rotate(270deg) scale(1.1);
-                opacity: 0.09;
-            }
-            100% {
-                transform: translate(0, 0) rotate(360deg) scale(1);
-                opacity: 0.04;
-            }
+        @keyframes floatBadge {
+            0% { transform: translate(0, 0) rotate(0deg); opacity: 0.3; }
+            25% { transform: translate(80px, -40px) rotate(5deg); opacity: 0.6; }
+            50% { transform: translate(-50px, 60px) rotate(-3deg); opacity: 0.4; }
+            75% { transform: translate(60px, -30px) rotate(7deg); opacity: 0.7; }
+            100% { transform: translate(0, 0) rotate(0deg); opacity: 0.3; }
         }
 
-        /* ===== HERO CONTENT ===== */
         .hero-content {
             position: relative;
             z-index: 1;
-            width: 100%;
+        }
+
+        .page-hero .hero-badge {
+            display: inline-block;
+            padding: 8px 24px;
+            border-radius: 50px;
+            background: rgba(245, 176, 20, 0.15);
+            border: 1px solid rgba(245, 176, 20, 0.2);
+            color: #f5b014;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            animation: pulseBadge 2s ease-in-out infinite;
+        }
+
+        @keyframes pulseBadge {
+            0%, 100% { box-shadow: 0 0 20px rgba(245, 176, 20, 0.05); }
+            50% { box-shadow: 0 0 40px rgba(245, 176, 20, 0.15); }
         }
 
         .page-hero h1 {
             font-size: 3.2rem;
             font-weight: 800;
-            margin-bottom: 15px;
-            position: relative;
-            display: inline-block;
+            margin-bottom: 12px;
+            animation: fadeInDown 1s ease forwards;
+            opacity: 0;
         }
 
-        .page-hero h1::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #f5b014, transparent);
-            animation: expandLine 2s ease forwards;
-        }
-
-        @keyframes expandLine {
-            0% { width: 0; }
-            100% { width: 100%; }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .page-hero h1 span {
             color: #f5b014;
             position: relative;
+            display: inline-block;
         }
 
+        /* ===== ROTATING BORDER PADA SPAN ===== */
         .page-hero h1 span::before {
             content: '';
             position: absolute;
-            top: -5px;
-            left: -10px;
-            right: -10px;
-            bottom: -5px;
-            background: rgba(245, 176, 20, 0.1);
-            border-radius: 8px;
-            transform: scaleX(0);
-            transform-origin: left;
-            animation: highlightText 1.5s ease forwards 0.5s;
+            inset: -8px -12px;
+            border-radius: 16px;
+            padding: 2px;
+            background: conic-gradient(from 0deg, #f5b014, #d49a0e, #f5b014, #d49a0e, #f5b014);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: rotateBorder 4s linear infinite;
+            opacity: 0.6;
+            z-index: -1;
         }
 
-        @keyframes highlightText {
-            0% { transform: scaleX(0); }
-            100% { transform: scaleX(1); }
+        @keyframes rotateBorder {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         .page-hero p {
-            color: rgba(255,255,255,0.7);
+            color: rgba(255, 255, 255, 0.7);
             font-size: 1.1rem;
             max-width: 600px;
-            margin: 15px auto 0;
+            margin: 0 auto;
             animation: fadeInUp 1s ease forwards 0.3s;
             opacity: 0;
         }
@@ -227,89 +354,230 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* ===== ROTATING BORDER PADA DEVELOPER PROFILE ===== */
+        .developer-profile {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin: 25px auto 0;
+            max-width: 480px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 18px 28px;
+            border: 1px solid rgba(245, 176, 20, 0.15);
+            animation: slideUp 0.8s ease forwards;
+            opacity: 0;
+            position: relative;
+        }
+
+        .developer-profile::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 22px;
+            padding: 2px;
+            background: conic-gradient(from 0deg, #f5b014, #d49a0e, #f5b014, #d49a0e, #f5b014);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: rotateBorder 6s linear infinite;
+            opacity: 0.4;
+            z-index: -1;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .developer-profile .avatar {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            border: 3px solid #f5b014;
+            object-fit: cover;
+            flex-shrink: 0;
+            animation: pulseAvatar 3s ease-in-out infinite;
+        }
+
+        @keyframes pulseAvatar {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(245, 176, 20, 0.4); }
+            50% { box-shadow: 0 0 0 15px rgba(245, 176, 20, 0); }
+        }
+
+        .developer-profile .info {
+            text-align: left;
+        }
+
+        .developer-profile .info .name {
+            font-size: 18px;
+            font-weight: 700;
+            color: #f5b014;
+        }
+
+        .developer-profile .info .role {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .developer-profile .info .role .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #10b981;
+            animation: blinkDot 1.5s ease-in-out infinite;
+        }
+
+        @keyframes blinkDot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .developer-profile .info .status-text {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.4);
+            font-family: 'Courier New', monospace;
+        }
+
         /* ========================================
-           SERVICE CARDS
+           SECTION TITLE
+           ======================================== */
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-title .badge {
+            display: inline-block;
+            padding: 6px 20px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: rgba(245, 176, 20, 0.1);
+            color: #f5b014;
+            margin-bottom: 12px;
+        }
+
+        .section-title h2 {
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+
+        .section-title h2 span {
+            color: #f5b014;
+            position: relative;
+        }
+
+        /* Rotating border pada section title span */
+        .section-title h2 span::before {
+            content: '';
+            position: absolute;
+            inset: -4px -8px;
+            border-radius: 12px;
+            padding: 2px;
+            background: conic-gradient(from 0deg, #f5b014, #d49a0e, #f5b014, #d49a0e, #f5b014);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: rotateBorder 5s linear infinite;
+            opacity: 0.3;
+            z-index: -1;
+        }
+
+        .section-title p {
+            color: #64748b;
+            font-size: 1.05rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* ========================================
+           SERVICES SECTION
            ======================================== */
         .services-section {
-            padding: 80px 0;
-            background: #f8fafc;
+            padding: 60px 0 80px;
         }
 
         .services-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            margin-top: 40px;
+            gap: 25px;
         }
 
         .service-card {
             background: white;
-            border-radius: 24px;
-            padding: 35px 30px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
-            transition: all 0.4s ease;
+            border-radius: 20px;
+            padding: 32px 28px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
-            border: 1px solid rgba(0,0,0,0.04);
+            border: 1px solid rgba(0, 0, 0, 0.04);
         }
 
+        /* Rotating border pada service card */
         .service-card::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #f5b014, #d49a0e, #f5b014);
-            background-size: 200% 100%;
-            transform: scaleX(0);
-            transition: transform 0.5s ease;
-            z-index: 1;
+            inset: -1px;
+            border-radius: 21px;
+            padding: 1px;
+            background: conic-gradient(from 0deg, #f5b014, #d49a0e, #f5b014, #d49a0e, #f5b014);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: rotateBorder 10s linear infinite;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -1;
         }
 
         .service-card:hover::before {
-            transform: scaleX(1);
-            animation: shimmerBorder 2s ease infinite;
-        }
-
-        @keyframes shimmerBorder {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 200% 50%; }
+            opacity: 0.4;
         }
 
         .service-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
         }
 
-        .service-card::after {
-            content: '</>';
+        .service-card .top-line {
             position: absolute;
-            bottom: -20px;
-            right: -10px;
-            font-size: 80px;
-            font-weight: 800;
-            color: rgba(245, 176, 20, 0.03);
-            font-family: 'Courier New', monospace;
-            transition: all 0.5s ease;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #f5b014, #d49a0e);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+            z-index: 2;
         }
 
-        .service-card:hover::after {
-            transform: rotate(-10deg) scale(1.1);
-            color: rgba(245, 176, 20, 0.06);
+        .service-card:hover .top-line {
+            transform: scaleX(1);
         }
 
-        .service-icon {
-            width: 70px;
-            height: 70px;
-            border-radius: 18px;
+        .service-card .service-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
             background: linear-gradient(135deg, rgba(245, 176, 20, 0.1), rgba(245, 176, 20, 0.05));
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             color: #f5b014;
             transition: all 0.4s ease;
+            flex-shrink: 0;
         }
 
         .service-card:hover .service-icon {
@@ -318,58 +586,70 @@
             transform: rotate(-5deg) scale(1.05);
         }
 
+        .service-card .service-icon svg {
+            width: 28px;
+            height: 28px;
+        }
+
         .service-card h3 {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 700;
             color: #0f172a;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .service-card p {
             color: #64748b;
             font-size: 14px;
             line-height: 1.7;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
 
-        .service-features {
+        .service-card .service-features {
             list-style: none;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
+            padding: 0;
         }
 
-        .service-features li {
+        .service-card .service-features li {
             display: flex;
             align-items: center;
             gap: 10px;
-            padding: 5px 0;
+            padding: 4px 0;
             color: #475569;
-            font-size: 14px;
+            font-size: 13px;
             transition: all 0.3s ease;
         }
 
-        .service-features li:hover {
+        .service-card .service-features li:hover {
             color: #f5b014;
             transform: translateX(5px);
         }
 
-        .btn-outline {
-            background: transparent;
-            border: 2px solid #e2e8f0;
-            color: #475569;
-            padding: 10px 24px;
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 14px;
-            transition: all 0.3s ease;
+        .service-card .service-features li::before {
+            content: '✓';
+            color: #f5b014;
+            font-weight: 700;
+        }
+
+        .service-card .btn-outline-dark {
             display: inline-flex;
             align-items: center;
             gap: 8px;
+            padding: 8px 20px;
+            border-radius: 40px;
+            border: 2px solid #e2e8f0;
+            background: transparent;
+            color: #475569;
+            font-weight: 600;
+            font-size: 13px;
             text-decoration: none;
+            transition: all 0.3s ease;
             font-family: inherit;
             cursor: pointer;
         }
 
-        .btn-outline:hover {
+        .service-card .btn-outline-dark:hover {
             border-color: #f5b014;
             color: #f5b014;
             transform: translateY(-2px);
@@ -380,44 +660,37 @@
            PROCESS SECTION
            ======================================== */
         .process-section {
-            padding: 80px 0;
+            padding: 60px 0 80px;
             background: linear-gradient(135deg, #0f172a, #1a1a3e);
             color: white;
             position: relative;
             overflow: hidden;
         }
 
-        .process-section::before {
-            content: '⚡';
-            position: absolute;
-            font-size: 300px;
-            opacity: 0.03;
-            top: -80px;
-            right: -80px;
-            animation: rotateGlow 20s linear infinite;
+        .process-section .section-title h2 {
+            color: white;
         }
 
-        @keyframes rotateGlow {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .process-section .section-title p {
+            color: rgba(255, 255, 255, 0.6);
         }
 
         .process-steps {
             display: grid;
             grid-template-columns: repeat(6, 1fr);
             gap: 20px;
-            margin-top: 40px;
+            margin-top: 30px;
             position: relative;
         }
 
         .process-steps::before {
             content: '';
             position: absolute;
-            top: 40px;
-            left: 10%;
-            right: 10%;
+            top: 30px;
+            left: 8%;
+            right: 8%;
             height: 2px;
-            background: linear-gradient(90deg, rgba(245, 176, 20, 0.2), rgba(245, 176, 20, 0.5), rgba(245, 176, 20, 0.2));
+            background: linear-gradient(90deg, rgba(245, 176, 20, 0.1), rgba(245, 176, 20, 0.5), rgba(245, 176, 20, 0.1));
             z-index: 0;
         }
 
@@ -437,95 +710,123 @@
         .process-step:nth-child(6) { animation-delay: 0.6s; }
 
         @keyframes fadeStep {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .step-number {
-            width: 60px;
-            height: 60px;
+            width: 56px;
+            height: 56px;
             border-radius: 50%;
             background: linear-gradient(135deg, #f5b014, #d49a0e);
             color: #0f172a;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 800;
-            margin: 0 auto 15px;
+            margin: 0 auto 12px;
             box-shadow: 0 8px 30px rgba(245, 176, 20, 0.2);
             transition: all 0.4s ease;
+            position: relative;
+        }
+
+        /* Rotating border pada step number */
+        .step-number::before {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border-radius: 50%;
+            padding: 2px;
+            background: conic-gradient(from 0deg, #f5b014, #d49a0e, #f5b014, #d49a0e, #f5b014);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: rotateBorder 3s linear infinite;
+            opacity: 0.6;
+            z-index: -1;
         }
 
         .process-step:hover .step-number {
-            transform: scale(1.1) rotate(-10deg);
+            transform: scale(1.1) rotate(-5deg);
             box-shadow: 0 12px 40px rgba(245, 176, 20, 0.4);
         }
 
         .process-step h3 {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 700;
-            margin-bottom: 8px;
+            margin-bottom: 4px;
             color: white;
         }
 
         .process-step p {
-            font-size: 13px;
-            color: rgba(255,255,255,0.6);
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
             line-height: 1.6;
+            margin: 0;
         }
 
         /* ========================================
            CTA SECTION
            ======================================== */
         .cta-section {
-            background: linear-gradient(135deg, #0a0a1a, #1a1a3e);
             padding: 60px 0;
             text-align: center;
+        }
+
+        .cta-box {
+            background: linear-gradient(135deg, #0f172a, #1a1a3e);
+            border-radius: 30px;
+            padding: 50px 40px;
             color: white;
             position: relative;
             overflow: hidden;
         }
 
-        .cta-section::before {
-            content: '🚀';
+        /* Rotating border pada CTA box */
+        .cta-box::before {
+            content: '';
             position: absolute;
-            font-size: 200px;
-            opacity: 0.03;
-            bottom: -50px;
-            left: -50px;
+            inset: -1px;
+            border-radius: 31px;
+            padding: 1px;
+            background: conic-gradient(from 0deg, #f5b014, #d49a0e, #f5b014, #d49a0e, #f5b014);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: rotateBorder 8s linear infinite;
+            opacity: 0.3;
+            z-index: 0;
         }
 
-        .cta-content {
+        .cta-box .cta-content {
             position: relative;
             z-index: 1;
         }
 
-        .cta-content h2 {
-            font-size: 2.5rem;
+        .cta-box h2 {
+            font-size: 2.2rem;
             font-weight: 700;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
-        .cta-content p {
-            color: rgba(255,255,255,0.7);
-            font-size: 1.1rem;
-            margin-bottom: 25px;
+        .cta-box h2 span {
+            color: #f5b014;
+        }
+
+        .cta-box p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.05rem;
+            margin-bottom: 24px;
         }
 
         .btn-white {
             background: white;
             color: #0f172a;
-            padding: 16px 40px;
+            padding: 14px 36px;
             border-radius: 40px;
             font-weight: 700;
-            font-size: 16px;
+            font-size: 15px;
             text-decoration: none;
             display: inline-flex;
             align-items: center;
@@ -538,72 +839,171 @@
 
         .btn-white:hover {
             transform: translateY(-3px);
-            box-shadow: 0 12px 30px rgba(255,255,255,0.2);
+            box-shadow: 0 12px 30px rgba(255, 255, 255, 0.2);
+        }
+
+        /* ========================================
+           FOOTER (KONSISTEN)
+           ======================================== */
+        footer {
+            background: #0f172a;
+            color: white;
+            padding: 50px 0 20px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-grid h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .footer-grid h4 span {
+            color: #f5b014;
+        }
+
+        .footer-grid p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+            line-height: 1.8;
+            margin-top: 12px;
+        }
+
+        .footer-grid ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-grid ul li {
+            margin-bottom: 8px;
+        }
+
+        .footer-grid a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .footer-grid a:hover {
+            color: #f5b014;
+            padding-left: 4px;
+        }
+
+        .footer-grid .footer-contact li {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .footer-bottom a {
+            color: rgba(255, 255, 255, 0.4);
+            text-decoration: none;
+            margin-left: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .footer-bottom a:hover {
+            color: #f5b014;
+        }
+
+        /* ========================================
+           WHATSAPP FLOAT
+           ======================================== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #25d366;
+            color: white;
+            font-size: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 8px 30px rgba(37, 211, 102, 0.4);
+            z-index: 999;
+            transition: all 0.3s ease;
+            animation: pulseWhatsApp 2s ease-in-out infinite;
+        }
+
+        @keyframes pulseWhatsApp {
+            0%, 100% { transform: scale(1); box-shadow: 0 8px 30px rgba(37, 211, 102, 0.4); }
+            50% { transform: scale(1.05); box-shadow: 0 8px 50px rgba(37, 211, 102, 0.6); }
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 40px rgba(37, 211, 102, 0.5);
         }
 
         /* ========================================
            RESPONSIVE
            ======================================== */
-        @media (max-width: 992px) {
-            .services-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            .process-steps {
-                grid-template-columns: repeat(3, 1fr);
-            }
-            .process-steps::before {
-                display: none;
-            }
-            .page-hero h1 {
-                font-size: 2.5rem;
-            }
+        @media (max-width: 1024px) {
+            .services-grid { grid-template-columns: repeat(2, 1fr); }
+            .process-steps { grid-template-columns: repeat(3, 1fr); }
+            .process-steps::before { display: none; }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
         }
 
         @media (max-width: 768px) {
-            .page-hero {
-                padding: 120px 16px 80px;
-                min-height: 350px;
-            }
-            .page-hero h1 {
-                font-size: 2rem;
-            }
-            .services-grid {
-                grid-template-columns: 1fr;
-                max-width: 450px;
-                margin: 30px auto 0;
-            }
-            .process-steps {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 30px;
-            }
-            .cta-content h2 {
-                font-size: 1.8rem;
-            }
-            .neon-circuit {
-                opacity: 0.08;
-            }
-            .floating-icons {
-                display: none;
-            }
+            .page-hero { padding: 130px 16px 70px; min-height: 320px; }
+            .page-hero h1 { font-size: 2.2rem; }
+            
+            .navbar .nav-links { display: none; }
+            .nav-buttons .btn-outline { display: none; }
+            
+            .services-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
+            .process-steps { grid-template-columns: repeat(2, 1fr); gap: 25px; }
+            
+            .footer-grid { grid-template-columns: 1fr; gap: 24px; }
+            .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+            .footer-bottom a { margin: 0 10px; }
+            
+            .code-rain { opacity: 0.06; }
+            .floating-badges { display: none; }
+            .developer-profile { flex-direction: column; text-align: center; padding: 16px 20px; }
+            .developer-profile .info { text-align: center; }
+            .whatsapp-float { width: 50px; height: 50px; font-size: 24px; bottom: 16px; right: 16px; }
+            .section-title h2 { font-size: 1.8rem; }
+            .cta-box { padding: 30px 20px; }
+            .cta-box h2 { font-size: 1.6rem; }
+            .page-hero h1 span::before { inset: -4px -8px; }
         }
 
         @media (max-width: 480px) {
-            .page-hero h1 {
-                font-size: 1.6rem;
-            }
-            .process-steps {
-                grid-template-columns: 1fr;
-                max-width: 300px;
-                margin: 30px auto 0;
-            }
-            .service-card {
-                padding: 25px 20px;
-            }
-            .step-number {
-                width: 50px;
-                height: 50px;
-                font-size: 16px;
-            }
+            .page-hero h1 { font-size: 1.7rem; }
+            .developer-profile .avatar { width: 55px; height: 55px; }
+            .developer-profile .info .name { font-size: 16px; }
+            .process-steps { grid-template-columns: 1fr; max-width: 280px; margin: 0 auto; }
+            .service-card { padding: 24px 18px; }
+            .section-title h2 { font-size: 1.5rem; }
+            .cta-box h2 { font-size: 1.3rem; }
+            .page-hero h1 span::before { inset: -2px -6px; }
         }
     </style>
 </head>
@@ -627,87 +1027,103 @@
                 <div id="userMenu" class="hidden">
                     <a href="user/index.html" class="btn btn-primary btn-sm">👤 <span id="userName">User</span></a>
                 </div>
-                <button class="mobile-menu-btn" id="mobileMenuBtn">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
             </div>
         </div>
     </nav>
 
     <!-- ===== HERO SECTION ===== -->
     <section class="page-hero">
-        <!-- Neon Circuit -->
-        <div class="neon-circuit">
-            <div class="circuit-line"></div>
-            <div class="circuit-line"></div>
-            <div class="circuit-line"></div>
-            <div class="circuit-line"></div>
-            <div class="circuit-line"></div>
-            <div class="circuit-line"></div>
+        <!-- Code Rain -->
+        <div class="code-rain">
+            <span class="code-char">&lt;/&gt;</span>
+            <span class="code-char">{ }</span>
+            <span class="code-char">function</span>
+            <span class="code-char">const</span>
+            <span class="code-char">return</span>
+            <span class="code-char">if</span>
+            <span class="code-char">else</span>
+            <span class="code-char">for</span>
+            <span class="code-char">while</span>
+            <span class="code-char">class</span>
+            <span class="code-char">import</span>
+            <span class="code-char">export</span>
+            <span class="code-char">async</span>
+            <span class="code-char">await</span>
+            <span class="code-char">try</span>
+            <span class="code-char">catch</span>
+            <span class="code-char">finally</span>
+            <span class="code-char">throw</span>
+            <span class="code-char">new</span>
         </div>
 
-        <!-- Neon Dots -->
-        <div class="neon-dots">
-            <div class="neon-dot"></div>
-            <div class="neon-dot"></div>
-            <div class="neon-dot"></div>
-            <div class="neon-dot"></div>
-            <div class="neon-dot"></div>
-            <div class="neon-dot"></div>
-            <div class="neon-dot"></div>
-        </div>
-
-        <!-- Floating Icons -->
-        <div class="floating-icons">
-            <span class="float-icon">💻</span>
-            <span class="float-icon">📱</span>
-            <span class="float-icon">🎨</span>
-            <span class="float-icon">⚡</span>
-            <span class="float-icon">🚀</span>
-            <span class="float-icon">🔧</span>
-            <span class="float-icon">📈</span>
+        <!-- Floating Badges -->
+        <div class="floating-badges">
+            <span class="float-badge">// our services</span>
+            <span class="float-badge">const solutions = []</span>
+            <span class="float-badge">function deliver()</span>
+            <span class="float-badge">import { expertise }</span>
+            <span class="float-badge">export default Services</span>
         </div>
 
         <div class="container hero-content">
+            <div class="hero-badge">⚡ Layanan</div>
             <h1>Layanan <span>Kami</span></h1>
             <p>Solusi digital komprehensif untuk mengembangkan bisnis Anda ke level berikutnya</p>
+
+            <!-- Developer Profile -->
+            <div class="developer-profile">
+                <img 
+                    src="https://i.ibb.co.com/FqBHZPN8/1782472907234.png" 
+                    alt="Hendri Setyawan - Web Developer" 
+                    class="avatar"
+                >
+                <div class="info">
+                    <div class="name">Hendri Setyawan</div>
+                    <div class="role">
+                        <span class="dot"></span>
+                        Web Developer &amp; Founder
+                    </div>
+                    <div class="status-text">▸ 6+ services offered</div>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- ===== SERVICES SECTION ===== -->
-    <section class="services-section section-padding">
+    <section class="services-section">
         <div class="container">
-            <div class="section-header">
-                <h2>Apa yang Kami <span style="color:#f5b014;">Tawarkan</span></h2>
+            <div class="section-title">
+                <div class="badge">✦ Layanan Kami</div>
+                <h2>Apa yang Kami <span>Tawarkan</span></h2>
                 <p>Kami menyediakan berbagai layanan pengembangan web dan digital marketing berkualitas tinggi</p>
             </div>
 
             <div class="services-grid">
                 <!-- Service 1 -->
                 <div class="service-card">
+                    <div class="top-line"></div>
                     <div class="service-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
                             <line x1="8" y1="21" x2="16" y2="21"></line>
                             <line x1="12" y1="17" x2="12" y2="21"></line>
                         </svg>
                     </div>
                     <h3>Pengembangan Website</h3>
-                    <p>Website responsif dan modern dengan teknologi terkini. Dari company profile hingga e-commerce yang kompleks.</p>
+                    <p>Website responsif dan modern dengan teknologi terkini. Dari company profile hingga e-commerce.</p>
                     <ul class="service-features">
-                        <li>✓ Desain Responsif</li>
-                        <li>✓ SEO Friendly</li>
-                        <li>✓ Performa Optimal</li>
+                        <li>Desain Responsif</li>
+                        <li>SEO Friendly</li>
+                        <li>Performa Optimal</li>
                     </ul>
-                    <a href="kontak.html" class="btn btn-outline">Pelajari Lebih Lanjut →</a>
+                    <a href="kontak.html" class="btn-outline-dark">Pelajari Lebih Lanjut →</a>
                 </div>
 
                 <!-- Service 2 -->
                 <div class="service-card">
+                    <div class="top-line"></div>
                     <div class="service-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
                             <line x1="12" y1="18" x2="12.01" y2="18"></line>
                         </svg>
@@ -715,17 +1131,18 @@
                     <h3>Aplikasi Mobile</h3>
                     <p>Native dan cross-platform mobile apps untuk iOS dan Android dengan user experience terbaik.</p>
                     <ul class="service-features">
-                        <li>✓ iOS & Android</li>
-                        <li>✓ React Native / Flutter</li>
-                        <li>✓ Maintenance Berkelanjutan</li>
+                        <li>iOS & Android</li>
+                        <li>React Native / Flutter</li>
+                        <li>Maintenance Berkelanjutan</li>
                     </ul>
-                    <a href="kontak.html" class="btn btn-outline">Pelajari Lebih Lanjut →</a>
+                    <a href="kontak.html" class="btn-outline-dark">Pelajari Lebih Lanjut →</a>
                 </div>
 
                 <!-- Service 3 -->
                 <div class="service-card">
+                    <div class="top-line"></div>
                     <div class="service-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
                             <path d="M2 17l10 5 10-5"></path>
                             <path d="M2 12l10 5 10-5"></path>
@@ -734,17 +1151,18 @@
                     <h3>UI/UX Design</h3>
                     <p>Desain antarmuka yang menarik dan pengalaman pengguna yang intuitif untuk produk digital Anda.</p>
                     <ul class="service-features">
-                        <li>✓ User Research</li>
-                        <li>✓ Wireframing & Prototyping</li>
-                        <li>✓ Design System</li>
+                        <li>User Research</li>
+                        <li>Wireframing & Prototyping</li>
+                        <li>Design System</li>
                     </ul>
-                    <a href="kontak.html" class="btn btn-outline">Pelajari Lebih Lanjut →</a>
+                    <a href="kontak.html" class="btn-outline-dark">Pelajari Lebih Lanjut →</a>
                 </div>
 
                 <!-- Service 4 -->
                 <div class="service-card">
+                    <div class="top-line"></div>
                     <div class="service-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
                             <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
                             <line x1="12" y1="22.08" x2="12" y2="12"></line>
@@ -753,17 +1171,18 @@
                     <h3>DevOps & Cloud</h3>
                     <p>Infrastruktur cloud yang scalable dengan CI/CD pipeline untuk deployment yang aman dan cepat.</p>
                     <ul class="service-features">
-                        <li>✓ AWS / Google Cloud</li>
-                        <li>✓ Docker & Kubernetes</li>
-                        <li>✓ Monitoring 24/7</li>
+                        <li>AWS / Google Cloud</li>
+                        <li>Docker & Kubernetes</li>
+                        <li>Monitoring 24/7</li>
                     </ul>
-                    <a href="kontak.html" class="btn btn-outline">Pelajari Lebih Lanjut →</a>
+                    <a href="kontak.html" class="btn-outline-dark">Pelajari Lebih Lanjut →</a>
                 </div>
 
                 <!-- Service 5 -->
                 <div class="service-card">
+                    <div class="top-line"></div>
                     <div class="service-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M18 20V10"></path>
                             <path d="M12 20V4"></path>
                             <path d="M6 20v-6"></path>
@@ -772,17 +1191,18 @@
                     <h3>Digital Marketing</h3>
                     <p>Strategi pemasaran digital terpadu untuk meningkatkan visibilitas dan konversi bisnis Anda.</p>
                     <ul class="service-features">
-                        <li>✓ SEO & SEM</li>
-                        <li>✓ Social Media Marketing</li>
-                        <li>✓ Content Strategy</li>
+                        <li>SEO & SEM</li>
+                        <li>Social Media Marketing</li>
+                        <li>Content Strategy</li>
                     </ul>
-                    <a href="kontak.html" class="btn btn-outline">Pelajari Lebih Lanjut →</a>
+                    <a href="kontak.html" class="btn-outline-dark">Pelajari Lebih Lanjut →</a>
                 </div>
 
                 <!-- Service 6 -->
                 <div class="service-card">
+                    <div class="top-line"></div>
                     <div class="service-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <circle cx="12" cy="12" r="3"></circle>
                             <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
                         </svg>
@@ -790,11 +1210,11 @@
                     <h3>Maintenance & Support</h3>
                     <p>Layanan pemeliharaan berkelanjutan untuk memastikan website dan aplikasi Anda selalu optimal.</p>
                     <ul class="service-features">
-                        <li>✓ Update Berkala</li>
-                        <li>✓ Security Monitoring</li>
-                        <li>✓ Backup Otomatis</li>
+                        <li>Update Berkala</li>
+                        <li>Security Monitoring</li>
+                        <li>Backup Otomatis</li>
                     </ul>
-                    <a href="kontak.html" class="btn btn-outline">Pelajari Lebih Lanjut →</a>
+                    <a href="kontak.html" class="btn-outline-dark">Pelajari Lebih Lanjut →</a>
                 </div>
             </div>
         </div>
@@ -803,16 +1223,17 @@
     <!-- ===== PROCESS SECTION ===== -->
     <section class="process-section">
         <div class="container">
-            <div class="section-header" style="color:white;">
-                <h2 style="color:white;">Proses <span style="color:#f5b014;">Kerja</span> Kami</h2>
-                <p style="color:rgba(255,255,255,0.6);">Metodologi terstruktur untuk hasil terbaik</p>
+            <div class="section-title">
+                <div class="badge" style="background:rgba(245,176,20,0.15); color:#f5b014;">⚡ Proses</div>
+                <h2>Proses <span>Kerja</span> Kami</h2>
+                <p>Metodologi terstruktur untuk hasil terbaik</p>
             </div>
 
             <div class="process-steps">
                 <div class="process-step">
                     <div class="step-number">01</div>
                     <h3>Diskusi</h3>
-                    <p>Konsultasi gratis untuk memahami kebutuhan dan tujuan bisnis Anda</p>
+                    <p>Konsultasi gratis untuk memahami kebutuhan bisnis Anda</p>
                 </div>
                 <div class="process-step">
                     <div class="step-number">02</div>
@@ -822,12 +1243,12 @@
                 <div class="process-step">
                     <div class="step-number">03</div>
                     <h3>Desain</h3>
-                    <p>Mockup dan prototype untuk persetujuan sebelum development</p>
+                    <p>Mockup dan prototype untuk persetujuan</p>
                 </div>
                 <div class="process-step">
                     <div class="step-number">04</div>
                     <h3>Development</h3>
-                    <p>Pengembangan dengan update progress secara berkala</p>
+                    <p>Pengembangan dengan update progress berkala</p>
                 </div>
                 <div class="process-step">
                     <div class="step-number">05</div>
@@ -846,67 +1267,93 @@
     <!-- ===== CTA SECTION ===== -->
     <section class="cta-section">
         <div class="container">
-            <div class="cta-content">
-                <h2>Siap Memulai <span style="color:#f5b014;">Proyek</span> Anda?</h2>
-                <p>Hubungi kami sekarang untuk konsultasi gratis dan penawaran khusus</p>
-                <a href="kontak.html" class="btn-white btn-lg">Hubungi Kami →</a>
+            <div class="cta-box">
+                <div class="cta-content">
+                    <h2>Siap Memulai <span>Proyek</span> Anda?</h2>
+                    <p>Hubungi kami sekarang untuk konsultasi gratis dan penawaran khusus</p>
+                    <a href="kontak.html" class="btn-white">🚀 Hubungi Kami →</a>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- ===== FOOTER ===== -->
-    <footer class="footer">
+    <footer>
         <div class="container">
             <div class="footer-grid">
-                <div class="footer-about">
-                    <a href="index.html" class="logo">Web<span>Dev</span>Pro</a>
-                    <p>Partner tepercaya untuk solusi digital bisnis Anda. Kami menghadirkan inovasi dan kualitas dalam setiap proyek.</p>
-                    <div class="social-links">
-                        <a href="#" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg></a>
-                        <a href="#" aria-label="Twitter"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg></a>
-                        <a href="#" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
-                        <a href="#" aria-label="LinkedIn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg></a>
-                    </div>
+                <div>
+                    <h4>Web<span>Dev</span>Pro</h4>
+                    <p>Solusi digital terbaik untuk bisnis Anda. Bangun website profesional bersama kami.</p>
                 </div>
-                <div class="footer-links">
-                    <h4>Tautan Cepat</h4>
+                <div>
+                    <h4>Menu</h4>
                     <ul>
                         <li><a href="index.html">Beranda</a></li>
                         <li><a href="tentang.html">Tentang Kami</a></li>
                         <li><a href="layanan.html">Layanan</a></li>
-                        <li><a href="portofolio.html">Portofolio</a></li>
-                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="harga.html">Paket Harga</a></li>
                     </ul>
                 </div>
-                <div class="footer-links">
+                <div>
                     <h4>Layanan</h4>
                     <ul>
-                        <li><a href="#">Website Development</a></li>
-                        <li><a href="#">Mobile Apps</a></li>
-                        <li><a href="#">UI/UX Design</a></li>
-                        <li><a href="#">Digital Marketing</a></li>
-                        <li><a href="#">Cloud Services</a></li>
+                        <li><a href="layanan.html">Company Profile</a></li>
+                        <li><a href="layanan.html">E-Commerce</a></li>
+                        <li><a href="layanan.html">Web Application</a></li>
+                        <li><a href="layanan.html">Landing Page</a></li>
                     </ul>
                 </div>
-                <div class="footer-contact">
+                <div>
                     <h4>Kontak</h4>
-                    <ul>
+                    <ul class="footer-contact">
                         <li>📍 Batang, Jawa Tengah</li>
-                        <li>📞 +62 812-4814-1031</li>
-                        <li>✉️ info@webdevpro.id</li>
-                        <li>🕐 Senin - Jumat: 09.00 - 17.00</li>
+                        <li>📧 setyawanhendri253@gmail.com</li>
+                        <li>📱 +62 812-4814-1031</li>
                     </ul>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 WebDevPro. Hak Cipta Dilindungi.</p>
+                <p>&copy; 2024 WebDevPro. All rights reserved.</p>
+                <div>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
             </div>
         </div>
     </footer>
 
     <!-- ===== WHATSAPP FLOAT ===== -->
-    <a href="https://wa.me/6281248141031" class="whatsapp-float" target="_blank">💬</a>
+    <a href="https://wa.me/6281248141031?text=Halo%20kak%20Hendri,%20saya%20tertarik%20dengan%20produk%20Anda." 
+       class="whatsapp-float" target="_blank" aria-label="WhatsApp">💬</a>
 
-    <script src="assets/js/main.js"></script>
+    <!-- ===== FIREBASE SDK ===== -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    
+    <script src="assets/js/firebase-config.js"></script>
+    <script src="assets/js/auth.js"></script>
+    <script>
+        // ============================================
+        // NAVBAR SCROLL
+        // ============================================
+        window.addEventListener('scroll', () => {
+            document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // ============================================
+        // AUTH STATE
+        // ============================================
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                document.getElementById('loginBtn').style.display = 'none';
+                document.getElementById('registerBtn').style.display = 'none';
+                document.getElementById('userMenu').classList.remove('hidden');
+                document.getElementById('userName').textContent = user.displayName || user.email;
+            }
+        });
+
+        console.log('🔥 WebDevPro - Services page loaded successfully!');
+    </script>
 </body>
 </html>

@@ -1,24 +1,41 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pengaturan | Admin WebDevPro</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/style.css" />
     <style>
-        /* ===== RESET & BASE ===== */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        /* ========================================
+           RESET & BASE
+           ======================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         body {
             font-family: 'Poppins', sans-serif;
-            background: #0f172a;
-            color: #e2e8f0;
+            background: #f0f4f9;
+            color: #1e293b;
             display: flex;
-            overflow-x: hidden;
         }
-        a { text-decoration: none; }
-        button { cursor: pointer; font-family: inherit; }
+        a {
+            text-decoration: none;
+        }
+        button {
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .admin-body {
+            min-height: 100vh;
+            background: #f0f4f9;
+        }
 
-        /* ===== ANIMATED BACKGROUND ===== */
+        /* ========================================
+           BACKGROUND ANIMATION
+           ======================================== */
         .bg-animation {
             position: fixed;
             top: 0;
@@ -26,221 +43,693 @@
             width: 100%;
             height: 100%;
             z-index: 0;
-            overflow: hidden;
             pointer-events: none;
-        }
-        .bg-animation .code-line {
-            position: absolute;
-            color: rgba(96, 165, 250, 0.06);
-            font-family: 'Courier New', monospace;
-            font-size: 13px;
-            white-space: nowrap;
-            animation: floatCode linear infinite;
-            font-weight: 300;
-        }
-        @keyframes floatCode {
-            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-100vh) rotate(2deg); opacity: 0; }
-        }
-        .bg-animation .particle {
-            position: absolute;
-            width: 3px;
-            height: 3px;
-            background: rgba(96, 165, 250, 0.12);
-            border-radius: 50%;
-            animation: floatParticle linear infinite;
-        }
-        @keyframes floatParticle {
-            0% { transform: translateY(100vh) scale(0); opacity: 0; }
-            20% { opacity: 1; }
-            80% { opacity: 1; }
-            100% { transform: translateY(-100vh) scale(1); opacity: 0; }
-        }
-        .bg-animation .glow-orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(80px);
-            animation: pulseGlow 8s ease-in-out infinite alternate;
-        }
-        @keyframes pulseGlow {
-            0% { transform: scale(1) translate(0, 0); opacity: 0.25; }
-            100% { transform: scale(1.4) translate(40px, -40px); opacity: 0.5; }
+            overflow: hidden;
         }
 
-        /* ===== SIDEBAR ===== */
-        .admin-layout {
-            display: flex;
-            min-height: 100vh;
-            width: 100%;
-            position: relative;
-            z-index: 1;
+        .bg-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(245, 176, 20, 0.06);
+            border-radius: 50%;
+            animation: floatBgParticle linear infinite;
         }
-        .sidebar {
+
+        .bg-particle:nth-child(1) { left: 5%; animation-duration: 22s; }
+        .bg-particle:nth-child(2) { left: 15%; animation-duration: 28s; animation-delay: 2s; width: 6px; }
+        .bg-particle:nth-child(3) { left: 25%; animation-duration: 18s; animation-delay: 4s; }
+        .bg-particle:nth-child(4) { left: 35%; animation-duration: 32s; animation-delay: 1s; width: 8px; }
+        .bg-particle:nth-child(5) { left: 45%; animation-duration: 24s; animation-delay: 3s; }
+        .bg-particle:nth-child(6) { left: 55%; animation-duration: 30s; animation-delay: 5s; width: 5px; }
+        .bg-particle:nth-child(7) { left: 65%; animation-duration: 20s; animation-delay: 2.5s; }
+        .bg-particle:nth-child(8) { left: 75%; animation-duration: 26s; animation-delay: 4.5s; width: 7px; }
+        .bg-particle:nth-child(9) { left: 85%; animation-duration: 23s; animation-delay: 1.5s; }
+        .bg-particle:nth-child(10) { left: 95%; animation-duration: 29s; animation-delay: 3.5s; width: 6px; }
+        .bg-particle:nth-child(11) { left: 50%; animation-duration: 35s; animation-delay: 0.5s; width: 10px; }
+
+        @keyframes floatBgParticle {
+            0% { transform: translateY(100vh) translateX(0) scale(0); opacity: 0; }
+            10% { opacity: 0.6; transform: translateY(80vh) translateX(20px) scale(1); }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(-100vh) translateX(-20px) scale(0); opacity: 0; }
+        }
+
+        .gradient-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            pointer-events: none;
+            z-index: 0;
+            animation: orbFloat 20s ease-in-out infinite;
+        }
+
+        .gradient-orb:nth-child(1) {
+            width: 500px;
+            height: 500px;
+            background: rgba(245, 176, 20, 0.03);
+            top: -200px;
+            right: -100px;
+        }
+
+        .gradient-orb:nth-child(2) {
+            width: 400px;
+            height: 400px;
+            background: rgba(99, 102, 241, 0.02);
+            bottom: -150px;
+            left: -100px;
+            animation-delay: -10s;
+        }
+
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(50px, -50px) scale(1.1); }
+            66% { transform: translate(-30px, 30px) scale(0.9); }
+        }
+
+        .floating-code-bg {
+            position: fixed;
+            font-family: 'Courier New', monospace;
+            color: rgba(245, 176, 20, 0.03);
+            font-weight: 700;
+            font-size: 20px;
+            pointer-events: none;
+            z-index: 0;
+            animation: floatCodeBg linear infinite;
+        }
+
+        .floating-code-bg:nth-child(1) { top: 10%; left: 5%; animation-duration: 25s; }
+        .floating-code-bg:nth-child(2) { top: 20%; right: 10%; animation-duration: 20s; animation-delay: -5s; }
+        .floating-code-bg:nth-child(3) { bottom: 30%; left: 8%; animation-duration: 28s; animation-delay: -10s; }
+        .floating-code-bg:nth-child(4) { bottom: 20%; right: 5%; animation-duration: 22s; animation-delay: -7s; }
+        .floating-code-bg:nth-child(5) { top: 50%; left: 50%; animation-duration: 30s; animation-delay: -12s; }
+        .floating-code-bg:nth-child(6) { top: 5%; left: 40%; animation-duration: 18s; animation-delay: -3s; }
+        .floating-code-bg:nth-child(7) { bottom: 10%; left: 60%; animation-duration: 24s; animation-delay: -8s; }
+
+        @keyframes floatCodeBg {
+            0% { transform: translate(0, 0) rotate(0deg); opacity: 0.03; }
+            25% { transform: translate(100px, -50px) rotate(90deg); opacity: 0.06; }
+            50% { transform: translate(-60px, 70px) rotate(180deg); opacity: 0.04; }
+            75% { transform: translate(70px, -40px) rotate(270deg); opacity: 0.07; }
+            100% { transform: translate(0, 0) rotate(360deg); opacity: 0.03; }
+        }
+
+        /* ========================================
+           SIDEBAR
+           ======================================== */
+        .admin-sidebar {
             position: fixed;
             top: 0;
             left: 0;
-            width: 250px;
+            width: 260px;
             height: 100vh;
-            background: rgba(15, 23, 42, 0.92);
-            backdrop-filter: blur(20px);
+            background: linear-gradient(180deg, #0f172a 0%, #1a1a3e 100%);
             padding: 24px 16px;
             display: flex;
             flex-direction: column;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, width 0.3s ease;
             z-index: 1000;
             overflow-y: auto;
-            border-right: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 4px 0 24px rgba(0, 0, 0, 0.15);
         }
-        .sidebar::-webkit-scrollbar { width: 4px; }
-        .sidebar::-webkit-scrollbar-thumb { background: #475569; border-radius: 10px; }
-        .sidebar-brand h3 {
-            font-size: 22px;
-            font-weight: 800;
-            color: #fff;
-            margin-bottom: 2px;
-            background: linear-gradient(135deg, #60a5fa, #a78bfa);
-          
-            -webkit-text-fill-color: transparent;
+        .admin-sidebar::-webkit-scrollbar {
+            width: 4px;
         }
-        .sidebar-brand small { color: #94a3b8; font-size: 11px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; }
-        .sidebar-menu { margin-top: 24px; flex: 1; }
-        .menu-header {
-            color: #64748b;
-            font-size: 11px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            padding: 12px 12px 6px;
-            margin-top: 8px;
+        .admin-sidebar::-webkit-scrollbar-thumb {
+            background: #f5b014;
+            border-radius: 10px;
         }
-        .menu-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 10px 14px;
-            border-radius: 12px;
-            color: #94a3b8;
-            font-weight: 500;
-            font-size: 14px;
-            transition: all 0.3s ease;
-            margin-bottom: 2px;
-            position: relative;
-        }
-        .menu-item:hover { background: rgba(255, 255, 255, 0.06); color: #e2e8f0; transform: translateX(4px); }
-        .menu-item.active {
-            background: linear-gradient(135deg, rgba(96, 165, 250, 0.2), rgba(167, 139, 250, 0.2));
-            color: #60a5fa;
-            border: 1px solid rgba(96, 165, 250, 0.15);
-        }
-        .menu-item.active::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 3px;
-            height: 20px;
-            background: linear-gradient(180deg, #60a5fa, #a78bfa);
-            border-radius: 0 4px 4px 0;
-        }
-
-        /* ===== MAIN CONTENT ===== */
-        .admin-main {
-            margin-left: 250px;
-            flex: 1;
-            padding: 24px 32px 40px;
-            min-height: 100vh;
-            position: relative;
-            z-index: 2;
-        }
-        .admin-header {
+        .sidebar-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 16px 24px;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(12px);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            margin-bottom: 28px;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-        }
-        .admin-header h3 {
-            font-size: 20px;
-            font-weight: 700;
-            background: linear-gradient(135deg, #f1f5f9, #94a3b8);
-            
-            -webkit-text-fill-color: transparent;
-        }
-        .admin-header > div {
-            font-weight: 500;
-            color: #94a3b8;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .admin-header > div span {
-            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-            color: #fff;
-            padding: 4px 14px;
-            border-radius: 40px;
-            font-size: 13px;
-        }
-
-        /* ===== SETTINGS ===== */
-        .settings-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-        }
-        .settings-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(12px);
-            border-radius: 20px;
-            padding: 24px 28px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
-        }
-        .settings-card:hover { border-color: rgba(96, 165, 250, 0.2); }
-        .settings-card h4 {
-            font-size: 18px;
-            font-weight: 700;
-            color: #f1f5f9;
-            margin-bottom: 4px;
-        }
-        .settings-card p {
-            font-size: 13px;
-            color: #94a3b8;
+            padding-bottom: 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
             margin-bottom: 20px;
         }
+        .sidebar-header .logo {
+            font-size: 22px;
+            font-weight: 800;
+            color: #fff;
+        }
+        .sidebar-header .logo span {
+            color: #f5b014;
+        }
+        .admin-badge {
+            background: rgba(245, 176, 20, 0.15);
+            color: #f5b014;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 2px 12px;
+            border-radius: 20px;
+            letter-spacing: 0.3px;
+            border: 1px solid rgba(245, 176, 20, 0.1);
+        }
+        .sidebar-nav ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .sidebar-nav ul li a {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            color: rgba(255,255,255,0.6);
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        .sidebar-nav ul li a svg {
+            flex-shrink: 0;
+            opacity: 0.6;
+            transition: opacity 0.2s;
+        }
+        .sidebar-nav ul li a:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+        }
+        .sidebar-nav ul li a:hover svg {
+            opacity: 1;
+        }
+        .sidebar-nav ul li a.active {
+            background: rgba(245, 176, 20, 0.08);
+            color: #f5b014;
+        }
+        .sidebar-nav ul li a.active svg {
+            opacity: 1;
+            stroke: #f5b014;
+        }
+        .sidebar-footer {
+            margin-top: auto;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .logout-btn {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            color: #ef4444;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            background: none;
+            border: none;
+            width: 100%;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .logout-btn:hover {
+            background: rgba(239, 68, 68, 0.1);
+        }
 
-        /* ===== FORM ===== */
-        .form-group { margin-bottom: 16px; }
+        /* ========================================
+           MAIN CONTENT
+           ======================================== */
+        .admin-main {
+            margin-left: 260px;
+            flex: 1;
+            padding: 24px 32px 40px;
+            transition: margin-left 0.3s ease;
+            min-height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ========================================
+           TOPBAR
+           ======================================== */
+        .admin-topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            margin-bottom: 28px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+        .sidebar-toggle {
+            background: none;
+            border: none;
+            color: #475569;
+            padding: 6px;
+            border-radius: 10px;
+            transition: background 0.2s;
+        }
+        .sidebar-toggle:hover {
+            background: #f1f5f9;
+        }
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+        .topbar-search {
+            display: flex;
+            align-items: center;
+            background: #f1f5f9;
+            padding: 6px 16px;
+            border-radius: 40px;
+            gap: 10px;
+            transition: all 0.25s;
+            border: 1.5px solid transparent;
+        }
+        .topbar-search:focus-within {
+            background: #fff;
+            border-color: #f5b014;
+            box-shadow: 0 0 0 4px rgba(245, 176, 20, 0.12);
+        }
+        .topbar-search input {
+            border: none;
+            background: transparent;
+            padding: 8px 0;
+            font-size: 13px;
+            color: #1e293b;
+            outline: none;
+            width: 160px;
+        }
+        .topbar-search input::placeholder {
+            color: #94a3b8;
+        }
+        .topbar-search svg {
+            color: #94a3b8;
+            flex-shrink: 0;
+        }
+        .notification-btn {
+            position: relative;
+            background: none;
+            border: none;
+            padding: 6px;
+            border-radius: 10px;
+            color: #475569;
+            transition: background 0.2s;
+        }
+        .notification-btn:hover {
+            background: #f1f5f9;
+        }
+        .notification-badge {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: #fff;
+            font-size: 9px;
+            font-weight: 700;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #fff;
+            box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+        }
+        .topbar-user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            font-size: 14px;
+            color: #1e293b;
+            padding: 4px 12px 4px 4px;
+            border-radius: 40px;
+            background: #f1f5f9;
+            transition: background 0.2s;
+        }
+        .topbar-user:hover {
+            background: #e2e8f0;
+        }
+        .topbar-user img {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #e2e8f0;
+            background: #e2e8f0;
+        }
+
+        /* ========================================
+           PAGE HEADER
+           ======================================== */
+        .page-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+        .page-header-left h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #0f172a;
+            letter-spacing: -0.3px;
+        }
+        .page-header-left p {
+            color: #64748b;
+            font-size: 15px;
+            margin-top: 2px;
+        }
+
+        /* ========================================
+           SETTINGS CONTAINER
+           ======================================== */
+        .settings-container {
+            display: flex;
+            gap: 24px;
+            align-items: flex-start;
+        }
+
+        /* ========================================
+           SETTINGS SIDEBAR
+           ======================================== */
+        .settings-sidebar {
+            min-width: 220px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            position: sticky;
+            top: 24px;
+        }
+        .settings-tab {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            width: 100%;
+            padding: 12px 16px;
+            border: none;
+            border-radius: 12px;
+            background: transparent;
+            color: #64748b;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.25s ease;
+            text-align: left;
+        }
+        .settings-tab:hover {
+            background: #f1f5f9;
+            color: #1e293b;
+        }
+        .settings-tab.active {
+            background: linear-gradient(135deg, rgba(245, 176, 20, 0.08), rgba(245, 176, 20, 0.03));
+            color: #f5b014;
+            box-shadow: 0 2px 8px rgba(245, 176, 20, 0.08);
+        }
+        .settings-tab svg {
+            flex-shrink: 0;
+        }
+
+        /* ========================================
+           SETTINGS CONTENT
+           ======================================== */
+        .settings-content {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 28px 32px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+        }
+        .settings-panel {
+            display: none;
+            animation: fadeSlideIn 0.35s ease;
+        }
+        .settings-panel.active {
+            display: block;
+        }
+
+        @keyframes fadeSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .settings-panel h2 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 4px;
+        }
+        .panel-desc {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+
+        /* ========================================
+           FORM
+           ======================================== */
+        .settings-form .form-section {
+            margin-bottom: 32px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .settings-form .form-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .settings-form .form-section h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 16px;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+        .form-group {
+            margin-bottom: 16px;
+        }
         .form-group label {
             display: block;
             font-weight: 600;
             font-size: 13px;
-            color: #94a3b8;
+            color: #1e293b;
             margin-bottom: 4px;
         }
-        .form-group .form-control {
+        .form-group .required {
+            color: #ef4444;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
             width: 100%;
             padding: 10px 16px;
             border-radius: 14px;
-            border: 1.5px solid rgba(255, 255, 255, 0.1);
-            background: rgba(255, 255, 255, 0.05);
+            border: 1.5px solid #e2e8f0;
+            background: #fafcff;
             font-size: 14px;
-            transition: all 0.3s;
+            transition: all 0.2s;
             outline: none;
             font-family: inherit;
-            color: #e2e8f0;
+            color: #1e293b;
         }
-        .form-group .form-control:focus { border-color: #3b82f6; box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15); }
-        .form-group .form-control::placeholder { color: #64748b; }
-        .form-group textarea.form-control { resize: vertical; min-height: 80px; }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #f5b014;
+            box-shadow: 0 0 0 4px rgba(245, 176, 20, 0.08);
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        .form-group input[readonly] {
+            background: #f1f5f9;
+            cursor: not-allowed;
+        }
+
+        .form-hint {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-top: 4px;
+        }
+
+        /* ========================================
+           TOGGLE SWITCH
+           ======================================== */
+        .toggle-switch-label {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 14px;
+            color: #1e293b;
+        }
+        .toggle-switch {
+            position: relative;
+            width: 44px;
+            height: 24px;
+            flex-shrink: 0;
+        }
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .toggle-slider {
+            position: absolute;
+            inset: 0;
+            background: #cbd5e1;
+            border-radius: 40px;
+            transition: all 0.3s ease;
+        }
+        .toggle-slider::before {
+            content: '';
+            position: absolute;
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background: #fff;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+        }
+        .toggle-switch input:checked+.toggle-slider {
+            background: linear-gradient(135deg, #f5b014, #d49a0e);
+        }
+        .toggle-switch input:checked+.toggle-slider::before {
+            transform: translateX(20px);
+        }
+
+        .checkbox-group {
+            margin-bottom: 12px;
+        }
+
+        /* ========================================
+           COLOR PICKER
+           ======================================== */
+        .color-picker-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .color-picker-wrapper input[type="color"] {
+            width: 44px;
+            height: 44px;
+            padding: 3px;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+            cursor: pointer;
+            background: #fff;
+        }
+        .color-picker-wrapper span {
+            font-weight: 600;
+            font-size: 14px;
+            color: #1e293b;
+            font-family: 'Poppins', monospace;
+        }
+
+        /* ========================================
+           IMAGE UPLOAD SMALL
+           ======================================== */
+        .image-upload-sm {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 12px 16px;
+            border: 2px dashed #e2e8f0;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.25s;
+            background: #fafcff;
+            min-height: 70px;
+        }
+        .image-upload-sm:hover {
+            border-color: #f5b014;
+            background: #f0f7ff;
+        }
+        .image-upload-sm img {
+            max-height: 50px;
+            max-width: 60px;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+        .image-upload-sm .upload-placeholder {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #94a3b8;
+            font-size: 13px;
+        }
+        .image-upload-sm .upload-placeholder svg {
+            color: #94a3b8;
+        }
+
+        /* ========================================
+           ADMIN AVATAR
+           ======================================== */
+        .admin-avatar-section {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .admin-avatar-large {
+            position: relative;
+            width: 120px;
+            height: 120px;
+        }
+        .admin-avatar-large img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #e2e8f0;
+            background: #e2e8f0;
+        }
+        .avatar-edit-btn {
+            position: absolute;
+            bottom: 4px;
+            right: 4px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(135deg, #f5b014, #d49a0e);
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(245, 176, 20, 0.3);
+            transition: transform 0.2s;
+        }
+        .avatar-edit-btn:hover {
+            transform: scale(1.08);
+        }
+
+        /* ========================================
+           FORM ACTIONS
+           ======================================== */
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid #f1f5f9;
+            flex-wrap: wrap;
+        }
 
         .btn {
             display: inline-flex;
@@ -251,460 +740,854 @@
             border-radius: 40px;
             font-weight: 600;
             font-size: 14px;
-            transition: all 0.3s ease;
-            font-family: inherit;
+            transition: all 0.25s ease;
         }
         .btn-primary {
-            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-            color: #fff;
-            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+            background: linear-gradient(135deg, #f5b014, #d49a0e);
+            color: #0f172a;
+            box-shadow: 0 6px 20px rgba(245, 176, 20, 0.25);
         }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(59, 130, 246, 0.4); }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 28px rgba(245, 176, 20, 0.35);
+        }
         .btn-outline {
             background: transparent;
-            border: 1.5px solid rgba(255, 255, 255, 0.15);
-            color: #94a3b8;
+            border: 1.5px solid #e2e8f0;
+            color: #475569;
         }
-        .btn-outline:hover { background: rgba(255, 255, 255, 0.05); border-color: #3b82f6; color: #e2e8f0; }
-        .btn-danger {
-            background: linear-gradient(135deg, #ef4444, #dc2626);
-            color: #fff;
-            box-shadow: 0 4px 20px rgba(239, 68, 68, 0.3);
+        .btn-outline:hover {
+            background: #f1f5f9;
+            border-color: #f5b014;
+            color: #f5b014;
         }
-        .btn-danger:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(239, 68, 68, 0.4); }
+        .btn-sm {
+            padding: 6px 14px;
+            font-size: 12px;
+            border-radius: 30px;
+        }
+        .btn-danger-outline {
+            background: transparent;
+            border: 1.5px solid #fee2e2;
+            color: #ef4444;
+        }
+        .btn-danger-outline:hover {
+            background: #fee2e2;
+        }
 
-        /* ===== TOAST ===== */
-        .toast {
-            position: fixed;
-            top: 24px;
-            right: 24px;
-            padding: 14px 24px;
-            border-radius: 16px;
-            color: #fff;
-            font-weight: 600;
-            font-size: 14px;
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
-            z-index: 9999;
-            animation: slideInRight 0.4s ease;
+        .action-btn {
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            border: none;
+            background: transparent;
+            color: #94a3b8;
             display: flex;
             align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .action-btn:hover {
+            background: #f1f5f9;
+            color: #1e293b;
+        }
+        .action-btn.edit:hover {
+            background: #fef3c7;
+            color: #d97706;
+        }
+        .action-btn.delete:hover {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        /* ========================================
+           SESSION LIST
+           ======================================== */
+        .session-list {
+            display: flex;
+            flex-direction: column;
             gap: 10px;
-            backdrop-filter: blur(12px);
         }
-        .toast.success { background: linear-gradient(135deg, rgba(16, 185, 129, 0.9), rgba(5, 150, 105, 0.9)); border: 1px solid rgba(16, 185, 129, 0.3); }
-        .toast.error { background: linear-gradient(135deg, rgba(239, 68, 68, 0.9), rgba(220, 38, 38, 0.9)); border: 1px solid rgba(239, 68, 68, 0.3); }
-        .toast.warning { background: linear-gradient(135deg, rgba(245, 158, 11, 0.9), rgba(217, 119, 6, 0.9)); border: 1px solid rgba(245, 158, 11, 0.3); }
-        .toast.hide { animation: slideOutRight 0.4s ease forwards; }
-        @keyframes slideInRight {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+        .session-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 18px;
+            background: #f8fafc;
+            border-radius: 14px;
+            border: 1px solid #f1f5f9;
+            transition: all 0.2s;
         }
-        @keyframes slideOutRight {
-            from { transform: translateX(0); opacity: 1; }
-            to { transform: translateX(100%); opacity: 0; }
+        .session-item:hover {
+            background: #f1f5f9;
+        }
+        .session-item .session-info {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .session-item .session-info svg {
+            color: #94a3b8;
+            flex-shrink: 0;
+        }
+        .session-device {
+            font-weight: 600;
+            font-size: 14px;
+            color: #1e293b;
+            display: block;
+        }
+        .session-location {
+            font-size: 12px;
+            color: #94a3b8;
+        }
+        .session-badge {
+            padding: 2px 12px;
+            border-radius: 40px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .session-badge.active {
+            background: #d1fae5;
+            color: #059669;
         }
 
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 1024px) {
-            .sidebar { transform: translateX(-100%); }
-            .sidebar.open { transform: translateX(0); }
-            .admin-main { margin-left: 0; padding: 16px; }
-            .settings-grid { grid-template-columns: 1fr; }
+        /* ========================================
+           BANK ACCOUNTS
+           ======================================== */
+        .bank-accounts {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 14px;
         }
-        @media (max-width: 768px) {
-            .modal-content { padding: 20px; }
-            .admin-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+        .bank-account-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 18px;
+            background: #f8fafc;
+            border-radius: 14px;
+            border: 1px solid #f1f5f9;
+            transition: all 0.2s;
         }
-        @media (max-width: 480px) {
-            .admin-main { padding: 12px; }
-            .settings-card { padding: 18px; }
+        .bank-account-item:hover {
+            background: #f1f5f9;
+        }
+        .bank-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .bank-name {
+            font-weight: 600;
+            font-size: 14px;
+            color: #1e293b;
+        }
+        .bank-number {
+            font-weight: 500;
+            font-size: 13px;
+            color: #475569;
+            letter-spacing: 1px;
+        }
+        .bank-holder {
+            font-size: 12px;
+            color: #94a3b8;
+        }
+        .bank-actions {
+            display: flex;
+            gap: 4px;
         }
 
-        .sidebar-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: #e2e8f0;
-            font-size: 24px;
-            cursor: pointer;
+        /* ========================================
+           BACKUP LIST
+           ======================================== */
+        .backup-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 16px;
         }
+        .backup-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 18px;
+            background: #f8fafc;
+            border-radius: 14px;
+            border: 1px solid #f1f5f9;
+            transition: all 0.2s;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .backup-item:hover {
+            background: #f1f5f9;
+        }
+        .backup-info {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .backup-info svg {
+            color: #f5b014;
+            flex-shrink: 0;
+        }
+        .backup-name {
+            font-weight: 600;
+            font-size: 14px;
+            color: #1e293b;
+            display: block;
+        }
+        .backup-meta {
+            font-size: 12px;
+            color: #94a3b8;
+        }
+        .backup-actions {
+            display: flex;
+            gap: 8px;
+        }
+        .backup-actions-manual {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        /* ========================================
+           TOAST
+           ======================================== */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 24px;
+            background: #0f172a;
+            color: #fff;
+            border-radius: 16px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+            transform: translateY(80px);
+            opacity: 0;
+            transition: all 0.4s ease;
+            z-index: 9999;
+        }
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .toast-icon {
+            color: #34d399;
+            flex-shrink: 0;
+        }
+        .toast-message {
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        /* ========================================
+           RESPONSIVE
+           ======================================== */
         @media (max-width: 1024px) {
-            .sidebar-toggle { display: block; }
+            .admin-sidebar {
+                transform: translateX(-100%);
+            }
+            .admin-sidebar.collapsed {
+                transform: translateX(0);
+            }
+            .admin-main {
+                margin-left: 0;
+                padding: 16px;
+            }
+            .settings-container {
+                flex-direction: column;
+            }
+            .settings-sidebar {
+                min-width: unset;
+                width: 100%;
+                position: static;
+                display: flex;
+                flex-wrap: wrap;
+                gap: 4px;
+                padding: 8px;
+            }
+            .settings-tab {
+                flex: 1;
+                min-width: 100px;
+                justify-content: center;
+                padding: 10px 12px;
+                font-size: 12px;
+            }
+            .settings-tab svg {
+                width: 16px;
+                height: 16px;
+            }
+            .settings-content {
+                padding: 20px;
+            }
+        }
+        @media (max-width: 600px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            .settings-content {
+                padding: 16px;
+            }
+            .settings-panel h2 {
+                font-size: 18px;
+            }
+            .backup-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .backup-actions {
+                width: 100%;
+                justify-content: flex-start;
+            }
+            .bank-account-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            .session-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+            .toast {
+                bottom: 16px;
+                right: 16px;
+                left: 16px;
+                padding: 12px 18px;
+            }
+            .gradient-orb {
+                opacity: 0.4;
+            }
+            .bg-particle {
+                opacity: 0.5;
+            }
+            .floating-code-bg {
+                display: none;
+            }
+            .admin-topbar {
+                padding: 10px 16px;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            .topbar-search input {
+                width: 120px;
+            }
+        }
+
+        /* ========================================
+           SCROLLBAR
+           ======================================== */
+        .admin-main::-webkit-scrollbar {
+            width: 6px;
+        }
+        .admin-main::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .admin-main::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        .admin-main::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
         }
     </style>
 </head>
-<body>
-    <!-- ===== ANIMATED BACKGROUND ===== -->
-    <div class="bg-animation" id="bgAnimation"></div>
+<body class="admin-body">
+    <!-- ===== BACKGROUND ANIMATION ===== -->
+    <div class="bg-animation">
+        <div class="bg-particle"></div>
+        <div class="bg-particle"></div>
+        <div class="bg-particle"></div>
+        <div class="bg-particle"></div>
+        <div class="bg-particle"></div>
+        <div class="bg-particle"></div>
+        <div class="bg-particle"></div>
+        <div class="bg-particle"></div>
+        <div class="bg-particle"></div>
+        <div class="bg-particle"></div>
+        <div class="bg-particle"></div>
+        <div class="gradient-orb"></div>
+        <div class="gradient-orb"></div>
+        <div class="floating-code-bg">&lt;/&gt;</div>
+        <div class="floating-code-bg">{ }</div>
+        <div class="floating-code-bg">function</div>
+        <div class="floating-code-bg">const</div>
+        <div class="floating-code-bg">return</div>
+        <div class="floating-code-bg">if</div>
+        <div class="floating-code-bg">else</div>
+        <div class="floating-code-bg">for</div>
+    </div>
 
-    <div class="admin-layout">
-        <!-- ===== SIDEBAR ===== -->
-        <aside class="sidebar" id="sidebar">
-            <div class="sidebar-brand">
-                <h3>Web<span style="background:transparent; -webkit-text-fill-color:#f5b014;">Dev</span>Pro</h3>
-                <small>Admin Panel</small>
+    <!-- ===== SIDEBAR ===== -->
+    <aside class="admin-sidebar" id="adminSidebar">
+        <div class="sidebar-header">
+            <a href="../index.html" class="logo">Web<span>Dev</span>Pro</a>
+            <span class="admin-badge">Admin</span>
+        </div>
+        <nav class="sidebar-nav">
+            <ul>
+                <li><a href="index.html"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg> Dashboard</a></li>
+                <li><a href="pesanans.html"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> Pesanan</a></li>
+                <li><a href="users.html"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg> Pengguna</a></li>
+                <li><a href="pakets.html"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg> Paket Layanan</a></li>
+                <li><a href="portofolios.html"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg> Portofolio</a></li>
+                <li><a href="blogs.html"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Blog</a></li>
+                <li><a href="testimonis.html"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Testimoni</a></li>
+                <li><a href="faqs.html"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> FAQ</a></li>
+                <li><a href="settings.html" class="active"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg> Pengaturan</a></li>
+            </ul>
+        </nav>
+        <div class="sidebar-footer">
+            <button class="logout-btn" id="logoutBtn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg> Keluar</button>
+        </div>
+    </aside>
+
+    <!-- ===== MAIN ===== -->
+    <main class="admin-main">
+        <!-- Top Bar -->
+        <header class="admin-topbar">
+            <button class="sidebar-toggle" id="sidebarToggle"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+            <div class="topbar-right">
+                <div class="topbar-search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" placeholder="Cari..."></div>
+                <div class="topbar-notifications"><button class="notification-btn" id="notificationBtn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="notification-badge">1</span></button></div>
+                <div class="topbar-user"><img src="../assets/images/admin/avatar.jpg" alt="Admin" onerror="this.src='https://ui-avatars.com/api/?name=Admin&background=f5b014&color=0f172a&size=36'"><span>Admin</span></div>
             </div>
-            <div class="sidebar-menu">
-                <div class="menu-header">Menu Utama</div>
-                <a href="index.html" class="menu-item">📊 Dashboard</a>
+        </header>
 
-                <div class="menu-header">Manajemen</div>
-                <a href="users.html" class="menu-item">👥 Users</a>
-                <a href="pesanans.html" class="menu-item">🛒 Pesanan</a>
-                <a href="pakets.html" class="menu-item">📦 Paket</a>
-                <a href="portofolios.html" class="menu-item">🎨 Portofolio</a>
-                <a href="blogs.html" class="menu-item">📝 Blog</a>
-                <a href="testimonials.html" class="menu-item">⭐ Testimoni</a>
-                <a href="faqs.html" class="menu-item">❓ FAQ</a>
-
-                <div class="menu-header">Pengaturan</div>
-                <a href="settings.html" class="menu-item active">⚙️ Pengaturan</a>
-
-                <div style="margin-top:30px; padding:20px 0; border-top:1px solid rgba(255,255,255,0.06);">
-                    <a href="../index.html" class="menu-item">🌐 Lihat Website</a>
-                    <a href="#" onclick="logout()" class="menu-item">🚪 Logout</a>
-                </div>
-            </div>
-        </aside>
-
-        <!-- ===== MAIN ===== -->
-        <div class="admin-main">
-            <button class="sidebar-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
-
-            <div class="admin-header">
-                <h3>⚙️ Pengaturan</h3>
-                <div>
-                    <span id="adminName">Hendri Setyawan</span> 👤
-                </div>
+        <!-- Page Content -->
+        <div class="admin-content">
+            <div class="page-header">
+                <div class="page-header-left"><h1>Pengaturan</h1><p>Kelola konfigurasi website dan akun admin</p></div>
             </div>
 
-            <div class="settings-grid">
-                <!-- Profile Settings -->
-                <div class="settings-card">
-                    <h4>👤 Profil Admin</h4>
-                    <p>Perbarui informasi profil Anda</p>
-                    <form id="profileForm" onsubmit="saveProfile(event)">
-                        <div class="form-group">
-                            <label>Nama Lengkap</label>
-                            <input type="text" id="profileName" class="form-control" placeholder="Nama Anda" />
-                        </div>
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input type="email" id="profileEmail" class="form-control" placeholder="email@example.com" disabled style="opacity:0.6;" />
-                        </div>
-                        <div class="form-group">
-                            <label>Bio</label>
-                            <textarea id="profileBio" class="form-control" rows="3" placeholder="Cerita singkat tentang Anda..."></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">💾 Simpan Profil</button>
-                    </form>
+            <!-- Settings -->
+            <div class="settings-container">
+                <div class="settings-sidebar">
+                    <button class="settings-tab active" data-tab="umum"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg> Umum</button>
+                    <button class="settings-tab" data-tab="profil"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Profil Admin</button>
+                    <button class="settings-tab" data-tab="website"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg> Website</button>
+                    <button class="settings-tab" data-tab="email"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Email & Notifikasi</button>
+                    <button class="settings-tab" data-tab="keamanan"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Keamanan</button>
+                    <button class="settings-tab" data-tab="pembayaran"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg> Pembayaran</button>
+                    <button class="settings-tab" data-tab="backup"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Backup & Restore</button>
                 </div>
 
-                <!-- Security Settings -->
-                <div class="settings-card">
-                    <h4>🔒 Keamanan</h4>
-                    <p>Ganti kata sandi dan kelola keamanan</p>
-                    <form id="securityForm" onsubmit="changePassword(event)">
-                        <div class="form-group">
-                            <label>Password Lama</label>
-                            <input type="password" id="oldPassword" class="form-control" placeholder="Password lama" />
-                        </div>
-                        <div class="form-group">
-                            <label>Password Baru</label>
-                            <input type="password" id="newPassword" class="form-control" placeholder="Password baru (min 6 karakter)" />
-                        </div>
-                        <div class="form-group">
-                            <label>Konfirmasi Password</label>
-                            <input type="password" id="confirmPassword" class="form-control" placeholder="Konfirmasi password" />
-                        </div>
-                        <button type="submit" class="btn btn-primary">🔑 Ganti Password</button>
-                    </form>
-                </div>
+                <div class="settings-content">
+                    <!-- TAB UMUM -->
+                    <div class="settings-panel active" id="tab-umum">
+                        <h2>Pengaturan Umum</h2>
+                        <p class="panel-desc">Kelola informasi dasar website Anda</p>
+                        <form class="settings-form" id="formUmum">
+                            <div class="form-section">
+                                <h3>Informasi Website</h3>
+                                <div class="form-row">
+                                    <div class="form-group"><label for="siteName">Nama Website <span class="required">*</span></label><input type="text" id="siteName" value="WebDevPro" required></div>
+                                    <div class="form-group"><label for="siteTagline">Tagline</label><input type="text" id="siteTagline" value="Solusi Digital Profesional untuk Bisnis Anda"></div>
+                                </div>
+                                <div class="form-group"><label for="siteDesc">Deskripsi Website</label><textarea id="siteDesc" rows="3">WebDevPro adalah perusahaan pengembangan web dan solusi digital terpercaya di Indonesia.</textarea></div>
+                            </div>
+                            <div class="form-section">
+                                <h3>Kontak & Lokasi</h3>
+                                <div class="form-row">
+                                    <div class="form-group"><label for="siteEmail">Email Utama</label><input type="email" id="siteEmail" value="info@webdevpro.id"></div>
+                                    <div class="form-group"><label for="sitePhone">Telepon</label><input type="tel" id="sitePhone" value="+62 812-3456-7890"></div>
+                                </div>
+                                <div class="form-group"><label for="siteAddress">Alamat</label><textarea id="siteAddress" rows="2">Jl. Sudirman No. 123, Karet Tengsin, Jakarta Pusat, DKI Jakarta 10220</textarea></div>
+                                <div class="form-row">
+                                    <div class="form-group"><label for="siteMaps">Embed Google Maps</label><input type="url" id="siteMaps" placeholder="https://www.google.com/maps/embed..."></div>
+                                    <div class="form-group"><label for="siteWhatsapp">Nomor WhatsApp</label><input type="tel" id="siteWhatsapp" value="6281234567890"></div>
+                                </div>
+                            </div>
+                            <div class="form-section">
+                                <h3>Media Sosial</h3>
+                                <div class="form-row">
+                                    <div class="form-group"><label for="socialFacebook">Facebook</label><input type="url" id="socialFacebook" placeholder="https://facebook.com/..."></div>
+                                    <div class="form-group"><label for="socialInstagram">Instagram</label><input type="url" id="socialInstagram" placeholder="https://instagram.com/..."></div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group"><label for="socialTwitter">Twitter / X</label><input type="url" id="socialTwitter" placeholder="https://twitter.com/..."></div>
+                                    <div class="form-group"><label for="socialLinkedin">LinkedIn</label><input type="url" id="socialLinkedin" placeholder="https://linkedin.com/company/..."></div>
+                                </div>
+                            </div>
+                            <div class="form-section">
+                                <h3>Logo & Favicon</h3>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Logo Website</label>
+                                        <div class="image-upload-sm" id="logoUpload">
+                                            <img src="../assets/images/logo.png" alt="Current Logo" onerror="this.style.display='none'">
+                                            <div class="upload-placeholder"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>Klik untuk ganti logo</span></div>
+                                            <input type="file" id="siteLogo" accept="image/*" hidden>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Favicon</label>
+                                        <div class="image-upload-sm" id="faviconUpload">
+                                            <img src="../assets/images/favicon.ico" alt="Current Favicon" onerror="this.style.display='none'">
+                                            <div class="upload-placeholder"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg><span>Klik untuk ganti favicon</span></div>
+                                            <input type="file" id="siteFavicon" accept=".ico,.png" hidden>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-actions"><button type="submit" class="btn btn-primary"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Simpan Perubahan</button></div>
+                        </form>
+                    </div>
 
-                <!-- Company Settings -->
-                <div class="settings-card">
-                    <h4>🏢 Informasi Perusahaan</h4>
-                    <p>Perbarui informasi perusahaan Anda</p>
-                    <form id="companyForm" onsubmit="saveCompany(event)">
-                        <div class="form-group">
-                            <label>Nama Perusahaan</label>
-                            <input type="text" id="companyName" class="form-control" placeholder="Nama perusahaan" />
-                        </div>
-                        <div class="form-group">
-                            <label>Alamat</label>
-                            <input type="text" id="companyAddress" class="form-control" placeholder="Alamat lengkap" />
-                        </div>
-                        <div class="form-group">
-                            <label>Telepon</label>
-                            <input type="text" id="companyPhone" class="form-control" placeholder="Nomor telepon" />
-                        </div>
-                        <div class="form-group">
-                            <label>Email Perusahaan</label>
-                            <input type="email" id="companyEmail" class="form-control" placeholder="email@perusahaan.com" />
-                        </div>
-                        <button type="submit" class="btn btn-primary">💾 Simpan</button>
-                    </form>
-                </div>
+                    <!-- TAB PROFIL ADMIN -->
+                    <div class="settings-panel" id="tab-profil">
+                        <h2>Profil Admin</h2>
+                        <p class="panel-desc">Kelola informasi akun administrator</p>
+                        <form class="settings-form" id="formProfil">
+                            <div class="form-section">
+                                <h3>Informasi Pribadi</h3>
+                                <div class="admin-avatar-section">
+                                    <div class="admin-avatar-large">
+                                        <img src="../assets/images/admin/avatar.jpg" alt="Admin Avatar" onerror="this.src='https://ui-avatars.com/api/?name=Admin&background=f5b014&color=0f172a&size=120'">
+                                        <button type="button" class="avatar-edit-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group"><label for="adminName">Nama Lengkap <span class="required">*</span></label><input type="text" id="adminName" value="Administrator" required></div>
+                                    <div class="form-group"><label for="adminUsername">Username</label><input type="text" id="adminUsername" value="admin" readonly></div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group"><label for="adminEmail">Email <span class="required">*</span></label><input type="email" id="adminEmail" value="admin@webdevpro.id" required></div>
+                                    <div class="form-group"><label for="adminPhone">Nomor Telepon</label><input type="tel" id="adminPhone" value="+62 812-3456-7890"></div>
+                                </div>
+                                <div class="form-group"><label for="adminBio">Bio</label><textarea id="adminBio" rows="3">Administrator utama WebDevPro dengan pengalaman 5+ tahun dalam manajemen sistem.</textarea></div>
+                            </div>
+                            <div class="form-actions"><button type="submit" class="btn btn-primary"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Simpan Perubahan</button></div>
+                        </form>
+                    </div>
 
-                <!-- Danger Zone -->
-                <div class="settings-card" style="border-color:rgba(239,68,68,0.2);">
-                    <h4 style="color:#f87171;">⚠️ Zona Berbahaya</h4>
-                    <p style="color:#f87171;">Tindakan ini tidak dapat dibatalkan</p>
-                    <div style="display:flex; gap:12px; flex-wrap:wrap;">
-                        <button class="btn btn-danger" onclick="clearAllData()">🗑️ Hapus Semua Data</button>
-                        <button class="btn btn-danger" onclick="logout()">🚪 Logout Akun</button>
+                    <!-- TAB WEBSITE -->
+                    <div class="settings-panel" id="tab-website">
+                        <h2>Pengaturan Website</h2>
+                        <p class="panel-desc">Konfigurasi tampilan dan perilaku website</p>
+                        <form class="settings-form" id="formWebsite">
+                            <div class="form-section">
+                                <h3>Tampilan</h3>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="themeColor">Warna Tema Utama</label>
+                                        <div class="color-picker-wrapper"><input type="color" id="themeColor" value="#f5b014"><span>#f5b014</span></div>
+                                    </div>
+                                    <div class="form-group"><label for="themeFont">Font Utama</label><select id="themeFont"><option value="poppins" selected>Poppins</option><option value="inter">Inter</option><option value="roboto">Roboto</option><option value="opensans">Open Sans</option></select></div>
+                                </div>
+                                <div class="checkbox-group">
+                                    <label class="toggle-switch-label"><span>Mode Maintenance</span><label class="toggle-switch"><input type="checkbox" name="maintenanceMode"><span class="toggle-slider"></span></label></label>
+                                    <p class="form-hint">Aktifkan untuk menampilkan halaman maintenance kepada pengunjung.</p>
+                                </div>
+                                <div class="checkbox-group">
+                                    <label class="toggle-switch-label"><span>Registrasi Pengguna</span><label class="toggle-switch"><input type="checkbox" name="userRegistration" checked><span class="toggle-slider"></span></label></label>
+                                    <p class="form-hint">Izinkan pengguna baru untuk mendaftar.</p>
+                                </div>
+                            </div>
+                            <div class="form-section">
+                                <h3>SEO Default</h3>
+                                <div class="form-group"><label for="metaTitle">Meta Title Default</label><input type="text" id="metaTitle" value="WebDevPro - Solusi Digital Profesional"></div>
+                                <div class="form-group"><label for="metaDesc">Meta Description Default</label><textarea id="metaDesc" rows="2">Jasa pembuatan website, aplikasi mobile, dan solusi digital terbaik di Indonesia. Konsultasi gratis!</textarea></div>
+                                <div class="form-group"><label for="metaKeywords">Meta Keywords</label><input type="text" id="metaKeywords" value="jasa website, pembuatan website, aplikasi mobile, digital marketing"></div>
+                            </div>
+                            <div class="form-section">
+                                <h3>Analytics</h3>
+                                <div class="form-group"><label for="googleAnalytics">Google Analytics ID</label><input type="text" id="googleAnalytics" placeholder="G-XXXXXXXXXX"></div>
+                                <div class="form-group"><label for="facebookPixel">Facebook Pixel ID</label><input type="text" id="facebookPixel" placeholder="XXXXXXXXXX"></div>
+                            </div>
+                            <div class="form-actions"><button type="submit" class="btn btn-primary"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Simpan Perubahan</button></div>
+                        </form>
+                    </div>
+
+                    <!-- TAB EMAIL -->
+                    <div class="settings-panel" id="tab-email">
+                        <h2>Email & Notifikasi</h2>
+                        <p class="panel-desc">Konfigurasi pengiriman email dan notifikasi</p>
+                        <form class="settings-form" id="formEmail">
+                            <div class="form-section">
+                                <h3>SMTP Configuration</h3>
+                                <div class="form-row">
+                                    <div class="form-group"><label for="smtpHost">SMTP Host</label><input type="text" id="smtpHost" value="smtp.gmail.com"></div>
+                                    <div class="form-group"><label for="smtpPort">SMTP Port</label><input type="number" id="smtpPort" value="587"></div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group"><label for="smtpUser">SMTP Username</label><input type="email" id="smtpUser" value="noreply@webdevpro.id"></div>
+                                    <div class="form-group"><label for="smtpPass">SMTP Password</label><input type="password" id="smtpPass" value="••••••••••••"></div>
+                                </div>
+                                <div class="checkbox-group">
+                                    <label class="toggle-switch-label"><span>SMTP TLS/SSL</span><label class="toggle-switch"><input type="checkbox" name="smtpTls" checked><span class="toggle-slider"></span></label></label>
+                                </div>
+                            </div>
+                            <div class="form-section">
+                                <h3>Notifikasi Email</h3>
+                                <div class="checkbox-group"><label class="toggle-switch-label"><span>Notifikasi Pesanan Baru</span><label class="toggle-switch"><input type="checkbox" name="notifOrder" checked><span class="toggle-slider"></span></label></label></div>
+                                <div class="checkbox-group"><label class="toggle-switch-label"><span>Notifikasi Pembayaran</span><label class="toggle-switch"><input type="checkbox" name="notifPayment" checked><span class="toggle-slider"></span></label></label></div>
+                                <div class="checkbox-group"><label class="toggle-switch-label"><span>Notifikasi Pendaftaran User</span><label class="toggle-switch"><input type="checkbox" name="notifRegister"><span class="toggle-slider"></span></label></label></div>
+                                <div class="checkbox-group"><label class="toggle-switch-label"><span>Newsletter Mingguan</span><label class="toggle-switch"><input type="checkbox" name="notifNewsletter" checked><span class="toggle-slider"></span></label></label></div>
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-outline" id="testEmailBtn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Kirim Email Tes</button>
+                                <button type="submit" class="btn btn-primary"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Simpan Perubahan</button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- TAB KEAMANAN -->
+                    <div class="settings-panel" id="tab-keamanan">
+                        <h2>Keamanan</h2>
+                        <p class="panel-desc">Kelola keamanan akun dan akses</p>
+                        <form class="settings-form" id="formKeamanan">
+                            <div class="form-section">
+                                <h3>Ubah Password</h3>
+                                <div class="form-group"><label for="currentPass">Password Saat Ini <span class="required">*</span></label><input type="password" id="currentPass" required></div>
+                                <div class="form-row">
+                                    <div class="form-group"><label for="newPass">Password Baru <span class="required">*</span></label><input type="password" id="newPass" required></div>
+                                    <div class="form-group"><label for="confirmPass">Konfirmasi Password Baru <span class="required">*</span></label><input type="password" id="confirmPass" required></div>
+                                </div>
+                            </div>
+                            <div class="form-section">
+                                <h3>Autentikasi Dua Faktor (2FA)</h3>
+                                <div class="checkbox-group">
+                                    <label class="toggle-switch-label"><span>Aktifkan 2FA</span><label class="toggle-switch"><input type="checkbox" name="enable2fa"><span class="toggle-slider"></span></label></label>
+                                    <p class="form-hint">Tambahkan lapisan keamanan ekstra dengan verifikasi OTP.</p>
+                                </div>
+                            </div>
+                            <div class="form-section">
+                                <h3>Sesi Login</h3>
+                                <div class="session-list">
+                                    <div class="session-item active">
+                                        <div class="session-info"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><div><span class="session-device">Chrome di Windows</span><span class="session-location">Jakarta, Indonesia • Saat ini</span></div></div>
+                                        <span class="session-badge active">Aktif</span>
+                                    </div>
+                                    <div class="session-item">
+                                        <div class="session-info"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg><div><span class="session-device">Safari di iPhone</span><span class="session-location">Yogyakarta, Indonesia • 2 hari lalu</span></div></div>
+                                        <button type="button" class="btn btn-sm btn-danger-outline">Hapus</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-actions"><button type="submit" class="btn btn-primary"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Simpan Perubahan</button></div>
+                        </form>
+                    </div>
+
+                    <!-- TAB PEMBAYARAN -->
+                    <div class="settings-panel" id="tab-pembayaran">
+                        <h2>Pengaturan Pembayaran</h2>
+                        <p class="panel-desc">Konfigurasi metode pembayaran dan rekening</p>
+                        <form class="settings-form" id="formPembayaran">
+                            <div class="form-section">
+                                <h3>Rekening Bank</h3>
+                                <div class="bank-accounts">
+                                    <div class="bank-account-item">
+                                        <div class="bank-info"><span class="bank-name">Bank Central Asia (BCA)</span><span class="bank-number">1234 5678 9012 3456</span><span class="bank-holder">a.n. WebDevPro Indonesia</span></div>
+                                        <div class="bank-actions"><button type="button" class="action-btn edit" title="Edit"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button><button type="button" class="action-btn delete" title="Hapus"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button></div>
+                                    </div>
+                                    <div class="bank-account-item">
+                                        <div class="bank-info"><span class="bank-name">Bank Mandiri</span><span class="bank-number">98 765 4321 098</span><span class="bank-holder">a.n. WebDevPro Indonesia</span></div>
+                                        <div class="bank-actions"><button type="button" class="action-btn edit" title="Edit"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button><button type="button" class="action-btn delete" title="Hapus"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button></div>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-outline btn-sm" id="addBankBtn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Tambah Rekening</button>
+                            </div>
+                            <div class="form-section">
+                                <h3>E-Wallet</h3>
+                                <div class="form-row">
+                                    <div class="checkbox-group"><label class="toggle-switch-label"><span>GoPay</span><label class="toggle-switch"><input type="checkbox" name="ewalletGopay" checked><span class="toggle-slider"></span></label></label></div>
+                                    <div class="checkbox-group"><label class="toggle-switch-label"><span>OVO</span><label class="toggle-switch"><input type="checkbox" name="ewalletOvo" checked><span class="toggle-slider"></span></label></label></div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="checkbox-group"><label class="toggle-switch-label"><span>DANA</span><label class="toggle-switch"><input type="checkbox" name="ewalletDana" checked><span class="toggle-slider"></span></label></label></div>
+                                    <div class="checkbox-group"><label class="toggle-switch-label"><span>LinkAja</span><label class="toggle-switch"><input type="checkbox" name="ewalletLinkaja"><span class="toggle-slider"></span></label></label></div>
+                                </div>
+                            </div>
+                            <div class="form-section">
+                                <h3>Payment Gateway</h3>
+                                <div class="form-group"><label for="midtransKey">Midtrans Server Key</label><input type="password" id="midtransKey" value="••••••••••••••••"></div>
+                                <div class="form-group"><label for="midtransClient">Midtrans Client Key</label><input type="password" id="midtransClient" value="••••••••••••••••"></div>
+                                <div class="checkbox-group"><label class="toggle-switch-label"><span>Mode Sandbox</span><label class="toggle-switch"><input type="checkbox" name="midtransSandbox" checked><span class="toggle-slider"></span></label></label></div>
+                            </div>
+                            <div class="form-actions"><button type="submit" class="btn btn-primary"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Simpan Perubahan</button></div>
+                        </form>
+                    </div>
+
+                    <!-- TAB BACKUP -->
+                    <div class="settings-panel" id="tab-backup">
+                        <h2>Backup & Restore</h2>
+                        <p class="panel-desc">Kelola backup data dan pengaturan</p>
+                        <form class="settings-form" id="formBackup">
+                            <div class="form-section">
+                                <h3>Backup Otomatis</h3>
+                                <div class="checkbox-group"><label class="toggle-switch-label"><span>Aktifkan Backup Otomatis</span><label class="toggle-switch"><input type="checkbox" name="autoBackup" checked><span class="toggle-slider"></span></label></label></div>
+                                <div class="form-row">
+                                    <div class="form-group"><label for="backupFrequency">Frekuensi Backup</label><select id="backupFrequency"><option value="daily" selected>Harian</option><option value="weekly">Mingguan</option><option value="monthly">Bulanan</option></select></div>
+                                    <div class="form-group"><label for="backupTime">Waktu Backup</label><input type="time" id="backupTime" value="02:00"></div>
+                                </div>
+                                <div class="form-group"><label for="backupRetention">Retensi Backup (hari)</label><input type="number" id="backupRetention" value="30" min="7" max="90"></div>
+                            </div>
+                            <div class="form-section">
+                                <h3>Riwayat Backup</h3>
+                                <div class="backup-list">
+                                    <div class="backup-item">
+                                        <div class="backup-info"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><div><span class="backup-name">backup_2024-06-29_020000.zip</span><span class="backup-meta">29 Jun 2024, 02:00 • 45.2 MB</span></div></div>
+                                        <div class="backup-actions"><button type="button" class="btn btn-sm btn-outline">Download</button><button type="button" class="btn btn-sm btn-danger-outline">Hapus</button></div>
+                                    </div>
+                                    <div class="backup-item">
+                                        <div class="backup-info"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><div><span class="backup-name">backup_2024-06-28_020000.zip</span><span class="backup-meta">28 Jun 2024, 02:00 • 44.8 MB</span></div></div>
+                                        <div class="backup-actions"><button type="button" class="btn btn-sm btn-outline">Download</button><button type="button" class="btn btn-sm btn-danger-outline">Hapus</button></div>
+                                    </div>
+                                    <div class="backup-item">
+                                        <div class="backup-info"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><div><span class="backup-name">backup_2024-06-27_020000.zip</span><span class="backup-meta">27 Jun 2024, 02:00 • 44.5 MB</span></div></div>
+                                        <div class="backup-actions"><button type="button" class="btn btn-sm btn-outline">Download</button><button type="button" class="btn btn-sm btn-danger-outline">Hapus</button></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-section">
+                                <h3>Backup Manual</h3>
+                                <div class="backup-actions-manual">
+                                    <button type="button" class="btn btn-primary" id="backupNowBtn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Backup Sekarang</button>
+                                    <button type="button" class="btn btn-outline" id="restoreBtn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg> Restore dari File</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
+    </main>
+
+    <!-- ===== TOAST ===== -->
+    <div class="toast" id="toast">
+        <div class="toast-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+        <div class="toast-message">Pengaturan berhasil disimpan!</div>
     </div>
 
-    <!-- ===== FIREBASE SDK ===== -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-
     <script>
-        // ===== FIREBASE CONFIG =====
-        const firebaseConfig = {
-            apiKey: "AIzaSyDummyKeyForDemo",
-            authDomain: "webdevpro-demo.firebaseapp.com",
-            projectId: "webdevpro-demo",
-            storageBucket: "webdevpro-demo.appspot.com",
-            messagingSenderId: "123456789",
-            appId: "1:123456789:web:abcdef123456"
-        };
+        // ===== SIDEBAR TOGGLE =====
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const adminSidebar = document.getElementById('adminSidebar');
+        sidebarToggle.addEventListener('click', () => {
+            adminSidebar.classList.toggle('collapsed');
+            document.body.classList.toggle('sidebar-collapsed');
+        });
 
-        if (!firebase.apps.length) {
-            firebase.initializeApp(firebaseConfig);
-        }
+        // ===== SETTINGS TABS =====
+        const settingsTabs = document.querySelectorAll('.settings-tab');
+        const settingsPanels = document.querySelectorAll('.settings-panel');
 
-        const auth = firebase.auth();
-        const db = firebase.firestore();
-        let currentUser = null;
-
-        // ===== CHECK ADMIN =====
-        function checkAdmin() {
-            return new Promise((resolve, reject) => {
-                auth.onAuthStateChanged(async (user) => {
-                    if (!user) {
-                        window.location.href = '../login.html';
-                        return reject();
-                    }
-
-                    try {
-                        const doc = await db.collection('users').doc(user.uid).get();
-                        if (doc.exists && doc.data().role === 'admin') {
-                            currentUser = { uid: user.uid, ...doc.data() };
-                            document.getElementById('adminName').textContent = doc.data().nama || 'Admin';
-                            loadProfile();
-                            resolve();
-                        } else {
-                            window.location.href = '../login.html';
-                            reject();
-                        }
-                    } catch (error) {
-                        console.error('Error checking admin:', error);
-                        window.location.href = '../login.html';
-                        reject();
-                    }
-                });
+        settingsTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetTab = tab.dataset.tab;
+                settingsTabs.forEach(t => t.classList.remove('active'));
+                settingsPanels.forEach(p => p.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById(`tab-${targetTab}`).classList.add('active');
             });
+        });
+
+        // ===== IMAGE UPLOAD =====
+        const logoUpload = document.getElementById('logoUpload');
+        const siteLogo = document.getElementById('siteLogo');
+        const faviconUpload = document.getElementById('faviconUpload');
+        const siteFavicon = document.getElementById('siteFavicon');
+
+        logoUpload.addEventListener('click', () => siteLogo.click());
+        faviconUpload.addEventListener('click', () => siteFavicon.click());
+
+        siteLogo.addEventListener('change', function() {
+            if (this.files.length > 0) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = logoUpload.querySelector('img');
+                    img.src = e.target.result;
+                    img.style.display = 'block';
+                    logoUpload.querySelector('.upload-placeholder').style.display = 'none';
+                };
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+
+        siteFavicon.addEventListener('change', function() {
+            if (this.files.length > 0) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = faviconUpload.querySelector('img');
+                    img.src = e.target.result;
+                    img.style.display = 'block';
+                    faviconUpload.querySelector('.upload-placeholder').style.display = 'none';
+                };
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+
+        // ===== COLOR PICKER =====
+        const themeColor = document.getElementById('themeColor');
+        themeColor.addEventListener('input', function() {
+            this.nextElementSibling.textContent = this.value;
+        });
+
+        // ===== TOAST =====
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.querySelector('.toast-message').textContent = message;
+            toast.classList.add('show');
+            clearTimeout(toast._timer);
+            toast._timer = setTimeout(() => toast.classList.remove('show'), 3000);
         }
 
-        // ===== LOAD PROFILE =====
-        function loadProfile() {
-            if (!currentUser) return;
-            document.getElementById('profileName').value = currentUser.nama || '';
-            document.getElementById('profileEmail').value = currentUser.email || '';
-            document.getElementById('profileBio').value = currentUser.bio || '';
-            document.getElementById('companyName').value = currentUser.companyName || '';
-            document.getElementById('companyAddress').value = currentUser.companyAddress || '';
-            document.getElementById('companyPhone').value = currentUser.companyPhone || '';
-            document.getElementById('companyEmail').value = currentUser.companyEmail || '';
-        }
+        // ===== FORM SUBMISSIONS =====
+        document.querySelectorAll('.settings-form').forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                showToast('✅ Pengaturan berhasil disimpan!');
+            });
+        });
 
-        // ===== SAVE PROFILE =====
-        async function saveProfile(event) {
-            event.preventDefault();
-            const nama = document.getElementById('profileName').value.trim();
-            const bio = document.getElementById('profileBio').value.trim();
-
-            if (!nama) {
-                showToast('Nama tidak boleh kosong!', 'warning');
-                return;
-            }
-
-            try {
-                await db.collection('users').doc(currentUser.uid).update({
-                    nama,
-                    bio,
-                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-                });
-                currentUser.nama = nama;
-                currentUser.bio = bio;
-                document.getElementById('adminName').textContent = nama;
-                showToast('✅ Profil berhasil diperbarui!', 'success');
-            } catch (error) {
-                showToast('❌ Gagal update profil: ' + error.message, 'error');
-            }
-        }
-
-        // ===== CHANGE PASSWORD =====
-        async function changePassword(event) {
-            event.preventDefault();
-            const oldPassword = document.getElementById('oldPassword').value;
-            const newPassword = document.getElementById('newPassword').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-
-            if (!oldPassword || !newPassword || !confirmPassword) {
-                showToast('Semua field password harus diisi!', 'warning');
-                return;
-            }
-
-            if (newPassword.length < 6) {
-                showToast('Password baru minimal 6 karakter!', 'warning');
-                return;
-            }
-
-            if (newPassword !== confirmPassword) {
-                showToast('Password baru dan konfirmasi tidak cocok!', 'warning');
-                return;
-            }
-
-            try {
-                const user = auth.currentUser;
-                const credential = firebase.auth.EmailAuthProvider.credential(user.email, oldPassword);
-                await user.reauthenticateWithCredential(credential);
-                await user.updatePassword(newPassword);
-                document.getElementById('securityForm').reset();
-                showToast('✅ Password berhasil diubah!', 'success');
-            } catch (error) {
-                let message = error.message;
-                if (message.includes('auth/wrong-password')) {
-                    message = 'Password lama salah!';
-                }
-                showToast('❌ Gagal ganti password: ' + message, 'error');
-            }
-        }
-
-        // ===== SAVE COMPANY =====
-        async function saveCompany(event) {
-            event.preventDefault();
-            const companyName = document.getElementById('companyName').value.trim();
-            const companyAddress = document.getElementById('companyAddress').value.trim();
-            const companyPhone = document.getElementById('companyPhone').value.trim();
-            const companyEmail = document.getElementById('companyEmail').value.trim();
-
-            try {
-                await db.collection('users').doc(currentUser.uid).update({
-                    companyName,
-                    companyAddress,
-                    companyPhone,
-                    companyEmail,
-                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-                });
-                showToast('✅ Informasi perusahaan berhasil diperbarui!', 'success');
-            } catch (error) {
-                showToast('❌ Gagal update: ' + error.message, 'error');
-            }
-        }
-
-        // ===== CLEAR ALL DATA =====
-        function clearAllData() {
-            if (confirm('⚠️ PERINGATAN: Anda akan menghapus SEMUA data di database. Tindakan ini TIDAK DAPAT DIBATALKAN.\n\nApakah Anda yakin?')) {
-                if (confirm('Konfirmasi terakhir: Hapus semua data?')) {
-                    // This is a destructive action - in production, you'd want to add more safeguards
-                    showToast('⚠️ Fitur ini dinonaktifkan untuk keamanan demo', 'warning');
-                }
-            }
-        }
-
-        // ===== LOGOUT =====
-        function logout() {
-            if (confirm('Apakah Anda yakin ingin keluar?')) {
-                auth.signOut().then(() => {
-                    window.location.href = '../login.html';
-                });
-            }
-        }
-
-        // ===== SHOW TOAST =====
-        function showToast(message, type = 'success') {
-            const existing = document.querySelector('.toast');
-            if (existing) existing.remove();
-
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            const icons = { success: '✅', error: '❌', warning: '⚠️' };
-            toast.innerHTML = `${icons[type] || 'ℹ️'} ${message}`;
-            document.body.appendChild(toast);
-
+        // ===== TEST EMAIL =====
+        document.getElementById('testEmailBtn').addEventListener('click', function() {
+            const original = this.innerHTML;
+            this.innerHTML = '<span>⏳ Mengirim...</span>';
+            this.disabled = true;
             setTimeout(() => {
-                toast.classList.add('hide');
-                setTimeout(() => toast.remove(), 400);
-            }, 3500);
-        }
+                this.innerHTML = original;
+                this.disabled = false;
+                showToast('📧 Email tes berhasil dikirim!');
+            }, 1500);
+        });
 
-        // ===== ANIMATED BACKGROUND =====
-        function createBgAnimation() {
-            const container = document.getElementById('bgAnimation');
-            const codeSnippets = [
-                'const settings = new Settings({ ... });',
-                'function updateProfile() { return true }',
-                'import { auth } from "firebase"',
-                'useEffect(() => { loadSettings() }, [])',
-                'const router = useRouter()',
-                'export default function SettingsPanel() {',
-                'const [settings, setSettings] = useState({})',
-                'async function fetchSettings() {',
-                'console.log("Loading settings...")',
-                'const user = auth.currentUser',
-                'class SettingsManager { constructor() }',
-                'render() { return <SettingsForm /> }'
-            ];
+        // ===== BACKUP NOW =====
+        document.getElementById('backupNowBtn').addEventListener('click', function() {
+            const original = this.innerHTML;
+            this.innerHTML = '<span>⏳ Membackup...</span>';
+            this.disabled = true;
+            setTimeout(() => {
+                this.innerHTML = original;
+                this.disabled = false;
+                showToast('💾 Backup berhasil dibuat!');
+            }, 2000);
+        });
 
-            for (let i = 0; i < 16; i++) {
-                const line = document.createElement('div');
-                line.className = 'code-line';
-                line.textContent = codeSnippets[i % codeSnippets.length];
-                line.style.left = Math.random() * 100 + '%';
-                line.style.fontSize = (11 + Math.random() * 9) + 'px';
-                line.style.animationDuration = (18 + Math.random() * 22) + 's';
-                line.style.animationDelay = (Math.random() * 20) + 's';
-                line.style.opacity = 0.2 + Math.random() * 0.4;
-                container.appendChild(line);
-            }
+        // ===== RESTORE =====
+        document.getElementById('restoreBtn').addEventListener('click', function() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.zip,.sql';
+            input.onchange = function() {
+                if (this.files.length > 0) {
+                    showToast('📂 File restore berhasil diupload!');
+                }
+            };
+            input.click();
+        });
 
-            for (let i = 0; i < 25; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.width = (2 + Math.random() * 5) + 'px';
-                particle.style.height = particle.style.width;
-                particle.style.animationDuration = (12 + Math.random() * 18) + 's';
-                particle.style.animationDelay = (Math.random() * 15) + 's';
-                container.appendChild(particle);
-            }
+        // ===== ADD BANK =====
+        document.getElementById('addBankBtn').addEventListener('click', function() {
+            showToast('🏦 Form tambah rekening akan muncul');
+        });
 
-            const colors = ['#3b82f6', '#8b5cf6', '#06b6d4', '#10b981'];
-            for (let i = 0; i < 3; i++) {
-                const orb = document.createElement('div');
-                orb.className = 'glow-orb';
-                orb.style.width = (120 + Math.random() * 180) + 'px';
-                orb.style.height = orb.style.width;
-                orb.style.background = colors[i % colors.length];
-                orb.style.left = (Math.random() * 80) + '%';
-                orb.style.top = (Math.random() * 80) + '%';
-                orb.style.animationDuration = (6 + Math.random() * 6) + 's';
-                orb.style.animationDelay = (Math.random() * 4) + 's';
-                container.appendChild(orb);
-            }
-        }
-
-        // ===== INIT =====
-        createBgAnimation();
-        checkAdmin();
+        console.log('🚀 Settings page loaded successfully!');
     </script>
 </body>
 </html>

@@ -3,384 +3,1456 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FAQ - Pertanyaan Umum | WebDevPro</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>Blog | WebDevPro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
     <style>
-        /* FAQ Styles */
-        .faq-hero {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            padding: 100px 20px 80px;
+        /* ========================================
+           RESET & BASE
+           ======================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f0f4f9;
+            color: #1e293b;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ========================================
+           NAVBAR (KONSISTEN)
+           ======================================== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 16px 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background: transparent;
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.06);
+            padding: 10px 0;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .navbar.scrolled .logo {
+            color: #0f172a;
+        }
+
+        .navbar .logo span {
+            color: #f5b014;
+        }
+
+        .navbar .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 8px;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar .nav-links a {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 40px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .navbar.scrolled .nav-links a {
+            color: #1e293b;
+        }
+
+        .navbar .nav-links a:hover {
+            color: #f5b014;
+            background: rgba(245, 176, 20, 0.06);
+        }
+
+        .navbar .nav-links a.active {
+            color: #f5b014;
+            background: rgba(245, 176, 20, 0.1);
+        }
+
+        .navbar .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 2px;
+            background: #f5b014;
+            border-radius: 4px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            border: none;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .btn-sm {
+            padding: 6px 16px;
+            font-size: 12px;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.25);
+            color: white;
+        }
+
+        .navbar.scrolled .btn-outline {
+            border-color: #e2e8f0;
+            color: #1e293b;
+        }
+
+        .btn-outline:hover {
+            border-color: #f5b014;
+            color: #f5b014;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #f5b014, #d49a0e);
+            color: #0f172a;
+            box-shadow: 0 4px 16px rgba(245, 176, 20, 0.25);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(245, 176, 20, 0.35);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* ========================================
+           HERO SECTION
+           ======================================== */
+        .blog-hero {
+            background: linear-gradient(135deg, #0f172a 0%, #1a1a3e 50%, #0f172a 100%);
+            padding: 160px 20px 80px;
             text-align: center;
             color: white;
             position: relative;
             overflow: hidden;
+            min-height: 450px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .faq-hero::before {
-            content: '❓';
+
+        /* Code Rain */
+        .code-rain {
             position: absolute;
-            font-size: 300px;
-            opacity: 0.03;
-            top: -50px;
-            right: -50px;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            opacity: 0.1;
         }
-        .faq-hero h1 {
-            font-size: 3rem;
-            margin-bottom: 15px;
+
+        .code-char {
+            position: absolute;
+            font-family: 'Courier New', monospace;
+            color: #f5b014;
+            font-size: 14px;
+            animation: codeFall linear infinite;
+            opacity: 0;
         }
-        .faq-hero p {
-            color: rgba(255,255,255,0.7);
+
+        .code-char:nth-child(1) { left: 5%; animation-duration: 12s; animation-delay: 0s; font-size: 16px; }
+        .code-char:nth-child(2) { left: 10%; animation-duration: 15s; animation-delay: 2s; font-size: 12px; }
+        .code-char:nth-child(3) { left: 15%; animation-duration: 10s; animation-delay: 4s; font-size: 18px; }
+        .code-char:nth-child(4) { left: 20%; animation-duration: 18s; animation-delay: 1s; font-size: 14px; }
+        .code-char:nth-child(5) { left: 25%; animation-duration: 13s; animation-delay: 3s; font-size: 20px; }
+        .code-char:nth-child(6) { left: 30%; animation-duration: 16s; animation-delay: 5s; font-size: 11px; }
+        .code-char:nth-child(7) { left: 35%; animation-duration: 11s; animation-delay: 2.5s; font-size: 15px; }
+        .code-char:nth-child(8) { left: 40%; animation-duration: 19s; animation-delay: 4.5s; font-size: 13px; }
+        .code-char:nth-child(9) { left: 45%; animation-duration: 14s; animation-delay: 1.5s; font-size: 17px; }
+        .code-char:nth-child(10) { left: 50%; animation-duration: 17s; animation-delay: 3.5s; font-size: 12px; }
+        .code-char:nth-child(11) { left: 55%; animation-duration: 12.5s; animation-delay: 5.5s; font-size: 19px; }
+        .code-char:nth-child(12) { left: 60%; animation-duration: 15.5s; animation-delay: 0.5s; font-size: 14px; }
+        .code-char:nth-child(13) { left: 65%; animation-duration: 10.5s; animation-delay: 2.2s; font-size: 16px; }
+        .code-char:nth-child(14) { left: 70%; animation-duration: 18.5s; animation-delay: 4.2s; font-size: 11px; }
+        .code-char:nth-child(15) { left: 75%; animation-duration: 13.5s; animation-delay: 1.8s; font-size: 18px; }
+        .code-char:nth-child(16) { left: 80%; animation-duration: 16.5s; animation-delay: 3.8s; font-size: 13px; }
+        .code-char:nth-child(17) { left: 85%; animation-duration: 11.5s; animation-delay: 5.2s; font-size: 15px; }
+        .code-char:nth-child(18) { left: 90%; animation-duration: 14.5s; animation-delay: 0.8s; font-size: 17px; }
+        .code-char:nth-child(19) { left: 95%; animation-duration: 17.5s; animation-delay: 2.8s; font-size: 12px; }
+
+        @keyframes codeFall {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.8; }
+            80% { opacity: 0.8; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Floating Badges */
+        .floating-badges {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .float-badge {
+            position: absolute;
+            background: rgba(245, 176, 20, 0.06);
+            border: 1px solid rgba(245, 176, 20, 0.08);
+            border-radius: 12px;
+            padding: 8px 16px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: rgba(245, 176, 20, 0.3);
+            animation: floatBadge linear infinite;
+            backdrop-filter: blur(4px);
+        }
+
+        .float-badge:nth-child(1) { top: 15%; left: 5%; animation-duration: 25s; }
+        .float-badge:nth-child(2) { top: 20%; right: 8%; animation-duration: 20s; animation-delay: -5s; }
+        .float-badge:nth-child(3) { bottom: 25%; left: 10%; animation-duration: 28s; animation-delay: -10s; }
+        .float-badge:nth-child(4) { bottom: 30%; right: 5%; animation-duration: 22s; animation-delay: -7s; }
+        .float-badge:nth-child(5) { top: 50%; left: 50%; animation-duration: 30s; animation-delay: -12s; }
+
+        @keyframes floatBadge {
+            0% { transform: translate(0, 0) rotate(0deg); opacity: 0.3; }
+            25% { transform: translate(80px, -40px) rotate(5deg); opacity: 0.6; }
+            50% { transform: translate(-50px, 60px) rotate(-3deg); opacity: 0.4; }
+            75% { transform: translate(60px, -30px) rotate(7deg); opacity: 0.7; }
+            100% { transform: translate(0, 0) rotate(0deg); opacity: 0.3; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .blog-hero .hero-badge {
+            display: inline-block;
+            padding: 8px 24px;
+            border-radius: 50px;
+            background: rgba(245, 176, 20, 0.15);
+            border: 1px solid rgba(245, 176, 20, 0.2);
+            color: #f5b014;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            animation: pulseBadge 2s ease-in-out infinite;
+        }
+
+        @keyframes pulseBadge {
+            0%, 100% { box-shadow: 0 0 20px rgba(245, 176, 20, 0.05); }
+            50% { box-shadow: 0 0 40px rgba(245, 176, 20, 0.15); }
+        }
+
+        .blog-hero h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            margin-bottom: 12px;
+            animation: fadeInDown 1s ease forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .blog-hero h1 span {
+            color: #f5b014;
+            position: relative;
+            display: inline-block;
+        }
+
+        /* ROTATING BORDER PADA SPAN */
+        .blog-hero h1 span::before {
+            content: '';
+            position: absolute;
+            inset: -8px -12px;
+            border-radius: 16px;
+            padding: 2px;
+            background: conic-gradient(from 0deg, #f5b014, #d49a0e, #f5b014, #d49a0e, #f5b014);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: rotateBorder 4s linear infinite;
+            opacity: 0.6;
+            z-index: -1;
+        }
+
+        @keyframes rotateBorder {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .blog-hero p {
+            color: rgba(255, 255, 255, 0.7);
             font-size: 1.1rem;
             max-width: 600px;
-            margin: 0 auto 30px;
+            margin: 0 auto;
+            animation: fadeInUp 1s ease forwards 0.3s;
+            opacity: 0;
         }
 
-        /* Search Box */
-        .faq-search {
-            max-width: 600px;
-            margin: 0 auto;
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* DEVELOPER PROFILE */
+        .developer-profile {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin: 25px auto 0;
+            max-width: 480px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 18px 28px;
+            border: 1px solid rgba(245, 176, 20, 0.15);
+            animation: slideUp 0.8s ease forwards;
+            opacity: 0;
             position: relative;
         }
-        .faq-search input {
-            width: 100%;
-            padding: 18px 25px 18px 55px;
-            border: none;
-            border-radius: 50px;
-            font-size: 16px;
-            font-family: 'Poppins', sans-serif;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-        }
-        .faq-search::before {
-            content: '🔍';
+
+        /* Rotating border on developer profile */
+        .developer-profile::before {
+            content: '';
             position: absolute;
-            left: 22px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 18px;
+            inset: -2px;
+            border-radius: 22px;
+            padding: 2px;
+            background: conic-gradient(from 0deg, #f5b014, #d49a0e, #f5b014, #d49a0e, #f5b014);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: rotateBorder 6s linear infinite;
+            opacity: 0.4;
+            z-index: -1;
         }
 
-        /* Category Tabs */
-        .faq-categories {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            flex-wrap: wrap;
-            margin: 40px 0 30px;
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        .faq-category {
-            padding: 10px 24px;
-            border-radius: 25px;
-            border: 2px solid #e0e0e0;
-            background: white;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            transition: all 0.3s;
-            color: #666;
+
+        .developer-profile .avatar {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            border: 3px solid #f5b014;
+            object-fit: cover;
+            flex-shrink: 0;
+            animation: pulseAvatar 3s ease-in-out infinite;
+        }
+
+        @keyframes pulseAvatar {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(245, 176, 20, 0.4); }
+            50% { box-shadow: 0 0 0 15px rgba(245, 176, 20, 0); }
+        }
+
+        .developer-profile .info {
+            text-align: left;
+        }
+
+        .developer-profile .info .name {
+            font-size: 18px;
+            font-weight: 700;
+            color: #f5b014;
+        }
+
+        .developer-profile .info .role {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
             display: flex;
             align-items: center;
             gap: 8px;
         }
-        .faq-category:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-        }
-        .faq-category.active {
-            background: var(--primary);
-            color: #1a1a2e;
-            border-color: var(--primary);
-            font-weight: 600;
+
+        .developer-profile .info .role .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #10b981;
+            animation: blinkDot 1.5s ease-in-out infinite;
         }
 
-        /* FAQ Accordion */
-        .faq-container {
-            max-width: 800px;
+        @keyframes blinkDot {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .developer-profile .info .status-text {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.4);
+            font-family: 'Courier New', monospace;
+        }
+
+        /* TERMINAL */
+        .terminal-code {
+            max-width: 520px;
+            margin: 20px auto 0;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 12px;
+            border: 1px solid rgba(245, 176, 20, 0.15);
+            padding: 14px 18px;
+            backdrop-filter: blur(10px);
+            text-align: left;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: #a0aec0;
+            overflow: hidden;
+            animation: fadeInUp 1s ease forwards 0.6s;
+            opacity: 0;
+            position: relative;
+        }
+
+        /* Rotating border on terminal */
+        .terminal-code::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: 13px;
+            padding: 1px;
+            background: conic-gradient(from 0deg, #f5b014, #d49a0e, #f5b014, #d49a0e, #f5b014);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: rotateBorder 8s linear infinite;
+            opacity: 0.3;
+            z-index: -1;
+        }
+
+        .terminal-code .term-header {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        .terminal-code .term-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .terminal-code .term-dot.red { background: #ff5f57; }
+        .terminal-code .term-dot.yellow { background: #ffbd2e; }
+        .terminal-code .term-dot.green { background: #28c840; }
+
+        .terminal-code .term-line {
+            display: flex;
+            gap: 10px;
+            line-height: 1.7;
+            animation: typeIn 0.8s ease forwards;
+            opacity: 0;
+        }
+        .terminal-code .term-line:nth-child(2) { animation-delay: 0.3s; }
+        .terminal-code .term-line:nth-child(3) { animation-delay: 0.6s; }
+        .terminal-code .term-line:nth-child(4) { animation-delay: 0.9s; }
+        .terminal-code .term-line:nth-child(5) { animation-delay: 1.2s; }
+        .terminal-code .term-line:nth-child(6) { animation-delay: 1.5s; }
+        .terminal-code .term-line:nth-child(7) { animation-delay: 1.8s; }
+
+        @keyframes typeIn {
+            from { opacity: 0; transform: translateX(-15px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .term-prompt { color: #f5b014; font-weight: 700; }
+        .term-command { color: #a0aec0; }
+        .term-output { color: #68d391; }
+        .term-cursor {
+            display: inline-block;
+            width: 8px;
+            height: 14px;
+            background: #f5b014;
+            animation: blink 1s step-end infinite;
+            vertical-align: text-bottom;
+            margin-left: 2px;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        /* ========================================
+           SECTION TITLE
+           ======================================== */
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-title .badge {
+            display: inline-block;
+            padding: 6px 20px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: rgba(245, 176, 20, 0.1);
+            color: #f5b014;
+            margin-bottom: 12px;
+        }
+
+        .section-title h2 {
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+
+        .section-title h2 span {
+            color: #f5b014;
+            position: relative;
+        }
+
+        /* Rotating border on section title span */
+        .section-title h2 span::before {
+            content: '';
+            position: absolute;
+            inset: -4px -8px;
+            border-radius: 12px;
+            padding: 2px;
+            background: conic-gradient(from 0deg, #f5b014, #d49a0e, #f5b014, #d49a0e, #f5b014);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: rotateBorder 5s linear infinite;
+            opacity: 0.3;
+            z-index: -1;
+        }
+
+        .section-title p {
+            color: #64748b;
+            font-size: 1.05rem;
+            max-width: 500px;
             margin: 0 auto;
         }
-        .faq-item {
+
+        /* ========================================
+           BLOG TOOLBAR
+           ======================================== */
+        .blog-toolbar {
             background: white;
+            padding: 18px 24px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            margin-bottom: 30px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            position: sticky;
+            top: 80px;
+            z-index: 99;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 220px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 11px 16px 11px 44px;
+            border: 2px solid #e2e8f0;
             border-radius: 12px;
-            margin-bottom: 15px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            font-size: 14px;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+            background: #fafcff;
+            outline: none;
+            color: #1e293b;
+        }
+
+        .search-box input:focus {
+            border-color: #f5b014;
+            box-shadow: 0 0 0 4px rgba(245, 176, 20, 0.08);
+        }
+
+        .search-box input::placeholder {
+            color: #94a3b8;
+        }
+
+        .search-box .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 16px;
+            color: #94a3b8;
+        }
+
+        .category-pills {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .category-pill {
+            padding: 7px 16px;
+            border-radius: 40px;
+            border: 2px solid #e2e8f0;
+            background: transparent;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            color: #64748b;
+            font-family: inherit;
+        }
+
+        .category-pill:hover {
+            border-color: #f5b014;
+            color: #f5b014;
+        }
+
+        .category-pill.active {
+            background: linear-gradient(135deg, #f5b014, #d49a0e);
+            color: #0f172a;
+            border-color: #f5b014;
+        }
+
+        /* ========================================
+           FEATURED POST
+           ======================================== */
+        .featured-post {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 0;
+            background: white;
+            border-radius: 20px;
             overflow: hidden;
-            transition: all 0.3s;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
+            margin-bottom: 40px;
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
         }
-        .faq-item:hover {
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+
+        /* Rotating border on featured post */
+        .featured-post::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: 21px;
+            padding: 1px;
+            background: conic-gradient(from 0deg, #f5b014, #d49a0e, #f5b014, #d49a0e, #f5b014);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: rotateBorder 10s linear infinite;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -1;
         }
-        .faq-question {
-            padding: 22px 25px;
+
+        .featured-post:hover::before {
+            opacity: 0.5;
+        }
+
+        .featured-post:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        }
+
+        .featured-image {
+            height: 100%;
+            min-height: 380px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-image .category-tag {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: linear-gradient(135deg, #f5b014, #d49a0e);
+            color: #0f172a;
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 12px;
+            z-index: 1;
+            letter-spacing: 0.5px;
+        }
+
+        .featured-image .image-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 40px;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
+            z-index: 1;
+        }
+
+        .featured-content {
+            padding: 36px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .featured-meta {
+            display: flex;
+            gap: 18px;
+            color: #94a3b8;
+            font-size: 13px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .featured-content h2 {
+            font-size: 1.7rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            line-height: 1.3;
+            color: #0f172a;
+            transition: color 0.3s ease;
+        }
+
+        .featured-content h2:hover {
+            color: #f5b014;
+        }
+
+        .featured-content p {
+            color: #64748b;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .featured-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: auto;
+        }
+
+        .featured-author img {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #f5b014;
+        }
+
+        .featured-author .author-name {
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .featured-author .author-role {
+            font-size: 13px;
+            color: #94a3b8;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #f5b014, #d49a0e);
+            color: #0f172a;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            font-family: inherit;
+            cursor: pointer;
+            align-self: flex-start;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(245, 176, 20, 0.35);
+        }
+
+        /* ========================================
+           BLOG GRID
+           ======================================== */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .blog-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(0, 0, 0, 0.04);
+            position: relative;
+        }
+
+        .blog-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #f5b014, #d49a0e);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+            z-index: 2;
+        }
+
+        /* Rotating border on blog card */
+        .blog-card::after {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: 17px;
+            padding: 1px;
+            background: conic-gradient(from 0deg, #f5b014, #d49a0e, #f5b014, #d49a0e, #f5b014);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: rotateBorder 12s linear infinite;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -1;
+        }
+
+        .blog-card:hover::after {
+            opacity: 0.4;
+        }
+
+        .blog-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .blog-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        }
+
+        .blog-card-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .blog-card-image .category-tag {
+            position: absolute;
+            bottom: 12px;
+            left: 12px;
+            background: linear-gradient(135deg, #f5b014, #d49a0e);
+            color: #0f172a;
+            padding: 4px 14px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 10px;
+            z-index: 1;
+            letter-spacing: 0.3px;
+        }
+
+        .blog-card-image .blog-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.15);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .blog-card:hover .blog-overlay {
+            opacity: 1;
+        }
+
+        .blog-card-content {
+            padding: 20px 22px 18px;
+        }
+
+        .blog-card-meta {
+            display: flex;
+            gap: 14px;
+            color: #94a3b8;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+
+        .blog-card h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            line-height: 1.4;
+            color: #0f172a;
+            transition: color 0.3s ease;
+        }
+
+        .blog-card h3:hover {
+            color: #f5b014;
+        }
+
+        .blog-card .excerpt {
+            color: #64748b;
+            font-size: 13px;
+            line-height: 1.7;
+            margin-bottom: 14px;
+            overflow: hidden;
+        }
+
+        .blog-card-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            cursor: pointer;
-            font-weight: 600;
-            color: #333;
-            font-size: 16px;
-            gap: 15px;
+            padding-top: 14px;
+            border-top: 1px solid #f1f5f9;
         }
-        .faq-question:hover {
-            color: var(--primary);
+
+        .blog-author-small {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: #475569;
         }
-        .faq-icon {
-            width: 32px;
-            height: 32px;
+
+        .blog-author-small img {
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
-            background: rgba(255,215,0,0.1);
+            object-fit: cover;
+            border: 2px solid #e2e8f0;
+        }
+
+        .read-more {
+            color: #f5b014;
+            font-weight: 700;
+            font-size: 13px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .read-more:hover {
+            gap: 10px;
+        }
+
+        /* ========================================
+           PAGINATION
+           ======================================== */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 40px;
+        }
+
+        .page-btn {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            flex-shrink: 0;
-            transition: all 0.3s;
+            font-weight: 600;
             font-size: 14px;
-        }
-        .faq-item.active .faq-icon {
-            background: var(--primary);
-            transform: rotate(180deg);
-        }
-        .faq-answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease, padding 0.4s ease;
-        }
-        .faq-answer-inner {
-            padding: 0 25px 25px;
-            color: #666;
-            line-height: 1.8;
-            font-size: 15px;
-        }
-        .faq-item.active .faq-answer {
-            max-height: 500px;
+            transition: all 0.3s ease;
+            color: #475569;
+            font-family: inherit;
+            position: relative;
         }
 
-        /* Popular Questions */
-        .popular-section {
-            background: #f8f9fa;
-            padding: 60px 0;
-            margin-top: 40px;
-        }
-        .popular-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            margin-top: 30px;
-        }
-        .popular-card {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            cursor: pointer;
-            transition: all 0.3s;
-            border-left: 4px solid var(--primary);
-        }
-        .popular-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-        }
-        .popular-card h4 {
-            margin: 0 0 10px 0;
-            font-size: 15px;
-            color: #333;
-        }
-        .popular-card p {
-            margin: 0;
-            font-size: 13px;
-            color: #999;
+        /* Rotating border on active page button */
+        .page-btn.active::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 14px;
+            padding: 2px;
+            background: conic-gradient(from 0deg, #f5b014, #d49a0e, #f5b014, #d49a0e, #f5b014);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: rotateBorder 3s linear infinite;
+            z-index: -1;
         }
 
-        /* Contact CTA */
-        .faq-cta {
+        .page-btn:hover:not(:disabled) {
+            border-color: #f5b014;
+            color: #f5b014;
+            transform: translateY(-2px);
+        }
+
+        .page-btn.active {
+            background: linear-gradient(135deg, #f5b014, #d49a0e);
+            color: #0f172a;
+            border-color: #f5b014;
+        }
+
+        .page-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        /* ========================================
+           EMPTY STATE
+           ======================================== */
+        .empty-state {
             text-align: center;
             padding: 60px 20px;
         }
-        .faq-cta h3 {
-            font-size: 1.8rem;
-            margin-bottom: 10px;
-        }
-        .faq-cta p {
-            color: #666;
-            margin-bottom: 25px;
+
+        .empty-state .empty-icon {
+            font-size: 56px;
+            margin-bottom: 12px;
         }
 
-        /* Stats */
-        .faq-stats {
+        .empty-state h3 {
+            color: #0f172a;
+            margin-bottom: 4px;
+        }
+
+        .empty-state p {
+            color: #64748b;
+        }
+
+        /* ========================================
+           FOOTER (KONSISTEN)
+           ======================================== */
+        footer {
+            background: #0f172a;
+            color: white;
+            padding: 50px 0 20px;
+        }
+
+        .footer-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            margin: 40px 0;
-        }
-        .faq-stat {
-            text-align: center;
-            padding: 25px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-        .faq-stat-icon {
-            font-size: 32px;
-            margin-bottom: 10px;
-        }
-        .faq-stat-value {
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--primary);
-        }
-        .faq-stat-label {
-            color: #666;
-            font-size: 14px;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 40px;
+            margin-bottom: 30px;
         }
 
-        /* Responsive */
+        .footer-grid h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .footer-grid h4 span {
+            color: #f5b014;
+        }
+
+        .footer-grid p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+            line-height: 1.8;
+            margin-top: 12px;
+        }
+
+        .footer-grid ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-grid ul li {
+            margin-bottom: 8px;
+        }
+
+        .footer-grid a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .footer-grid a:hover {
+            color: #f5b014;
+            padding-left: 4px;
+        }
+
+        .footer-grid .footer-contact li {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            padding-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .footer-bottom a {
+            color: rgba(255, 255, 255, 0.4);
+            text-decoration: none;
+            margin-left: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .footer-bottom a:hover {
+            color: #f5b014;
+        }
+
+        /* ========================================
+           WHATSAPP FLOAT
+           ======================================== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #25d366;
+            color: white;
+            font-size: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 8px 30px rgba(37, 211, 102, 0.4);
+            z-index: 999;
+            transition: all 0.3s ease;
+            animation: pulseWhatsApp 2s ease-in-out infinite;
+        }
+
+        @keyframes pulseWhatsApp {
+            0%, 100% { transform: scale(1); box-shadow: 0 8px 30px rgba(37, 211, 102, 0.4); }
+            50% { transform: scale(1.05); box-shadow: 0 8px 50px rgba(37, 211, 102, 0.6); }
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 40px rgba(37, 211, 102, 0.5);
+        }
+
+        /* ========================================
+           RESPONSIVE
+           ======================================== */
+        @media (max-width: 1024px) {
+            .featured-post { grid-template-columns: 1fr; }
+            .featured-image { min-height: 280px; }
+            .blog-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+        }
+
         @media (max-width: 768px) {
-            .faq-hero h1 { font-size: 2rem; }
-            .popular-grid { grid-template-columns: 1fr; }
-            .faq-stats { grid-template-columns: repeat(2, 1fr); }
+            .blog-hero { padding: 130px 16px 70px; min-height: 320px; }
+            .blog-hero h1 { font-size: 2.2rem; }
+            
+            .navbar .nav-links { display: none; }
+            .nav-buttons .btn-outline { display: none; }
+            
+            .blog-toolbar {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 16px 18px;
+                top: 70px;
+            }
+            .search-box { min-width: unset; }
+            .category-pills { justify-content: center; }
+            
+            .featured-content { padding: 24px; }
+            .featured-content h2 { font-size: 1.4rem; }
+            .featured-image { min-height: 220px; }
+            
+            .blog-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
+            
+            .footer-grid { grid-template-columns: 1fr; gap: 24px; }
+            .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+            .footer-bottom a { margin: 0 10px; }
+            
+            .code-rain { opacity: 0.06; }
+            .floating-badges { display: none; }
+            .terminal-code { font-size: 10px; padding: 10px 14px; }
+            .developer-profile { flex-direction: column; text-align: center; padding: 16px 20px; }
+            .developer-profile .info { text-align: center; }
+            .whatsapp-float { width: 50px; height: 50px; font-size: 24px; bottom: 16px; right: 16px; }
+            .section-title h2 { font-size: 1.8rem; }
+        }
+
+        @media (max-width: 480px) {
+            .blog-hero h1 { font-size: 1.7rem; }
+            .blog-hero p { font-size: 0.95rem; }
+            .developer-profile .avatar { width: 55px; height: 55px; }
+            .developer-profile .info .name { font-size: 16px; }
+            .featured-content h2 { font-size: 1.2rem; }
+            .featured-content { padding: 18px; }
+            .featured-meta { font-size: 12px; gap: 12px; }
+            .blog-card h3 { font-size: 0.95rem; }
+            .blog-card-image { height: 170px; }
+            .blog-card-content { padding: 16px 18px; }
+            .terminal-code .term-line { flex-wrap: wrap; }
+            .section-title h2 { font-size: 1.5rem; }
         }
     </style>
 </head>
 <body>
-    <!-- Navbar -->
+    <!-- ===== NAVBAR ===== -->
     <nav class="navbar" id="navbar">
         <div class="container">
             <a href="index.html" class="logo">Web<span>Dev</span>Pro</a>
-            
             <ul class="nav-links">
                 <li><a href="index.html">Beranda</a></li>
                 <li><a href="tentang.html">Tentang</a></li>
                 <li><a href="layanan.html">Layanan</a></li>
                 <li><a href="portofolio.html">Portofolio</a></li>
                 <li><a href="harga.html">Harga</a></li>
-                <li><a href="blog.html">Blog</a></li>
+                <li><a href="blog.html" class="active">Blog</a></li>
                 <li><a href="kontak.html">Kontak</a></li>
             </ul>
-            
             <div class="nav-buttons">
                 <a href="login.html" class="btn btn-outline btn-sm" id="loginBtn">Masuk</a>
                 <a href="register.html" class="btn btn-primary btn-sm" id="registerBtn">Daftar</a>
                 <div id="userMenu" class="hidden">
-                    <a href="user/index.html" class="btn btn-primary btn-sm">
-                        👤 <span id="userName">User</span>
-                    </a>
+                    <a href="user/index.html" class="btn btn-primary btn-sm">👤 <span id="userName">User</span></a>
                 </div>
             </div>
         </div>
     </nav>
 
-    <!-- FAQ Hero -->
-    <section class="faq-hero">
-        <h1>FAQ <span style="color:var(--primary);">WebDevPro</span></h1>
-        <p>Temukan jawaban untuk pertanyaan umum seputar layanan kami. Jika tidak menemukan jawaban, silakan hubungi kami.</p>
-        
-        <div class="faq-search">
-            <input type="text" id="searchFaq" placeholder="Cari pertanyaan..." onkeyup="searchFAQ()">
+    <!-- ===== HERO SECTION ===== -->
+    <section class="blog-hero">
+        <!-- Code Rain -->
+        <div class="code-rain">
+            <span class="code-char">&lt;/&gt;</span>
+            <span class="code-char">{ }</span>
+            <span class="code-char">function</span>
+            <span class="code-char">const</span>
+            <span class="code-char">return</span>
+            <span class="code-char">if</span>
+            <span class="code-char">else</span>
+            <span class="code-char">for</span>
+            <span class="code-char">while</span>
+            <span class="code-char">class</span>
+            <span class="code-char">import</span>
+            <span class="code-char">export</span>
+            <span class="code-char">async</span>
+            <span class="code-char">await</span>
+            <span class="code-char">try</span>
+            <span class="code-char">catch</span>
+            <span class="code-char">finally</span>
+            <span class="code-char">throw</span>
+            <span class="code-char">new</span>
         </div>
-    </section>
 
-    <!-- Stats -->
-    <section style="padding: 40px 0 0;">
-        <div class="container">
-            <div class="faq-stats">
-                <div class="faq-stat">
-                    <div class="faq-stat-icon">❓</div>
-                    <div class="faq-stat-value" id="totalFaq">0</div>
-                    <div class="faq-stat-label">Total FAQ</div>
+        <!-- Floating Badges -->
+        <div class="floating-badges">
+            <span class="float-badge">// latest posts</span>
+            <span class="float-badge">const blog = []</span>
+            <span class="float-badge">function read()</span>
+            <span class="float-badge">import { articles }</span>
+            <span class="float-badge">export default Blog</span>
+        </div>
+
+        <div class="container hero-content">
+            <div class="hero-badge">📝 Blog</div>
+            <h1>Blog <span>WebDevPro</span></h1>
+            <p>Tips, tutorial, dan insight terbaru seputar pengembangan web, teknologi, dan digital marketing.</p>
+
+            <!-- Developer Profile -->
+            <div class="developer-profile">
+                <img 
+                    src="https://i.ibb.co.com/FqBHZPN8/1782472907234.png" 
+                    alt="Hendri Setyawan - Web Developer" 
+                    class="avatar"
+                >
+                <div class="info">
+                    <div class="name">Hendri Setyawan</div>
+                    <div class="role">
+                        <span class="dot"></span>
+                        Web Developer &amp; Founder
+                    </div>
+                    <div class="status-text">▸ 25+ articles written</div>
                 </div>
-                <div class="faq-stat">
-                    <div class="faq-stat-icon">📂</div>
-                    <div class="faq-stat-value" id="totalKategori">0</div>
-                    <div class="faq-stat-label">Kategori</div>
+            </div>
+
+            <!-- Terminal Code -->
+            <div class="terminal-code">
+                <div class="term-header">
+                    <span class="term-dot red"></span>
+                    <span class="term-dot yellow"></span>
+                    <span class="term-dot green"></span>
+                    <span style="margin-left:10px; color:#64748b; font-size:10px;">developer@webdevpro:~/blog$</span>
                 </div>
-                <div class="faq-stat">
-                    <div class="faq-stat-icon">👁️</div>
-                    <div class="faq-stat-value" id="totalViews">0</div>
-                    <div class="faq-stat-label">Total Views</div>
+                <div class="term-line">
+                    <span class="term-prompt">$</span>
+                    <span class="term-command">ls -la articles</span>
                 </div>
-                <div class="faq-stat">
-                    <div class="faq-stat-icon">✅</div>
-                    <div class="faq-stat-value">98%</div>
-                    <div class="faq-stat-label">Terjawab</div>
+                <div class="term-line">
+                    <span class="term-prompt">→</span>
+                    <span class="term-output">📄 10-tren-web-development-2024.md</span>
+                </div>
+                <div class="term-line">
+                    <span class="term-prompt">→</span>
+                    <span class="term-output">📄 panduan-react-hooks.md</span>
+                </div>
+                <div class="term-line">
+                    <span class="term-prompt">→</span>
+                    <span class="term-output">📄 tips-seo-untuk-pemula.md</span>
+                </div>
+                <div class="term-line">
+                    <span class="term-prompt">→</span>
+                    <span class="term-output">📄 5-cara-meningkatkan-kecepatan-website.md</span>
+                </div>
+                <div class="term-line">
+                    <span class="term-prompt">→</span>
+                    <span class="term-output">📄 panduan-memilih-hosting-terbaik.md</span>
+                </div>
+                <div class="term-line">
+                    <span class="term-prompt">$</span>
+                    <span class="term-command">cat README.md</span>
+                    <span class="term-cursor"></span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- FAQ Content -->
+    <!-- ===== BLOG CONTENT ===== -->
     <section style="padding: 40px 0 60px;">
         <div class="container">
-            <!-- Categories -->
-            <div class="faq-categories" id="faqCategories">
-                <div class="faq-category active" onclick="filterCategory('all')">
-                    📂 Semua
+            <!-- Toolbar -->
+            <div class="blog-toolbar">
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" id="searchInput" placeholder="Cari artikel..." onkeyup="searchBlogs()">
                 </div>
+                <div class="category-pills" id="categoryPills">
+                    <button class="category-pill active" onclick="filterCategory('all')">Semua</button>
+                </div>
+            </div>
+
+            <!-- Featured Post -->
+            <div id="featuredSection">
                 <!-- Dynamic -->
             </div>
 
-            <!-- FAQ List -->
-            <div class="faq-container" id="faqContainer">
-                <div style="text-align:center; padding:50px;">Memuat FAQ...</div>
+            <!-- Blog Grid -->
+            <div class="blog-grid" id="blogGrid">
+                <!-- Dynamic -->
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination" id="pagination">
+                <!-- Dynamic -->
             </div>
 
             <!-- Empty State -->
-            <div id="emptyState" style="display:none; text-align:center; padding:60px 20px;">
-                <div style="font-size:60px; margin-bottom:15px;">🔍</div>
-                <h3>Tidak Ditemukan</h3>
-                <p style="color:#666;">Tidak ada FAQ yang cocok dengan pencarian Anda.</p>
+            <div id="emptyState" class="empty-state" style="display:none;">
+                <div class="empty-icon">📭</div>
+                <h3>Tidak Ada Artikel</h3>
+                <p>Belum ada artikel dalam kategori ini.</p>
             </div>
         </div>
     </section>
 
-    <!-- Popular Questions -->
-    <section class="popular-section">
-        <div class="container">
-            <div class="section-title" style="margin-bottom:0;">
-                <h2>Pertanyaan <span style="color:var(--primary);">Populer</span></h2>
-                <p>Pertanyaan yang paling sering ditanyakan oleh klien kami</p>
-            </div>
-            <div class="popular-grid" id="popularGrid">
-                <!-- Dynamic -->
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="faq-cta">
-        <div class="container">
-            <h3>Masih Punya <span style="color:var(--primary);">Pertanyaan</span>?</h3>
-            <p>Tim kami siap membantu Anda. Hubungi kami melalui WhatsApp atau email.</p>
-            <a href="https://wa.me/6281248141031?text=Halo%20kak%20Hendri,%20saya%20punya%20pertanyaan." 
-               class="btn btn-primary btn-lg" target="_blank">💬 Chat WhatsApp</a>
-            <a href="kontak.html" class="btn btn-outline btn-lg" style="margin-left:15px;">📧 Kirim Email</a>
-        </div>
-    </section>
-
-    <!-- Footer -->
+    <!-- ===== FOOTER ===== -->
     <footer>
         <div class="container">
             <div class="footer-grid">
                 <div>
                     <h4>Web<span>Dev</span>Pro</h4>
-                    <p style="color:rgba(255,255,255,0.7); margin-top:15px;">Solusi digital terbaik untuk bisnis Anda.</p>
+                    <p>Solusi digital terbaik untuk bisnis Anda. Bangun website profesional bersama kami.</p>
                 </div>
                 <div>
                     <h4>Menu</h4>
-                    <a href="index.html">Beranda</a>
-                    <a href="tentang.html">Tentang Kami</a>
-                    <a href="layanan.html">Layanan</a>
-                    <a href="harga.html">Paket Harga</a>
+                    <ul>
+                        <li><a href="index.html">Beranda</a></li>
+                        <li><a href="tentang.html">Tentang Kami</a></li>
+                        <li><a href="layanan.html">Layanan</a></li>
+                        <li><a href="harga.html">Paket Harga</a></li>
+                    </ul>
                 </div>
                 <div>
                     <h4>Layanan</h4>
-                    <a href="layanan.html">Company Profile</a>
-                    <a href="layanan.html">E-Commerce</a>
-                    <a href="layanan.html">Web Application</a>
-                    <a href="layanan.html">Landing Page</a>
+                    <ul>
+                        <li><a href="layanan.html">Company Profile</a></li>
+                        <li><a href="layanan.html">E-Commerce</a></li>
+                        <li><a href="layanan.html">Web Application</a></li>
+                        <li><a href="layanan.html">Landing Page</a></li>
+                    </ul>
                 </div>
                 <div>
                     <h4>Kontak</h4>
-                    <a href="#">📍 Batang, Jawa Tengah</a>
-                    <a href="#">📧 setyawanhendri253@gmail.com</a>
-                    <a href="#">📱 +62 812-4814-1031</a>
+                    <ul class="footer-contact">
+                        <li>📍 Batang, Jawa Tengah</li>
+                        <li>📧 setyawanhendri253@gmail.com</li>
+                        <li>📱 +62 812-4814-1031</li>
+                    </ul>
                 </div>
             </div>
             <div class="footer-bottom">
@@ -393,13 +1465,11 @@
         </div>
     </footer>
 
-    <!-- WhatsApp Float -->
+    <!-- ===== WHATSAPP FLOAT ===== -->
     <a href="https://wa.me/6281248141031?text=Halo%20kak%20Hendri,%20saya%20tertarik%20dengan%20produk%20Anda." 
-       class="whatsapp-float" target="_blank" title="Chat WhatsApp">
-        💬
-    </a>
+       class="whatsapp-float" target="_blank" aria-label="WhatsApp">💬</a>
 
-    <!-- Firebase SDK -->
+    <!-- ===== FIREBASE SDK ===== -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
@@ -407,10 +1477,16 @@
     <script src="assets/js/firebase-config.js"></script>
     <script src="assets/js/auth.js"></script>
     <script>
-        let allFaqs = [];
-        let filteredFaqs = [];
+        // ============================================
+        // NAVBAR SCROLL
+        // ============================================
+        window.addEventListener('scroll', () => {
+            document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+        });
 
-        // Check auth
+        // ============================================
+        // AUTH STATE
+        // ============================================
         auth.onAuthStateChanged((user) => {
             if (user) {
                 document.getElementById('loginBtn').style.display = 'none';
@@ -420,121 +1496,188 @@
             }
         });
 
-        // Load FAQs
-        async function loadFAQs() {
+        // ============================================
+        // BLOG DATA
+        // ============================================
+        let allBlogs = [];
+        let filteredBlogs = [];
+        let currentPage = 1;
+        const perPage = 6;
+        let currentCategory = 'all';
+
+        // ============================================
+        // LOAD BLOGS
+        // ============================================
+        async function loadBlogs() {
             try {
-                const snapshot = await db.collection('faqs')
+                const snapshot = await db.collection('blogs')
                     .where('status', '==', 'published')
-                    .orderBy('urutan', 'asc')
+                    .orderBy('createdAt', 'desc')
                     .get();
 
-                allFaqs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                filteredFaqs = [...allFaqs];
+                allBlogs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                filteredBlogs = [...allBlogs];
 
-                // Update stats
-                updateStats();
-                
-                // Load categories
                 loadCategories();
-                
-                // Render
-                renderFAQ();
-                renderPopular();
+                renderFeatured();
+                renderGrid();
+                renderPagination();
 
             } catch (error) {
-                console.error('Error loading FAQs:', error);
-                document.getElementById('faqContainer').innerHTML = 
-                    '<div style="text-align:center; padding:50px; color:#e74c3c;">Gagal memuat FAQ</div>';
+                console.error('Error loading blogs:', error);
+                document.getElementById('blogGrid').innerHTML = 
+                    '<div style="text-align:center; padding:50px; color:#ef4444;">❌ Gagal memuat artikel</div>';
             }
         }
 
-        function updateStats() {
-            document.getElementById('totalFaq').textContent = allFaqs.length;
-            
-            const categories = [...new Set(allFaqs.map(f => f.kategori).filter(Boolean))];
-            document.getElementById('totalKategori').textContent = categories.length;
-            
-            const totalViews = allFaqs.reduce((sum, f) => sum + (f.views || 0), 0);
-            document.getElementById('totalViews').textContent = totalViews.toLocaleString('id-ID');
-        }
-
+        // ============================================
+        // LOAD CATEGORIES
+        // ============================================
         function loadCategories() {
-            const categories = [...new Set(allFaqs.map(f => f.kategori).filter(Boolean))];
-            const container = document.getElementById('faqCategories');
+            const categories = [...new Set(allBlogs.map(b => b.kategori).filter(Boolean))];
+            const container = document.getElementById('categoryPills');
             
-            const icons = {
-                'umum': '📌',
-                'pemesanan': '🛒',
-                'pembayaran': '💳',
-                'teknis': '⚙️',
-                'desain': '🎨',
-                'maintenance': '🔧',
-                'default': '📂'
-            };
-
             categories.forEach(cat => {
-                const icon = icons[cat.toLowerCase()] || icons['default'];
-                container.innerHTML += `
-                    <div class="faq-category" onclick="filterCategory('${cat}')">
-                        ${icon} ${cat}
-                    </div>
-                `;
+                const btn = document.createElement('button');
+                btn.className = 'category-pill';
+                btn.textContent = cat;
+                btn.onclick = () => filterCategory(cat);
+                container.appendChild(btn);
             });
         }
 
+        // ============================================
+        // FILTER CATEGORY
+        // ============================================
         function filterCategory(category) {
-            // Update active
-            document.querySelectorAll('.faq-category').forEach(c => {
-                c.classList.toggle('active', 
-                    (category === 'all' && c.textContent.includes('Semua')) ||
-                    c.textContent.includes(category)
+            currentCategory = category;
+            currentPage = 1;
+            
+            document.querySelectorAll('.category-pill').forEach(pill => {
+                pill.classList.toggle('active', 
+                    (category === 'all' && pill.textContent === 'Semua') ||
+                    pill.textContent === category
                 );
             });
 
-            // Filter
-            filteredFaqs = category === 'all' 
-                ? [...allFaqs] 
-                : allFaqs.filter(f => f.kategori === category);
+            filteredBlogs = category === 'all' ? [...allBlogs] : allBlogs.filter(b => b.kategori === category);
 
-            renderFAQ();
+            renderFeatured();
+            renderGrid();
+            renderPagination();
         }
 
-        function searchFAQ() {
-            const keyword = document.getElementById('searchFaq').value.toLowerCase();
+        // ============================================
+        // SEARCH BLOGS
+        // ============================================
+        function searchBlogs() {
+            const keyword = document.getElementById('searchInput').value.toLowerCase().trim();
+            currentPage = 1;
             
-            filteredFaqs = allFaqs.filter(f => 
-                (f.pertanyaan && f.pertanyaan.toLowerCase().includes(keyword)) ||
-                (f.jawaban && f.jawaban.toLowerCase().includes(keyword)) ||
-                (f.kategori && f.kategori.toLowerCase().includes(keyword))
-            );
+            if (!keyword) {
+                filteredBlogs = currentCategory === 'all' ? [...allBlogs] : allBlogs.filter(b => b.kategori === currentCategory);
+            } else {
+                filteredBlogs = allBlogs.filter(b => 
+                    (b.judul && b.judul.toLowerCase().includes(keyword)) ||
+                    (b.konten && b.konten.toLowerCase().includes(keyword)) ||
+                    (b.kategori && b.kategori.toLowerCase().includes(keyword))
+                );
+            }
 
-            renderFAQ();
+            renderFeatured();
+            renderGrid();
+            renderPagination();
         }
 
-        function renderFAQ() {
-            const container = document.getElementById('faqContainer');
-            const emptyState = document.getElementById('emptyState');
+        // ============================================
+        // RENDER FEATURED
+        // ============================================
+        function renderFeatured() {
+            const section = document.getElementById('featuredSection');
+            
+            if (filteredBlogs.length === 0) {
+                section.style.display = 'none';
+                return;
+            }
 
-            if (filteredFaqs.length === 0) {
-                container.innerHTML = '';
+            const featured = filteredBlogs.find(b => b.isFeatured) || filteredBlogs[0];
+            const imageUrl = featured.imageUrl || 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800';
+            const authorPhoto = featured.authorPhoto || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(featured.authorName || 'Admin') + '&background=f5b014&color=0f172a&size=44';
+            
+            section.innerHTML = `
+                <div class="featured-post">
+                    <div class="featured-image" style="background-image:url('${imageUrl}')">
+                        <span class="category-tag">${featured.kategori || 'Umum'}</span>
+                        <div class="image-overlay"></div>
+                    </div>
+                    <div class="featured-content">
+                        <div class="featured-meta">
+                            <span>📅 ${featured.createdAt ? new Date(featured.createdAt.toDate()).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }) : '-'}</span>
+                            <span>👁️ ${featured.views || 0} views</span>
+                            <span>⏱️ ${featured.readTime || '5 min'} read</span>
+                        </div>
+                        <h2>${featured.judul || 'Untitled'}</h2>
+                        <p>${stripHtml(featured.konten || '').substring(0, 180)}...</p>
+                        <a href="blog-detail.html?id=${featured.id}" class="btn btn-primary">Baca Selengkapnya →</a>
+                        <div class="featured-author">
+                            <img src="${authorPhoto}" alt="${featured.authorName || 'Admin'}">
+                            <div>
+                                <div class="author-name">${featured.authorName || 'Admin'}</div>
+                                <div class="author-role">${featured.authorRole || 'Writer'}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            section.style.display = 'block';
+        }
+
+        // ============================================
+        // RENDER GRID
+        // ============================================
+        function renderGrid() {
+            const grid = document.getElementById('blogGrid');
+            const emptyState = document.getElementById('emptyState');
+            
+            const featured = filteredBlogs.find(b => b.isFeatured) || filteredBlogs[0];
+            const gridBlogs = filteredBlogs.filter(b => b.id !== featured?.id);
+            
+            const start = (currentPage - 1) * perPage;
+            const end = start + perPage;
+            const pageBlogs = gridBlogs.slice(start, end);
+
+            if (pageBlogs.length === 0 && filteredBlogs.length === 0) {
+                grid.innerHTML = '';
                 emptyState.style.display = 'block';
                 return;
             }
 
             emptyState.style.display = 'none';
-            container.innerHTML = '';
+            grid.innerHTML = '';
 
-            filteredFaqs.forEach((faq, index) => {
-                container.innerHTML += `
-                    <div class="faq-item" id="faq-${faq.id}">
-                        <div class="faq-question" onclick="toggleFAQ('${faq.id}')">
-                            <span>${faq.pertanyaan || 'Untitled'}</span>
-                            <div class="faq-icon">▼</div>
+            pageBlogs.forEach(blog => {
+                const imageUrl = blog.imageUrl || 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600';
+                const authorPhoto = blog.authorPhoto || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(blog.authorName || 'Admin') + '&background=f5b014&color=0f172a&size=28';
+                
+                grid.innerHTML += `
+                    <div class="blog-card">
+                        <div class="blog-card-image" style="background-image:url('${imageUrl}')">
+                            <span class="category-tag">${blog.kategori || 'Umum'}</span>
+                            <div class="blog-overlay"></div>
                         </div>
-                        <div class="faq-answer">
-                            <div class="faq-answer-inner">
-                                ${faq.jawaban || 'Belum ada jawaban.'}
-                                ${faq.link ? `<br><br><a href="${faq.link}" style="color:var(--primary); font-weight:600;">${faq.linkText || 'Pelajari lebih lanjut →'}</a>` : ''}
+                        <div class="blog-card-content">
+                            <div class="blog-card-meta">
+                                <span>📅 ${blog.createdAt ? new Date(blog.createdAt.toDate()).toLocaleDateString('id-ID') : '-'}</span>
+                                <span>👁️ ${blog.views || 0}</span>
+                            </div>
+                            <h3>${blog.judul || 'Untitled'}</h3>
+                            <div class="excerpt">${stripHtml(blog.konten || '').substring(0, 120)}...</div>
+                            <div class="blog-card-footer">
+                                <div class="blog-author-small">
+                                    <img src="${authorPhoto}" alt="${blog.authorName || 'Admin'}">
+                                    <span>${blog.authorName || 'Admin'}</span>
+                                </div>
+                                <a href="blog-detail.html?id=${blog.id}" class="read-more">Baca →</a>
                             </div>
                         </div>
                     </div>
@@ -542,74 +1685,61 @@
             });
         }
 
-        function toggleFAQ(id) {
-            const item = document.getElementById(`faq-${id}`);
-            const isActive = item.classList.contains('active');
+        // ============================================
+        // RENDER PAGINATION
+        // ============================================
+        function renderPagination() {
+            const container = document.getElementById('pagination');
+            const featured = filteredBlogs.find(b => b.isFeatured) || filteredBlogs[0];
+            const totalPages = Math.ceil((filteredBlogs.length - (featured ? 1 : 0)) / perPage);
             
-            // Close all
-            document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
-            
-            // Toggle current
-            if (!isActive) {
-                item.classList.add('active');
-                // Increment view
-                incrementView(id);
-            }
-        }
-
-        async function incrementView(id) {
-            try {
-                await db.collection('faqs').doc(id).update({
-                    views: firebase.firestore.FieldValue.increment(1)
-                });
-            } catch (error) {
-                console.error('Error incrementing view:', error);
-            }
-        }
-
-        function renderPopular() {
-            const popular = [...allFaqs]
-                .sort((a, b) => (b.views || 0) - (a.views || 0))
-                .slice(0, 3);
-
-            const container = document.getElementById('popularGrid');
-            
-            if (popular.length === 0) {
-                container.innerHTML = '<p style="text-align:center; color:#999;">Belum ada data</p>';
+            if (totalPages <= 1) {
+                container.innerHTML = '';
                 return;
             }
 
-            container.innerHTML = '';
-            popular.forEach(faq => {
-                container.innerHTML += `
-                    <div class="popular-card" onclick="scrollToFAQ('${faq.id}')">
-                        <h4>❓ ${faq.pertanyaan}</h4>
-                        <p>${faq.views || 0} kali dilihat • ${faq.kategori || 'Umum'}</p>
-                    </div>
-                `;
-            });
-        }
-
-        function scrollToFAQ(id) {
-            // Filter to show all then scroll
-            filterCategory('all');
+            let html = '';
+            html += `<button class="page-btn" onclick="changePage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>‹</button>`;
             
-            setTimeout(() => {
-                const element = document.getElementById(`faq-${id}`);
-                if (element) {
-                    element.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    element.classList.add('active');
+            for (let i = 1; i <= totalPages; i++) {
+                if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
+                    html += `<button class="page-btn ${i === currentPage ? 'active' : ''}" onclick="changePage(${i})">${i}</button>`;
+                } else if (i === currentPage - 2 || i === currentPage + 2) {
+                    html += `<span style="padding:8px; color:#94a3b8;">…</span>`;
                 }
-            }, 100);
+            }
+            
+            html += `<button class="page-btn" onclick="changePage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>›</button>`;
+            
+            container.innerHTML = html;
         }
 
-        // Navbar scroll
-        window.addEventListener('scroll', () => {
-            document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
-        });
+        // ============================================
+        // CHANGE PAGE
+        // ============================================
+        function changePage(page) {
+            currentPage = page;
+            renderGrid();
+            renderPagination();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
 
-        // Load
-        document.addEventListener('DOMContentLoaded', loadFAQs);
+        // ============================================
+        // STRIP HTML
+        // ============================================
+        function stripHtml(html) {
+            if (!html) return '';
+            const tmp = document.createElement('div');
+            tmp.innerHTML = html;
+            return tmp.textContent || tmp.innerText || '';
+        }
+
+        // ============================================
+        // INIT
+        // ============================================
+        document.addEventListener('DOMContentLoaded', loadBlogs);
+
+        console.log('🔥 WebDevPro - Blog page loaded successfully!');
     </script>
 </body>
 </html>
