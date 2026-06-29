@@ -98,6 +98,7 @@
             gap: 30px;
             margin: 0;
             padding: 0;
+            align-items: center;
         }
 
         .nav-links a {
@@ -202,6 +203,7 @@
             border: none;
             cursor: pointer;
             padding: 5px;
+            margin-left: 10px;
         }
 
         .mobile-menu-btn span {
@@ -209,10 +211,129 @@
             height: 2px;
             background: white;
             transition: var(--transition);
+            display: block;
         }
 
         .navbar.scrolled .mobile-menu-btn span {
             background: var(--dark);
+        }
+
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* ========================================
+           MOBILE NAV OVERLAY
+           ======================================== */
+        .nav-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 10, 26, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* ========================================
+           MOBILE MENU SIDEBAR
+           ======================================== */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -320px;
+            width: 300px;
+            height: 100vh;
+            background: var(--white);
+            z-index: 1001;
+            padding: 80px 30px 30px;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow-y: auto;
+            box-shadow: -20px 0 60px rgba(0, 0, 0, 0.1);
+        }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        .mobile-menu .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: var(--dark);
+            cursor: pointer;
+            padding: 5px;
+            line-height: 1;
+        }
+
+        .mobile-menu .mobile-logo {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 30px;
+        }
+
+        .mobile-menu .mobile-logo span {
+            color: var(--primary);
+        }
+
+        .mobile-menu .mobile-nav-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .mobile-menu .mobile-nav-links li {
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .mobile-menu .mobile-nav-links a {
+            display: block;
+            padding: 14px 0;
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px;
+            transition: var(--transition);
+        }
+
+        .mobile-menu .mobile-nav-links a:hover {
+            color: var(--primary);
+            padding-left: 8px;
+        }
+
+        .mobile-menu .mobile-nav-links a.active {
+            color: var(--primary);
+        }
+
+        .mobile-menu .mobile-auth-buttons {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .mobile-menu .mobile-auth-buttons .btn {
+            width: 100%;
+            justify-content: center;
         }
 
         /* ========================================
@@ -805,10 +926,19 @@
 
         @media (max-width: 768px) {
             .nav-links {
-                display: none;
+                display: none !important;
             }
             .mobile-menu-btn {
                 display: flex;
+            }
+            .nav-overlay {
+                display: block;
+                opacity: 0;
+                pointer-events: none;
+            }
+            .nav-overlay.active {
+                opacity: 1;
+                pointer-events: all;
             }
 
             .hero {
@@ -952,6 +1082,28 @@
         </div>
     </nav>
 
+    <!-- ===== MOBILE MENU OVERLAY ===== -->
+    <div class="nav-overlay" id="navOverlay"></div>
+
+    <!-- ===== MOBILE MENU SIDEBAR ===== -->
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="close-btn" id="closeMenuBtn">&times;</button>
+        <div class="mobile-logo">Web<span>Dev</span>Pro</div>
+        <ul class="mobile-nav-links">
+            <li><a href="index.html" class="active">Beranda</a></li>
+            <li><a href="tentang.html">Tentang</a></li>
+            <li><a href="layanan.html">Layanan</a></li>
+            <li><a href="portofolio.html">Portofolio</a></li>
+            <li><a href="harga.html">Harga</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="kontak.html">Kontak</a></li>
+        </ul>
+        <div class="mobile-auth-buttons">
+            <a href="login.html" class="btn btn-outline" id="mobileLoginBtn">Masuk</a>
+            <a href="register.html" class="btn btn-primary" id="mobileRegisterBtn">Daftar</a>
+        </div>
+    </div>
+
     <!-- ===== HERO SECTION ===== -->
     <section class="hero">
         <!-- Background Animations -->
@@ -991,7 +1143,7 @@
         <div class="container">
             <div class="hero-content">
                 <div class="hero-badge">⭐ Web Developer Batang Jawa Tengah</div>
-                <h1>Hendri Setyawan</span> Akan Wujudkan Website </span>Impian</span> Anda Bersama Kami</h1>
+                <h1>Hendri Setyawan Akan Wujudkan Website Impian Anda Bersama Kami</h1>
                 <p>Kami menyediakan jasa pembuatan website profesional dengan desain modern, responsif, dan optimasi SEO terbaik untuk mengembangkan bisnis Anda.</p>
 
                 <div class="hero-buttons">
@@ -1016,7 +1168,7 @@
             </div>
 
             <div class="hero-image">
-                <img src="https://i.ibb.co.com/FqBHZPN8/1782472907234.png"alt="Web Development Illustration">
+                <img src="https://i.ibb.co.com/FqBHZPN8/1782472907234.png" alt="Web Development Illustration">
             </div>
         </div>
     </section>
@@ -1198,10 +1350,52 @@
         // ============================================
         // MOBILE MENU
         // ============================================
-        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
-            const navLinks = document.querySelector('.nav-links');
-            navLinks.classList.toggle('active');
-            this.classList.toggle('active');
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const navOverlay = document.getElementById('navOverlay');
+        const body = document.body;
+
+        function openMenu() {
+            mobileMenu.classList.add('active');
+            navOverlay.classList.add('active');
+            mobileMenuBtn.classList.add('active');
+            body.style.overflow = 'hidden';
+        }
+
+        function closeMenu() {
+            mobileMenu.classList.remove('active');
+            navOverlay.classList.remove('active');
+            mobileMenuBtn.classList.remove('active');
+            body.style.overflow = '';
+        }
+
+        // Open menu
+        mobileMenuBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (mobileMenu.classList.contains('active')) {
+                closeMenu();
+            } else {
+                openMenu();
+            }
+        });
+
+        // Close menu with close button
+        closeMenuBtn.addEventListener('click', closeMenu);
+
+        // Close menu with overlay
+        navOverlay.addEventListener('click', closeMenu);
+
+        // Close menu with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+                closeMenu();
+            }
+        });
+
+        // Close menu when clicking on a link
+        document.querySelectorAll('.mobile-nav-links a').forEach(link => {
+            link.addEventListener('click', closeMenu);
         });
 
         // ============================================
@@ -1255,6 +1449,10 @@
                 document.getElementById('registerBtn').style.display = 'none';
                 document.getElementById('userMenu').classList.remove('hidden');
                 document.getElementById('userName').textContent = user.displayName || user.email;
+
+                // Also update mobile menu
+                document.getElementById('mobileLoginBtn').style.display = 'none';
+                document.getElementById('mobileRegisterBtn').style.display = 'none';
             }
         });
 
