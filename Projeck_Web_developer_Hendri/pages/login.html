@@ -7,9 +7,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+<!-- Firebase Config & Auth -->
+<script src="../assets/js/firebase-config.js"></script>
+<script src="../assets/js/auth.js"></script>
     
     <!-- Firebase Config & Auth -->
     <script src="../assets/js/firebase-config.js"></script>
@@ -657,8 +661,10 @@
 
     <script>
     // ============================================================
-    // DOM REFS
+    // LOGIN SCRIPT - Menggunakan auth dan db dari global
     // ============================================================
+    
+    // DOM REFS
     const form = document.getElementById('loginForm');
     const email = document.getElementById('email');
     const password = document.getElementById('password');
@@ -675,9 +681,7 @@
 
     let toastTimeout = null;
 
-    // ============================================================
     // TOAST SYSTEM
-    // ============================================================
     function showToast(message, type = 'success') {
         const icons = { success: '✅', error: '❌', warning: '⚠️', info: 'ℹ️' };
         toastIcon.textContent = icons[type] || '📢';
@@ -692,9 +696,7 @@
         }, 4500);
     }
 
-    // ============================================================
     // LOADING OVERLAY
-    // ============================================================
     function showLoading(text = 'Memproses login...') {
         loadingText.textContent = text;
         loadingOverlay.classList.add('show');
@@ -706,9 +708,7 @@
         document.body.style.overflow = '';
     }
 
-    // ============================================================
     // TOGGLE PASSWORD
-    // ============================================================
     toggleBtn.addEventListener('click', function() {
         const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
         password.setAttribute('type', type);
@@ -727,9 +727,7 @@
         password.focus();
     });
 
-    // ============================================================
     // VALIDATION
-    // ============================================================
     function validateEmail(emailStr) {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailStr);
     }
@@ -775,9 +773,7 @@
         passwordError.classList.remove('show');
     });
 
-    // ============================================================
     // LOGIN FUNCTION
-    // ============================================================
     async function loginUser(emailVal, passVal) {
         try {
             const userCredential = await firebase.auth().signInWithEmailAndPassword(emailVal, passVal);
@@ -789,7 +785,6 @@
                 const docSnap = await docRef.get();
 
                 if (!docSnap.exists) {
-                    // If user document doesn't exist, create one
                     await docRef.set({
                         nama: user.displayName || 'Pengguna',
                         email: user.email,
@@ -812,13 +807,10 @@
         }
     }
 
-    // ============================================================
     // FORM SUBMISSION
-    // ============================================================
     form.addEventListener('submit', async function(e) {
         e.preventDefault();
 
-        // Validate
         let isValid = true;
 
         if (email.value.trim() === '' || !validateEmail(email.value)) {
@@ -844,7 +836,6 @@
             return;
         }
 
-        // Disable button
         loginBtn.disabled = true;
         const originalText = loginBtn.innerHTML;
         loginBtn.innerHTML = '<span class="spinner"></span> Memproses...';
@@ -893,9 +884,7 @@
         }
     });
 
-    // ============================================================
     // GOOGLE SIGN-IN
-    // ============================================================
     googleBtn.addEventListener('click', async function() {
         googleBtn.disabled = true;
         const originalText = googleBtn.innerHTML;
@@ -910,7 +899,6 @@
             const result = await firebase.auth().signInWithPopup(provider);
             const user = result.user;
 
-            // Check user role
             const docRef = firebase.firestore().collection('users').doc(user.uid);
             const docSnap = await docRef.get();
 
@@ -959,9 +947,7 @@
         }
     });
 
-    // ============================================================
     // KEYBOARD: Enter to submit
-    // ============================================================
     form.addEventListener('keydown', function(e) {
         if (e.key === 'Enter' && e.target.tagName !== 'BUTTON') {
             e.preventDefault();
@@ -971,9 +957,7 @@
         }
     });
 
-    // ============================================================
     // AUTO REDIRECT IF ALREADY LOGGED IN
-    // ============================================================
     firebase.auth().onAuthStateChanged(async (user) => {
         if (user) {
             try {

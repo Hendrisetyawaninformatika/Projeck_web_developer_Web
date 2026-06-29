@@ -10,31 +10,10 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-    
-    <!-- Firebase Config -->
-     <!-- Firebase Config & Auth -->
-<script src="../assets/js/firebase-config.js"></script>
-<script src="../assets/js/auth.js"></script>
-    <script>
-        // ===== FIREBASE CONFIGURATION =====
-        // Ganti dengan konfigurasi Firebase Anda
-        
-       const firebaseConfig = {
-  apiKey: "AIzaSyDvIsc3igsRSbjYlv9i3adSQSFIABoTdM8",
-  authDomain: "web-defeloper-hendri.firebaseapp.com",
-  databaseURL: "https://web-defeloper-hendri-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "web-defeloper-hendri",
-  storageBucket: "web-defeloper-hendri.firebasestorage.app",
-  messagingSenderId: "308915481624",
-  appId: "1:308915481624:web:c71ec63a419143c80fa76d",
-  measurementId: "G-ZEJEVKSBSP"
-};
 
-        // Initialize Firebase
-        if (!firebase.apps.length) {
-            firebase.initializeApp(firebaseConfig);
-        }
-    </script>
+    <!-- Firebase Config & Auth - HANYA SEKALI IMPORT -->
+    <script src="../assets/js/firebase-config.js"></script>
+    <script src="../assets/js/auth.js"></script>
     
     <style>
         /* ===== RESET & BASE ===== */
@@ -480,11 +459,6 @@
             box-shadow: 0 4px 16px rgba(245, 176, 20, 0.3);
         }
 
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(245, 176, 20, 0.4);
-        }
-
         .btn-primary:active {
             transform: scale(0.97);
         }
@@ -527,14 +501,9 @@
             gap: 8px;
         }
 
-        .btn-google:hover {
-            background: #f8fafc;
-            border-color: #cbd5e1;
-        }
-
         .btn-google:active {
             transform: scale(0.97);
-            background: #f1f5f9;
+            background: #f8fafc;
         }
 
         .btn-google:disabled {
@@ -590,29 +559,27 @@
         /* ===== TOAST ===== */
         .toast {
             position: fixed;
-            top: 20px;
+            top: 16px;
             left: 50%;
             transform: translateX(-50%) translateY(-100px);
-            padding: 12px 20px;
+            padding: 10px 18px;
             border-radius: 12px;
             color: #fff;
             font-weight: 500;
-            font-size: 13px;
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+            font-size: 12px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
             z-index: 9999;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             max-width: 90%;
-            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             opacity: 0;
-            pointer-events: none;
         }
 
         .toast.show {
             transform: translateX(-50%) translateY(0);
             opacity: 1;
-            pointer-events: auto;
         }
 
         .toast-success { background: linear-gradient(135deg, #10b981, #059669); }
@@ -621,7 +588,7 @@
         .toast-info { background: linear-gradient(135deg, #3b82f6, #2563eb); }
 
         .toast .toast-icon {
-            font-size: 18px;
+            font-size: 16px;
         }
 
         /* ===== LOADING OVERLAY ===== */
@@ -631,8 +598,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(8px);
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(6px);
             display: none;
             justify-content: center;
             align-items: center;
@@ -652,8 +619,8 @@
         }
 
         .loading-overlay .spinner-large {
-            width: 44px;
-            height: 44px;
+            width: 36px;
+            height: 36px;
             border: 4px solid rgba(245, 176, 20, 0.2);
             border-top-color: #f5b014;
             border-radius: 50%;
@@ -662,14 +629,14 @@
 
         .loading-overlay p {
             color: white;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 400;
         }
 
         .loading-overlay .loading-dots span {
             display: inline-block;
             animation: dotBounce 1.4s infinite both;
-            font-size: 20px;
+            font-size: 18px;
             color: #f5b014;
         }
 
@@ -929,9 +896,9 @@
                                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                                 <circle cx="12" cy="7" r="4"></circle>
                             </svg>
-                            <input type="text" id="nama" placeholder="John Doe" required autocomplete="name" minlength="2">
+                            <input type="text" id="nama" placeholder="John Doe" required autocomplete="name">
                         </div>
-                        <div class="input-error" id="namaError">Nama lengkap wajib diisi (min 2 karakter)</div>
+                        <div class="input-error" id="namaError">Nama lengkap wajib diisi</div>
                     </div>
                     <div class="form-group">
                         <label for="telepon">Nomor Telepon</label>
@@ -1042,26 +1009,11 @@
 
     <script>
     // ============================================================
-    // 1. FIREBASE INIT
+    // REGISTER SCRIPT - TIDAK ADA DEKLARASI firebaseConfig atau auth
+    // Semua sudah tersedia dari firebase-config.js dan auth.js
     // ============================================================
-    if (typeof firebase === 'undefined') {
-        console.error('Firebase SDK gagal dimuat. Periksa koneksi internet.');
-        showToast('Gagal memuat Firebase. Periksa koneksi internet.', 'error');
-    }
 
-    let auth, db;
-    try {
-        auth = firebase.auth();
-        db = firebase.firestore();
-        console.log('✅ Firebase initialized successfully');
-    } catch (e) {
-        console.error('Firebase init error:', e);
-        showToast('Gagal menginisialisasi Firebase. Periksa konfigurasi.', 'error');
-    }
-
-    // ============================================================
-    // 2. DOM REFS
-    // ============================================================
+    // DOM REFS
     const form = document.getElementById('registerForm');
     const nama = document.getElementById('nama');
     const telepon = document.getElementById('telepon');
@@ -1094,7 +1046,7 @@
     let toastTimeout = null;
 
     // ============================================================
-    // 3. TOAST SYSTEM
+    // TOAST SYSTEM
     // ============================================================
     function showToast(message, type = 'success') {
         const icons = {
@@ -1106,18 +1058,17 @@
         toastIcon.textContent = icons[type] || '📢';
         toastMessage.textContent = message;
         toast.className = `toast toast-${type}`;
-        // force reflow
         void toast.offsetWidth;
         toast.classList.add('show');
 
         if (toastTimeout) clearTimeout(toastTimeout);
         toastTimeout = setTimeout(() => {
             toast.classList.remove('show');
-        }, 4500);
+        }, 4000);
     }
 
     // ============================================================
-    // 4. LOADING OVERLAY
+    // LOADING OVERLAY
     // ============================================================
     function showLoading(text = 'Mendaftarkan akun Anda') {
         loadingText.textContent = text;
@@ -1131,12 +1082,11 @@
     }
 
     // ============================================================
-    // 5. TOGGLE PASSWORD
+    // TOGGLE PASSWORD
     // ============================================================
     function togglePasswordVisibility(input, toggleBtn) {
         const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
         input.setAttribute('type', type);
-        // Update icon visual
         const svg = toggleBtn.querySelector('svg');
         if (type === 'text') {
             svg.innerHTML = `
@@ -1149,7 +1099,6 @@
                 <circle cx="12" cy="12" r="3" />
             `;
         }
-        // Focus input after toggle
         input.focus();
     }
 
@@ -1157,7 +1106,7 @@
     toggleBtn2.addEventListener('click', () => togglePasswordVisibility(confirmPass, toggleBtn2));
 
     // ============================================================
-    // 6. PASSWORD STRENGTH
+    // PASSWORD STRENGTH
     // ============================================================
     function checkPasswordStrength(pass) {
         let score = 0;
@@ -1175,7 +1124,6 @@
             { label: 'Sangat Kuat', color: '#059669', width: '100%' }
         ];
 
-        // Clamp score 0-4
         const idx = Math.min(score, 4);
         return levels[idx];
     }
@@ -1197,7 +1145,7 @@
     });
 
     // ============================================================
-    // 7. VALIDATION HELPERS
+    // VALIDATION HELPERS
     // ============================================================
     function setError(el, errorEl, message) {
         el.classList.add('error');
@@ -1261,23 +1209,15 @@
         }
     });
 
-    // Real-time sync for confirm password
-    confirmPass.addEventListener('blur', function() {
-        if (this.value !== password.value && this.value.length > 0) {
-            setError(this, confirmError, 'Password tidak cocok');
-        }
-    });
-
     // ============================================================
-    // 8. FORM SUBMISSION
+    // FORM SUBMISSION
     // ============================================================
     form.addEventListener('submit', async function(e) {
         e.preventDefault();
 
-        // --- Validate all fields ---
+        // Validate all fields
         let isValid = true;
 
-        // Nama
         if (nama.value.trim() === '' || !validateName(nama.value)) {
             setError(nama, namaError, 'Nama lengkap wajib diisi (min 2 karakter)');
             isValid = false;
@@ -1285,7 +1225,6 @@
             setSuccess(nama, namaError);
         }
 
-        // Email
         if (email.value.trim() === '' || !validateEmail(email.value)) {
             setError(email, emailError, 'Email valid wajib diisi');
             isValid = false;
@@ -1293,7 +1232,6 @@
             setSuccess(email, emailError);
         }
 
-        // Password
         if (password.value.length < 6) {
             setError(password, passwordError, 'Password minimal 6 karakter');
             isValid = false;
@@ -1301,7 +1239,6 @@
             setSuccess(password, passwordError);
         }
 
-        // Confirm
         if (confirmPass.value !== password.value || confirmPass.value === '') {
             setError(confirmPass, confirmError, 'Password tidak cocok');
             isValid = false;
@@ -1309,7 +1246,6 @@
             setSuccess(confirmPass, confirmError);
         }
 
-        // Terms
         if (!termsCheck.checked) {
             termsError.classList.add('show');
             isValid = false;
@@ -1317,25 +1253,20 @@
             termsError.classList.remove('show');
         }
 
-        // Focus first error
         if (!isValid) {
-            const firstErrorField = form.querySelector('.input-error.show');
-            if (firstErrorField) {
-                const input = firstErrorField.closest('.form-group')?.querySelector('input');
-                if (input) {
-                    input.focus();
-                    input.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }
+            const firstError = form.querySelector('.input-error.show');
+            if (firstError) {
+                const input = firstError.closest('.form-group')?.querySelector('input');
+                if (input) input.focus();
             }
             return;
         }
 
-        // --- Disable button to prevent double submission ---
+        // Disable button
         registerBtn.disabled = true;
-        const originalBtnText = registerBtn.innerHTML;
+        const originalText = registerBtn.innerHTML;
         registerBtn.innerHTML = '<span class="spinner"></span> Memproses...';
 
-        // --- Proceed to Firebase Registration ---
         const emailVal = email.value.trim();
         const passVal = password.value;
         const namaVal = nama.value.trim();
@@ -1344,17 +1275,17 @@
         showLoading('Mendaftarkan akun Anda');
 
         try {
-            // 1. Create user with email & password
-            const userCredential = await auth.createUserWithEmailAndPassword(emailVal, passVal);
+            // Create user with email & password
+            const userCredential = await firebase.auth().createUserWithEmailAndPassword(emailVal, passVal);
             const user = userCredential.user;
 
-            // 2. Update display name
+            // Update display name
             await user.updateProfile({
                 displayName: namaVal
             });
 
-            // 3. Save additional data to Firestore
-            await db.collection('users').doc(user.uid).set({
+            // Save additional data to Firestore
+            await firebase.firestore().collection('users').doc(user.uid).set({
                 nama: namaVal,
                 email: emailVal,
                 telepon: teleponVal || '',
@@ -1365,7 +1296,7 @@
                 emailVerified: false
             });
 
-            // 4. Send email verification
+            // Send email verification
             await user.sendEmailVerification();
 
             hideLoading();
@@ -1374,7 +1305,7 @@
             // Reset form
             form.reset();
             registerBtn.disabled = false;
-            registerBtn.innerHTML = originalBtnText;
+            registerBtn.innerHTML = originalText;
 
             // Redirect after delay
             setTimeout(() => {
@@ -1384,7 +1315,7 @@
         } catch (error) {
             hideLoading();
             registerBtn.disabled = false;
-            registerBtn.innerHTML = originalBtnText;
+            registerBtn.innerHTML = originalText;
             
             console.error('Registration error:', error);
 
@@ -1408,10 +1339,9 @@
     });
 
     // ============================================================
-    // 9. GOOGLE SIGN-IN
+    // GOOGLE SIGN-IN
     // ============================================================
     googleBtn.addEventListener('click', async function() {
-        // Disable button
         googleBtn.disabled = true;
         const originalText = googleBtn.innerHTML;
         googleBtn.innerHTML = '<span class="spinner"></span> Memproses...';
@@ -1424,11 +1354,11 @@
                 prompt: 'select_account'
             });
 
-            const result = await auth.signInWithPopup(provider);
+            const result = await firebase.auth().signInWithPopup(provider);
             const user = result.user;
 
             // Check if user doc exists, if not create
-            const docRef = db.collection('users').doc(user.uid);
+            const docRef = firebase.firestore().collection('users').doc(user.uid);
             const docSnap = await docRef.get();
 
             if (!docSnap.exists) {
@@ -1445,14 +1375,13 @@
             }
 
             hideLoading();
-            showToast('✅ Berhasil masuk dengan Google!', 'success');
+            showToast('✅ Berhasil daftar dengan Google!', 'success');
 
-            // Reset button
             googleBtn.disabled = false;
             googleBtn.innerHTML = originalText;
 
             setTimeout(() => {
-                window.location.href = '../index.html';
+                window.location.href = 'login.html';
             }, 1500);
 
         } catch (error) {
@@ -1469,26 +1398,25 @@
             } else if (error.code === 'auth/popup-blocked') {
                 showToast('Pop-up diblokir. Izinkan pop-up untuk melanjutkan.', 'warning');
             } else {
-                showToast('Gagal masuk dengan Google. Coba lagi.', 'error');
+                showToast('Gagal daftar dengan Google. Coba lagi.', 'error');
             }
         }
     });
 
     // ============================================================
-    // 10. KEYBOARD: Enter to submit
+    // KEYBOARD: Enter to submit
     // ============================================================
     form.addEventListener('keydown', function(e) {
         if (e.key === 'Enter' && e.target.tagName !== 'BUTTON') {
             e.preventDefault();
-            const submitBtn = form.querySelector('button[type="submit"]');
-            if (submitBtn && !submitBtn.disabled) {
+            if (!registerBtn.disabled) {
                 form.dispatchEvent(new Event('submit'));
             }
         }
     });
 
     // ============================================================
-    // 11. INITIAL SETUP: remove success/error state on focus
+    // INITIAL SETUP
     // ============================================================
     document.querySelectorAll('.input-wrapper input').forEach(input => {
         input.addEventListener('focus', function() {
@@ -1498,41 +1426,13 @@
         });
     });
 
-    // ============================================================
-    // 12. CHECK TERMS ON CHANGE
-    // ============================================================
     termsCheck.addEventListener('change', function() {
         if (this.checked) {
             termsError.classList.remove('show');
         }
     });
 
-    // ============================================================
-    // 13. AUTO COMPLETE FIX FOR MOBILE
-    // ============================================================
-    // Fix for autocomplete on mobile devices
-    document.querySelectorAll('input[autocomplete]').forEach(input => {
-        input.addEventListener('focus', function() {
-            // Trigger autocomplete on mobile
-            if (window.innerWidth < 768) {
-                this.setAttribute('autocomplete', 'on');
-            }
-        });
-    });
-
-    // ============================================================
-    // 14. CONSOLE LOG FOR DEBUGGING
-    // ============================================================
     console.log('✅ Register page loaded successfully!');
-    console.log('📝 Firebase Auth:', auth ? 'Connected' : 'Not connected');
-    console.log('📝 Firestore:', db ? 'Connected' : 'Not connected');
-
-    // Check if Firebase is properly configured
-    if (auth && db) {
-        console.log('✅ All Firebase services are ready');
-    } else {
-        console.warn('⚠️ Some Firebase services are not available');
-    }
     </script>
 </body>
 </html>
