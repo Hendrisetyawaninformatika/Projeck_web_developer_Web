@@ -7,48 +7,454 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/style.css">
     <style>
-        .user-layout { display: flex; min-height: 100vh; }
-        .user-sidebar { width: 250px; background: white; box-shadow: 2px 0 10px rgba(0,0,0,0.05); padding: 20px 0; position: fixed; height: 100vh; }
-        .user-sidebar .logo { padding: 0 20px 20px; text-align: center; border-bottom: 1px solid #eee; margin-bottom: 20px; }
-        .user-menu a { display: block; padding: 12px 25px; color: #666; text-decoration: none; transition: all 0.3s; border-left: 3px solid transparent; }
-        .user-menu a:hover, .user-menu a.active { background: rgba(255,215,0,0.1); color: var(--secondary); border-left-color: var(--primary); }
-        .user-main { margin-left: 250px; flex: 1; background: #f5f6fa; }
-        .user-header { background: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-        .user-content { padding: 30px; }
+        /* ========================================
+           RESET & BASE
+           ======================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-        /* Status Badge Styles */
-        .status-badge {
-            display: inline-block;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 12px;
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f0f4f9;
+            color: #1e293b;
+        }
+
+        /* ========================================
+           BACKGROUND ANIMATION
+           ======================================== */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .bg-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(245, 176, 20, 0.08);
+            border-radius: 50%;
+            animation: floatBgParticle linear infinite;
+        }
+
+        .bg-particle:nth-child(1) { left: 5%; animation-duration: 22s; }
+        .bg-particle:nth-child(2) { left: 15%; animation-duration: 28s; animation-delay: 2s; width: 6px; }
+        .bg-particle:nth-child(3) { left: 25%; animation-duration: 18s; animation-delay: 4s; }
+        .bg-particle:nth-child(4) { left: 35%; animation-duration: 32s; animation-delay: 1s; width: 8px; }
+        .bg-particle:nth-child(5) { left: 45%; animation-duration: 24s; animation-delay: 3s; }
+        .bg-particle:nth-child(6) { left: 55%; animation-duration: 30s; animation-delay: 5s; width: 5px; }
+        .bg-particle:nth-child(7) { left: 65%; animation-duration: 20s; animation-delay: 2.5s; }
+        .bg-particle:nth-child(8) { left: 75%; animation-duration: 26s; animation-delay: 4.5s; width: 7px; }
+        .bg-particle:nth-child(9) { left: 85%; animation-duration: 23s; animation-delay: 1.5s; }
+        .bg-particle:nth-child(10) { left: 95%; animation-duration: 29s; animation-delay: 3.5s; width: 6px; }
+        .bg-particle:nth-child(11) { left: 50%; animation-duration: 35s; animation-delay: 0.5s; width: 10px; }
+
+        @keyframes floatBgParticle {
+            0% { transform: translateY(100vh) translateX(0) scale(0); opacity: 0; }
+            10% { opacity: 0.8; transform: translateY(80vh) translateX(20px) scale(1); }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(-100vh) translateX(-20px) scale(0); opacity: 0; }
+        }
+
+        .gradient-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            pointer-events: none;
+            z-index: 0;
+            animation: orbFloat 20s ease-in-out infinite;
+        }
+
+        .gradient-orb:nth-child(1) {
+            width: 500px;
+            height: 500px;
+            background: rgba(245, 176, 20, 0.04);
+            top: -200px;
+            right: -100px;
+        }
+
+        .gradient-orb:nth-child(2) {
+            width: 400px;
+            height: 400px;
+            background: rgba(99, 102, 241, 0.03);
+            bottom: -150px;
+            left: -100px;
+            animation-delay: -10s;
+        }
+
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(50px, -50px) scale(1.1); }
+            66% { transform: translate(-30px, 30px) scale(0.9); }
+        }
+
+        /* ========================================
+           USER LAYOUT
+           ======================================== */
+        .user-layout {
+            display: flex;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* ========================================
+           SIDEBAR
+           ======================================== */
+        .user-sidebar {
+            width: 260px;
+            background: linear-gradient(180deg, #0f172a 0%, #1a1a3e 100%);
+            box-shadow: 4px 0 20px rgba(0,0,0,0.1);
+            padding: 24px 0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        .user-sidebar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .user-sidebar::-webkit-scrollbar-thumb {
+            background: #f5b014;
+            border-radius: 10px;
+        }
+
+        .user-sidebar .logo {
+            padding: 0 24px 24px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            margin-bottom: 20px;
+        }
+
+        .user-sidebar .logo h4 {
+            font-size: 22px;
+            font-weight: 800;
+            color: white;
+            margin: 0;
+        }
+
+        .user-sidebar .logo h4 span {
+            color: #f5b014;
+        }
+
+        .user-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 24px;
+            color: rgba(255,255,255,0.6);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .user-menu a:hover {
+            background: rgba(255,255,255,0.05);
+            color: white;
+        }
+
+        .user-menu a.active {
+            background: rgba(245, 176, 20, 0.1);
+            color: #f5b014;
+            border-left-color: #f5b014;
+        }
+
+        .user-menu .menu-divider {
+            margin: 20px 24px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+
+        /* ========================================
+           MAIN CONTENT
+           ======================================== */
+        .user-main {
+            margin-left: 260px;
+            flex: 1;
+            min-height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ========================================
+           HEADER
+           ======================================== */
+        .user-header {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            padding: 16px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.04);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            border-bottom: 1px solid rgba(255,255,255,0.5);
+        }
+
+        .user-header h4 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 0;
+        }
+
+        .user-header .header-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            border: none;
+            border-radius: 40px;
             font-weight: 600;
-            text-transform: uppercase;
+            font-size: 13px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            cursor: pointer;
+            font-family: inherit;
         }
-        .status-pending { background: #fff3cd; color: #856404; }
-        .status-diproses { background: #cce5ff; color: #004085; }
-        .status-selesai { background: #d4edda; color: #155724; }
-        .status-dibatalkan { background: #f8d7da; color: #721c24; }
-        .status-revisi { background: #e2e3e5; color: #383d41; }
 
-        /* Pesanan Card */
-        .pesanan-card {
-            background: white;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 15px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            transition: all 0.3s;
-            border-left: 4px solid transparent;
+        .btn-sm {
+            padding: 6px 16px;
+            font-size: 12px;
         }
-        .pesanan-card:hover {
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+
+        .btn-primary {
+            background: linear-gradient(135deg, #f5b014, #d49a0e);
+            color: #0f172a;
+            box-shadow: 0 4px 16px rgba(245, 176, 20, 0.25);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(245, 176, 20, 0.35);
+        }
+
+        .user-avatar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            font-size: 14px;
+            color: #1e293b;
+            padding: 4px 14px 4px 4px;
+            border-radius: 40px;
+            background: #f1f5f9;
+            transition: all 0.3s ease;
+        }
+
+        .user-avatar:hover {
+            background: #e2e8f0;
+        }
+
+        .user-avatar .avatar-img {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #e2e8f0;
+        }
+
+        /* ========================================
+           USER CONTENT
+           ======================================== */
+        .user-content {
+            padding: 32px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ========================================
+           STATS GRID
+           ======================================== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            border: 1px solid rgba(255,255,255,0.5);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #f5b014, #d49a0e, #f5b014);
+            background-size: 200% 100%;
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .stat-card:hover::before {
+            transform: scaleX(1);
+            animation: shimmerStat 2s ease infinite;
+        }
+
+        @keyframes shimmerStat {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+        }
+
+        .stat-card .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        .stat-card .stat-icon.yellow {
+            background: rgba(245, 176, 20, 0.12);
+        }
+        .stat-card .stat-icon.blue {
+            background: rgba(59, 130, 246, 0.12);
+        }
+        .stat-card .stat-icon.green {
+            background: rgba(16, 185, 129, 0.12);
+        }
+        .stat-card .stat-icon.red {
+            background: rgba(239, 68, 68, 0.12);
+        }
+
+        .stat-card .stat-info {
+            flex: 1;
+        }
+
+        .stat-card .stat-value {
+            font-size: 26px;
+            font-weight: 700;
+            color: #0f172a;
+            line-height: 1.2;
+        }
+
+        .stat-card .stat-label {
+            color: #64748b;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        /* ========================================
+           FILTER TABS
+           ======================================== */
+        .filter-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .filter-tab {
+            padding: 8px 20px;
+            border-radius: 40px;
+            border: 2px solid #e2e8f0;
+            background: transparent;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            color: #64748b;
+            font-family: inherit;
+        }
+
+        .filter-tab:hover {
+            border-color: #f5b014;
+            color: #f5b014;
             transform: translateY(-2px);
         }
-        .pesanan-card.pending { border-left-color: #f39c12; }
-        .pesanan-card.diproses { border-left-color: #3498db; }
-        .pesanan-card.selesai { border-left-color: #27ae60; }
-        .pesanan-card.dibatalkan { border-left-color: #e74c3c; }
+
+        .filter-tab.active {
+            background: linear-gradient(135deg, #f5b014, #d49a0e);
+            color: #0f172a;
+            border-color: #f5b014;
+            box-shadow: 0 4px 16px rgba(245, 176, 20, 0.25);
+        }
+
+        /* ========================================
+           PESANAN CARD
+           ======================================== */
+        .pesanan-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 22px 24px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+            border: 1px solid rgba(255,255,255,0.5);
+            transition: all 0.4s ease;
+            border-left: 5px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pesanan-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #f5b014, #d49a0e, #f5b014);
+            background-size: 200% 100%;
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .pesanan-card:hover::before {
+            transform: scaleX(1);
+            animation: shimmerStat 2s ease infinite;
+        }
+
+        .pesanan-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+        }
+
+        .pesanan-card.pending { border-left-color: #f59e0b; }
+        .pesanan-card.diproses { border-left-color: #3b82f6; }
+        .pesanan-card.selesai { border-left-color: #10b981; }
+        .pesanan-card.dibatalkan { border-left-color: #ef4444; }
         .pesanan-card.revisi { border-left-color: #6c757d; }
 
         .pesanan-header {
@@ -56,192 +462,416 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 8px;
         }
+
         .pesanan-kode {
             font-weight: 700;
-            color: #333;
+            color: #0f172a;
             font-size: 16px;
         }
+
         .pesanan-date {
             font-size: 13px;
-            color: #999;
+            color: #94a3b8;
         }
+
+        /* Status Badge */
+        .status-badge {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 40px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .status-pending { background: #fef3c7; color: #d97706; }
+        .status-diproses { background: #dbeafe; color: #2563eb; }
+        .status-selesai { background: #d1fae5; color: #059669; }
+        .status-dibatalkan { background: #fee2e2; color: #dc2626; }
+        .status-revisi { background: #e2e3e5; color: #383d41; }
 
         .pesanan-body {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
             gap: 15px;
-            margin-bottom: 15px;
+            margin-bottom: 14px;
         }
+
         .pesanan-info {
             display: flex;
             flex-direction: column;
         }
+
         .pesanan-info-label {
             font-size: 12px;
-            color: #999;
-            margin-bottom: 3px;
+            color: #94a3b8;
+            margin-bottom: 2px;
         }
+
         .pesanan-info-value {
             font-weight: 600;
-            color: #333;
+            color: #0f172a;
             font-size: 14px;
         }
 
         .pesanan-progress {
-            margin-bottom: 15px;
+            margin-bottom: 14px;
         }
+
         .progress-info {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
             font-size: 13px;
+            color: #64748b;
         }
+
+        .progress-info span:last-child {
+            font-weight: 700;
+            color: #f5b014;
+        }
+
         .progress-track {
-            background: #e0e0e0;
-            border-radius: 8px;
+            background: #f1f5f9;
+            border-radius: 10px;
             height: 6px;
             overflow: hidden;
         }
+
         .progress-fill {
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            background: linear-gradient(90deg, #f5b014, #d49a0e);
             height: 100%;
-            border-radius: 8px;
-            transition: width 0.5s ease;
+            border-radius: 10px;
+            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmerProgress 2s ease-in-out infinite;
+        }
+
+        @keyframes shimmerProgress {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
 
         .pesanan-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-top: 12px;
-            border-top: 1px solid #f0f0f0;
+            padding-top: 14px;
+            border-top: 1px solid #f1f5f9;
+            flex-wrap: wrap;
+            gap: 10px;
         }
+
         .pesanan-harga {
             font-weight: 700;
-            color: var(--primary);
+            color: #f5b014;
             font-size: 16px;
         }
 
-        /* Empty State */
+        /* ========================================
+           EMPTY STATE
+           ======================================== */
         .empty-state {
             text-align: center;
             padding: 60px 20px;
         }
-        .empty-state-icon {
+
+        .empty-state .empty-icon {
             font-size: 60px;
-            margin-bottom: 15px;
+            margin-bottom: 16px;
         }
+
         .empty-state h3 {
-            margin: 0 0 10px 0;
-            color: #333;
+            font-size: 22px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 8px;
         }
+
         .empty-state p {
-            color: #666;
+            color: #64748b;
             margin-bottom: 20px;
         }
 
-        /* Filter Tabs */
-        .filter-tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
+        .empty-state .btn {
+            display: inline-flex;
         }
-        .filter-tab {
-            padding: 8px 18px;
-            border-radius: 20px;
-            border: 1px solid #ddd;
-            background: white;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.3s;
-            color: #666;
-        }
-        .filter-tab:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-        }
-        .filter-tab.active {
-            background: var(--primary);
+
+        /* ========================================
+           TOAST
+           ======================================== */
+        .alert-toast {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            padding: 14px 24px;
+            border-radius: 16px;
             color: white;
-            border-color: var(--primary);
+            font-weight: 600;
+            font-size: 14px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+            z-index: 9999;
+            animation: slideInRight 0.4s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .alert-toast.success {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+        .alert-toast.error {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+        }
+        .alert-toast.warning {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .alert-toast.hide {
+            animation: slideOutRight 0.4s ease forwards;
+        }
+
+        @keyframes slideOutRight {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        /* ========================================
+           RESPONSIVE
+           ======================================== */
+        @media (max-width: 1024px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .user-sidebar {
+                transform: translateX(-100%);
+                width: 280px;
+            }
+            .user-sidebar.open {
+                transform: translateX(0);
+            }
+            .user-main {
+                margin-left: 0;
+            }
+            .user-header {
+                padding: 12px 16px;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            .user-content {
+                padding: 16px;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+            .stat-card {
+                padding: 14px 18px;
+            }
+            .stat-card .stat-value {
+                font-size: 20px;
+            }
+            .pesanan-body {
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+            .gradient-orb {
+                opacity: 0.4;
+            }
+            .bg-particle {
+                opacity: 0.5;
+            }
+            .pesanan-card {
+                padding: 16px 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .user-header h4 {
+                font-size: 17px;
+            }
+            .user-header .header-right {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            .user-avatar span {
+                display: none;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .pesanan-body {
+                grid-template-columns: 1fr;
+            }
+            .filter-tabs {
+                gap: 6px;
+            }
+            .filter-tab {
+                font-size: 12px;
+                padding: 6px 14px;
+            }
+            .pesanan-kode {
+                font-size: 14px;
+            }
+        }
+
+        /* ========================================
+           MENU TOGGLE
+           ======================================== */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: #0f172a;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- ===== BACKGROUND ANIMATION ===== -->
+    <div class="bg-animation">
+        <div class="bg-particle"></div>
+        <div class="bg-particle"></div>
+        <div class="bg-particle"></div>
+        <div class="bg-particle"></div>
+        <div class="bg-particle"></div>
+        <div class="bg-particle"></div>
+        <div class="bg-particle"></div>
+        <div class="bg-particle"></div>
+        <div class="bg-particle"></div>
+        <div class="bg-particle"></div>
+        <div class="bg-particle"></div>
+        <div class="gradient-orb"></div>
+        <div class="gradient-orb"></div>
+    </div>
+
     <div class="user-layout">
-        <!-- Sidebar -->
-        <aside class="user-sidebar">
+        <!-- ===== SIDEBAR ===== -->
+        <aside class="user-sidebar" id="userSidebar">
             <div class="logo">
-                <h4 style="margin:0;">Web<span style="color:var(--primary);">Dev</span>Pro</h4>
+                <h4>Web<span>Dev</span>Pro</h4>
             </div>
             <div class="user-menu">
                 <a href="index.html">📊 Dashboard</a>
                 <a href="profile.html">👤 Profil Saya</a>
                 <a href="pesanans.html" class="active">🛒 Pesanan Saya</a>
-                <div style="margin-top:30px; border-top:1px solid #eee; padding-top:20px;">
-                    <a href="../index.html">🌐 Lihat Website</a>
-                    <a href="#" onclick="logout()">🚪 Logout</a>
-                </div>
+                <div class="menu-divider"></div>
+                <a href="../index.html">🌐 Lihat Website</a>
+                <a href="#" onclick="logout()">🚪 Logout</a>
             </div>
         </aside>
 
-        <!-- Main -->
+        <!-- ===== MAIN ===== -->
         <div class="user-main">
-            <div class="user-header">
-                <div>
-                    <h4 style="margin:0;">Pesanan Saya</h4>
+            <!-- Header -->
+            <header class="user-header">
+                <div style="display:flex; align-items:center; gap:12px;">
+                    <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">☰</button>
+                    <h4>🛒 <span>Pesanan Saya</span></h4>
                 </div>
-                <div>
-                    <a href="https://wa.me/6281234567890" target="_blank" class="btn btn-sm btn-primary">💬 Chat Admin</a>
-                    <span id="userName" style="margin-left:15px;">User</span> 👤
+                <div class="header-right">
+                    <a href="https://wa.me/6281248141031" target="_blank" class="btn btn-primary btn-sm">💬 Chat Admin</a>
+                    <div class="user-avatar">
+                        <img src="https://ui-avatars.com/api/?name=User&background=f5b014&color=0f172a&size=36" alt="Avatar" class="avatar-img" id="userAvatar">
+                        <span id="userName">User</span>
+                    </div>
                 </div>
-            </div>
-            
+            </header>
+
+            <!-- Content -->
             <div class="user-content">
                 <!-- Stats -->
-                <div class="stats-grid" style="grid-template-columns: repeat(4, 1fr); margin-bottom:25px;">
+                <div class="stats-grid">
                     <div class="stat-card">
                         <div class="stat-icon yellow">🛒</div>
-                        <div class="stat-value" id="totalPesanan">0</div>
-                        <div class="stat-label">Total Pesanan</div>
+                        <div class="stat-info">
+                            <div class="stat-value" id="totalPesanan">0</div>
+                            <div class="stat-label">Total Pesanan</div>
+                        </div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-icon blue">⏳</div>
-                        <div class="stat-value" id="pesananProses">0</div>
-                        <div class="stat-label">Dalam Proses</div>
+                        <div class="stat-info">
+                            <div class="stat-value" id="pesananProses">0</div>
+                            <div class="stat-label">Dalam Proses</div>
+                        </div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-icon green">✅</div>
-                        <div class="stat-value" id="pesananSelesai">0</div>
-                        <div class="stat-label">Selesai</div>
+                        <div class="stat-info">
+                            <div class="stat-value" id="pesananSelesai">0</div>
+                            <div class="stat-label">Selesai</div>
+                        </div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-icon red">🚫</div>
-                        <div class="stat-value" id="pesananBatal">0</div>
-                        <div class="stat-label">Dibatalkan</div>
+                        <div class="stat-info">
+                            <div class="stat-value" id="pesananBatal">0</div>
+                            <div class="stat-label">Dibatalkan</div>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Filter Tabs -->
                 <div class="filter-tabs">
-                    <div class="filter-tab active" onclick="filterPesanans('all')">Semua</div>
-                    <div class="filter-tab" onclick="filterPesanans('pending')">Pending</div>
-                    <div class="filter-tab" onclick="filterPesanans('diproses')">Diproses</div>
-                    <div class="filter-tab" onclick="filterPesanans('selesai')">Selesai</div>
-                    <div class="filter-tab" onclick="filterPesanans('revisi')">Revisi</div>
-                    <div class="filter-tab" onclick="filterPesanans('dibatalkan')">Dibatalkan</div>
+                    <button class="filter-tab active" onclick="filterPesanans('all', this)">Semua</button>
+                    <button class="filter-tab" onclick="filterPesanans('pending', this)">Pending</button>
+                    <button class="filter-tab" onclick="filterPesanans('diproses', this)">Diproses</button>
+                    <button class="filter-tab" onclick="filterPesanans('selesai', this)">Selesai</button>
+                    <button class="filter-tab" onclick="filterPesanans('revisi', this)">Revisi</button>
+                    <button class="filter-tab" onclick="filterPesanans('dibatalkan', this)">Dibatalkan</button>
                 </div>
 
                 <!-- Pesanan List -->
                 <div id="pesananList">
-                    <div style="text-align:center; padding:50px;">Memuat data...</div>
+                    <div style="text-align:center; padding:50px; color:#94a3b8;">⏳ Memuat data...</div>
                 </div>
 
                 <!-- Empty State -->
                 <div id="emptyState" class="empty-state" style="display:none;">
-                    <div class="empty-state-icon">📭</div>
+                    <div class="empty-icon">📭</div>
                     <h3>Belum Ada Pesanan</h3>
                     <p>Anda belum memiliki pesanan. Yuk, buat pesanan sekarang!</p>
                     <a href="../pemesanan.html" class="btn btn-primary">🛒 Buat Pesanan</a>
@@ -250,23 +880,52 @@
         </div>
     </div>
 
-    <!-- Firebase SDK -->
+    <!-- ===== FIREBASE SDK ===== -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-    
+
     <script src="../assets/js/firebase-config.js"></script>
     <script src="../assets/js/auth.js"></script>
+
     <script>
+        // ============================================
+        // VARIABLES
+        // ============================================
         let allPesanans = [];
         let currentFilter = 'all';
 
+        // ============================================
+        // MENU TOGGLE
+        // ============================================
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.getElementById('userSidebar').classList.toggle('open');
+        });
+
+        document.addEventListener('click', function(e) {
+            const sidebar = document.getElementById('userSidebar');
+            const toggle = document.getElementById('menuToggle');
+            if (window.innerWidth <= 768) {
+                if (!sidebar.contains(e.target) && !toggle.contains(e.target)) {
+                    sidebar.classList.remove('open');
+                }
+            }
+        });
+
+        // ============================================
+        // CHECK USER
+        // ============================================
         checkUser().then(() => {
             const user = auth.currentUser;
             document.getElementById('userName').textContent = user.displayName || user.email;
+            const avatar = document.getElementById('userAvatar');
+            if (user.photoURL) avatar.src = user.photoURL;
             loadPesanans();
         });
 
+        // ============================================
+        // LOAD PESANANS
+        // ============================================
         async function loadPesanans() {
             try {
                 const user = auth.currentUser;
@@ -276,51 +935,83 @@
                     .get();
 
                 allPesanans = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                
+
                 updateStats(allPesanans);
                 renderPesanans(allPesanans);
             } catch (error) {
                 console.error('Error loading pesanans:', error);
-                document.getElementById('pesananList').innerHTML = 
-                    '<div style="text-align:center; padding:50px; color:#e74c3c;">Gagal memuat data. Coba lagi nanti.</div>';
+                document.getElementById('pesananList').innerHTML =
+                    '<div style="text-align:center; padding:50px; color:#ef4444;">❌ Gagal memuat data. Coba lagi nanti.</div>';
             }
         }
 
+        // ============================================
+        // UPDATE STATS
+        // ============================================
         function updateStats(pesanans) {
-            document.getElementById('totalPesanan').textContent = pesanans.length;
-            document.getElementById('pesananProses').textContent = pesanans.filter(p => ['pending', 'diproses', 'revisi'].includes(p.status)).length;
-            document.getElementById('pesananSelesai').textContent = pesanans.filter(p => p.status === 'selesai').length;
-            document.getElementById('pesananBatal').textContent = pesanans.filter(p => p.status === 'dibatalkan').length;
+            animateValue(document.getElementById('totalPesanan'), 0, pesanans.length);
+            animateValue(document.getElementById('pesananProses'), 0, pesanans.filter(p => ['pending', 'diproses', 'revisi'].includes(p.status)).length);
+            animateValue(document.getElementById('pesananSelesai'), 0, pesanans.filter(p => p.status === 'selesai').length);
+            animateValue(document.getElementById('pesananBatal'), 0, pesanans.filter(p => p.status === 'dibatalkan').length);
         }
 
-        function filterPesanans(status) {
+        // ============================================
+        // ANIMATE VALUE
+        // ============================================
+        function animateValue(element, start, end) {
+            if (start === end) {
+                element.textContent = end;
+                return;
+            }
+
+            const duration = 800;
+            const steps = 40;
+            const increment = Math.ceil((end - start) / steps);
+            let current = start;
+            const stepTime = duration / steps;
+
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= end) {
+                    current = end;
+                    clearInterval(timer);
+                }
+                element.textContent = current;
+            }, stepTime);
+        }
+
+        // ============================================
+        // FILTER PESANANS
+        // ============================================
+        function filterPesanans(status, el) {
             currentFilter = status;
-            
-            // Update active tab
+
             document.querySelectorAll('.filter-tab').forEach(tab => tab.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            // Filter data
-            const filtered = status === 'all' 
-                ? allPesanans 
+            if (el) el.classList.add('active');
+
+            const filtered = status === 'all'
+                ? allPesanans
                 : allPesanans.filter(p => p.status === status);
-            
+
             renderPesanans(filtered);
         }
 
+        // ============================================
+        // RENDER PESANANS
+        // ============================================
         function renderPesanans(pesanans) {
             const container = document.getElementById('pesananList');
             const emptyState = document.getElementById('emptyState');
-            
+
             if (pesanans.length === 0) {
                 container.innerHTML = '';
                 emptyState.style.display = 'block';
                 return;
             }
-            
+
             emptyState.style.display = 'none';
             container.innerHTML = '';
-            
+
             pesanans.forEach(p => {
                 const statusConfig = {
                     'pending': { class: 'status-pending', text: 'Pending' },
@@ -331,19 +1022,19 @@
                 };
                 const status = statusConfig[p.status] || statusConfig['pending'];
                 const progress = p.progress || 0;
-                
+
                 container.innerHTML += `
                     <div class="pesanan-card ${p.status}">
                         <div class="pesanan-header">
                             <div>
                                 <span class="pesanan-kode">#${p.kodePesanan || '000'}</span>
-                                <span class="pesanan-date" style="margin-left:15px;">
+                                <span class="pesanan-date" style="margin-left:14px;">
                                     ${p.createdAt ? new Date(p.createdAt.toDate()).toLocaleDateString('id-ID') : '-'}
                                 </span>
                             </div>
                             <span class="status-badge ${status.class}">${status.text}</span>
                         </div>
-                        
+
                         <div class="pesanan-body">
                             <div class="pesanan-info">
                                 <span class="pesanan-info-label">Nama Proyek</span>
@@ -360,7 +1051,7 @@
                                 </span>
                             </div>
                         </div>
-                        
+
                         <div class="pesanan-progress">
                             <div class="progress-info">
                                 <span>Progress Proyek</span>
@@ -370,65 +1061,57 @@
                                 <div class="progress-fill" style="width:${progress}%"></div>
                             </div>
                         </div>
-                        
+
                         <div class="pesanan-footer">
                             <span class="pesanan-harga">Rp ${(p.harga || 0).toLocaleString('id-ID')}</span>
-                            <a href="pesanan-detail.html?id=${p.id}" class="btn btn-primary">📄 Lihat Detail</a>
+                            <a href="pesanan-detail.html?id=${p.id}" class="btn btn-primary btn-sm">📄 Detail</a>
                         </div>
                     </div>
                 `;
             });
         }
 
-        // Show alert
+        // ============================================
+        // SHOW ALERT
+        // ============================================
         function showAlert(message, type = 'success') {
-            let alertBox = document.querySelector('.alert-toast');
-            if (alertBox) alertBox.remove();
-            
-            const colors = {
-                success: '#27ae60',
-                error: '#e74c3c',
-                warning: '#f39c12'
-            };
-            
-            alertBox = document.createElement('div');
-            alertBox.className = 'alert-toast';
-            alertBox.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: ${colors[type] || colors.success};
-                color: white;
-                padding: 15px 25px;
-                border-radius: 8px;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-                z-index: 9999;
-                font-weight: 500;
-                animation: slideIn 0.3s ease;
-            `;
-            alertBox.textContent = message;
-            
-            document.body.appendChild(alertBox);
-            
+            const existing = document.querySelector('.alert-toast');
+            if (existing) existing.remove();
+
+            const toast = document.createElement('div');
+            toast.className = `alert-toast ${type}`;
+            const icons = { success: '✅', error: '❌', warning: '⚠️' };
+            toast.innerHTML = `${icons[type] || 'ℹ️'} ${message}`;
+            document.body.appendChild(toast);
+
             setTimeout(() => {
-                alertBox.style.animation = 'slideOut 0.3s ease';
-                setTimeout(() => alertBox.remove(), 300);
-            }, 3000);
+                toast.classList.add('hide');
+                setTimeout(() => toast.remove(), 400);
+            }, 3500);
         }
 
-        // CSS Animation
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes slideIn {
-                from { transform: translateX(100%); opacity: 0; }
-                to { transform: translateX(0); opacity: 1; }
+        // ============================================
+        // LOGOUT
+        // ============================================
+        function logout() {
+            if (confirm('Apakah Anda yakin ingin keluar?')) {
+                auth.signOut().then(() => {
+                    localStorage.removeItem('webdevpro_session');
+                    window.location.href = '../login.html';
+                });
             }
-            @keyframes slideOut {
-                from { transform: translateX(0); opacity: 1; }
-                to { transform: translateX(100%); opacity: 0; }
+        }
+
+        // ============================================
+        // AUTH STATE
+        // ============================================
+        auth.onAuthStateChanged((user) => {
+            if (!user) {
+                window.location.href = '../login.html';
             }
-        `;
-        document.head.appendChild(style);
+        });
+
+        console.log('🚀 Pesanan page loaded successfully!');
     </script>
 </body>
 </html>

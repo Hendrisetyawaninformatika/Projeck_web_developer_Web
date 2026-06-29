@@ -7,7 +7,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="assets/css/style.css" />
     <style>
-        /* ===== RESET & BASE ===== */
+        /* ========================================
+           RESET & BASE
+           ======================================== */
         * {
             margin: 0;
             padding: 0;
@@ -15,7 +17,7 @@
         }
         body {
             font-family: 'Poppins', sans-serif;
-            background: #f4f7fc;
+            background: #f0f4f9;
             color: #1e293b;
             display: flex;
         }
@@ -28,30 +30,133 @@
         }
         .admin-body {
             min-height: 100vh;
-            background: #f4f7fc;
+            background: #f0f4f9;
         }
 
-        /* ===== SIDEBAR ===== */
+        /* ========================================
+           BACKGROUND ANIMATION
+           ======================================== */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .bg-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(245, 176, 20, 0.06);
+            border-radius: 50%;
+            animation: floatBgParticle linear infinite;
+        }
+
+        .bg-particle:nth-child(1) { left: 5%; animation-duration: 22s; }
+        .bg-particle:nth-child(2) { left: 15%; animation-duration: 28s; animation-delay: 2s; width: 6px; }
+        .bg-particle:nth-child(3) { left: 25%; animation-duration: 18s; animation-delay: 4s; }
+        .bg-particle:nth-child(4) { left: 35%; animation-duration: 32s; animation-delay: 1s; width: 8px; }
+        .bg-particle:nth-child(5) { left: 45%; animation-duration: 24s; animation-delay: 3s; }
+        .bg-particle:nth-child(6) { left: 55%; animation-duration: 30s; animation-delay: 5s; width: 5px; }
+        .bg-particle:nth-child(7) { left: 65%; animation-duration: 20s; animation-delay: 2.5s; }
+        .bg-particle:nth-child(8) { left: 75%; animation-duration: 26s; animation-delay: 4.5s; width: 7px; }
+        .bg-particle:nth-child(9) { left: 85%; animation-duration: 23s; animation-delay: 1.5s; }
+        .bg-particle:nth-child(10) { left: 95%; animation-duration: 29s; animation-delay: 3.5s; width: 6px; }
+        .bg-particle:nth-child(11) { left: 50%; animation-duration: 35s; animation-delay: 0.5s; width: 10px; }
+
+        @keyframes floatBgParticle {
+            0% { transform: translateY(100vh) translateX(0) scale(0); opacity: 0; }
+            10% { opacity: 0.6; transform: translateY(80vh) translateX(20px) scale(1); }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(-100vh) translateX(-20px) scale(0); opacity: 0; }
+        }
+
+        .gradient-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            pointer-events: none;
+            z-index: 0;
+            animation: orbFloat 20s ease-in-out infinite;
+        }
+
+        .gradient-orb:nth-child(1) {
+            width: 500px;
+            height: 500px;
+            background: rgba(245, 176, 20, 0.03);
+            top: -200px;
+            right: -100px;
+        }
+
+        .gradient-orb:nth-child(2) {
+            width: 400px;
+            height: 400px;
+            background: rgba(99, 102, 241, 0.02);
+            bottom: -150px;
+            left: -100px;
+            animation-delay: -10s;
+        }
+
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(50px, -50px) scale(1.1); }
+            66% { transform: translate(-30px, 30px) scale(0.9); }
+        }
+
+        .floating-code-bg {
+            position: fixed;
+            font-family: 'Courier New', monospace;
+            color: rgba(245, 176, 20, 0.03);
+            font-weight: 700;
+            font-size: 20px;
+            pointer-events: none;
+            z-index: 0;
+            animation: floatCodeBg linear infinite;
+        }
+
+        .floating-code-bg:nth-child(1) { top: 10%; left: 5%; animation-duration: 25s; }
+        .floating-code-bg:nth-child(2) { top: 20%; right: 10%; animation-duration: 20s; animation-delay: -5s; }
+        .floating-code-bg:nth-child(3) { bottom: 30%; left: 8%; animation-duration: 28s; animation-delay: -10s; }
+        .floating-code-bg:nth-child(4) { bottom: 20%; right: 5%; animation-duration: 22s; animation-delay: -7s; }
+        .floating-code-bg:nth-child(5) { top: 50%; left: 50%; animation-duration: 30s; animation-delay: -12s; }
+        .floating-code-bg:nth-child(6) { top: 5%; left: 40%; animation-duration: 18s; animation-delay: -3s; }
+        .floating-code-bg:nth-child(7) { bottom: 10%; left: 60%; animation-duration: 24s; animation-delay: -8s; }
+
+        @keyframes floatCodeBg {
+            0% { transform: translate(0, 0) rotate(0deg); opacity: 0.03; }
+            25% { transform: translate(100px, -50px) rotate(90deg); opacity: 0.06; }
+            50% { transform: translate(-60px, 70px) rotate(180deg); opacity: 0.04; }
+            75% { transform: translate(70px, -40px) rotate(270deg); opacity: 0.07; }
+            100% { transform: translate(0, 0) rotate(360deg); opacity: 0.03; }
+        }
+
+        /* ========================================
+           SIDEBAR
+           ======================================== */
         .admin-sidebar {
             position: fixed;
             top: 0;
             left: 0;
             width: 260px;
             height: 100vh;
-            background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+            background: linear-gradient(180deg, #0f172a 0%, #1a1a3e 100%);
             padding: 24px 16px;
             display: flex;
             flex-direction: column;
             transition: transform 0.3s ease, width 0.3s ease;
             z-index: 1000;
             overflow-y: auto;
-            box-shadow: 4px 0 20px rgba(0, 0, 0, 0.2);
+            box-shadow: 4px 0 24px rgba(0, 0, 0, 0.15);
         }
         .admin-sidebar::-webkit-scrollbar {
             width: 4px;
         }
         .admin-sidebar::-webkit-scrollbar-thumb {
-            background: #475569;
+            background: #f5b014;
             border-radius: 10px;
         }
         .sidebar-header {
@@ -68,17 +173,17 @@
             color: #fff;
         }
         .sidebar-header .logo span {
-            color: #60a5fa;
+            color: #f5b014;
         }
         .admin-badge {
-            background: rgba(96, 165, 250, 0.2);
-            color: #60a5fa;
+            background: rgba(245, 176, 20, 0.15);
+            color: #f5b014;
             font-size: 10px;
             font-weight: 600;
-            padding: 2px 10px;
+            padding: 2px 12px;
             border-radius: 20px;
             letter-spacing: 0.3px;
-            border: 1px solid rgba(96, 165, 250, 0.2);
+            border: 1px solid rgba(245, 176, 20, 0.1);
         }
         .sidebar-nav ul {
             list-style: none;
@@ -92,31 +197,30 @@
             gap: 14px;
             padding: 12px 16px;
             border-radius: 12px;
-            color: #94a3b8;
+            color: rgba(255,255,255,0.6);
             font-weight: 500;
             font-size: 14px;
-            transition: all 0.2s ease;
-            position: relative;
+            transition: all 0.3s ease;
         }
         .sidebar-nav ul li a svg {
             flex-shrink: 0;
-            opacity: 0.7;
+            opacity: 0.6;
             transition: opacity 0.2s;
         }
         .sidebar-nav ul li a:hover {
-            background: rgba(255, 255, 255, 0.06);
-            color: #e2e8f0;
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
         }
         .sidebar-nav ul li a:hover svg {
             opacity: 1;
         }
         .sidebar-nav ul li a.active {
-            background: rgba(96, 165, 250, 0.15);
-            color: #60a5fa;
+            background: rgba(245, 176, 20, 0.08);
+            color: #f5b014;
         }
         .sidebar-nav ul li a.active svg {
             opacity: 1;
-            stroke: #60a5fa;
+            stroke: #f5b014;
         }
         .sidebar-footer {
             margin-top: auto;
@@ -129,37 +233,47 @@
             gap: 14px;
             padding: 12px 16px;
             border-radius: 12px;
-            color: #94a3b8;
+            color: #ef4444;
             font-weight: 500;
             font-size: 14px;
-            transition: all 0.2s;
+            transition: all 0.3s ease;
+            background: none;
+            border: none;
+            width: 100%;
+            cursor: pointer;
+            font-family: inherit;
         }
         .logout-btn:hover {
-            background: rgba(239, 68, 68, 0.12);
-            color: #f87171;
-        }
-        .logout-btn:hover svg {
-            stroke: #f87171;
+            background: rgba(239, 68, 68, 0.1);
         }
 
-        /* ===== MAIN CONTENT ===== */
+        /* ========================================
+           MAIN CONTENT
+           ======================================== */
         .admin-main {
             margin-left: 260px;
             flex: 1;
             padding: 24px 32px 40px;
             transition: margin-left 0.3s ease;
             min-height: 100vh;
+            position: relative;
+            z-index: 1;
         }
+
+        /* ========================================
+           TOPBAR
+           ======================================== */
         .admin-topbar {
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 12px 24px;
-            background: #ffffff;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
             border-radius: 20px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
             margin-bottom: 28px;
-            border: 1px solid rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.6);
         }
         .sidebar-toggle {
             background: none;
@@ -184,13 +298,13 @@
             padding: 6px 16px;
             border-radius: 40px;
             gap: 10px;
-            transition: all 0.2s;
-            border: 1px solid transparent;
+            transition: all 0.25s;
+            border: 1.5px solid transparent;
         }
         .topbar-search:focus-within {
             background: #fff;
-            border-color: #60a5fa;
-            box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.15);
+            border-color: #f5b014;
+            box-shadow: 0 0 0 4px rgba(245, 176, 20, 0.12);
         }
         .topbar-search input {
             border: none;
@@ -224,7 +338,7 @@
             position: absolute;
             top: -2px;
             right: -2px;
-            background: #ef4444;
+            background: linear-gradient(135deg, #ef4444, #dc2626);
             color: #fff;
             font-size: 9px;
             font-weight: 700;
@@ -235,6 +349,7 @@
             align-items: center;
             justify-content: center;
             border: 2px solid #fff;
+            box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
         }
         .topbar-user {
             display: flex;
@@ -243,17 +358,26 @@
             font-weight: 600;
             font-size: 14px;
             color: #1e293b;
+            padding: 4px 12px 4px 4px;
+            border-radius: 40px;
+            background: #f1f5f9;
+            transition: background 0.2s;
+        }
+        .topbar-user:hover {
+            background: #e2e8f0;
         }
         .topbar-user img {
-            width: 38px;
-            height: 38px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             object-fit: cover;
             border: 2px solid #e2e8f0;
             background: #e2e8f0;
         }
 
-        /* ===== PAGE HEADER ===== */
+        /* ========================================
+           PAGE HEADER
+           ======================================== */
         .page-header {
             display: flex;
             align-items: center;
@@ -282,16 +406,16 @@
             border-radius: 40px;
             font-weight: 600;
             font-size: 14px;
-            transition: all 0.25s ease;
+            transition: all 0.3s ease;
         }
         .btn-primary {
-            background: linear-gradient(135deg, #3b82f6, #2563eb);
-            color: #fff;
-            box-shadow: 0 6px 16px rgba(37, 99, 235, 0.25);
+            background: linear-gradient(135deg, #f5b014, #d49a0e);
+            color: #0f172a;
+            box-shadow: 0 6px 16px rgba(245, 176, 20, 0.25);
         }
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 24px rgba(37, 99, 235, 0.35);
+            box-shadow: 0 10px 24px rgba(245, 176, 20, 0.35);
         }
         .btn-outline {
             background: transparent;
@@ -300,7 +424,8 @@
         }
         .btn-outline:hover {
             background: #f1f5f9;
-            border-color: #cbd5e1;
+            border-color: #f5b014;
+            color: #f5b014;
         }
         .btn-sm {
             padding: 6px 14px;
@@ -308,11 +433,13 @@
             border-radius: 30px;
         }
         .btn-danger {
-            background: #ef4444;
+            background: linear-gradient(135deg, #ef4444, #dc2626);
             color: #fff;
+            box-shadow: 0 6px 16px rgba(239, 68, 68, 0.25);
         }
         .btn-danger:hover {
-            background: #dc2626;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 24px rgba(239, 68, 68, 0.35);
         }
         .btn-icon {
             padding: 6px 8px;
@@ -321,7 +448,9 @@
             border: none;
         }
 
-        /* ===== STATS ===== */
+        /* ========================================
+           STATS
+           ======================================== */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -329,19 +458,20 @@
             margin-bottom: 28px;
         }
         .stat-card {
-            background: #fff;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
             padding: 20px 22px;
             border-radius: 20px;
             display: flex;
             align-items: center;
             gap: 16px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-            border: 1px solid rgba(0, 0, 0, 0.02);
-            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: transform 0.25s, box-shadow 0.25s;
         }
         .stat-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.06);
+            transform: translateY(-4px);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.07);
         }
         .stat-icon {
             width: 48px;
@@ -353,19 +483,19 @@
             flex-shrink: 0;
         }
         .stat-icon.blue {
-            background: #eff6ff;
+            background: linear-gradient(135deg, #eff6ff, #dbeafe);
             color: #3b82f6;
         }
         .stat-icon.green {
-            background: #ecfdf5;
+            background: linear-gradient(135deg, #ecfdf5, #d1fae5);
             color: #10b981;
         }
         .stat-icon.orange {
-            background: #fffbeb;
+            background: linear-gradient(135deg, #fffbeb, #fef3c7);
             color: #f59e0b;
         }
         .stat-icon.purple {
-            background: #f5f3ff;
+            background: linear-gradient(135deg, #f5f3ff, #ede9fe);
             color: #8b5cf6;
         }
         .stat-info h3 {
@@ -380,19 +510,22 @@
             font-weight: 500;
         }
 
-        /* ===== FILTER BAR ===== */
+        /* ========================================
+           FILTER BAR
+           ======================================== */
         .filter-bar {
             display: flex;
             flex-wrap: wrap;
             align-items: center;
             justify-content: space-between;
             gap: 14px;
-            background: #fff;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
             padding: 12px 20px;
             border-radius: 20px;
             margin-bottom: 28px;
-            border: 1px solid rgba(0, 0, 0, 0.02);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
         }
         .filter-group {
             display: flex;
@@ -411,15 +544,17 @@
             transition: all 0.2s;
         }
         .filter-select:focus {
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            border-color: #f5b014;
+            box-shadow: 0 0 0 4px rgba(245, 176, 20, 0.08);
         }
         .filter-actions {
             display: flex;
             gap: 10px;
         }
 
-        /* ===== PORTFOLIO GRID ===== */
+        /* ========================================
+           PORTFOLIO GRID
+           ======================================== */
         .portfolio-admin-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -427,11 +562,12 @@
             margin-bottom: 30px;
         }
         .portfolio-admin-card {
-            background: #fff;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
             border-radius: 24px;
             overflow: hidden;
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
-            border: 1px solid rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.5);
             transition: transform 0.25s ease, box-shadow 0.25s ease;
         }
         .portfolio-admin-card:hover {
@@ -558,7 +694,6 @@
             line-height: 1.5;
             margin-bottom: 12px;
             display: -webkit-box;
-            -webkit-box-orient: vertical;
             overflow: hidden;
         }
         .portfolio-meta {
@@ -587,17 +722,20 @@
             color: #334155;
         }
 
-        /* ===== PAGINATION ===== */
+        /* ========================================
+           PAGINATION
+           ======================================== */
         .data-card-footer {
             display: flex;
             flex-wrap: wrap;
             align-items: center;
             justify-content: space-between;
             gap: 16px;
-            background: #fff;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
             padding: 16px 20px;
             border-radius: 20px;
-            border: 1px solid rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.5);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
         }
         .pagination-info {
@@ -627,9 +765,9 @@
             background: #f1f5f9;
         }
         .page-btn.active {
-            background: #3b82f6;
-            color: #fff;
-            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+            background: #f5b014;
+            color: #0f172a;
+            box-shadow: 0 4px 10px rgba(245, 176, 20, 0.3);
         }
         .page-btn:disabled {
             opacity: 0.3;
@@ -640,7 +778,9 @@
             padding: 0 4px;
         }
 
-        /* ===== MODAL ===== */
+        /* ========================================
+           MODAL
+           ======================================== */
         .modal {
             position: fixed;
             inset: 0;
@@ -660,7 +800,7 @@
             position: absolute;
             inset: 0;
             background: rgba(15, 23, 42, 0.5);
-            backdrop-filter: blur(4px);
+            backdrop-filter: blur(6px);
         }
         .modal-content {
             position: relative;
@@ -726,7 +866,9 @@
             font-size: 14px;
         }
 
-        /* ===== FORM ===== */
+        /* ========================================
+           FORM
+           ======================================== */
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -761,8 +903,8 @@
         .form-group input:focus,
         .form-group select:focus,
         .form-group textarea:focus {
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.08);
+            border-color: #f5b014;
+            box-shadow: 0 0 0 4px rgba(245, 176, 20, 0.08);
         }
         .form-group textarea {
             resize: vertical;
@@ -781,7 +923,7 @@
         .checkbox-label input[type="checkbox"] {
             width: 18px;
             height: 18px;
-            accent-color: #3b82f6;
+            accent-color: #f5b014;
             border-radius: 4px;
         }
         .image-upload {
@@ -795,7 +937,7 @@
         }
         .image-upload:hover,
         .image-upload.dragover {
-            border-color: #3b82f6;
+            border-color: #f5b014;
             background: #f0f7ff;
         }
         .image-upload svg {
@@ -807,7 +949,7 @@
             margin-top: 6px;
         }
         .upload-link {
-            color: #3b82f6;
+            color: #f5b014;
             font-weight: 600;
         }
         .tech-input-list {
@@ -832,8 +974,8 @@
             background: #fafcff;
         }
         .tech-input-row input:focus {
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.08);
+            border-color: #f5b014;
+            box-shadow: 0 0 0 4px rgba(245, 176, 20, 0.08);
         }
         .remove-tech {
             color: #94a3b8;
@@ -843,13 +985,58 @@
             color: #ef4444;
         }
 
-        /* ===== DELETE ICON ===== */
+        /* ========================================
+           DELETE ICON
+           ======================================== */
         .delete-icon {
             color: #ef4444;
             margin-bottom: 12px;
         }
 
-        /* ===== RESPONSIVE ===== */
+        /* ========================================
+           TOAST
+           ======================================== */
+        .toast {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            padding: 14px 24px;
+            border-radius: 16px;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+            z-index: 99999;
+            animation: slideInRight 0.4s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .toast.success {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+        .toast.error {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+        }
+        .toast.warning {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        .toast.hide {
+            animation: slideOutRight 0.4s ease forwards;
+        }
+        @keyframes slideOutRight {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+
+        /* ========================================
+           RESPONSIVE
+           ======================================== */
         @media (max-width: 1024px) {
             .admin-sidebar {
                 transform: translateX(-100%);
@@ -865,7 +1052,7 @@
                 grid-template-columns: 1fr;
             }
         }
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
             .page-header-left h1 {
                 font-size: 22px;
             }
@@ -889,10 +1076,96 @@
                 flex-direction: column;
                 align-items: center;
             }
+            .gradient-orb {
+                opacity: 0.4;
+            }
+            .bg-particle {
+                opacity: 0.5;
+            }
+            .floating-code-bg {
+                display: none;
+            }
+            .admin-topbar {
+                padding: 10px 16px;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            .topbar-search input {
+                width: 120px;
+            }
+        }
+        @media (max-width: 480px) {
+            .page-header-left h1 {
+                font-size: 18px;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .stat-card {
+                padding: 14px 16px;
+            }
+            .stat-info h3 {
+                font-size: 18px;
+            }
+            .topbar-user span {
+                display: none;
+            }
+            .portfolio-admin-card {
+                border-radius: 16px;
+            }
+            .portfolio-admin-image {
+                height: 150px;
+            }
+            .action-btn {
+                width: 34px;
+                height: 34px;
+            }
+        }
+
+        /* ========================================
+           SCROLLBAR
+           ======================================== */
+        .admin-main::-webkit-scrollbar {
+            width: 6px;
+        }
+        .admin-main::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .admin-main::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        .admin-main::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
         }
     </style>
 </head>
 <body class="admin-body">
+    <!-- ===== BACKGROUND ANIMATION ===== -->
+    <div class="bg-animation">
+        <div class="bg-particle"></div>
+        <div class="bg-particle"></div>
+        <div class="bg-particle"></div>
+        <div class="bg-particle"></div>
+        <div class="bg-particle"></div>
+        <div class="bg-particle"></div>
+        <div class="bg-particle"></div>
+        <div class="bg-particle"></div>
+        <div class="bg-particle"></div>
+        <div class="bg-particle"></div>
+        <div class="bg-particle"></div>
+        <div class="gradient-orb"></div>
+        <div class="gradient-orb"></div>
+        <div class="floating-code-bg">&lt;/&gt;</div>
+        <div class="floating-code-bg">{ }</div>
+        <div class="floating-code-bg">function</div>
+        <div class="floating-code-bg">const</div>
+        <div class="floating-code-bg">return</div>
+        <div class="floating-code-bg">if</div>
+        <div class="floating-code-bg">else</div>
+        <div class="floating-code-bg">for</div>
+    </div>
+
     <!-- ===== SIDEBAR ===== -->
     <aside class="admin-sidebar" id="adminSidebar">
         <div class="sidebar-header">
@@ -913,7 +1186,7 @@
             </ul>
         </nav>
         <div class="sidebar-footer">
-            <a href="#" class="logout-btn" id="logoutBtn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg> Keluar</a>
+            <button class="logout-btn" id="logoutBtn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg> Keluar</button>
         </div>
     </aside>
 
@@ -925,7 +1198,7 @@
             <div class="topbar-right">
                 <div class="topbar-search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" placeholder="Cari portofolio..."></div>
                 <div class="topbar-notifications"><button class="notification-btn" id="notificationBtn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="notification-badge">2</span></button></div>
-                <div class="topbar-user"><img src="../assets/images/admin/avatar.jpg" alt="Admin" onerror="this.src='https://ui-avatars.com/api/?name=Admin&background=3b82f6&color=fff&size=36'"><span>Admin</span></div>
+                <div class="topbar-user"><img src="../assets/images/admin/avatar.jpg" alt="Admin" onerror="this.src='https://ui-avatars.com/api/?name=Admin&background=f5b014&color=0f172a&size=36'"><span>Admin</span></div>
             </div>
         </header>
 
@@ -937,11 +1210,11 @@
             </div>
 
             <!-- Stats -->
-            <div class="stats-grid">
-                <div class="stat-card"><div class="stat-icon blue"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div><div class="stat-info"><h3>24</h3><p>Total Proyek</p></div></div>
-                <div class="stat-card"><div class="stat-icon green"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div><div class="stat-info"><h3>20</h3><p>Ditampilkan</p></div></div>
-                <div class="stat-card"><div class="stat-icon orange"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><div class="stat-info"><h3>4</h3><p>Draft</p></div></div>
-                <div class="stat-card"><div class="stat-icon purple"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div><div class="stat-info"><h3>12.5K</h3><p>Total Views</p></div></div>
+            <div class="stats-grid" id="statsGrid">
+                <div class="stat-card"><div class="stat-icon blue"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div><div class="stat-info"><h3 id="statTotal">24</h3><p>Total Proyek</p></div></div>
+                <div class="stat-card"><div class="stat-icon green"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div><div class="stat-info"><h3 id="statPublished">20</h3><p>Ditampilkan</p></div></div>
+                <div class="stat-card"><div class="stat-icon orange"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><div class="stat-info"><h3 id="statDraft">4</h3><p>Draft</p></div></div>
+                <div class="stat-card"><div class="stat-icon purple"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div><div class="stat-info"><h3 id="statViews">12.5K</h3><p>Total Views</p></div></div>
             </div>
 
             <!-- Filter -->
@@ -957,7 +1230,7 @@
             </div>
 
             <!-- Portfolio Grid -->
-            <div class="portfolio-admin-grid">
+            <div class="portfolio-admin-grid" id="portfolioGrid">
                 <!-- Card 1 -->
                 <div class="portfolio-admin-card" data-category="website" data-status="published">
                     <div class="portfolio-admin-image">
@@ -966,7 +1239,7 @@
                             <div class="portfolio-admin-actions">
                                 <button class="action-btn view" title="Lihat"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
                                 <button class="action-btn edit" title="Edit"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
-                                <button class="action-btn delete" title="Hapus"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
+                                <button class="action-btn delete" title="Hapus" onclick="openDeleteModal(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
                             </div>
                         </div>
                         <span class="portfolio-status published">Ditampilkan</span>
@@ -987,7 +1260,7 @@
                             <div class="portfolio-admin-actions">
                                 <button class="action-btn view" title="Lihat"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
                                 <button class="action-btn edit" title="Edit"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
-                                <button class="action-btn delete" title="Hapus"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
+                                <button class="action-btn delete" title="Hapus" onclick="openDeleteModal(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
                             </div>
                         </div>
                         <span class="portfolio-status published">Ditampilkan</span>
@@ -1008,7 +1281,7 @@
                             <div class="portfolio-admin-actions">
                                 <button class="action-btn view" title="Lihat"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
                                 <button class="action-btn edit" title="Edit"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
-                                <button class="action-btn delete" title="Hapus"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
+                                <button class="action-btn delete" title="Hapus" onclick="openDeleteModal(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
                             </div>
                         </div>
                         <span class="portfolio-status published">Ditampilkan</span>
@@ -1029,7 +1302,7 @@
                             <div class="portfolio-admin-actions">
                                 <button class="action-btn view" title="Lihat"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
                                 <button class="action-btn edit" title="Edit"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
-                                <button class="action-btn delete" title="Hapus"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
+                                <button class="action-btn delete" title="Hapus" onclick="openDeleteModal(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
                             </div>
                         </div>
                         <span class="portfolio-status draft">Draft</span>
@@ -1050,7 +1323,7 @@
                             <div class="portfolio-admin-actions">
                                 <button class="action-btn view" title="Lihat"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
                                 <button class="action-btn edit" title="Edit"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
-                                <button class="action-btn delete" title="Hapus"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
+                                <button class="action-btn delete" title="Hapus" onclick="openDeleteModal(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
                             </div>
                         </div>
                         <span class="portfolio-status published">Ditampilkan</span>
@@ -1071,7 +1344,7 @@
                             <div class="portfolio-admin-actions">
                                 <button class="action-btn view" title="Lihat"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
                                 <button class="action-btn edit" title="Edit"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
-                                <button class="action-btn delete" title="Hapus"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
+                                <button class="action-btn delete" title="Hapus" onclick="openDeleteModal(this)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
                             </div>
                         </div>
                         <span class="portfolio-status draft">Draft</span>
@@ -1088,15 +1361,15 @@
 
             <!-- Pagination -->
             <div class="data-card-footer">
-                <div class="pagination-info">Menampilkan 1-6 dari 24 proyek</div>
-                <div class="pagination">
-                    <button class="page-btn" disabled><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></button>
-                    <button class="page-btn active">1</button>
-                    <button class="page-btn">2</button>
-                    <button class="page-btn">3</button>
+                <div class="pagination-info" id="paginationInfo">Menampilkan 1-6 dari 24 proyek</div>
+                <div class="pagination" id="paginationContainer">
+                    <button class="page-btn" id="prevPage" disabled><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></button>
+                    <button class="page-btn active" data-page="1">1</button>
+                    <button class="page-btn" data-page="2">2</button>
+                    <button class="page-btn" data-page="3">3</button>
                     <span class="page-dots">...</span>
-                    <button class="page-btn">4</button>
-                    <button class="page-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
+                    <button class="page-btn" data-page="4">4</button>
+                    <button class="page-btn" id="nextPage"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></button>
                 </div>
             </div>
         </div>
@@ -1150,7 +1423,9 @@
     </div>
 
     <script>
-        // ===== SIDEBAR TOGGLE =====
+        // ============================================
+        // SIDEBAR TOGGLE
+        // ============================================
         const sidebarToggle = document.getElementById('sidebarToggle');
         const adminSidebar = document.getElementById('adminSidebar');
         sidebarToggle.addEventListener('click', () => {
@@ -1158,84 +1433,253 @@
             document.body.classList.toggle('sidebar-collapsed');
         });
 
-        // ===== MODAL TAMBAH =====
+        // ============================================
+        // STATS ANIMATION
+        // ============================================
+        function animateStats() {
+            const stats = document.querySelectorAll('.stat-info h3');
+            stats.forEach(stat => {
+                const text = stat.textContent;
+                const num = parseInt(text.replace(/[^0-9]/g, ''));
+                if (isNaN(num)) return;
+
+                let current = 0;
+                const target = num;
+                const duration = 1500;
+                const steps = 30;
+                const increment = Math.ceil(target / steps);
+                const stepTime = duration / steps;
+
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        current = target;
+                        clearInterval(timer);
+                    }
+                    stat.textContent = current;
+                }, stepTime);
+            });
+        }
+
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateStats();
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.3 });
+
+        const statsGrid = document.getElementById('statsGrid');
+        if (statsGrid) {
+            statsObserver.observe(statsGrid);
+        }
+
+        // ============================================
+        // MODAL TAMBAH
+        // ============================================
         const portofolioModal = document.getElementById('portofolioModal');
         const addBtn = document.getElementById('addPortofolioBtn');
         const modalClose = document.getElementById('modalClose');
         const modalCancel = document.getElementById('modalCancel');
-        function openModal() { portofolioModal.classList.add('active'); document.body.style.overflow = 'hidden'; }
-        function closeModal() { portofolioModal.classList.remove('active'); document.body.style.overflow = ''; document.getElementById('portofolioForm').reset(); }
+
+        function openModal() {
+            portofolioModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            portofolioModal.classList.remove('active');
+            document.body.style.overflow = '';
+            document.getElementById('portofolioForm').reset();
+        }
+
         addBtn.addEventListener('click', openModal);
         modalClose.addEventListener('click', closeModal);
         modalCancel.addEventListener('click', closeModal);
         portofolioModal.querySelector('.modal-overlay').addEventListener('click', closeModal);
 
-        // ===== TECH STACK =====
+        // ============================================
+        // TECH STACK
+        // ============================================
         const addTechBtn = document.getElementById('addTechBtn');
         const techList = document.getElementById('techList');
+
         addTechBtn.addEventListener('click', () => {
             const row = document.createElement('div');
             row.className = 'tech-input-row';
-            row.innerHTML = `<input type="text" class="tech-input" placeholder="Nama teknologi"><button type="button" class="btn btn-icon remove-tech"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>`;
+            row.innerHTML = `
+                <input type="text" class="tech-input" placeholder="Nama teknologi">
+                <button type="button" class="btn btn-icon remove-tech"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+            `;
             techList.appendChild(row);
         });
+
         techList.addEventListener('click', (e) => {
             if (e.target.closest('.remove-tech') && techList.querySelectorAll('.tech-input-row').length > 1) {
                 e.target.closest('.tech-input-row').remove();
             }
         });
 
-        // ===== IMAGE UPLOAD =====
+        // ============================================
+        // IMAGE UPLOAD
+        // ============================================
         const imageUpload = document.getElementById('imageUpload');
         const projectImage = document.getElementById('projectImage');
+
         imageUpload.addEventListener('click', () => projectImage.click());
-        imageUpload.addEventListener('dragover', (e) => { e.preventDefault(); imageUpload.classList.add('dragover'); });
-        imageUpload.addEventListener('dragleave', () => imageUpload.classList.remove('dragover'));
-        imageUpload.addEventListener('drop', (e) => { e.preventDefault(); imageUpload.classList.remove('dragover'); });
+        imageUpload.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            imageUpload.classList.add('dragover');
+        });
+        imageUpload.addEventListener('dragleave', () => {
+            imageUpload.classList.remove('dragover');
+        });
+        imageUpload.addEventListener('drop', (e) => {
+            e.preventDefault();
+            imageUpload.classList.remove('dragover');
+        });
         projectImage.addEventListener('change', () => {
-            if (projectImage.files.length) imageUpload.querySelector('p').textContent = `📎 ${projectImage.files[0].name}`;
+            if (projectImage.files.length) {
+                imageUpload.querySelector('p').textContent = `📎 ${projectImage.files[0].name}`;
+            }
         });
 
-        // ===== FILTER =====
+        // ============================================
+        // FILTER
+        // ============================================
         const filterKategori = document.getElementById('filterKategori');
         const filterStatus = document.getElementById('filterStatus');
         const cards = document.querySelectorAll('.portfolio-admin-card');
+
         function applyFilter() {
-            const kat = filterKategori.value, stat = filterStatus.value;
+            const kat = filterKategori.value;
+            const stat = filterStatus.value;
+
             cards.forEach(c => {
-                const match = (kat === 'all' || c.dataset.category === kat) && (stat === 'all' || c.dataset.status === stat);
+                const match = (kat === 'all' || c.dataset.category === kat) &&
+                              (stat === 'all' || c.dataset.status === stat);
                 c.style.display = match ? 'block' : 'none';
             });
         }
+
         filterKategori.addEventListener('change', applyFilter);
         filterStatus.addEventListener('change', applyFilter);
-        document.getElementById('resetFilter').addEventListener('click', () => { filterKategori.value = 'all'; filterStatus.value = 'all'; applyFilter(); });
 
-        // ===== MODAL HAPUS =====
+        document.getElementById('resetFilter').addEventListener('click', () => {
+            filterKategori.value = 'all';
+            filterStatus.value = 'all';
+            applyFilter();
+        });
+
+        // ============================================
+        // PAGINATION
+        // ============================================
+        let currentPage = 1;
+        const totalPages = 4;
+
+        document.getElementById('prevPage').addEventListener('click', function() {
+            if (currentPage > 1) {
+                currentPage--;
+                updatePagination();
+            }
+        });
+
+        document.getElementById('nextPage').addEventListener('click', function() {
+            if (currentPage < totalPages) {
+                currentPage++;
+                updatePagination();
+            }
+        });
+
+        document.querySelectorAll('.page-btn[data-page]').forEach(btn => {
+            btn.addEventListener('click', function() {
+                currentPage = parseInt(this.dataset.page);
+                updatePagination();
+            });
+        });
+
+        function updatePagination() {
+            document.querySelectorAll('.page-btn[data-page]').forEach(btn => {
+                btn.classList.toggle('active', parseInt(btn.dataset.page) === currentPage);
+            });
+
+            document.getElementById('prevPage').disabled = currentPage === 1;
+            document.getElementById('nextPage').disabled = currentPage === totalPages;
+
+            const start = (currentPage - 1) * 6 + 1;
+            const end = Math.min(currentPage * 6, 24);
+            document.getElementById('paginationInfo').textContent = `Menampilkan ${start}-${end} dari 24 proyek`;
+
+            // Smooth scroll to top of grid
+            document.getElementById('portfolioGrid').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // ============================================
+        // DELETE MODAL
+        // ============================================
         const deleteModal = document.getElementById('deleteModal');
-        const deleteBtns = document.querySelectorAll('.action-btn.delete');
         const deleteModalClose = document.getElementById('deleteModalClose');
         const deleteCancel = document.getElementById('deleteCancel');
         const deleteConfirm = document.getElementById('deleteConfirm');
-        deleteBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const card = btn.closest('.portfolio-admin-card');
-                document.getElementById('deleteProjectName').textContent = card.querySelector('h3').textContent;
-                deleteModal.classList.add('active');
-            });
-        });
-        function closeDelete() { deleteModal.classList.remove('active'); }
-        deleteModalClose.addEventListener('click', closeDelete);
-        deleteCancel.addEventListener('click', closeDelete);
-        deleteModal.querySelector('.modal-overlay').addEventListener('click', closeDelete);
-        deleteConfirm.addEventListener('click', () => { closeDelete(); alert('🗑️ Portofolio berhasil dihapus!'); });
+        let currentDeleteCard = null;
 
-        // ===== FORM SUBMIT =====
+        function openDeleteModal(btn) {
+            const card = btn.closest('.portfolio-admin-card');
+            currentDeleteCard = card;
+            const projectName = card.querySelector('h3').textContent;
+            document.getElementById('deleteProjectName').textContent = projectName;
+            deleteModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDeleteModal() {
+            deleteModal.classList.remove('active');
+            document.body.style.overflow = '';
+            currentDeleteCard = null;
+        }
+
+        deleteModalClose.addEventListener('click', closeDeleteModal);
+        deleteCancel.addEventListener('click', closeDeleteModal);
+        deleteModal.querySelector('.modal-overlay').addEventListener('click', closeDeleteModal);
+
+        deleteConfirm.addEventListener('click', () => {
+            if (currentDeleteCard) {
+                currentDeleteCard.style.display = 'none';
+                showToast('🗑️ Portofolio berhasil dihapus!', 'success');
+            }
+            closeDeleteModal();
+        });
+
+        // ============================================
+        // FORM SUBMIT
+        // ============================================
         document.getElementById('portofolioForm').addEventListener('submit', (e) => {
             e.preventDefault();
             closeModal();
-            alert('✅ Portofolio berhasil disimpan!');
+            showToast('✅ Portofolio berhasil disimpan!', 'success');
         });
+
+        // ============================================
+        // TOAST
+        // ============================================
+        function showToast(message, type = 'success') {
+            const existing = document.querySelector('.toast');
+            if (existing) existing.remove();
+
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            const icons = { success: '✅', error: '❌', warning: '⚠️' };
+            toast.innerHTML = `${icons[type] || 'ℹ️'} ${message}`;
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.add('hide');
+                setTimeout(() => toast.remove(), 400);
+            }, 3500);
+        }
+
+        console.log('🚀 Portofolio Management page loaded successfully!');
     </script>
 </body>
 </html>
